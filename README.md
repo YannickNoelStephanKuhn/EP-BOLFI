@@ -24,7 +24,7 @@ Please have a look at parameters/estimation/gitt_basf.py, which contains all the
 
 ## Installation
 
-EP-BOLFI requires Python 3.9(.2). Just copy the repository to a location on your computer and install the dependencies either via [pip](https://pypi.org/project/pip/) or [conda](https://anaconda.org/). We recommend using conda on Windows systems.
+EP-BOLFI requires Python 3.9(.2). Just copy the repository to a location on your computer and install the dependencies either via [pip](https://pypi.org/project/pip/) or [miniforge](https://github.com/conda-forge/miniforge). We recommend using miniforge on Windows systems.
 
 ### Using pip
 
@@ -32,28 +32,30 @@ EP-BOLFI requires Python 3.9(.2). Just copy the repository to a location on your
 pip install -r requirements.txt
 ```
 
-### Using conda
+### Using [miniforge](https://github.com/conda-forge/miniforge)
 
 ```bash
-conda install -c conda-forge --file requirements.txt
+conda install --file requirements.txt
 ```
 
 ## Citing EP-BOLFI
 
 If you use EP-BOLFI in your work, please cite our paper
 
-> Kuhn, Y., Wolf, H., Horstmann, B., & Latz, A. (2022). EP-BOLFI: Measurement-Noise-Aware Parameterization of Continuum Battery Models from Electrochemical Measurements Applied to Full-Cell GITT Measurements. _arXiv_.
+> Kuhn, Y., Wolf, H., Horstmann, B., & Latz, A. (2022). EP-BOLFI: Measurement-Noise-Aware Parameterization of Continuum Battery Models from Electrochemical Measurements Applied to Full-Cell GITT Measurements. _arXiv_, ID 2208.03289.
 
 You can use the bibtex
 
 ```
 @article{Kuhn2022,
-  archivePrefix = {arXiv},
-  arxivId = {},
-  author = {Kuhn, Yannick and Wolf, Hannes and Horstmann, Birger and Latz, Arnulf},
-  pages = {1--18},
-  title = {{EP-BOLFI: Measurement-Noise-Aware Parameterization of Continuum Battery Models from Electrochemical Measurements Applied to Full-Cell GITT Measurements}},
+  doi = {10.48550/ARXIV.2208.03289},
+  url = {https://arxiv.org/abs/2208.03289},
+  author = {Kuhn, Yannick and Wolf, Hannes and Latz, Arnulf and Horstmann, Birger},
+  keywords = {Data Analysis, Statistics and Probability (physics.data-an), Chemical Physics (physics.chem-ph), Computational Physics (physics.comp-ph), Applications (stat.AP), FOS: Physical sciences, FOS: Physical sciences, FOS: Computer and information sciences, FOS: Computer and information sciences},
+  title = {EP-BOLFI: Measurement-Noise-Aware Parameterization of Continuum Battery Models from Electrochemical Measurements Applied to Full-Cell GITT Measurements},
+  publisher = {arXiv},
   year = {2022},
+  copyright = {Creative Commons Attribution 4.0 International}
 }
 ```
 
