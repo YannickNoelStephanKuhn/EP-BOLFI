@@ -2,12 +2,14 @@
 
 EP-BOLFI (Expectation Propagation with Bayesian Optimization for Likelihood-Free Inference) extends the simulator optimizer BOLFI with the data featurization of Expectation Propagation. EP-BOLFI inherits the advantages of both: high stability to measurement noise and considerable reduction of computational effort. The performance is one to two orders of magnitude better than Markov-Chain Monte Carlo, counted in the number of simulator evaluations required.
 
-This is the accompanying repository to the article "EP-BOLFI: Measurement-Noise-Aware Parameterization of Continuum Battery Models from Electrochemical Measurements Applied to Full-Cell GITT Measurements", where EP-BOLFI is used to parameterize GITT measurements of a full battery cell.
+## Documentation
 
-## Reproducing the data analysis in the article
+[ep_bolfi](ep_bolfi/) contains the EP-BOLFI algorithm, a few example models, and utility functions that cover fitting functions, datafile imports, dataset processing, and visualization. For further details, please refer to [documentation](documentation/).
 
-First, please download the SPMe benchmark results, GITT data and GITT parameterization results and put them into the root folder of your download of this repository.
- - To perform the SPMe benchmarks from Aitio et al., please use spme_benchmark.py. To calculate the tabulated results presented in the article, use evaluate_spme_benchmark_confidence.py.
+## Examples
+
+The examples currently comprise of the code used in the [EP-BOLFI publication](https://doi.org/10.48550/arXiv.2208.03289). Apart from the SPMe benchmark, they analyze a GITT dataset provided by BASF. You can find the dataset at the DOI [10.5281/zenodo.7478267](https://doi.org/10.5281/zenodo.7478267). If you wish to re-run the parameterization yourself, copy the contents of GITT_data_and_parameterization_info.zip into the top folder first.
+ - To perform the SPMe benchmarks from Aitio et al., please use spme_benchmark_multimodal.py and spme_benchmark_unimodal.py. To calculate the tabulated results presented in the article, use evaluate_spme_benchmark_confidence.py.
  - To preprocess the OCV curves, please use ocv_from_cccv_and_gitt.py.
  - To view the GITT data, please use measurement_plot.py.
  - To estimate parameters from the GITT data from BASF, use run_estimation.py, and after that collect_gitt_estimation_results.py. This may take more than a week to run.
@@ -18,62 +20,37 @@ First, please download the SPMe benchmark results, GITT data and GITT parameteri
  - To analyze the precision and reliability of the GITT estimation procedure, please use calculate_experimental_and_simulated_features.py. To plot this analysis, please use analytic_vs_epbolfi_results.py and sensitivity_visualization.py.
  - To plot the joint resistance of the two exchange-current densities, please use joint_resistance.py.
 
-## Using EP-BOLFI to process your GITT measurements with your model
+## Using EP-BOLFI to process your measurements with your model
 
-Please have a look at parameters/estimation/gitt_basf.py, which contains all the code that is necessary to preprocess your simulator and data for use with EP-BOLFI. Both experimental and simulated output have to have the following shape: a list of lists, where each list refers to a charge pulse or a rest phase, starting with a charge pulse. Always close with a rest phase. For performing the optimization, please have a look at run_estimation.py. The variable names and procedures are explained in the article. If you wish to re-use an optimization result as starting value, use .Q, .r, .Q_features and .r_features and pass them to the keyword arguments Q, r, Q_features and r_features of perform_gitt_estimation.
+Please have a look at [the setup example](Python/parameters/estimation/). [gitt_basf.py](Python/parameters/estimation/gitt_basf.py) contains the preprocessing of the GITT dataset and a GITT simulator. [gitt.py](Python/parameters/estimation/gitt.py) contains one possible definition of features in a GITT measurement. For performing the optimization, please have a look at run_estimation.py. If you wish to re-use an optimization result as starting value, use .Q, .r, .Q_features and .r_features and pass them to the initialization of the EP-BOLFI object.
 
 ## Installation
 
-EP-BOLFI requires Python 3.9(.2). Just copy the repository to a location on your computer and install the dependencies either via [pip](https://pypi.org/project/pip/) or [miniforge](https://github.com/conda-forge/miniforge). We recommend using miniforge on Windows systems.
+EP-BOLFI requires [Python 3.9](https://www.python.org/downloads/release/python-3913/). Just download the newest Release .whl file and [requirements.txt](requirements.txt). Install the dependencies with [requirements.txt](requirements.txt) via [pip](https://pypi.org/project/pip/), then install the .whl file. In case you want to build the package from source, please refer to [CONTRIBUTING.md](CONTRIBUTING.md#building-from-source).
 
 ### Using pip
 
+Create a virtual environment and activate it. On Linux and Mac:
+```bash
+python3.9 -m venv ep_bolfi
+source ep_bolfi/bin/activate
+```
+On Windows:
+```powershell
+py -3.9 -m venv ep_bolfi
+. .\ep_bolfi\Scripts\activate
+```
+
+Then install the dependencies and package:
 ```bash
 pip install -r requirements.txt
+pip install ep_bolfi-${VERSION}-py3-none-any.whl
 ```
-
-### Using [miniforge](https://github.com/conda-forge/miniforge)
-
-```bash
-conda install --file requirements.txt
-```
-
-## Citing EP-BOLFI
-
-If you use EP-BOLFI in your work, please cite our paper
-
-> Kuhn, Y., Wolf, H., Horstmann, B., & Latz, A. (2022). EP-BOLFI: Measurement-Noise-Aware Parameterization of Continuum Battery Models from Electrochemical Measurements Applied to Full-Cell GITT Measurements. _arXiv_, ID 2208.03289.
-
-You can use the bibtex
-
-```
-@article{Kuhn2022,
-  doi = {10.48550/ARXIV.2208.03289},
-  url = {https://arxiv.org/abs/2208.03289},
-  author = {Kuhn, Yannick and Wolf, Hannes and Latz, Arnulf and Horstmann, Birger},
-  keywords = {Data Analysis, Statistics and Probability (physics.data-an), Chemical Physics (physics.chem-ph), Computational Physics (physics.comp-ph), Applications (stat.AP), FOS: Physical sciences, FOS: Physical sciences, FOS: Computer and information sciences, FOS: Computer and information sciences},
-  title = {EP-BOLFI: Measurement-Noise-Aware Parameterization of Continuum Battery Models from Electrochemical Measurements Applied to Full-Cell GITT Measurements},
-  publisher = {arXiv},
-  year = {2022},
-  copyright = {Creative Commons Attribution 4.0 International}
-}
-```
-
-We would be grateful if you could also cite [ELFI](https://github.com/elfi-dev/elfi), which EP-BOLFI relies upon for BOLFI.
 
 ## Contributing to EP-BOLFI
 
-We will open up EP-BOLFI to contributions at a later date. Please use the "Watch" feature on the [GitHub repository](https://github.com/YannickNoelStephanKuhn/EP-BOLFI) to get notified when EP-BOLFI goes Open Source.
+Please refer to the [contributing guidelines](CONTRIBUTING.md) and adhere to the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Licence
 
-Shield: [![CC BY-NC-ND 4.0][cc-by-nc-nd-shield]][cc-by-nc-nd]
-
-This work is licensed under a
-[Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License][cc-by-nc-nd].
-
-[![CC BY-NC-ND 4.0][cc-by-nc-nd-image]][cc-by-nc-nd]
-
-[cc-by-nc-nd]: http://creativecommons.org/licenses/by-nc-nd/4.0/
-[cc-by-nc-nd-image]: https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png
-[cc-by-nc-nd-shield]: https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg
+GPLv3, see LICENSE file.
