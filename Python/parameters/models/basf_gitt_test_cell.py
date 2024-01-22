@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 """!@file
 Parameter file for the pouch cell that was measured by BASF.
 """

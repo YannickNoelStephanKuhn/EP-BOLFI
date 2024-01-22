@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 """!@file
 @brief Comprehensive list of parameters of every model.
 SI units are assumed unless stated otherwise. When imported, this

@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 import json
 
 from utility.preprocessing import calculate_means_and_standard_deviations

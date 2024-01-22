@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 """!@package models.solversetup
 This file eases the setup and simulation of PyBaMM battery models.
 """

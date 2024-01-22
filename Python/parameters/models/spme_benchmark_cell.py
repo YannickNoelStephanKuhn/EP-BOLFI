@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 """!@file
 Parameter file for the SPMe benchmark. Aitio2020 mentioned Moura2016,
 which mentions the parameters of DUALFOIL for LiCoO₂ / graphite.

@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 from parameters.estimation.spme_benchmark_unimodal import (
     perform_spme_benchmark_unimodal
 )

@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 """!@package utility.preprocessing
 Contains frequently used workflows in dataset preprocessing.
 

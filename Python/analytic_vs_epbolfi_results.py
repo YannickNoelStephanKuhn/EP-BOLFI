@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 import numpy as np
 from scipy.optimize import minimize
 import matplotlib

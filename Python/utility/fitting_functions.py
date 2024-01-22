@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 """!@package utility.fitting_functions
 Various helper and fitting functions for processing measurement curves.
 """

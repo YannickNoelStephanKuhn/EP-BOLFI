@@ -1,6 +1,6 @@
 elfi >= 0.8.3
 matplotlib >= 3.5.1
-numpy >= 1.22.3
+numpy == 1.24
 pybamm == 21.11
 scipy >= 1.8.0
 sympy >= 1.9

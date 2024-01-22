@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 import matplotlib.pyplot as plt
 
 from utility.visualization import plot_measurement

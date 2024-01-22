@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 from contextlib import redirect_stdout
 from runpy import run_module
 import json

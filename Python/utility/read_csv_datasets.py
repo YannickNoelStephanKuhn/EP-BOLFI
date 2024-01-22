@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 """!@package utility.read_csv_datasets
 Defines datatypes for further processing and containtes the means to
 convert commonly encountered measurement files into them.

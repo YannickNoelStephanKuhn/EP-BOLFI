@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 """!@file
 Example usage of the correlation matrix visualization tools.
 """

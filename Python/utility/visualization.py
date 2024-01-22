@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 """!@package utility.visualization
 Various helper and plotting functions for common data visualizations.
 """

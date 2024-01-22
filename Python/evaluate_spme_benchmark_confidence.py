@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 import json
 
 from parameters.models.spme_benchmark_cell import parameters

@@ -1,3 +1,4 @@
+# Copyright (c): German Aerospace Center (DLR)
 """!@file
 Parameter file for the estimation of battery model parameters from the
 GITT data provided by BASF.
