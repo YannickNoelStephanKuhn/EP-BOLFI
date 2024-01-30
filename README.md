@@ -26,7 +26,11 @@ Please have a look at [the setup example](Python/parameters/estimation/). [gitt_
 
 ## Installation
 
-EP-BOLFI requires [Python 3.9](https://www.python.org/downloads/release/python-3913/). Just download the newest Release .whl file and [requirements.txt](requirements.txt). Install the dependencies with [requirements.txt](requirements.txt) via [pip](https://pypi.org/project/pip/), then install the .whl file. In case you want to build the package from source, please refer to [CONTRIBUTING.md](CONTRIBUTING.md#building-from-source).
+EP-BOLFI requires [Python 3.9](https://www.python.org/downloads/release/python-3913/). Then, install EP-BOLFI and its dependencies via pip:
+```bash
+pip install ep-bolfi
+```
+In case you want to build the package from source, please refer to [CONTRIBUTING.md](CONTRIBUTING.md#building-from-source).
 
 ### Using pip
 
