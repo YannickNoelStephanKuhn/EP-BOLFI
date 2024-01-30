@@ -1,10 +1,9 @@
-# Copyright (c): German Aerospace Center (DLR)
 from contextlib import redirect_stdout
-from runpy import run_module
 import json
 import numpy as np
+from runpy import run_module
 
-from parameters.estimation.gitt import perform_gitt_estimation
+from parameters.estimation.gitt import build_gitt_estimator
 
 # Limits the extent of each next prior.
 prior_limits = {
@@ -41,11 +40,12 @@ with open(
             ] = parameter_estimates[
                 electrode + 'electrode Bruggeman coefficient'
             ]
-    parameter_estimates['1 + dlnf/dlnc'] = 1.475 / (
+    parameter_estimates['Thermodynamic factor'] = 1.475 / (
         1 - parameter_estimates['Cation transference number']
     )
     # all_error_bounds = results['error bounds']
-    # """! The uncertainty in the estimation of the SOC-independent parameters. """
+    # """! The uncertainty in the estimation of the SOC-independent parameters.
+    # """
     # parameter_errorbars = {
     #     name: all_error_bounds[name]
     #     for name in [
@@ -149,20 +149,22 @@ for pulse_number in range(84, 0 - 1, -1):
                 estimation_result = json.load(g)['inferred parameters']
             estimation_result.update(parameter_estimates)
             experimental_dataset = data['simulator'](estimation_result)
-            estimation_verification = perform_gitt_estimation(
+            estimator = build_gitt_estimator(
                 data['simulator'],
                 experimental_dataset,
                 data['fixed_parameters'],
                 free_parameters=data['free_parameters'],
                 free_parameters_boundaries=data['free_parameters_boundaries'],
                 transform_parameters=data['transform_parameters'],
+            )
+            estimator.run(
                 bolfi_initial_evidence=65,
                 bolfi_total_evidence=130,
                 bolfi_posterior_samples=27,
                 ep_iterations=4,
                 final_dampening=0.5,
                 verbose=True,
-                seed=0
+                seed=0,
             )
     free_parameters_boundaries = {
         name: (
@@ -179,7 +181,7 @@ for pulse_number in range(84, 0 - 1, -1):
                 prior_limits[name][1]
             ])
         )
-        for name, bounds in estimation_verification.final_error_bounds.items()
+        for name, bounds in estimator.final_error_bounds.items()
     }
     for name, bounds in free_parameters_boundaries.items():
         limit = prior_limits[name]
@@ -216,12 +218,12 @@ for pulse_number in range(84, 0 - 1, -1):
         + '.json', 'w'
     ) as f:
         json.dump({
-            "inferred parameters": estimation_verification.inferred_parameters,
+            "inferred parameters": estimator.inferred_parameters,
             "covariance":
                 [list(line)
-                 for line in estimation_verification.final_covariance],
+                 for line in estimator.final_covariance],
             "correlation":
                 [list(line)
-                 for line in estimation_verification.final_correlation],
-            "error bounds": estimation_verification.final_error_bounds,
+                 for line in estimator.final_correlation],
+            "error bounds": estimator.final_error_bounds,
         }, f)

@@ -1,4 +1,3 @@
-# Copyright (c): German Aerospace Center (DLR)
 import json
 # import numpy as np
 # from contextlib import redirect_stdout

@@ -1,4 +1,3 @@
-# Copyright (c): German Aerospace Center (DLR)
 import json
 import matplotlib
 import matplotlib.pyplot as plt
@@ -87,6 +86,6 @@ ax0.set_xlabel("")
 ax1.xaxis.set_ticks([])
 ax1.set_xlabel("")
 fig.tight_layout()
-fig.savefig('../sensitivities_in_features.pdf',
+fig.savefig('./sensitivities_in_features.pdf',
             bbox_inches='tight', pad_inches=0.0)
 plt.show()

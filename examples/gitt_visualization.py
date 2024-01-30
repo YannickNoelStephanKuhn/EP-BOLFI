@@ -1,4 +1,3 @@
-# Copyright (c): German Aerospace Center (DLR)
 """!@file
 Example usage of the visualization tools for GITT.
 """
@@ -7,25 +6,25 @@ import json
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.transforms import Bbox
-from runpy import run_module
 import numpy as np
+from runpy import run_module
 
-from utility.preprocessing import (
+from ep_bolfi.utility.preprocessing import (
     SubstitutionDict, simulate_all_parameter_combinations
 )
-from utility.visualization import (
+from ep_bolfi.utility.visualization import (
     plot_comparison, push_apart_text
 )
-from models.solversetup import spectral_mesh_pts_and_method
+from ep_bolfi.models.solversetup import spectral_mesh_pts_and_method
 
 # from pybamm.models.full_battery_models.lithium_ion.dfn import DFN
-from models.DFN import DFN
-# from models.SPMe import SPMe
-# from models.SPM import SPM
+from ep_bolfi.models.DFN import DFN
+# from ep_bolfi.models.SPMe import SPMe
+# from ep_bolfi.models.SPM import SPM
 
 # Set the substitutions for dependent parameters and different names.
 substitutions = {
-    '1 + dlnf/dlnc':
+    'Thermodynamic factor':
         lambda base: 1.475 / (
             1 - np.array(base['Cation transference number'])
         ),
@@ -67,7 +66,7 @@ data = run_module(
 if type(pulse_number) is tuple:
     pulse_number = pulse_number[0]
 experiment = data['experiment']
-input = data['input']
+current_input = data['current_input']
 feature_visualizer = data['feature_visualizer']
 parameters = data['parameters']
 parameters.update(free_parameters)
@@ -83,7 +82,7 @@ model = (
 # Doubling beyond 8-20-8 to 16-40-16 changes the features by about
 # 2 promille. Halving from 8-20-8 to 4-10-4 changes them by 2 %.
 solutions, errorbars = simulate_all_parameter_combinations(
-    DFN(halfcell=False, pybamm_control=True), input,
+    DFN(halfcell=False, pybamm_control=True), current_input,
     *spectral_mesh_pts_and_method(8, 20, 8, 2, 1, 1, halfcell=False),
     parameters, covariance=covariance,
     order_of_parameter_names=order_of_parameter_names,
@@ -135,7 +134,7 @@ trans = matplotlib.transforms.ScaledTranslation(
 label_text = ax.text(0.0, 1.0, '(a)', transform=ax.transAxes + trans,
                      verticalalignment='top', fontsize=20)
 push_apart_text(fig, ax, text_objects)
-fig.savefig('../GITT_7_parameters_fit_pulse_66.pdf',
+fig.savefig('./GITT_7_parameters_fit_pulse_66.pdf',
             bbox_inches='tight', pad_inches=0.0)
 label_text.set_visible(False)
 bounding_box = Bbox([[0.348, -26], [0.392, 3.5]])
@@ -155,5 +154,5 @@ trans = matplotlib.transforms.ScaledTranslation(
 ax.text(0.0, 1.0, '(b)', transform=ax.transAxes + trans,
         verticalalignment='top', fontsize=20)
 push_apart_text(fig, ax, text_objects, lock_xaxis=True)
-fig.savefig('../GITT_7_parameters_fit_pulse_67.pdf',
+fig.savefig('./GITT_7_parameters_fit_pulse_67.pdf',
             bbox_inches='tight', pad_inches=0.0)

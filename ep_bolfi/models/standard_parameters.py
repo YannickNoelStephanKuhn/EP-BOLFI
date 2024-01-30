@@ -1,5 +1,4 @@
-# Copyright (c): German Aerospace Center (DLR)
-"""!@file
+"""!@package ep_bolfi.models.standard_parameters
 @brief Comprehensive list of parameters of every model.
 SI units are assumed unless stated otherwise. When imported, this
 package turns into the list of variables contained in here.
@@ -249,7 +248,7 @@ def t_plus(cₑ):
 def one_plus_dlnf_dlnc_dim(cₑ_dim):
     """! Thermodynamic factor. """
     return FunctionParameter(
-        "1 + dlnf/dlnc",
+        "Thermodynamic factor",
         {"Electrolyte concentration [mol.m3]": cₑ_dim}
     )
 
@@ -299,31 +298,32 @@ def Dₚ(SOCₚ, T):
     return Dₚ_dim(SOCₚ, ΔT * T + T_ref) / Dₚ_typ
 
 
-def iₛₑₙ_0_dim(cₑₙ_dim, SOCₙ_surf_dim, T_dim):
+def iₛₑₙ_0_dim(cₑₙ_dim, SOCₙ_surf_dim, cₙ_max, T_dim):
     """! Anode exchange current density. """
     return FunctionParameter(
         "Negative electrode exchange-current density [A.m-2]",
         {
             "Electrolyte concentration [mol.m-3]": cₑₙ_dim,
             "Negative particle surface concentration [mol.m-3]": SOCₙ_surf_dim,
+            "Maximum concentration in negative electrode [mol.m-3]": cₙ_max,
             "Temperature [K]": T_dim,
-         }
+        }
     )
 
 
 """! Reference anode exchange current density for non-dimensionalization. """
-iₛₑₙ_0_ref = iₛₑₙ_0_dim(cₑ_typ, 0.5 * cₙ, T_ref)
+iₛₑₙ_0_ref = iₛₑₙ_0_dim(cₑ_typ, 0.5 * cₙ, cₙ, T_ref)
 
 
-def iₛₑₙ_0(cₑₙ, SOCₙ_surf, T):
+def iₛₑₙ_0(cₑₙ, SOCₙ_surf, cₙ_max, T):
     """! Non-dimensionalized anode exchange current density. """
     return (
-        iₛₑₙ_0_dim(cₑ_typ * cₑₙ, SOCₙ_surf * cₙ, ΔT * T + T_ref)
+        iₛₑₙ_0_dim(cₑ_typ * cₑₙ, SOCₙ_surf * cₙ, cₙ_max, ΔT * T + T_ref)
         / iₛₑₙ_0_ref
     )
 
 
-def d_cₑₙ_iₛₑₙ_0_dim(cₑₙ_dim, SOCₙ_surf_dim, T_dim):
+def d_cₑₙ_iₛₑₙ_0_dim(cₑₙ_dim, SOCₙ_surf_dim, cₙ_max, T_dim):
     """! ∂ anode exchange current density / ∂ electrolyte concentration. """
     return FunctionParameter(
         "Negative electrode exchange-current density partial derivative "
@@ -331,45 +331,47 @@ def d_cₑₙ_iₛₑₙ_0_dim(cₑₙ_dim, SOCₙ_surf_dim, T_dim):
         {
             "Electrolyte concentration": cₑₙ_dim,
             "Negative particle surface concentration": SOCₙ_surf_dim,
+            "Maximum concentration in negative electrode [mol.m-3]": cₙ_max,
             "Temperature": T_dim,
         }
     )
 
 
-def d_cₑₙ_iₛₑₙ_0(cₑₙ, SOCₙ_surf, T):
+def d_cₑₙ_iₛₑₙ_0(cₑₙ, SOCₙ_surf, cₙ_max, T):
     """! The non-dimensionalized version of the prior variable. """
     return (
-        d_cₑₙ_iₛₑₙ_0_dim(cₑ_typ * cₑₙ, SOCₙ_surf * cₙ, ΔT * T + T_ref)
+        d_cₑₙ_iₛₑₙ_0_dim(cₑ_typ * cₑₙ, SOCₙ_surf * cₙ, cₙ_max, ΔT * T + T_ref)
         * cₑ_typ
         / iₛₑₙ_0_ref
     )
 
 
-def iₛₑₚ_0_dim(cₑₚ_dim, SOCₚ_surf_dim, T_dim):
+def iₛₑₚ_0_dim(cₑₚ_dim, SOCₚ_surf_dim, cₚ_max, T_dim):
     """! Cathode exchange current density. """
     return FunctionParameter(
         "Positive electrode exchange-current density [A.m-2]",
         {
             "Electrolyte concentration [mol.m-3]": cₑₚ_dim,
             "Positive particle surface concentration [mol.m-3]": SOCₚ_surf_dim,
+            "Maximum concentration in positive electrode [mol.m-3]": cₚ_max,
             "Temperature [K]": T_dim,
         }
     )
 
 
 """! Reference cathode exchange current density for non-dimensionalization. """
-iₛₑₚ_0_ref = iₛₑₚ_0_dim(cₑ_typ, 0.5 * cₚ, T_ref)
+iₛₑₚ_0_ref = iₛₑₚ_0_dim(cₑ_typ, 0.5 * cₚ, cₚ, T_ref)
 
 
-def iₛₑₚ_0(cₑₚ, SOCₚ_surf, T):
+def iₛₑₚ_0(cₑₚ, SOCₚ_surf, cₚ_max, T):
     """! Non-dimensionalized cathode exchange current density. """
     return (
-        iₛₑₚ_0_dim(cₑ_typ * cₑₚ, SOCₚ_surf * cₚ, ΔT * T + T_ref)
+        iₛₑₚ_0_dim(cₑ_typ * cₑₚ, SOCₚ_surf * cₚ, cₚ_max, ΔT * T + T_ref)
         / iₛₑₚ_0_ref
     )
 
 
-def d_cₑₚ_iₛₑₚ_0_dim(cₑₚ_dim, SOCₚ_surf_dim, T_dim):
+def d_cₑₚ_iₛₑₚ_0_dim(cₑₚ_dim, SOCₚ_surf_dim, cₚ_max, T_dim):
     """! ∂ cathode exchange current density / ∂ electrolyte concentration. """
     return FunctionParameter(
         "Positive electrode exchange-current density partial derivative "
@@ -377,15 +379,16 @@ def d_cₑₚ_iₛₑₚ_0_dim(cₑₚ_dim, SOCₚ_surf_dim, T_dim):
         {
             "Electrolyte concentration": cₑₚ_dim,
             "Positive particle surface concentration": SOCₚ_surf_dim,
+            "Maximum concentration in positive electrode [mol.m-3]": cₚ_max,
             "Temperature": T_dim,
         }
     )
 
 
-def d_cₑₚ_iₛₑₚ_0(cₑₚ, SOCₚ_surf, T):
+def d_cₑₚ_iₛₑₚ_0(cₑₚ, SOCₚ_surf, cₚ_max, T):
     """! The non-dimensionalized version of the prior variable. """
     return (
-        d_cₑₚ_iₛₑₚ_0_dim(cₑ_typ * cₑₚ, SOCₚ_surf * cₚ, ΔT * T + T_ref)
+        d_cₑₚ_iₛₑₚ_0_dim(cₑ_typ * cₑₚ, SOCₚ_surf * cₚ, cₚ_max, ΔT * T + T_ref)
         * cₑ_typ
         / iₛₑₚ_0_ref
     )

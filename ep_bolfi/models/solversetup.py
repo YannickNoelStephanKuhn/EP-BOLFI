@@ -1,5 +1,4 @@
-# Copyright (c): German Aerospace Center (DLR)
-"""!@package models.solversetup
+"""!@package ep_bolfi.models.solversetup
 This file eases the setup and simulation of PyBaMM battery models.
 """
 
@@ -22,54 +21,57 @@ def solver_setup(
     root_tol=1e-3,
     dt_max=None,
     free_parameters=[],
-    verbose=False
+    verbose=False,
+    logging_file=None,
 ):
     """!@brief Processes the model and returns a runnable solver.
-
-    @par model
+    @param model
         A PyBaMM model. Use one of the models in this folder.
-    @par parameters
+    @param parameters
         The parameters that the model requires as a dictionary.
         Please refer to models.standard_parameters for the names
         or adapt one of the examples in parameters.models.
-    @par submesh_types
+    @param submesh_types
         A dictionary of the meshes to be used. The keys have to
         match the geometry names in the model. Use
         #spectral_mesh_and_method as reference or a shortcut.
-    @par var_pts
+    @param var_pts
         A dictionary giving the number of discretization volumes.
         Since the keys have to be special variables determined by
         PyBaMM, use #auto_var_pts as a shortcut.
-    @par spatial_methods
+    @param spatial_methods
         A dictionary of the spatial methods to be used. The keys
         have to match the geometry names in the model. Use
         #spectral_mesh_and_method as reference or a shortcut.
-    @par geometry
+    @param geometry
         The geometry of the model in dictionary form. Usually,
         model.default_geometry is sufficient, which is the default.
-    @par reltol
+    @param reltol
         The relative tolerance that the Casadi solver shall use.
         Default is 1e-6.
-    @par abstol
+    @param abstol
         The absolute tolerance that the Casadi solver shall use.
         Default is 1e-6.
-    @par root_tol
+    @param root_tol
         The tolerance for rootfinding that the Casadi solver shall use.
         Default is 1e-3.
-    @par dt_max
+    @param dt_max
         The maximum timestep size for the Casadi solver in seconds.
         Default is chosen by PyBaMM.
-    @par free_parameters
+    @param free_parameters
         A list of parameter names that shall be input later. They may be
         given to the returned lambda function as a dictionary with the
         names as keys and the values of the parameters as values.
         DO NOT USE GEOMETRICAL PARAMETERS, THEY WILL CRASH THE MESH.
         Instead, just use this function with a complete set of
         parameters where the relevant parameters are changed.
-    @par verbose The default (False) sets the PyBaMM flag to only
+    @param verbose
+        The default (False) sets the PyBaMM flag to only
         show warnings. True will show the details of preprocessing
         and the runtime of the solver. This applies globally, so
         don't set this to True if running simulations in parallel.
+    @param logging_file
+        Optional name of a file to store the logs in.
     @return
         A lambda function that takes a numpy.array of timepoints to
         evaluate and runs the Casadi solver for those. Optionally takes
@@ -96,6 +98,9 @@ def solver_setup(
         pybamm.set_logging_level("INFO")
     else:
         pybamm.set_logging_level("WARNING")  # "NOTSET"
+    # The logging callback copies the current level of pybamm.logger.
+    if logging_file:
+        callback = pybamm.callbacks.LoggingCallback(logging_file)
 
     # Declare the free parameters as inputs.
     parameters = dict(deepcopy(parameters))
@@ -117,17 +122,33 @@ def solver_setup(
     disc.process_model(model)
 
     # Initialize the solver.
-    solver = pybamm.CasadiSolver(rtol=float(reltol), atol=float(abstol),
-                                 root_tol=float(root_tol), dt_max=dt_max)
-
-    return lambda t_eval, inputs={}: solver.solve(
-        model, t_eval, inputs=inputs
+    extra_options = {
+        "disable_internal_warnings": True, "newton_scheme": "tfqmr"
+    }
+    solver = pybamm.CasadiSolver(
+        rtol=float(reltol),
+        atol=float(abstol),
+        root_tol=float(root_tol),
+        dt_max=dt_max,
+        mode="safe",
+        max_step_decrease_count=10,
+        return_solution_if_failed_early=True,
+        extra_options_setup=extra_options
     )
+
+    if logging_file:
+        return lambda t_eval, inputs={}, callbacks=callback: solver.solve(
+            model, t_eval, inputs=inputs, callbacks=callbacks,
+        )
+    else:
+        return lambda t_eval, inputs={}: solver.solve(
+            model, t_eval, inputs=inputs,
+        )
 
 
 def simulation_setup(
     model,
-    input,
+    operation_input,
     parameters,
     submesh_types,
     var_pts,
@@ -138,49 +159,48 @@ def simulation_setup(
     root_tol=1e-3,
     dt_max=None,
     free_parameters=[],
-    verbose=False
+    verbose=False,
+    logging_file=None,
 ):
     """!@brief Processes the model and returns a runnable solver.
-
     In contrast to solversetup.solver_setup, this allows for a more
     verbose description of the operating conditions and should be
     preferred.
-
-    @par model
+    @param model
         A PyBaMM model. Use one of the models in this folder.
-    @par input
+    @param operation_input
         A list of strings which describe the operating conditions. These
         exactly match the PyBaMM usage for pybamm.Experiment. Examples:
         "Hold at 4 V for 60 s", "Discharge at 1 A for 30 s",
         "Rest for 1800 s", "Charge at 1 C for 30 s".
-    @par parameters
+    @param parameters
         The parameters that the model requires as a dictionary.
         Please refer to models.standard_parameters for the names
         or adapt one of the examples in parameters.models.
-    @par submesh_types
+    @param submesh_types
         A dictionary of the meshes to be used. The keys have to
         match the geometry names in the model. Use
         #spectral_mesh_and_method as reference or a shortcut.
-    @par var_pts
+    @param var_pts
         A dictionary giving the number of discretization volumes.
         Since the keys have to be special variables determined by
         PyBaMM, use #auto_var_pts as a shortcut.
-    @par spatial_methods
+    @param spatial_methods
         A dictionary of the spatial methods to be used. The keys
         have to match the geometry names in the model. Use
         #spectral_mesh_and_method as reference or a shortcut.
-    @par geometry
+    @param geometry
         The geometry of the model in dictionary form. Usually,
         model.default_geometry is sufficient, which is the default.
-    @par reltol The relative tolerance that the Casadi solver should
+    @param reltol The relative tolerance that the Casadi solver should
         use. Default is 1e-6.
-    @par abstol The absolute tolerance that the Casadi solver should
+    @param abstol The absolute tolerance that the Casadi solver should
         use. Default is 1e-6.
-    @par root_tol The tolerance for rootfinding that the Casadi solver
+    @param root_tol The tolerance for rootfinding that the Casadi solver
         should use. Default is 1e-3.
-    @par dt_max The maximum timestep size for the Casadi solver in
+    @param dt_max The maximum timestep size for the Casadi solver in
         seconds. Default is chosen by PyBaMM.
-    @par free_parameters
+    @param free_parameters
         A list of parameter names that shall be input later. They may be
         given to the solve() function of the returned Simulation object
         as a dictionary to the keyword parameter "inputs" with the
@@ -188,14 +208,19 @@ def simulation_setup(
         DO NOT USE GEOMETRICAL PARAMETERS, THEY WILL CRASH THE MESH.
         Instead, just use this function with a complete set of
         parameters where the relevant parameters are changed.
-    @par verbose The default (False) sets the PyBaMM flag to only
+    @param verbose
+        The default (False) sets the PyBaMM flag to only
         show warnings. True will show the details of preprocessing
         and the runtime of the solver. This applies globally, so
         don't set this to True if running simulations in parallel.
+    @param logging_file
+        Optional name of a file to store the logs in.
     @return
-        A pybamm.Simulation that runs the simulation when its solve()
-        method is called. Please use solve(check_model=False) as it
-        won't work properly with redundant model checks in place.
+        A 2-tuple of a pybamm.Simulation.solve call that runs the
+        simulation when called, and the proper callback for the logging
+        file if specified (else None).
+        Please use solve(check_model=False) if it doesn't
+        work properly with redundant model checks in place.
     """
 
     # Levels of the "logging" module used by PyBaMM:
@@ -214,6 +239,13 @@ def simulation_setup(
         pybamm.set_logging_level("INFO")
     else:
         pybamm.set_logging_level("WARNING")  # "NOTSET"
+    # The logging callback copies the current level of pybamm.logger.
+    if logging_file:
+        callback = pybamm.callbacks.LoggingCallback(logging_file)
+        if verbose:
+            callback.logger.setLevel("INFO")
+        else:
+            callback.logger.setLevel("WARNING")
 
     # Declare the free parameters as inputs.
     parameters = dict(deepcopy(parameters))
@@ -221,11 +253,14 @@ def simulation_setup(
         name: "[input]" for name in free_parameters
     })
 
-    experiment = pybamm.Experiment(input)
+    experiment = pybamm.Experiment(operation_input)
     # Use the PyBaMM 0.3.0 compatibility setup routine for experiments.
     # experiment.use_simulation_setup_type = 'old'
 
-    return pybamm.Simulation(
+    extra_options = {
+        "disable_internal_warnings": True, "newton_scheme": "tfqmr"
+    }
+    simulator = pybamm.Simulation(
         model,
         experiment,
         model.default_geometry,
@@ -237,28 +272,34 @@ def simulation_setup(
             rtol=float(reltol),
             atol=float(abstol),
             root_tol=float(root_tol),
-            dt_max=dt_max
+            dt_max=dt_max,
+            return_solution_if_failed_early=True,
+            extra_options_setup=extra_options,
         )
     )
+
+    if logging_file:
+        return simulator.solve, callback
+    else:
+        return simulator.solve, None
 
 
 def auto_var_pts(x_n, x_s, x_p, r_n, r_p, y=1, z=1):
     """!@brief Utility function for setting the discretization density.
-
-    @par x_n
+    @param x_n
         The number of voxels for the electrolyte in the anode.
-    @par x_s
+    @param x_s
         The number of voxels for the electrolyte in the separator.
-    @par x_p
+    @param x_p
         The number of voxels for the electrolyte in the cathode.
-    @par r_n
+    @param r_n
         The number of voxels for each anode representative particle.
-    @par r_p
+    @param r_p
         The number of voxels for each cathode representative particle.
-    @par y
+    @param y
         Used by PyBaMM for spatially resolved current collectors.
         Don't change the default (1) unless the model supports it.
-    @par z
+    @param z
         Used by PyBaMM for spatially resolved current collectors.
         Don't change the default (1) unless the model supports it.
     @return
@@ -287,24 +328,23 @@ def spectral_mesh_pts_and_method(
     halfcell=False
 ):
     """!@brief Utility function for default mesh and spatial methods.
-
     Only returns Spectral Volume mesh and spatial methods.
-    @par order_s_n
+    @param order_s_n
         The order of the anode particles Spectral Volumes.
-    @par order_s_p
+    @param order_s_p
         The order of the anode particles Spectral Volumes.
-    @par order_e
+    @param order_e
         The order of the anode, separator and cathode electrolyte
         Spectral Volumes. These have to be the same, since the
         corresponding meshes get concatenated.
-    @par volumes_e_n
+    @param volumes_e_n
         The # of Spectral Volumes to use for the anode electrolyte.
         This is useful to have different resolutions for each part.
-    @par volumes_e_s
+    @param volumes_e_s
         The # of Spectral Volumes to use for the separator electrolyte.
-    @par volumes_e_p
+    @param volumes_e_p
         The # of Spectral Volumes to use for the cathode electrolyte.
-    @par halfcell
+    @param halfcell
         Default is False, which sets up the mesh and spatial methods for
         a full-cell setup. Set it to True for a half-cell setup.
     @return
@@ -325,7 +365,14 @@ def spectral_mesh_pts_and_method(
         ),
         "current collector": pybamm.SubMesh0D,
     }
-    if not halfcell:
+    if halfcell:
+        submesh_types["negative electrode"] = pybamm.MeshGenerator(
+            pybamm.Uniform1DSubMesh,
+        )
+        submesh_types["negative particle"] = pybamm.MeshGenerator(
+            pybamm.Uniform1DSubMesh,
+        )
+    else:
         submesh_types["negative electrode"] = pybamm.MeshGenerator(
             pybamm.SpectralVolume1DSubMesh,
             {"order": order_e}
@@ -345,7 +392,14 @@ def spectral_mesh_pts_and_method(
         "positive particle": pybamm.SpectralVolume(order=order_s_p),
         "current collector": pybamm.ZeroDimensionalSpatialMethod()
     }
-    if not halfcell:
+    if halfcell:
+        spatial_methods["negative electrode"] = (
+            pybamm.FiniteVolume()
+        )
+        spatial_methods["negative particle"] = (
+            pybamm.FiniteVolume()
+        )
+    else:
         spatial_methods["negative electrode"] = pybamm.SpectralVolume(
             order=order_e
         )

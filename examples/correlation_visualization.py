@@ -1,15 +1,14 @@
-# Copyright (c): German Aerospace Center (DLR)
 """!@file
 Example usage of the correlation matrix visualization tools.
 """
 
 import json
-import numpy as np
 import matplotlib.pyplot as plt
-from utility.visualization import visualize_correlation
+import numpy as np
+
+from ep_bolfi.utility.visualization import visualize_correlation
 
 import matplotlib
-
 fontsize = 15
 matplotlib.rcParams.update({"font.size": fontsize})
 

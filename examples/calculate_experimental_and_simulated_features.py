@@ -1,4 +1,3 @@
-# Copyright (c): German Aerospace Center (DLR)
 import json
 from runpy import run_module
 

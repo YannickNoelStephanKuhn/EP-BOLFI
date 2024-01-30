@@ -1,21 +1,17 @@
-# Copyright (c): German Aerospace Center (DLR)
 from copy import deepcopy
 import json
+import matplotlib.pyplot as plt
 import numpy as np
-from scipy.stats import chi2
 import pybamm
 from pybamm.expression_tree.exceptions import SolverError
-import matplotlib
-import matplotlib.pyplot as plt
+from scipy.stats import chi2
 
-from contextlib import redirect_stdout
-
-from optimization.EP_BOLFI import EP_BOLFI
-from models.SPMe import SPMe
-# from pybamm.models.full_battery_models.lithium_ion.spme import SPMe
-from models.solversetup import solver_setup, spectral_mesh_pts_and_method
-from utility.preprocessing import solve_all_parameter_combinations
-from utility.visualization import plot_comparison
+from ep_bolfi import EP_BOLFI
+# from ep_bolfi.models.SPMe import SPMe
+from pybamm.models.full_battery_models.lithium_ion.spme import SPMe
+from ep_bolfi.models.solversetup import (
+    solver_setup, spectral_mesh_pts_and_method
+)
 
 from parameters.models.spme_benchmark_cell import cₙ_max, cₚ_max, parameters
 

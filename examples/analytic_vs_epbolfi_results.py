@@ -1,18 +1,17 @@
-# Copyright (c): German Aerospace Center (DLR)
-import numpy as np
-from scipy.optimize import minimize
+import json
 import matplotlib
 from matplotlib import ticker
 import matplotlib.pyplot as plt
-import json
+import numpy as np
+from scipy.optimize import minimize
 
-from utility.fitting_functions import (
+from ep_bolfi.utility.fitting_functions import (
     inverse_d_dSOC_OCV_fit_function
 )
-from utility.preprocessing import (
+from ep_bolfi.utility.preprocessing import (
     calculate_both_SOC_from_OCV, calculate_means_and_standard_deviations
 )
-from utility.visualization import set_fontsize
+from ep_bolfi.utility.visualization import set_fontsize
 
 from parameters.estimation.gitt_basf import (
     parameters, gitt_pulses,
@@ -134,7 +133,7 @@ for i, (soc, diffusivities) in enumerate(zip(
     ax.set_xlabel("Positive electrode SOCₚ  /  -")
     ax.set_ylabel("$D_p^*$  /  $m^2/s$")
     ax.legend(loc='lower center')
-    fig.savefig('../analytic_' + ["GITT", "ICI"][i] + '.pdf',
+    fig.savefig('./analytic_' + ["GITT", "ICI"][i] + '.pdf',
                 bbox_inches='tight', pad_inches=0.0)
 """
 
@@ -195,7 +194,7 @@ ax_dev.set_xlabel("Pulse number")
 ax_dev.set_ylabel("Accuracy of data features  /  -")
 ax_dev.set_yscale('log')
 fig_dev.tight_layout()
-fig_dev.savefig('../feature_deviations.pdf',
+fig_dev.savefig('./feature_deviations.pdf',
                 bbox_inches='tight', pad_inches=0.0)
 
 matplotlib.rcParams.update({'font.size': 11})
@@ -359,7 +358,7 @@ for i, (name, ax, ax_ver, ax_hist) in enumerate(zip(
         label="EP-BOLFI with errorbars"
     ).lines
     # smoothed_estimate[name] = smooth_fit(
-    #     SOC, np.log(datapoints[name]), order=5, smoothing_factor=smoothing
+    #     SOC, np.log(datapoints[name]), order=5, s=s
     # )
     # line_smooth, = ax.plot(
     #     plot_SOC, np.exp(smoothed_estimate[name](plot_SOC)),
@@ -433,7 +432,7 @@ for i, (name, ax, ax_ver, ax_hist) in enumerate(zip(
     ax.legend(handles, labels, loc='lower center')
 ax_comp.set_xticks([0, 1, 2, 3], list_of_labels)
 ax_comp_cloud.set_xticks([0, 1, 2, 3], list_of_labels)
-ax_comp.set_ylim([0.00011, 4.9])
+ax_comp.set_ylim([0.0011, 2.9])
 ax_comp_cloud.set_ylim([0.00011, 4.9])
 ax_comp.set_yscale('log')
 ax_comp_cloud.set_yscale('log')
@@ -445,9 +444,9 @@ ax_comp.yaxis.set_major_formatter(
 ax_comp_cloud.yaxis.set_major_formatter(
     ticker.FuncFormatter(lambda y, _: '{:g}'.format(y))
 )
-ax_comp.set_yticks([0.001, 0.01, 0.1, 1.0])
+ax_comp.set_yticks([0.01, 0.1, 1.0])
 ax_comp_cloud.set_yticks([0.001, 0.01, 0.1, 1.0])
-ax_dev_comp.set_ylim([0.00011, 4.9])
+ax_dev_comp.set_ylim([0.0011, 2.9])
 ax_dev_comp_cloud.set_ylim([0.00011, 4.9])
 ax_dev_comp.yaxis.set_major_formatter(ticker.FuncFormatter(
     lambda y, _: '{:g}'.format(y))
@@ -455,7 +454,7 @@ ax_dev_comp.yaxis.set_major_formatter(ticker.FuncFormatter(
 ax_dev_comp_cloud.yaxis.set_major_formatter(ticker.FuncFormatter(
     lambda y, _: '{:g}'.format(y))
 )
-ax_dev_comp.set_yticks([0.001, 0.01, 0.1, 1.0])
+ax_dev_comp.set_yticks([0.01, 0.1, 1.0])
 ax_dev_comp_cloud.set_yticks([0.001, 0.01, 0.1, 1.0])
 trans_comp = matplotlib.transforms.ScaledTranslation(
     10/72, -5/72, fig_comp.dpi_scale_trans
@@ -500,10 +499,10 @@ fig.tight_layout()
 fig_comp.tight_layout()
 fig_comp_cloud.tight_layout()
 fig_hist.tight_layout()
-fig_comp_cloud.savefig('../verification_and_feature_deviation_summary.pdf',
-                       bbox_inches='tight', pad_inches=0.0)
-fig.savefig('../EP_BOLFI_fit.pdf',
+fig_comp.savefig('./verification_and_feature_deviation_summary.pdf',
+                 bbox_inches='tight', pad_inches=0.0)
+fig.savefig('./EP_BOLFI_fit.pdf',
             bbox_inches='tight', pad_inches=0.0)
-fig_ver.savefig('../EP_BOLFI_verification.pdf',
+fig_ver.savefig('./EP_BOLFI_verification.pdf',
                 bbox_inches='tight', pad_inches=0.0)
 plt.show()

@@ -1,9 +1,7 @@
-# Copyright (c): German Aerospace Center (DLR)
 import json
 
-from parameters.models.spme_benchmark_cell import parameters
-from utility.preprocessing import (
-    approximate_confidence_ellipsoid, calculate_means_and_standard_deviations
+from ep_bolfi.utility.preprocessing import (
+    calculate_means_and_standard_deviations
 )
 
 
@@ -12,6 +10,7 @@ def print_mean_and_standard_deviation(filename):
         result = json.load(f)
     free_parameters = list(result['inferred parameters'].keys())
     """
+    from ep_bolfi.utility.preprocessing import approximate_confidence_ellipsoid
     _, confidence_semiaxes = approximate_confidence_ellipsoid(
         parameters,
         free_parameters,
@@ -64,14 +63,14 @@ def print_mean_and_standard_deviation(filename):
 
 for sample_number in [2080, 4160, 6240, 8320]:
     print_mean_and_standard_deviation(
-        '../spme_benchmark_results/unimodal/'
+        './spme_benchmark_results/unimodal/'
         + str(sample_number)
         + '_samples.json'
     )
 
 for soc_point in range(11):
     print_mean_and_standard_deviation(
-        '../spme_benchmark_results/multimodal/individual_excitation_points/'
+        './spme_benchmark_results/multimodal/individual_excitation_points/'
         + str(6240)
         + '_samples_at_soc_point_'
         + str(soc_point)
@@ -80,7 +79,7 @@ for soc_point in range(11):
 
 for sample_number in [2080, 4160]:
     print_mean_and_standard_deviation(
-        '../spme_benchmark_results/multimodal/individual_excitation_points/'
+        './spme_benchmark_results/multimodal/individual_excitation_points/'
         + str(sample_number)
         + '_samples_at_soc_point_'
         + str(10)

@@ -1,4 +1,3 @@
-# Copyright (c): German Aerospace Center (DLR)
 """!@file
 Parameter file for the estimation of battery model parameters from the
 GITT data provided by BASF.
@@ -9,18 +8,22 @@ import json
 import numpy as np
 from pybamm.expression_tree.exceptions import SolverError
 
-from models.solversetup import simulation_setup, spectral_mesh_pts_and_method
-from utility.read_csv_datasets import read_channels_from_measurement_system
-from utility.fitting_functions import (
+from ep_bolfi.models.solversetup import (
+    simulation_setup, spectral_mesh_pts_and_method
+)
+from ep_bolfi.utility.dataset_formatting import (
+    read_csv_from_measurement_system
+)
+from ep_bolfi.utility.fitting_functions import (
     fit_exponential_decay, fit_sqrt,
     # OCV_fit_function, inverse_OCV_fit_function
 )
-from utility.preprocessing import (
+from ep_bolfi.utility.preprocessing import (
     subtract_both_OCV_curves_from_cycles, find_occurrences,
     calculate_both_SOC_from_OCV
 )
 
-from models.DFN import DFN
+from pybamm.models.full_battery_models.lithium_ion import DFN
 
 from parameters.models.basf_gitt_test_cell import (
     parameters, positive_SOC_from_cell_SOC, negative_SOC_from_cell_SOC
@@ -81,8 +84,8 @@ try:
         }
         parameter_order = list(all_estimates.keys())
         all_covariances = results['covariance']
-        """! The uncertainty in the estimation of the SOC-independent parameters.
-        """
+        """! The uncertainty in the estimation of the SOC-independent
+        parameters. """
         parameter_deviations = {
             name: np.sqrt(all_covariances[parameter_order.index(
                 name)][parameter_order.index(name)])
@@ -243,10 +246,10 @@ def beta_p_noise_generator():
 
 
 """! The experimental data to be used for inference. """
-complete_dataset = read_channels_from_measurement_system(
-    '../GITT data/L_ACB440_BP_1.064', 'iso-8859-1', 1,
+complete_dataset = read_csv_from_measurement_system(
+    './GITT data/L_ACB440_BP_1.064', 'iso-8859-1', 1,
     headers={3: "t [s]", 7: "I [A]", 8: "U [V]"},
-    delimiter='\t', decimal='.', type="",
+    delimiter='\t', decimal='.',
     segment_column=2,  # 9,
     current_sign_correction={
         "R": 1, "C": -1, "D": 1, "P": 1, "O": 1, "S": 1, "ACR": 1,
@@ -262,10 +265,10 @@ starting_OCV = dataset.voltages[0][-1]
 # starting_OCV = complete_dataset.voltages[57][-1]#6
 
 """! The dataset with charge-discharge cycles. """
-charge_discharge_cycles = read_channels_from_measurement_system(
-    '../GITT data/L_ACB440_BP_1.064', 'iso-8859-1', 1,
+charge_discharge_cycles = read_csv_from_measurement_system(
+    './GITT data/L_ACB440_BP_1.064', 'iso-8859-1', 1,
     headers={3: "t [s]", 7: "I [A]", 8: "U [V]"},
-    delimiter='\t', decimal='.', type="",
+    delimiter='\t', decimal='.',
     segment_column=2,  # 9,
     current_sign_correction={
         "R": 1, "C": -1, "D": 1, "P": 1, "O": 1, "S": 1, "ACR": 1,
@@ -278,10 +281,10 @@ charge = charge_discharge.subslice(0, 1)
 cv = charge_discharge.subslice(1, 2)
 discharge = charge_discharge.subslice(2, 3)
 
-gitt = read_channels_from_measurement_system(
-    '../GITT data/L_ACB440_BP_2.064', 'iso-8859-1', 1,
+gitt = read_csv_from_measurement_system(
+    './GITT data/L_ACB440_BP_2.064', 'iso-8859-1', 1,
     headers={3: "t [s]", 7: "I [A]", 8: "U [V]"},
-    delimiter='\t', decimal='.', type='',  # type='static',
+    delimiter='\t', decimal='.',
     segment_column=9,
     current_sign_correction={
         "R": 1, "C": -1, "D": 1, "P": 1, "O": 1, "S": 1, "ACR": 1,
@@ -308,12 +311,12 @@ gitt_pulses_without_OCV = deepcopy(gitt_pulses)
 gitt_pulses_without_OCV.voltages = subtract_both_OCV_curves_from_cycles(
     gitt_pulses, parameters, negative_SOC_from_cell_SOC,
     positive_SOC_from_cell_SOC, starting_OCV=starting_OCV
-)
+)[0]
 """! The overpotential curve during the GITT experiment. """
 voltages_without_OCV = subtract_both_OCV_curves_from_cycles(
     gitt_for_estimation, parameters, negative_SOC_from_cell_SOC,
     positive_SOC_from_cell_SOC, starting_OCV=starting_OCV
-)
+)[0]
 # Add the initial SOCs to the parameters.
 calculate_both_SOC_from_OCV(
     parameters, negative_SOC_from_cell_SOC, positive_SOC_from_cell_SOC,
@@ -336,22 +339,22 @@ The current as a pybamm.Simulation input (gets set later).
 Other example inputs: "Hold at 3.95 V for 180 s",
 "Discharge at 1 C for 1 s".
 """
-input = []
+current_input = []
 t0 = gitt_for_estimation.timepoints[0][0]
 for t, I in zip(gitt_for_estimation.timepoints, gitt_for_estimation.currents):
     if np.mean(np.abs(np.atleast_1d(I))) < 1e-8:
-        input.append(
+        current_input.append(
             "Rest for " + str(t[-1] - t[0]) + " s (0.1 second period)"
         )
     else:
-        input.append(
+        current_input.append(
             "Discharge at " + str(np.mean(np.atleast_1d(I))) +
             " A for " + str(t[-1] - t[0]) + " s (0.1 second period)"
         )
 
 # This is an optimization for the ignored relaxation at rest.
 if optimize_simulation_speed:
-    input[-1] = "Rest for 30.0 s (0.1 second period)"
+    current_input[-1] = "Rest for 30.0 s (0.1 second period)"
 
 """
 ## Complete measured OCV curve.
@@ -377,7 +380,7 @@ for name in free_parameters_names:
         pass
 
 solver_free_parameters = deepcopy(free_parameters_names)
-solver_free_parameters.append("1 + dlnf/dlnc")
+solver_free_parameters.append("Thermodynamic factor")
 for elec_sign in ["Negative ", "Positive "]:
     for part in [" (electrode)", " (electrolyte)"]:
         solver_free_parameters.append(
@@ -396,13 +399,12 @@ if soc_dependent_estimation:
                 elec_sign + "electrode Bruggeman coefficient"
             ])
 
-model = DFN(halfcell=False, pybamm_control=True)
-# model = SPMe(halfcell=False, pybamm_control=True)
-solver = simulation_setup(model, input, parameters,
+model = DFN()
+solver = simulation_setup(model, current_input, parameters,
                           *spectral_mesh_pts_and_method(8, 20, 8, 2, 1, 1,
                                                         halfcell=False),
                           free_parameters=solver_free_parameters, reltol=1e-9,
-                          abstol=1e-9, root_tol=1e-6, verbose=False)
+                          abstol=1e-9, root_tol=1e-6, verbose=False)[0]
 white_noise_generator = np.random.default_rng(seed)
 
 
@@ -422,7 +424,7 @@ def simulator(trial_parameters):
         })
     elif soc_dependent_estimation:
         param.update(parameter_estimates)
-    param["1 + dlnf/dlnc"] = 1.475 / (
+    param["Thermodynamic factor"] = 1.475 / (
         1 - param["Cation transference number"]
     )
     for elec_sign in ["Negative ", "Positive "]:
@@ -432,14 +434,14 @@ def simulator(trial_parameters):
             )
     # Fail silently if the simulation did not work.
     try:
-        solution = solver.solve(
+        solution = solver(
             check_model=False, calc_esoh=False, inputs=param
         )
     except SolverError:
         return [[[0.0 for i in n] for n in e] for e in experimental_dataset]
     if solution is None:
         return [[[0.0 for i in n] for n in e] for e in experimental_dataset]
-    if len(solution.cycles) < len(input):
+    if len(solution.cycles) < len(current_input):
         return [[[0.0 for i in n] for n in e] for e in experimental_dataset]
 
     sim_data = [[], []]
@@ -472,7 +474,8 @@ def feature_visualizer(t, U):
             visualizations.extend(fit_exponential_decay(t_cycle, U_cycle,
                                                         threshold=0.95))
             visualizations[-1][2] = (
-                "  τᵣ: {0:.4g}".format(np.abs(1.0 / visualizations[-1][2][2]))
+                "  τᵣ: {0:.4g}".format(
+                    np.abs(1.0 / visualizations[-1][2][2]))
                 + " s"
             )
     for i, (t_cycle, U_cycle) in enumerate(zip(t, U)):
@@ -484,12 +487,14 @@ def feature_visualizer(t, U):
             visualizations[-1][2] = (
                 "  IR: {0:.4g} V".format(visualizations[-1][2][0]) + "\n"
                 + r"  $\left(\frac{dU}{d\sqrt{t}}\right)^{-1}$"
-                + ": {0:.4g}".format(1.0 / visualizations[-1][2][1]) + " √s/V"
+                + ": {0:.4g}".format(1.0 /
+                                     visualizations[-1][2][1]) + " √s/V"
             )
         else:
             visualizations[-1][2] = (
                 r"  η: {0:.4g} V".format(visualizations[-1][2][0]) + "\n"
                 + r"  $\left(\frac{dU}{d\sqrt{t}}\right)^{-1}$"
-                + ": {0:.4g}".format(1.0 / visualizations[-1][2][1]) + " √s/V"
+                + ": {0:.4g}".format(1.0 /
+                                     visualizations[-1][2][1]) + " √s/V"
             )
     return visualizations

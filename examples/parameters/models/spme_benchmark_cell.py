@@ -1,10 +1,9 @@
-# Copyright (c): German Aerospace Center (DLR)
 """!@file
 Parameter file for the SPMe benchmark. Aitio2020 mentioned Moura2016,
 which mentions the parameters of DUALFOIL for LiCoO₂ / graphite.
 """
 
-from pybamm import exp, tanh
+from pybamm import cosh, exp, tanh
 
 
 def graphite(soc):
@@ -22,6 +21,20 @@ def graphite(soc):
     )
 
 
+def dsoc_graphite(soc):
+    return (
+        1.5 * -120.0 * exp(-120.0 * soc)
+        + 0.0351 / (0.083 * cosh((soc - 0.286) / 0.083)**2)
+        - 0.0045 / (0.119 * cosh((soc - 0.849) / 0.119)**2)
+        - 0.035 / (0.05 * cosh((soc - 0.9233) / 0.05)**2)
+        - 0.0147 / (0.034 * cosh((soc - 0.5) / 0.034)**2)
+        - 0.102 / (0.142 * cosh((soc - 0.194) / 0.142)**2)
+        - 0.022 / (0.0164 * cosh((soc - 0.9) / 0.0164)**2)
+        - 0.011 / (0.0226 * cosh((soc - 0.124) / 0.0226)**2)
+        + 0.0155 / (0.029 * cosh((soc - 0.105) / 0.029)**2)
+    )
+
+
 def LiCoO2(soc):
     return (
         2.16216
@@ -31,6 +44,17 @@ def LiCoO2(soc):
         + 0.2051 * tanh(1.4684 - 5.4888 * soc)
         + 0.2531 * tanh((-soc + 0.56478) / 0.1316)
         - 0.02167 * tanh((soc - 0.525) / 0.006)
+    )
+
+
+def dsoc_LiCoO2(soc):
+    return (
+        0.07645 * -54.4806 / cosh(30.834 - 54.4806 * soc)**2
+        + 2.1581 * -50.294 / cosh(52.294 - 50.294 * soc)**2
+        - 0.14169 * -19.8543 / cosh(11.0923 - 19.8543 * soc)**2
+        + 0.2051 * -5.4888 / cosh(1.4684 - 5.4888 * soc)**2
+        - 0.2531 / (0.1316 * cosh((-soc + 0.56478) / 0.1316)**2)
+        - 0.02167 / (0.006 * cosh((soc - 0.525) / 0.006)**2)
     )
 
 
@@ -74,7 +98,9 @@ parameters = {
     "Positive electrode conductivity [S.m-1]": 10,
     "Electrolyte conductivity [S.m-1]": 1.1,
     "Negative electrode OCP [V]": graphite,
+    "Negative electrode OCP derivative by SOC [V]": dsoc_graphite,
     "Positive electrode OCP [V]": LiCoO2,
+    "Positive electrode OCP derivative by SOC [V]": dsoc_LiCoO2,
     "Negative electrode anodic charge-transfer coefficient": αₙₙ,
     "Negative electrode cathodic charge-transfer coefficient": αₚₙ,
     "Positive electrode anodic charge-transfer coefficient": αₙₚ,
@@ -91,7 +117,7 @@ parameters = {
     "Positive electrode porosity": 0.3,
     "Positive electrode active material volume fraction": 1 - 0.3,
     # This parameter is from Danner2016.
-    "1 + dlnf/dlnc": 2.191,
+    "Thermodynamic factor": 2.191,
     "Negative electrode electrons in reaction": 1.0,
     "Positive electrode electrons in reaction": 1.0,
     "Typical electrolyte concentration [mol.m-3]": 1000.0,
@@ -129,29 +155,29 @@ parameters["Initial concentration in positive electrode [mol.m-3]"] = (
 )
 
 parameters["Negative electrode exchange-current density [A.m-2]"] = (
-    lambda cₑ, cₙ, T: 2e-5 * cₑ**αₚₙ * cₙ**αₙₙ * (cₙ_max - cₙ) ** αₚₙ
+    lambda cₑ, cₙ, cₙ_max, T: (
+        2e-5 * cₑ ** αₚₙ * cₙ ** αₙₙ * (cₙ_max - cₙ) ** αₚₙ
+    )
 )
 parameters["Positive electrode exchange-current density [A.m-2]"] = (
-    lambda cₑ, cₚ, T: 6e-7 * cₑ**αₙₚ * cₚ**αₚₚ * (cₚ_max - cₚ) ** αₙₚ
+    lambda cₑ, cₚ, cₚ_max, T: (
+        6e-7 * cₑ ** αₙₚ * cₚ ** αₚₚ * (cₚ_max - cₚ) ** αₙₚ
+    )
 )
 
 parameters[
     "Negative electrode exchange-current density partial derivative "
     "by electrolyte concentration [A.m.mol-1]"
 ] = (
-    lambda cₑ, cₙ, T: 2e-5
-    * αₚₚ
-    * cₑ ** (αₚₚ - 1)
-    * cₙ**αₙₚ
-    * (cₙ_max - cₙ) ** αₚₚ
+    lambda cₑ, cₙ, cₙ_max, T: (
+        2e-5 * αₚₚ * cₑ ** (αₚₚ - 1) * cₙ ** αₙₚ * (cₙ_max - cₙ) ** αₚₚ
+    )
 )
 parameters[
     "Positive electrode exchange-current density partial derivative "
     "by electrolyte concentration [A.m.mol-1]"
 ] = (
-    lambda cₑ, cₚ, T: 6e-7
-    * αₚₚ
-    * cₑ ** (αₚₚ - 1)
-    * cₚ**αₙₚ
-    * (cₚ_max - cₚ) ** αₚₚ
+    lambda cₑ, cₚ, cₚ_max, T: (
+        6e-7 * αₚₚ * cₑ ** (αₚₚ - 1) * cₚ ** αₙₚ * (cₚ_max - cₚ) ** αₚₚ
+    )
 )

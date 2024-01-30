@@ -1,10 +1,9 @@
-# Copyright (c): German Aerospace Center (DLR)
 import json
 import matplotlib.pyplot as plt
 import numpy as np
 
-from utility.visualization import fit_and_plot_OCV, set_fontsize
-from utility.fitting_functions import (
+from ep_bolfi.utility.visualization import fit_and_plot_OCV, set_fontsize
+from ep_bolfi.utility.fitting_functions import (
     smooth_fit, inverse_OCV_fit_function, inverse_d2_dSOC2_OCV_fit_function,
     a_fit
 )
@@ -64,12 +63,12 @@ with open('../GITT estimation results/L_ACB440_BP_2_OCV.json') as f:
     gitt_terminal = json.load(f)
 gitt_C = 31.75 + np.array(gitt_terminal["Cell SOC [C]"])
 gitt_V = gitt_terminal["Cell OCV [V]"]
-smoothing_factor = 1e-5
+s = 1e-5
 CC_charge_spline = smooth_fit(CC_charge_C + CV_C, CC_charge_V,
-                              smoothing_factor=smoothing_factor)
-gitt_spline = smooth_fit(gitt_C, gitt_V, smoothing_factor=smoothing_factor)
+                              s=s)
+gitt_spline = smooth_fit(gitt_C, gitt_V, s=s)
 CC_discharge_spline = smooth_fit(CC_discharge_C - CV_C, CC_discharge_V,
-                                 smoothing_factor=smoothing_factor)
+                                 s=s)
 
 C_eval = np.linspace(
     np.max([np.min(CC_charge_C + CV_C), np.min(gitt_C),
@@ -108,8 +107,8 @@ SOC_offset = 0.01
 
 ax2.plot(C_eval, qd2OCV, label="CC charge + CC discharge - 2 * GITT")
 ax2.plot(C_eval, inverse_d2_dSOC2_OCV_fit_function(
-        np.linspace(*SOC_range, 400), *graphite
-    )[::-1] / SOC_scale - SOC_offset,
+    np.linspace(*SOC_range, 400), *graphite
+)[::-1] / SOC_scale - SOC_offset,
     label="2nd derivative of graphite OCV (/ " + str(SOC_scale) + ", - "
     + str(SOC_offset) + ")")
 ax2.set_xlabel("Capacity moved  /  C")
@@ -137,7 +136,7 @@ set_fontsize(ax0, fontsize, fontsize, fontsize, fontsize, fontsize, fontsize)
 set_fontsize(ax1, fontsize, fontsize, fontsize, fontsize, fontsize, fontsize)
 set_fontsize(ax2, fontsize, fontsize, fontsize, fontsize, fontsize, fontsize)
 set_fontsize(ax3, fontsize, fontsize, fontsize, fontsize, fontsize, fontsize)
-fig1.savefig('../OCV_extraction_data.pdf', pad_inches=0.0)
-fig2.savefig('../OCV_extraction_alignment.pdf', pad_inches=0.0)
-fig3.savefig('../OCV_extraction_result.pdf', pad_inches=0.0)
+fig1.savefig('./OCV_extraction_data.pdf', pad_inches=0.0)
+fig2.savefig('./OCV_extraction_alignment.pdf', pad_inches=0.0)
+fig3.savefig('./OCV_extraction_result.pdf', pad_inches=0.0)
 plt.show()

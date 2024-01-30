@@ -1,7 +1,8 @@
-# Copyright (c): German Aerospace Center (DLR)
 import json
 
-from utility.preprocessing import calculate_means_and_standard_deviations
+from ep_bolfi.utility.preprocessing import (
+    calculate_means_and_standard_deviations
+)
 
 with open(
     '../GITT estimation results/seven_parameter_estimation_seed_0.json', 'r'
@@ -23,7 +24,7 @@ means, standard_deviations, error_bounds = (
         epsabs=1e-12, epsrel=1e-12
     )
 )
-print("Results for the estimatino of seven parameters:")
+print("Results for the estimation of seven parameters:")
 print("bounds of one standard deviation:")
 for k, v in error_bounds.items():
     print(k, v)

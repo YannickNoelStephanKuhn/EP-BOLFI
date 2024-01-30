@@ -1,10 +1,9 @@
-# Copyright (c): German Aerospace Center (DLR)
 from contextlib import redirect_stdout
-from runpy import run_module
 import json
 import numpy as np
+from runpy import run_module
 
-from parameters.estimation.gitt import perform_gitt_estimation
+from parameters.estimation.gitt import build_gitt_estimator
 
 seed = 0
 # Estimates all 7 parameters of interest from pulses 66 and 67.
@@ -26,13 +25,15 @@ with open(
     + '.log', 'w'
 ) as f:
     with redirect_stdout(f):
-        estimation_result = perform_gitt_estimation(
+        estimator = build_gitt_estimator(
             data['simulator'],
             data['experimental_dataset'],
             data['fixed_parameters'],
             free_parameters=data['free_parameters'],
             free_parameters_boundaries=data['free_parameters_boundaries'],
             transform_parameters=data['transform_parameters'],
+        )
+        estimator.run(
             bolfi_initial_evidence=129,
             bolfi_total_evidence=258,
             bolfi_posterior_samples=35,
@@ -47,12 +48,12 @@ with open(
     + '.json', 'w'
 ) as f:
     json.dump({
-        "inferred parameters": estimation_result.inferred_parameters,
+        "inferred parameters": estimator.inferred_parameters,
         "covariance":
-            [list(line) for line in estimation_result.final_covariance],
+            [list(line) for line in estimator.final_covariance],
         "correlation":
-            [list(line) for line in estimation_result.final_correlation],
-        "error bounds": estimation_result.final_error_bounds,
+            [list(line) for line in estimator.final_correlation],
+        "error bounds": estimator.final_error_bounds,
     }, f)
 
 
@@ -158,13 +159,16 @@ for pulse_number in range(84, 0 - 1, -1):
                     'seed': seed,
                 }
             )
-            estimation_result = perform_gitt_estimation(
+            estimator = build_gitt_estimator(
                 data['simulator'],
                 data['experimental_dataset'],
                 data['fixed_parameters'],
                 free_parameters=data['free_parameters'],
                 free_parameters_boundaries=data['free_parameters_boundaries'],
                 transform_parameters=data['transform_parameters'],
+
+            )
+            estimator.run(
                 bolfi_initial_evidence=65,
                 bolfi_total_evidence=130,
                 bolfi_posterior_samples=20,
@@ -188,7 +192,7 @@ for pulse_number in range(84, 0 - 1, -1):
                 prior_limits[name][1]
             ])
         )
-        for name, bounds in estimation_result.final_error_bounds.items()
+        for name, bounds in estimator.final_error_bounds.items()
     }
     for name, bounds in free_parameters_boundaries.items():
         limit = prior_limits[name]
@@ -225,10 +229,10 @@ for pulse_number in range(84, 0 - 1, -1):
         + '.json', 'w'
     ) as f:
         json.dump({
-            "inferred parameters": estimation_result.inferred_parameters,
+            "inferred parameters": estimator.inferred_parameters,
             "covariance":
-                [list(line) for line in estimation_result.final_covariance],
+                [list(line) for line in estimator.final_covariance],
             "correlation":
-                [list(line) for line in estimation_result.final_correlation],
-            "error bounds": estimation_result.final_error_bounds,
+                [list(line) for line in estimator.final_correlation],
+            "error bounds": estimator.final_error_bounds,
         }, f)

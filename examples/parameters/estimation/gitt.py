@@ -1,4 +1,3 @@
-# Copyright (c): German Aerospace Center (DLR)
 """!@file
 GITT parameter estimation setup.
 """
