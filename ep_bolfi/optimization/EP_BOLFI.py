@@ -1,22 +1,28 @@
-# Copyright (c): German Aerospace Center (DLR)
-"""!@file
+"""!@package ep_bolfi.EP_BOLFI.EP_BOLFI
 This file contains functions to perform Expectation Propagation on
-battery models using BOLFI (Bayesian Optimization).
+simulator models using BOLFI (Bayesian Optimization).
 """
 
 from copy import deepcopy
 import elfi
+import json
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import chi2
 
 
+class NDArrayEncoder(json.JSONEncoder):
+    def default(self, item):
+        if isinstance(item, np.ndarray):
+            return item.tolist()
+        return json.JSONEncoder.default(self, item)
+
+
 def combine_parameters_to_try(parameters, parameters_to_try_dict):
     """!@brief Give every combination as full parameter sets.
-
-    @par parameters
+    @param parameters
         The base full parameter set as a dictionary.
-    @par parameters_to_try_dict
+    @param parameters_to_try_dict
         The keys of this dictionary correspond to the "parameters"' keys
         where different values are to be inserted. These are given by
         the tuples which are the values of this dictionary.
@@ -56,8 +62,7 @@ def combine_parameters_to_try(parameters, parameters_to_try_dict):
 
 def fix_parameters(parameters_to_be_fixed):
     """!@brief Returns a function which sets some parameters in advance.
-
-    @par parameters_to_be_fixed
+    @param parameters_to_be_fixed
         These parameters will at least be a
         part of the dictionary that the returned function returns.
     @return
@@ -67,8 +72,7 @@ def fix_parameters(parameters_to_be_fixed):
 
     def return_all_parameters(free_parameters):
         """!@brief Adds the 'free_parameters' to a pool of parameters.
-
-        @par free_parameters
+        @param free_parameters
             A dictionary which gets added to the fixed pool of
             parameters (see the function 'fix_parameters').
         @return
@@ -86,7 +90,6 @@ def fix_parameters(parameters_to_be_fixed):
 
 class Preprocessed_Simulator:
     """!@brief Normalizes sampling to a standard normal distribution.
-
     In order to help BOLFI to work efficiently with the least amount of
     setup required, this class mediates between the model parameters
     and a standard normal distribution for sampling. In a sense, the
@@ -101,99 +104,104 @@ class Preprocessed_Simulator:
                  Q,
                  experimental_data,
                  feature_extractor,
-                 transform_parameters={}):
+                 transform_parameters={},
+                 fixed_parameter_order=None):
+        """!
+        @param simulator
+            The function that returns results given parameters.
+        @param fixed_parameters
+            Dictionary of parameters that stay fixed and their values.
+        @param free_parameters_names
+            List of the names of parameters which shall be inferred.
+        @param r
+            'Q' times the mean of the distribution of free parameters.
+        @param Q
+            Inverse covariance matrix of free parameters, i.e. precision.
+            It is used to transform the free parameters given to the
+            'simulator' into the ones used in the model. Most notably, these
+            univariate standard normal distributions get transformed into
+            a multivariate normal distribution corresponding to Q and r.
+        @param experimental_data
+            The experimental data that the model will be fitted to.
+            It has to have the same structure as the 'simulator' output.
+        @param feature_extractor
+            A function that takes the output of 'simulator' / the
+            'experimental_data' and returns a list of numbers, the features.
+        @param transform_parameters
+            Optional transformations between the parameter space that is
+            used for searching for optimal parameters and the battery
+            model parameters. 'Q' and 'r' define a normal distribution in
+            that search space. The keys are the names of the free
+            parameters. The values are 2-tuples. The first entry is a
+            function taking the search space parameter and returning the
+            model parameter. The second entry is the inverse function.
+        @param fixed_parameter_order
+            Optional fixed parameter order. Prevents erroneous behaviour
+            when the parameter dictionaries get reshuffled.
+            Highly recommended.
+        """
 
         self.simulator = simulator
-        """! Dictionary of parameters that stay fixed and their values. """
         self.fixed_parameters = fixed_parameters
-        """! List of the names of parameters which shall be inferred. """
         self.free_parameters_names = free_parameters_names
-        """! 'Q' times the mean of the distribution of free parameters. """
+        if fixed_parameter_order:
+            self.fixed_parameter_order = fixed_parameter_order
+        else:
+            self.fixed_parameter_order = list(
+                enumerate(self.free_parameters_names)
+            )
         self.r = r
-        """!
-        Inverse covariance matrix of free parameters, i.e. precision.
-        It is used to transform the free parameters given to the
-        'simulator' into the ones used in the model. Most notably, these
-        univariate standard normal distributions get transformed into
-        a multivariate normal distribution corresponding to Q and r.
-        """
         self.Q = Q
-        """!
-        The experimental data that the model will be fitted to.
-        It has to have the same structure as the 'simulator' output.
-        """
         self.experimental_data = experimental_data
-        """!
-        A function that takes the output of 'simulator' or the
-        'experimental_data' and returns a list of numbers, the features.
-        """
         self.feature_extractor = feature_extractor
-        """!
-        Optional transformations between the parameter space that is
-        used for searching for optimal parameters and the battery
-        model parameters. 'Q' and 'r' define a normal distribution in
-        that search space. The keys are the names of the free
-        parameters. The values are 2-tuples. The first entry is a
-        function taking the search space parameter and returning the
-        model parameter. The second entry is the inverse function.
-        """
         self.transform_parameters = transform_parameters
 
-        """! Stores all parameter combinations that have been tried. """
+        ## Stores all parameter combinations that have been tried.
         self.log_of_tried_parameters = {
             name: [] for name in self.free_parameters_names
         }
 
-        """! Extract the features from the experimental data. """
+        ## Extract the features from the experimental data.
         self.experimental_features = feature_extractor(experimental_data)
 
-        """! Input dimension of the estimation task. """
+        ## Input dimension of the estimation task.
         self.input_dim = len(self.free_parameters_names)
-        """! Output dimension of the estimation task (number of features). """
+        ## Output dimension of the estimation task (number of features).
         self.output_dim = len(self.experimental_features)
 
-        """! Create a function to combine the free and fixed parameters. """
+        ## Create a function to combine the free and fixed parameters.
         self.add_parameters = fix_parameters(self.fixed_parameters)
 
-        """!
-        Compute the linear transformation of parameters for which the
-        covariance of the underlying multivariate normal distribution
-        is a diagonal matrix. That is, compute the eigenvectors of Q.
-        It is more stable since Q has growing eigenvectors in
-        convergence.
-        """
+        ## Compute the linear transformation of parameters for which the
+        # covariance of the underlying multivariate normal distribution
+        # is a diagonal matrix. That is, compute the eigenvectors of Q.
+        # It is more stable since Q has growing eigenvectors in
+        # convergence.
         self.inv_variances, self.back_transform_matrix = np.linalg.eigh(self.Q)
-        """! Variances of the model parameters. """
+        ## Variances of the model parameters.
         self.variances = self.inv_variances**(-1)
-        """! Inverse of back_transform_matrix. """
+        ## Inverse of back_transform_matrix.
         self.transform_matrix = self.back_transform_matrix.T
 
-        """!
-        transform_matrix @ Q @ back_transform_matrix is diagonal. The
-        correct transformation for vectors v is then transform_matrix @
-        v. The product below corresponds to Q⁻¹ @ r. It is just
-        expressed in the eigenvector space of Q for efficiency.
-        """
+        ## transform_matrix @ Q @ back_transform_matrix is diagonal. The
+        # correct transformation for vectors v is then transform_matrix @
+        # v. The product below corresponds to Q⁻¹ @ r. It is just
+        # expressed in the eigenvector space of Q for efficiency.
         self.transformed_means = np.linalg.multi_dot(
             [np.diag(self.variances), self.transform_matrix, self.r]
         )
 
-        """!
-        Now that the multivariate normal distribution is decomposed into
-        various univariate ones, norm them to have equal variance 1.
-        """
+        ## Now that the multivariate normal distribution is decomposed into
+        # various univariate ones, norm them to have equal variance 1.
         self.norm_factor = np.diag(np.sqrt(self.inv_variances))
-        """! Inverse of norm_factor. """
+        ## Inverse of norm_factor.
         self.un_norm_factor = np.diag(np.sqrt(self.variances))
-        """!
-        Expectation values of the normed univariate normal distributions.
-        """
+        ## Expectation values of the normed univariate normal distributions.
         self.normed_means = np.matmul(self.norm_factor, self.transformed_means)
 
     def search_to_transformed_trial(self, search_space_parameters):
         """!@brief Transforms search space parameters to model ones.
-
-        @par search_space_parameters
+        @param search_space_parameters
             A list of lists which each contain a single search space
             parameter sample as it is returned by the sample functions
             of ELFI. In the case of only sample, a list also works.
@@ -206,43 +214,36 @@ class Preprocessed_Simulator:
         """
 
         # Index of the axis along which a single sample lies.
-        try:
-            if len(search_space_parameters[0]) > 1:
-                sample_axis = 1
-            else:
-                sample_axis = 0
-        except TypeError:
-            sample_axis = 0
+        sample_axis = 1
 
         # Get the normed parameter sample.
-        if sample_axis == 0:
-            normed_parameters = np.apply_along_axis(
-                lambda slice: slice + self.normed_means, sample_axis,
-                search_space_parameters.reshape(self.input_dim))
-        else:
-            normed_parameters = np.apply_along_axis(
-                lambda slice: slice + self.normed_means, sample_axis,
-                search_space_parameters)
+        normed_parameters = np.apply_along_axis(
+            lambda slice: slice + self.normed_means,
+            sample_axis,
+            search_space_parameters
+        )
 
         # Un-norm it into the eigenvector space of Q represenation.
         transformed_parameters = np.apply_along_axis(
-            lambda slice: self.un_norm_factor @ slice, sample_axis,
+            lambda slice: self.un_norm_factor @ slice,
+            sample_axis,
             normed_parameters)
 
         # Transform it backwards to the transformed model space.
         transformed_trial_parameters = np.apply_along_axis(
-            lambda slice: self.back_transform_matrix @ slice, sample_axis,
-            transformed_parameters)
+            lambda slice: self.back_transform_matrix @ slice,
+            sample_axis,
+            transformed_parameters
+        )
 
         # Convert this into a dictionary. The ordering is still given by
         # 'self.free_parameters_names'.
         return {name: transformed_trial_parameters.T[i]
-                for i, name in enumerate(self.free_parameters_names)}
+                for i, name in self.fixed_parameter_order}
 
     def transformed_trial_to_search(self, model_space_parameters):
         """!@brief Transforms model space parameters to model ones.
-
-        @par model_space_parameters
+        @param model_space_parameters
             A dictionary. The keys are the 'self.free_parameters_names'
             and the values are the model parameters after applying the
             transformations given in 'self.transform_parameters'.
@@ -256,48 +257,40 @@ class Preprocessed_Simulator:
         """
 
         # Index of the axis along which a single sample lies.
-        try:
-            if len(model_space_parameters[self.free_parameters_names[0]]) > 1:
-                sample_axis = 1
-            else:
-                sample_axis = 0
-        except TypeError:
-            sample_axis = 0
+        sample_axis = 1
 
-        if sample_axis == 0:
-            transformed_trial_parameters = [
-                model_space_parameters[name]
-                for name in self.free_parameters_names
-            ]
-        elif sample_axis == 1:
-            length = len(model_space_parameters[self.free_parameters_names[0]])
-            transformed_trial_parameters = [
-                [model_space_parameters[name][i]
-                 for name in self.free_parameters_names]
-                for i in range(length)
-            ]
+        length = len(model_space_parameters[self.free_parameters_names[0]])
+        transformed_trial_parameters = [
+            [model_space_parameters[name][i]
+                for name in self.free_parameters_names]
+            for i in range(length)
+        ]
 
         # Transform it forwards to the eigenvector space of Q.
         transformed_parameters = np.apply_along_axis(
-            lambda slice: self.transform_matrix @ slice, sample_axis,
-            transformed_trial_parameters)
+            lambda slice: self.transform_matrix @ slice,
+            sample_axis,
+            transformed_trial_parameters
+        )
 
         # Get the normed parameter sample.
         normed_parameters = np.apply_along_axis(
-            lambda slice: self.norm_factor @ slice, sample_axis,
-            transformed_parameters)
+            lambda slice: self.norm_factor @ slice,
+            sample_axis,
+            transformed_parameters
+        )
 
         # Get the search space parameters.
         search_parameters = np.apply_along_axis(
-            lambda slice: slice - self.normed_means, sample_axis,
+            lambda slice: slice - self.normed_means,
+            sample_axis,
             normed_parameters)
 
         return search_parameters
 
     def undo_transformation(self, transformed_trial_parameters):
         """!@brief Undo the transforms in 'self.transform_parameters'.
-
-        @par transformed_trial_parameters
+        @param transformed_trial_parameters
             A dictionary. The keys are the 'free_parameters_names' and
             the values are the model parameters after they have been
             transformed as specified in 'self.transform_parameters'.
@@ -315,8 +308,7 @@ class Preprocessed_Simulator:
 
     def apply_transformation(self, trial_parameters):
         """!@brief Apply the transforms in 'self.transform_parameters'.
-
-        @par trial_parameters
+        @param trial_parameters
             A dictionary. The keys are the 'free_parameters_names'
             and the values are the actual model parameters.
         @return
@@ -340,12 +332,11 @@ class Preprocessed_Simulator:
 
     def elfi_simulator(self, *args, **kwargs):
         """!@brief A battery model simulator that can be used with ELFI.
-
-        @par *args
+        @param *args
             The parameters as given by the prior nodes. Their
             order has to correspond to that of the parameter
             'free_parameters' given to 'return_simulator'.
-        @par **kwargs
+        @param **kwargs
             Keyword parameters batch_size and random_state,
             but both are unused (they just get passed by BOLFI).
         @return
@@ -369,11 +360,86 @@ class Preprocessed_Simulator:
         return simulated_features
 
 
+class Optimizer_State:
+    """!@brief Handles the heuristics for the EP-BOLFI operation modes. """
+
+    def __init__(
+        self,
+        input_dim,
+        mcmc_chains,
+        total_evidence,
+        posterior_samples,
+        gelman_rubin_threshold,
+        ess_ratio_resample=5.0,
+        ess_ratio_sampling_from_zero=-1.0,
+        ess_ratio_abort=20.0,
+        posterior_sampling_increase=1.2,
+        model_resampling_increase=1.2,
+    ):
+        self.input_dim = input_dim
+        self.mcmc_chains = mcmc_chains
+        self.total_evidence = total_evidence
+        self.posterior_samples = posterior_samples
+        self.gelman_rubin_threshold = gelman_rubin_threshold
+        self.ess_ratio_resample = ess_ratio_resample
+        self.ess_ratio_sampling_from_zero = ess_ratio_sampling_from_zero
+        self.ess_ratio_abort = ess_ratio_abort
+        self.posterior_sampling_increase = posterior_sampling_increase
+        self.model_resampling_increase = model_resampling_increase
+
+        self.finished = False
+        self.sampling_from_zero = False
+        self.resampling = False
+        self.initials = None
+
+        self.order_of_actions = []
+        for ess_ratio, action in sorted([
+            (0.0, "sample"),
+            (self.ess_ratio_resample, "resample"),
+            (self.ess_ratio_sampling_from_zero, "sample_from_zero"),
+            (self.ess_ratio_abort, "abort"),
+        ]):
+            if ess_ratio >= 0.0:
+                self.order_of_actions.append((ess_ratio, action))
+        self.current_action = "sample"
+        self.verbose_actions = {
+            "sample":
+                "Sampling the pseudo-posterior...",
+            "resample":
+                "Resampling the model...",
+            "sample_from_zero":
+                "Sampling the pseudo-posterior from  0...",
+            "abort":
+                "Posterior too badly conditioned. Skipping feature.",
+        }
+
+    def calculate_next_step(self, ess_ratio, action=None):
+        if action is None:
+            for ess_criterion, action in self.order_of_actions:
+                # By not breaking when the criterion is fulfilled and going
+                # through them in ascending order, their ess ratios work as
+                # checkpoints; the largest one smaller than the current ess
+                # gets triggered. They are exclusive to each other.
+                if ess_criterion < ess_ratio:
+                    self.current_action = action
+        else:
+            self.current_action = action
+        if self.current_action == "sample":
+            self.initials = None
+            self.posterior_samples *= self.posterior_sampling_increase
+        elif self.current_action == "resample":
+            self.initials = None
+            self.total_evidence *= self.model_resampling_increase
+        elif self.current_action == "sample_from_zero":
+            self.initials = np.zeros([self.mcmc_chains, self.input_dim])
+            self.posterior_samples *= self.posterior_sampling_increase
+        elif self.current_action == "abort":
+            self.initials = None
+
+
 class EP_BOLFI:
     """!@brief Expectation Propagation and Bayesian Optimization.
-
     Sets up and runs these two algorithms to infer model parameters.
-
     Use the variables "Q", "r", "Q_features" and "r_features" to copy
     the state of another estimator. Do not use them in any other case.
     Always use either all of them or none of them.
@@ -395,131 +461,145 @@ class EP_BOLFI:
         r_features=None,
         transform_parameters={},
         weights=None,
-        display_current_feature=None
+        display_current_feature=None,
+        fixed_parameter_order=None,
     ):
+        """!
+        @param simulators
+            A list of functions that take one argument: a dictionary of
+            combined 'fixed_parameters' and 'free_parameters'. They return
+            the simulated counterpart to the experimental data. Most of
+            the time, one function will be sufficient. Additional
+            functions may be used to combine simulators which each give a
+            subset of the total experimental method.
+        @param experimental_datasets
+            A list of the experimental data. Each entry corresponds to
+            the simulator in 'simulators' with the same index and has the
+            same structure as its output.
+        @param feature_extractors
+            A list of functions which each take the corresponding data
+            entry and return a list of numbers, which represent its
+            reduced features.
+        @param fixed_parameters
+            Dictionary of parameters that stay fixed and their values.
+        @param free_parameters
+            Dictionary of parameters which shall be inferred and their
+            initial guesses or, more accurately, their expected values.
+            Please note that these values live in the transformed space.
+            Optionally, the values may be a 2-tuple where the second entry
+            would be the variance of that parameter. For finer tuning with
+            covariances, use 'initial_covariance' (will take precedence).
+            Alternatively, you may set 'free_parameters_boundaries' to
+            set the expected values and variances by confidence intervals.
+        @param initial_covariance
+            Initial covariance of the parameters. Has to be a symmetric
+            matrix (list of list or numpy 2D array). A reasonable simple
+            choice is to have a diagonal matrix and set the standard
+            deviation σᵢ of each parameter to half of the distance between
+            initial guess and biggest/smallest value that shall be tried.
+            If the diagonal entries are σᵢ² and the bounds are symmetric,
+            the probability distribution of each parameter is 95%
+            within these bounds. Please note that the same does not hold
+            for the whole probability distribution.
+        @param free_parameters_boundaries
+            Optional hard boundaries of the space in which optimal
+            parameters are searched for. They are given as a dictionary
+            with values as 2-tuples with the left and right boundaries.
+            Boundaries need to be given for either none or all parameters.
+            If None are given, boundaries will be set by
+            'boundaries_in_deviations' relative to the covariance.
+            The default then is the 95 % confidence ellipsoid.
+            If neither 'initial_covariance' nor 'free_parameters' set the
+            covariance, this parameter sets it according to the example in
+            the description of 'initial_covariance'.
+        @param boundaries_in_deviations
+            When <= 0, the boundaries are set as described above.
+            When > 0, the boundaries are this multiple of the standard
+            deviation. This scales with the shrinking covariance
+            as the algorithm progresses. 'free_parameters_boundaries'
+            takes precedence, i.e., the covariance gets set and then the
+            boundaries in the optimization are in standard deviations.
+        @param Q
+            If you want to restore a previous EP-BOLFI instance from a
+            dump of its data (see "result_to_json" method), put the
+            "Q" attribute stored therein into this parameter.
+        @param r
+            Same as Q, but use the "r" attribute.
+        @param Q_features
+            Same as Q, but use the "Q_features" attribute.
+        @param r_features
+            Same as Q, but use the "r_features" attribute.
+        @param transform_parameters
+            Optional transformations between the parameter space that is
+            used for searching for optimal parameters and the model
+            parameters. Any missing free parameter is not transformed.
+            The values are 2-tuples. The first entry is a function taking
+            the search space parameter and returning the model parameter.
+            The second entry is the inverse function.
+            For convenience, any value may also be one of the following:
+            - 'none' => (identity, identity)
+            - 'log' => (exp, log)
+            Please note that, for performance reasons, the returned inferred
+            values are directly back-transformed from the mean of the
+            internal standard distribution. This means that they represent
+            the median of the actual distribution.
+        @param weights
+            Optional weights to assign to the features. Higher weights
+            give more importance to a feature and vice versa. A list of
+            lists which correspond to the 'feature_extractors'.
+        @param display_current_feature
+            A list of functions. Each corresponds to a feature extractor
+            with the same index. Given an index of the array of its
+            features, this returns a short description of it.
+            If None is given, only the index will be shown in the output.
+        @param fixed_parameter_order
+            Establish a numerical order to the parameter names. This prevents
+            errors arising from internal reordering of the dictionaries.
+            Only necessary when using the same model in different contexts.
+        """
 
-        """!
-        A list of functions that take one argument: a dictionary of
-        combined 'fixed_parameters' and 'free_parameters'. They return
-        the simulated counterpart to the experimental data. Most of
-        the time, one function will be sufficient. Additional
-        functions may be used to combine simulators which each give a
-        subset of the total experimental method.
-        """
         self.simulators = simulators
-        """!
-        A list of the experimental data. Each entry corresponds to
-        the simulator in 'simulators' with the same index and has the
-        same structure as its output.
-        """
         self.experimental_datasets = experimental_datasets
-        """!
-        A list of functions which each take the corresponding data
-        entry and return a list of numbers, which represent its
-        reduced features.
-        """
         self.feature_extractors = feature_extractors
-        """! Dictionary of parameters that stay fixed and their values. """
         self.fixed_parameters = fixed_parameters
-        """!
-        Dictionary of parameters which shall be inferred and their
-        initial guesses or, more accurately, their expected values.
-        Please note that these values live in the transformed space.
-        Optionally, the values may be a 2-tuple where the second entry
-        would be the variance of that parameter. For finer tuning with
-        covariances, use 'covariance' (will take precedence).
-        Alternatively, you may set 'free_parameters_boundaries' to
-        set the expected values and variances by confidence intervals.
-        """
         self.free_parameters = free_parameters
-        """!
-        Initial covariance of the parameters. Has to be a symmetric
-        matrix (list of list or numpy 2D array). A reasonable simple
-        choice is to have a diagonal matrix and set the standard
-        deviation σᵢ of each parameter to half of the distance between
-        initial guess and biggest/smallest value that shall be tried.
-        If the diagonal entries are σᵢ² and the bounds are symmetric,
-        the probability distribution of each parameter is 95%
-        within these bounds. Please note that the same does not hold
-        for the whole probability distribution.
-        """
         self.initial_covariance = initial_covariance
-        """!
-        Optional hard boundaries of the space in which optimal
-        parameters are searched for. They are given as a dictionary
-        with values as 2-tuples with the left and right boundaries.
-        Boundaries need to be given for either none or all parameters.
-        If None are given, boundaries will be set by
-        'boundaries_in_deviations' relative to the covariance.
-        The default then is the 95 % confidence ellipsoid.
-        If neither 'covariance' nor 'free_parameters' set the
-        covariance, this parameter sets it according to the example in
-        the description of 'covariance'.
-        """
         self.free_parameters_boundaries = free_parameters_boundaries
-        """!
-        When <= 0, the boundaries are set as described above.
-        When > 0, the boundaries are this multiple of the standard
-        deviation. This scales with the shrinking covariance
-        as the algorithm progresses. 'free_parameters_boundaries'
-        takes precedence, i.e., the covariance gets set and then the
-        boundaries in the optimization are in standard deviations.
-        """
         self.boundaries_in_deviations = boundaries_in_deviations
-        """!
-        Optional transformations between the parameter space that is
-        used for searching for optimal parameters and the model
-        parameters. Any missing free parameter is not transformed.
-        The values are 2-tuples. The first entry is a function taking
-        the search space parameter and returning the model parameter.
-        The second entry is the inverse function.
-        For convenience, any value may also be one of the following:
-         - 'none' => (identity, identity)
-         - 'log' => (exp, log)
-        Please note that, for performance reasons, the returned inferred
-        values are directly back-transformed from the mean of the
-        internal standard distribution. This means that they represent
-        the median of the actual distribution.
-        """
         self.transform_parameters = transform_parameters
-        """!
-        Optional weights to assign to the features. Higher weights
-        give more importance to a feature and vice versa. A list of
-        lists which correspond to the 'feature_extractors'.
-        """
         self.weights = weights
-        """!
-        A list of functions. Each corresponds to a feature extractor
-        with the same index. Given an index of the array of its
-        features, this returns a short description of it.
-        If None is given, only the index will be shown in the output.
-        """
         self.display_current_feature = display_current_feature
 
         if self.free_parameters:
-            """! Stores all parameter combinations that have been tried. """
-            self.log_of_tried_parameters = {
-                name: [] for name in self.free_parameters.keys()
-            }
+            self.fixed_parameter_order = list(
+                enumerate(self.free_parameters.keys())
+            )
         elif self.free_parameters_boundaries:
-            self.log_of_tried_parameters = {
-                name: [] for name in self.free_parameters_boundaries.keys()
-            }
+            self.fixed_parameter_order = list(
+                enumerate(self.free_parameters_boundaries.keys())
+            )
         else:
             raise ValueError(
                 "Either 'free_parameters' or 'free_parameters_boundaries' "
                 "needs to be set!"
             )
+        ## If the parameter order is explicitly given, use that instead.
+        if fixed_parameter_order:
+            self.fixed_parameter_order = fixed_parameter_order
+        ## Stores all parameter combinations that have been tried.
+        self.log_of_tried_parameters = {
+            name: [] for _, name in self.fixed_parameter_order
+        }
 
-        """! Experimental features. """
+        ## Experimental features.
         self.experimental_features = []
-        """! Input dimension of the estimation task. """
+        ## Input dimension of the estimation task.
         self.input_dim = len(self.log_of_tried_parameters)
-        """! Output dimension of the estimation task (sum of features). """
+        ## Output dimension of the estimation task (sum of features).
         self.output_dim = 0
-        """! Mapping of index by all features to corresponding simulator. """
+        ## Mapping of index by all features to corresponding simulator.
         self.simulator_index_by_feature = []
-        """! Mapping of index by all features to that by one set of them. """
+        ## Mapping of index by all features to that by one set of them.
         self.sub_index_by_feature = []
         for i, (extractor, dataset) in (enumerate(zip(
                 self.feature_extractors, self.experimental_datasets))):
@@ -529,20 +609,43 @@ class EP_BOLFI:
                 self.simulator_index_by_feature.append(i)
                 self.sub_index_by_feature.append(j - self.output_dim)
             self.output_dim = self.output_dim + length
-        # Set the weights to unity if None are given.
+        ## Set the weights to unity if None are given.
         if self.weights is None:
             self.weights = []
             for features in self.experimental_features:
-                self.weights.append([1 for i in range(len(features))])
-        """! Container for the initial expectation values. """
+                self.weights.append([1 for _ in range(len(features))])
+        ## Container for the initial expectation values.
         self.initial_guesses = np.zeros(self.input_dim)
+
+        if self.display_current_feature is not None:
+            ## Stores all raw parameter evaluation points.
+            self.log_of_raw_tried_parameters = {
+                self.display_current_feature[
+                    self.simulator_index_by_feature[j]
+                ](self.sub_index_by_feature[j]): []
+                for j in range(self.output_dim)
+            }
+            ## Stores all discrepancies of the sampled parameters.
+            self.log_of_discrepancies = {
+                self.display_current_feature[
+                    self.simulator_index_by_feature[j]
+                ](self.sub_index_by_feature[j]): []
+                for j in range(self.output_dim)
+            }
+        else:
+            self.log_of_raw_tried_parameters = {
+                str(j): [] for j in range(self.output_dim)
+            }
+            self.log_of_discrepancies = {
+                str(j): [] for j in range(self.output_dim)
+            }
 
         if (boundaries_in_deviations <= 0):
             self.boundaries_in_deviations = np.sqrt(
                 chi2(self.input_dim).ppf(0.95)
             )
         else:
-            """! Uses boundaries as multiples of the standard deviation. """
+            ## Uses boundaries as multiples of the standard deviation.
             self.boundaries_in_deviations = boundaries_in_deviations
 
         # Substitute transformations given by name.
@@ -558,7 +661,7 @@ class EP_BOLFI:
                             lambda s: np.exp(s), lambda b: np.log(b)
                         )
         # Fill-in 'none' transformations.
-        for name in self.log_of_tried_parameters.keys():
+        for _, name in self.fixed_parameter_order:
             if name not in self.transform_parameters.keys():
                 self.transform_parameters[name] = (
                     lambda s: s, lambda b: b
@@ -574,7 +677,7 @@ class EP_BOLFI:
                     for value in self.free_parameters.values():
                         if len(value) < 2:
                             variance_info = False
-                        break
+                            break
                 else:
                     variance_info = False
             except TypeError:
@@ -590,24 +693,26 @@ class EP_BOLFI:
                 self.input_dim, self.input_dim
             ])
             if variance_info:
-                for i, value in enumerate(self.free_parameters.values()):
+                for i, name in self.fixed_parameter_order:
+                    value = self.free_parameters[name]
                     self.initial_guesses[i] = value[0]
                     self.initial_covariance[i][i] = value[1]
             else:
                 if self.free_parameters:
-                    for i, value in enumerate(self.free_parameters.values()):
+                    for i, name in self.fixed_parameter_order:
+                        value = self.free_parameters[name]
                         self.initial_guesses[i] = np.atleast_1d(value)[0]
                 else:
-                    for i, (value, transform) in enumerate(zip(
-                            self.free_parameters_boundaries.values(),
-                            self.transform_parameters.values())):
+                    for i, name in self.fixed_parameter_order:
+                        value = self.free_parameters_boundaries[name]
+                        transform = self.transform_parameters[name]
                         expected_value = 0.5 * (
                             transform[1](value[0]) + transform[1](value[1])
                         )
                         self.initial_guesses[i] = expected_value
-                for i, (value, transform) in enumerate(zip(
-                        self.free_parameters_boundaries.values(),
-                        self.transform_parameters.values())):
+                for i, name in self.fixed_parameter_order:
+                    value = self.free_parameters_boundaries[name]
+                    transform = self.transform_parameters[name]
                     standard_deviation = np.max([
                         np.abs(transform[1](value[1])
                                - self.initial_guesses[i]),
@@ -617,7 +722,8 @@ class EP_BOLFI:
                     self.initial_covariance[i][i] = standard_deviation**2
         else:
             if self.free_parameters:
-                for i, (key, value) in enumerate(self.free_parameters.items()):
+                for i, name in self.fixed_parameter_order:
+                    value = self.free_parameters[name]
                     self.initial_guesses[i] = np.atleast_1d(value)[0]
             else:
                 raise ValueError(
@@ -627,33 +733,39 @@ class EP_BOLFI:
         if Q is not None:
             self.initial_covariance = np.linalg.inv(Q)
 
-        """! Reserve containers for the inference result. """
+        ## Stores the inference mean (empty at first).
         self.final_expectation = deepcopy(self.initial_guesses)
+        ## Stores the inference covariance (empty at first).
         self.final_covariance = deepcopy(self.initial_covariance)
         deviations = np.sqrt(np.diag(self.final_covariance))
+        ## Stores the inference correlation (empty at first).
         self.final_correlation = (
             self.final_covariance / deviations[:, None]
         ) / deviations[None, :]
 
         if Q is None:
-            """! Expectation Propagation covariance matrix. """
+            ## Expectation Propagation covariance matrix (prior).
             self.initial_Q = np.linalg.inv(self.initial_covariance)
+            ## Expectation Propagation covariance matrix (posterior).
             self.Q = deepcopy(self.initial_Q)
         else:
-            """! Expectation Propagation covariance matrix. """
+            ## Expectation Propagation covariance matrix (prior).
             self.initial_Q = deepcopy(Q)
+            ## Expectation Propagation covariance matrix (posterior).
             self.Q = deepcopy(Q)
         if r is None:
-            """! Expectation Propagation expectation value. """
+            ## Expectation Propagation expectation value (prior).
             self.initial_r = self.initial_Q @ self.initial_guesses
+            ## Expectation Propagation expectation value (posterior).
             self.r = deepcopy(self.initial_r)
         else:
-            """! Expectation Propagation expectation value. """
+            ## Expectation Propagation expectation value (prior).
             self.initial_r = deepcopy(r)
+            ## Expectation Propagation expectation value (posterior).
             self.r = deepcopy(r)
-        """! Expectation Propagation itemized covariance matrices. """
+        ## Expectation Propagation itemized covariance matrices.
         self.Q_features = []
-        """! Expectation Propagation itemized expectation values. """
+        ## Expectation Propagation itemized expectation values.
         self.r_features = []
         if Q_features is None:
             for i in range(self.output_dim):
@@ -670,16 +782,14 @@ class EP_BOLFI:
         else:
             self.r_features = deepcopy(r_features)
 
-        """! The inferred model parameters. """
+        ## The inferred model parameters.
         self.inferred_parameters = {
-            name: transform[0](self.final_expectation[i])
-            for i, (name, transform) in enumerate(
-                self.transform_parameters.items()
-            )
+            name: self.transform_parameters[name][0](self.final_expectation[i])
+            for i, name in self.fixed_parameter_order
         }
         error_lower_bound = {}
         error_upper_bound = {}
-        for i, name in enumerate(self.log_of_tried_parameters.keys()):
+        for i, name in self.fixed_parameter_order:
             error_lower_bound[name] = (
                 self.final_expectation[i]
                 - np.sqrt(
@@ -698,24 +808,43 @@ class EP_BOLFI:
             name: transform[0](error_upper_bound[name])
             for name, transform in self.transform_parameters.items()
         }
-        """!
-        The 95% confidence bounds (which don't reflect the
-        cross-correlations, but are easier to interpret).
-        """
+        ## The 95% confidence bounds (which don't reflect the
+        # cross-correlations, but are easier to interpret).
         self.final_error_bounds = {
             name: (error_lower_bound[name], error_upper_bound[name])
             for name in self.log_of_tried_parameters.keys()
         }
 
+    def result_to_json(self, seed=None):
+        return json.dumps({
+            "inferred parameters": self.inferred_parameters,
+            "covariance":
+                [list(line) for line in self.final_covariance],
+            "correlation":
+                [list(line) for line in self.final_correlation],
+            "error bounds": self.final_error_bounds,
+            "seed": seed,
+            "Q": self.Q,
+            "r": self.r,
+            "Q_features": self.Q_features,
+            "r_features": self.r_features,
+            "fixed_parameter_order": self.fixed_parameter_order,
+        }, cls=NDArrayEncoder)
+
+    def log_to_json(self):
+        return json.dumps({
+            "tried parameters": self.log_of_tried_parameters,
+            "discrepancies": self.log_of_discrepancies,
+            "raw tried parameters": self.log_of_raw_tried_parameters,
+        }, cls=NDArrayEncoder)
+
     def visualize_parameter_distribution(self):
         """!@brief Plots the features and visualizes the correlation.
-
         Please note that this function requires that the output of the
         individual simulators and the individual experimental data give
         an x- and y-axis when indexed with [0] and [1], respectively.
         Lists of lists in [0] and [1] with segmented data works as well.
         EP_BOLFI.run() does not have these restrictions.
-
         Visualizes the comparison that EP_BOLFI was set up to infer
         model parameters with. May be used to check if everything works
         as intended. Additionally, the 95% confidence error bounds for
@@ -733,14 +862,15 @@ class EP_BOLFI:
             parameters, self.final_error_bounds
         )[0]
         fig_ax = [plt.subplots(figsize=(2**0.5 * 5, 5))
-                  for i in range(len(self.simulators))]
+                  for _ in range(len(self.simulators))]
         for i, (sim, exp_data, feature) in enumerate(zip(
                 self.simulators, self.experimental_datasets,
                 self.feature_extractors)):
             ps = Preprocessed_Simulator(
                 sim, self.fixed_parameters,
                 list(self.log_of_tried_parameters.keys()),
-                self.r, self.Q, exp_data, feature, self.transform_parameters
+                self.r, self.Q, exp_data, feature, self.transform_parameters,
+                self.fixed_parameter_order
             )
             sim_data = ps.simulator(parameters)
             sim_data_plot = [[entry for segment in axis
@@ -781,9 +911,12 @@ class EP_BOLFI:
         final_dampening=None,
         ep_dampener_reduction_steps=-1,
         gelman_rubin_threshold=None,
-        ess_ratio_sampling_from_zero=5.0,
+        ess_ratio_resample=5.0,
+        ess_ratio_sampling_from_zero=-1.0,
         ess_ratio_abort=20.0,
+        max_heuristic_steps=10,
         posterior_sampling_increase=1.2,
+        model_resampling_increase=1.1,
         independent_mcmc_chains=4,
         scramble_ep_feature_order=True,
         show_trials=False,
@@ -791,85 +924,100 @@ class EP_BOLFI:
         seed=None
     ):
         """!@brief Runs Expectation Propagation together with BOLFI.
-
         This function can be called multiple times; the estimation will
         take off from where it last stopped.
-
-        @par bolfi_initial_evidence
+        @param bolfi_initial_evidence
             Number of evidence samples BOLFI will take for each feature
             before using Bayesian Optimization sampling. Default:
             1 + 2 ^ "number of estimated parameters".
-        @par bolfi_total_evidence
+        @param bolfi_total_evidence
             Number of evidence samples BOLFI will take for each feature
             in total (including initial evidence). Default:
             2 * "bolfi_initial_evidence".
-        @par bolfi_posterior_samples
+        @param bolfi_posterior_samples
             Effective number of samples BOLFI will take from the
             posterior distribution. These are then used to fit a
             Gaussian to the posterior. Fit convergence scales with 1/√n.
-            Default: 0.5 * I² + 1.5 * I with I as the number of
+            Default: I² + 3 * I with I as the number of
             estimated parameters. This is the number of the
-            metaparameters of the underlying probability distribution.
-        @par ep_iterations
+            metaparameters of the underlying probability distribution
+            times 2. The "times 2" considers the warmup samples.
+        @param ep_iterations
             The number of iterations of the Expectation Propagation
             algorithm, i.e., the number of passes over each feature.
             Default: 3.
-        @par ep_dampener
+        @param ep_dampener
             The linear combination factor of the posterior calculated by
             BOLFI and the pseudo-prior. 0 means no dampening, i.e., the
             pseudo-prior gets replaced by the posterior. For values up
             to 1, that fraction of the pseudo-prior remains in each
             site update. Default: with "a" as the number of features and
             "b" as "ep_iterations", 1 - a * (1 - ᵃᵇ√"final_dampening").
-        @par final_dampening
+        @param final_dampening
             Alternative way to set "ep_dampener". 0 means no dampening.
             For values up to 1, that fraction of the prior remains after
             the whole estimation. Default: if "ep_dampener" is not set,
             0.5. Else, "ep_dampener" takes precedence.
-        @par ep_dampener_reduction_steps
+        @param ep_dampener_reduction_steps
             Number of iterations over which the 'ep_dampener' gets
             reduced to 0. In each iteration, an equal fraction of it
             gets subtracted. Set to a negative number to disable the
             reduction. Default: -1.
-        @par gelman_rubin_threshold
+        @param gelman_rubin_threshold
             Optional threshold on top of the effective sample size.
             Values close to one indicate a converged estimate of the
             pseudo-posteriors. Never set to exactly one.
-        @par ess_ratio_sampling_from_zero
+        @param ess_ratio_sampling_from_zero
             Threshold in the ratio of effective sample size to samples
             in the pseudo-posterior estimation, at which the sampling
-            defaults to starting at the center of the pseudo-prior.
-            Set higher than "ess_ratio_abort" to disable this behaviour.
-        @par ess_ratio_abort
+            defaults to starting at the center of the pseudo-prior. Set
+            higher than "ess_ratio_resample" to disable this behaviour.
+        @param ess_ratio_resample
+            Threshold in the ratio of effective sample size to samples
+            in the pseudo-posterior estimation, at which before sampling
+            the model gets resampled. Set higher than "ess_ratio_abort"
+            to disable this behaviour.
+        @param ess_ratio_abort
             Threshold in the ratio of effective sample size to samples
             in the pseudo-posterior estimation, at which the sampling
             aborts and the pseudo-posterior update is skipped.
-        @par posterior_sampling_increase
+        @param max_heuristic_steps
+            The heuristics that are set by the "ess_ratio_*" arguments
+            could effectively run forever. This parameter limits the
+            amount of times these heuristics get employed in on EP
+            iteration before it terminates.
+        @param posterior_sampling_increase
             The factor by which the ratio of the effective sample size
             to samples in the pseudo-posterior estimation is multiplied
             each loop (cumulatively). Never set to exactly one or lower,
             as it might result in an infinite loop.
-        @par independent_mcmc_chains
+        @param model_resampling_increase
+            The factor by which 'bolfi_total_evidence' gets multiplied
+            each time the model gets resampled.
+        @param independent_mcmc_chains
             The number of independent Markov-Chain Monte Carlo chains
             that are used for the estimation of the pseudo-posterior.
             Since we did not implement parallelization, more chains will
             not be faster, but more stable.
-        @par scramble_ep_feature_order
+        @param scramble_ep_feature_order
             True randomizes the order that the EP features are iterated
             over. Their order is still consistent across EP iterations.
             False uses the order that the "feature_extractors" define.
-        @par show_trials
+        @param show_trials
             True plots the log of tried parameters live. Please note
             that each plot blocks the execution of the program, so do
             not use this when running the estimation in the background.
-        @par verbose
+        @param verbose
             True shows verbose error messages and logs of the estimation
             process. With False, you need to get the estimation results
             from self.final_expectation and self.final_covariance.
             Default: True.
-        @par seed
+        @param seed
             Optional seed that is used in the RNG. If None is given, the
             results will be slightly different each time.
+        @return
+            The BOLFI instance of the last EP iteration. As such, it
+            contains the Posterior of the overall inference procedure.
         """
 
         # Enable parallelization in ELFI. For details, see https://
@@ -879,13 +1027,23 @@ class EP_BOLFI:
         # For scaling to clusters:
         # elfi.set_client('ipyparallel')
 
+        if self.output_dim == 1 and ep_iterations > 1:
+            raise RuntimeError(
+                "EP with only one feature does not properly update the "
+                "posterior after the initial loop. Set ep_iterations to 1. "
+                "If you want to re-run, initialize a new EP_BOLFI instance "
+                "from this one's Q and r attributes, but leave the attributes "
+                "Q_features and r_features as None. "
+                "This will make the former posterior the new prior."
+            )
+
         bolfi_initial_evidence = (bolfi_initial_evidence or
                                   1 + 2**self.input_dim)
         bolfi_total_evidence = (bolfi_total_evidence or
                                 2 * bolfi_initial_evidence)
         bolfi_posterior_samples = (
             bolfi_posterior_samples or
-            0.5 * self.input_dim**2 + 1.5 * self.input_dim
+            self.input_dim**2 + 3 * self.input_dim
         )
         final_dampening = final_dampening or 0.5
         final_dampening = np.max([0, np.min([final_dampening, 1])])
@@ -902,6 +1060,10 @@ class EP_BOLFI:
         )
         posterior_sampling_increase = (
             posterior_sampling_increase if posterior_sampling_increase > 1.0
+            else 1.2
+        )
+        model_resampling_increase = (
+            model_resampling_increase if model_resampling_increase > 1.0
             else 1.2
         )
 
@@ -971,7 +1133,8 @@ class EP_BOLFI:
                     list(self.log_of_tried_parameters.keys()), r_pseudoprior,
                     Q_pseudoprior, self.experimental_datasets[simulator_index],
                     self.feature_extractors[simulator_index],
-                    self.transform_parameters
+                    self.transform_parameters,
+                    self.fixed_parameter_order
                 )
 
                 # Create the ELFI simulator.
@@ -986,16 +1149,16 @@ class EP_BOLFI:
                 # "weights" are applied.
                 def summary(data):
                     try:
-                        return (
+                        return [
                             data[sub_index] / self.experimental_features[
                                 simulator_index
                             ][sub_index]
                             * self.weights[simulator_index][sub_index]
-                        )
+                        ]
                     except IndexError:
                         if verbose:
                             print("Warning: simulator output was too short.")
-                        return 0
+                        return [0]
                 processed_data = elfi.Summary(summary, elfi_simulator)
 
                 # Use the Euclidean distance. Either the feature is a
@@ -1048,6 +1211,139 @@ class EP_BOLFI:
                     batch_size=1, bounds=bolfi_bounds, seed=seed
                 )
                 bolfi.fit(n_evidence=bolfi_total_evidence, bar=verbose)
+
+                state = Optimizer_State(
+                    self.input_dim,
+                    independent_mcmc_chains,
+                    bolfi_total_evidence,
+                    bolfi_posterior_samples,
+                    gelman_rubin_threshold,
+                    ess_ratio_resample,
+                    ess_ratio_sampling_from_zero,
+                    ess_ratio_abort,
+                    posterior_sampling_increase,
+                    model_resampling_increase,
+                )
+
+                degenerate_estimate = np.array([0.0] * self.input_dim)
+                minimum_ess = 0
+                ess = [0 for _ in range(self.input_dim)]
+                maximum_gelman_rubin = float('inf')
+                gelman_rubin = [float('inf') for _ in range(self.input_dim)]
+                sample_ess_ratio = 1.0
+                current_action = None
+                adapt_sample_size = True
+                heuristic_steps = 0
+
+                while (minimum_ess < bolfi_posterior_samples or
+                        (maximum_gelman_rubin > gelman_rubin_threshold if
+                         gelman_rubin_threshold < float('inf') else False)):
+                    state.calculate_next_step(sample_ess_ratio, current_action)
+                    if state.current_action == "resample":
+                        adapt_sample_size = False
+                    current_action = None
+                    if (
+                        state.current_action == "abort"
+                        or
+                        heuristic_steps > max_heuristic_steps
+                    ):
+                        degenerate_estimate = np.zeros(self.input_dim)
+                        skip_sample = True
+                        print(state.verbose_actions["abort"])
+                        break
+                    if verbose:
+                        # print(bolfi.target_model)
+                        print(state.verbose_actions[state.current_action])
+                    heuristic_steps += 1
+                    # If the number of evidence points stayed the same,
+                    # this just returns the current posterior.
+                    bolfi.fit(n_evidence=state.total_evidence, bar=verbose)
+                    try:
+                        # Make a deepcopy of the BOLFI instance for sampling.
+                        # Reason: when the sampling errors out with
+                        # "NUTS: Cannot find acceptable stepsize ...",
+                        # something breaks internally so that bolfi.fit
+                        # errors out with inconsistent array sizes.
+                        # File "<lib>/elfi/methods/bo/gpy_regression.py",
+                        #   line 132,
+                        #   in predict:
+                        # r2 = np.sum(x**2., 1)[:, None]
+                        #    + self._rbf_x2sum
+                        #    - 2. * x.dot(self._gp.X.T)
+                        # ValueError: operands could not be broadcast together
+                        # with shapes (1,<old evidence>) (1,<old evidence> + 1)
+                        bolfi_for_sampling = deepcopy(bolfi)
+                        result = bolfi_for_sampling.sample(
+                            int(
+                                state.posterior_samples * sample_ess_ratio
+                            ) if adapt_sample_size else int(
+                                state.posterior_samples
+                            ),
+                            n_chains=independent_mcmc_chains,
+                            initials=state.initials
+                        )
+                        adapt_sample_size = True
+                    except OverflowError as oe:
+                        # cannot convert float infinity to integer
+                        # Happens when state.posterior_samples gets too large.
+                        if verbose:
+                            print("Error message from BOLFI:", oe)
+                        skip_sample = True
+                        break
+                    except ValueError as ve:
+                        # NUTS: Cannot find acceptable stepsize
+                        # starting from point [best evidence].
+                        if verbose:
+                            print("Error message from BOLFI:", ve)
+                        em = str(ve)
+                        degenerate_estimate = np.fromstring(
+                            em[em.find('[')+1:em.find(']')],
+                            dtype=float, sep='  '
+                        )
+                        current_action = "resample"
+                        continue
+                    except ZeroDivisionError:
+                        skip_sample = True
+                        break
+                    chains = result.meta['chains']
+                    for i in range(self.input_dim):
+                        ess[i] = (
+                            elfi.methods.mcmc.eff_sample_size(chains[:, :, i])
+                        )
+                        gelman_rubin[i] = (
+                            elfi.methods.mcmc.gelman_rubin_statistic(
+                                chains[:, :, i]
+                            )
+                        )
+                    minimum_ess = np.min(ess)
+                    minimum_ess = 1 if np.min(ess) <= 0 else minimum_ess
+                    # The samples_array excludes the warmup samples (one half).
+                    # sample_ess_ratio is the amount of samples
+                    # compared to the minimum ESS of any parameter. It's >= 1.
+                    sample_ess_ratio = (
+                        2 * len(result.samples_array) / minimum_ess
+                    )
+                    maximum_gelman_rubin = np.max(gelman_rubin)
+
+                if self.display_current_feature is not None:
+                    self.log_of_raw_tried_parameters[
+                        self.display_current_feature[
+                            self.simulator_index_by_feature[j]
+                        ](self.sub_index_by_feature[j])
+                    ].extend(bolfi.target_model.X)
+                    self.log_of_discrepancies[
+                        self.display_current_feature[
+                            self.simulator_index_by_feature[j]
+                        ](self.sub_index_by_feature[j])
+                    ].extend(bolfi.target_model.Y)
+                else:
+                    self.log_of_raw_tried_parameters[str(j)].extend(
+                        bolfi.target_model.X
+                    )
+                    self.log_of_discrepancies[str(j)].extend(
+                        bolfi.target_model.Y
+                    )
+
                 # Append the newly tried parameters.
                 for name in self.log_of_tried_parameters.keys():
                     self.log_of_tried_parameters[name].extend(
@@ -1067,125 +1363,11 @@ class EP_BOLFI:
                     ):
                         axes[index].set_title(name)
                         axes[index].semilogy(range(len(
-                                self.log_of_tried_parameters[name]
-                            )), self.log_of_tried_parameters[name],
+                            self.log_of_tried_parameters[name]
+                        )), self.log_of_tried_parameters[name],
                             marker='.', lw=0, label=name
                         )
                     plt.show()
-
-                degenerate_estimate = np.array([0.0] * self.input_dim)
-                minimum_ess = 0
-                ess = [0 for i in range(self.input_dim)]
-                maximum_gelman_rubin = float('inf')
-                gelman_rubin = [float('inf') for i in range(self.input_dim)]
-                sample_ess_ratio = 1.0
-                sampling_factor = 1.0
-
-                while (minimum_ess < bolfi_posterior_samples or
-                        (maximum_gelman_rubin > gelman_rubin_threshold if
-                         gelman_rubin_threshold < float('inf') else False)):
-                    # if verbose:
-                    #     print(bolfi.target_model)
-                    if sample_ess_ratio < ess_ratio_sampling_from_zero:
-                        initials = None
-                        if verbose:
-                            print("Sampling the pseudo-posterior...")
-                    elif sample_ess_ratio < ess_ratio_abort:
-                        initials = np.array([[
-                            0.0 for p in range(self.input_dim)
-                        ] for c in range(independent_mcmc_chains)])
-                        if verbose:
-                            print("Sampling the pseudo-posterior from 0...")
-                    else:
-                        if verbose:
-                            print("Posterior too badly conditioned. "
-                                  "Skipping feature.")
-                        degenerate_estimate = np.array([0.0] * self.input_dim)
-                        skip_sample = True
-                        break
-                    try:
-                        result = bolfi.sample(
-                            int(np.max([
-                                int(bolfi_posterior_samples
-                                    * sample_ess_ratio),
-                                bolfi_posterior_samples
-                            ]) * sampling_factor),
-                            n_chains=independent_mcmc_chains, initials=initials
-                        )
-                    except ValueError as ve:
-                        # NUTS: Cannot find acceptable stepsize
-                        # starting from point [best evidence].
-                        print("Error message from BOLFI:", ve)
-                        em = str(ve)
-                        degenerate_estimate = np.fromstring(
-                            em[em.find('[')+1:em.find(']')],
-                            dtype=float, sep='  '
-                        )
-                        if initials is None:
-                            print("Trying starting from point 0:")
-                            initials = np.array([[
-                                0.0 for p in range(self.input_dim)
-                            ] for c in range(independent_mcmc_chains)])
-                        else:
-                            print("Trying starting from best evidence:")
-                            initials = None
-                        try:
-                            result = bolfi.sample(
-                                int(np.max([
-                                    int(bolfi_posterior_samples
-                                        * sample_ess_ratio),
-                                    bolfi_posterior_samples
-                                ]) * sampling_factor),
-                                n_chains=independent_mcmc_chains,
-                                initials=initials
-                            )
-                        except (ValueError, ZeroDivisionError):
-                            skip_sample = True
-                            break
-                    except ZeroDivisionError:
-                        skip_sample = True
-                        break
-                    chains = result.meta['chains']
-                    for i in range(self.input_dim):
-                        ess[i] = (
-                            elfi.methods.mcmc.eff_sample_size(chains[:, :, i])
-                        )
-                        gelman_rubin[i] = (
-                            elfi.methods.mcmc.gelman_rubin_statistic(
-                                chains[:, :, i]
-                            )
-                        )
-                    minimum_ess = np.min(ess)
-                    minimum_ess = 1 if np.min(ess) <= 0 else minimum_ess
-                    sample_ess_ratio = (
-                        2 * len(result.samples_array)
-                        // independent_mcmc_chains / minimum_ess
-                    )
-                    sampling_factor = (
-                        posterior_sampling_increase * sampling_factor
-                    )
-                    maximum_gelman_rubin = np.max(gelman_rubin)
-
-                if skip_sample and verbose:
-                    print("Warning:")
-                    print("  the a posteriori guess might be degenerate,")
-                    print("  i.e. its covariance has collapsed to zero.")
-                    print("  Since no new information could be acquired,")
-                    print("  this feature update will be skipped.")
-                    print("  Check the original error message preceding")
-                    print("  this one. It might contain an array. If:")
-                    print(" 1) it contains boundaries, the true parameters")
-                    print("    might not lie inside the pseudo-prior.")
-                    print("    This might be corrected in further iterations.")
-                    print("    If not, try a higher dampening parameter for")
-                    print("    the EP part of this optimizer algorithm or")
-                    print("    other boundaries.")
-                    print(" 2) it contains numbers between the boundaries,")
-                    print("    this might just be a numerical artifact ")
-                    print("    or the algorithm has already converged.")
-                    print("    Especially if this happens and there were only")
-                    print("    error messages with the boundaries before, the")
-                    print("    algorithm has converged, albeit very slowly.")
 
                 if skip_sample:
                     try:
@@ -1232,7 +1414,7 @@ class EP_BOLFI:
                 # Calculate the Expectation Propagation site update.
                 Q_h = np.linalg.inv(covariance)
                 r_h = Q_h @ µ_h
-                
+
                 self.Q_features[j] += (1.0 - ep_dampener) * (Q_h - self.Q)
                 self.r_features[j] += (1.0 - ep_dampener) * (r_h - self.r)
 
@@ -1246,8 +1428,7 @@ class EP_BOLFI:
                 self.inferred_parameters = ps.undo_transformation(
                     {
                         name: self.final_expectation[i]
-                        for i, name
-                        in enumerate(self.log_of_tried_parameters.keys())
+                        for i, name in self.fixed_parameter_order
                     }
                 )
 
@@ -1262,7 +1443,7 @@ class EP_BOLFI:
                 # correlations, but are easier to interpret).
                 error_lower_bound = {}
                 error_upper_bound = {}
-                for i, name in enumerate(self.log_of_tried_parameters.keys()):
+                for i, name in self.fixed_parameter_order:
                     error_lower_bound[name] = (
                         self.final_expectation[i]
                         - np.sqrt(
@@ -1349,7 +1530,7 @@ class EP_BOLFI:
                 # correlations, but are easier to interpret).
                 local_error_lower_bound = {}
                 local_error_upper_bound = {}
-                for i, name in enumerate(self.log_of_tried_parameters.keys()):
+                for i, name in self.fixed_parameter_order:
                     local_error_lower_bound[name] = (
                         local_guess[i] - np.sqrt(
                             chi2(self.input_dim).ppf(0.95)
@@ -1371,8 +1552,7 @@ class EP_BOLFI:
                 }
                 local_guess = ps.undo_transformation({
                     name: local_guess[i]
-                    for i, name in
-                    enumerate(self.log_of_tried_parameters.keys())
+                    for i, name in self.fixed_parameter_order
                 })
                 print("guess:")
                 for name, value in local_guess.items():
@@ -1382,3 +1562,6 @@ class EP_BOLFI:
                 for name, value in local_error_bounds.items():
                     print("'" + name + "':", value, ",")
                 print("}")
+
+        # Return the last BOLFI instance, as it contains the Posterior.
+        return bolfi
