@@ -13,7 +13,10 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Information Analysis",
   "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
   "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
 ]
 authors = [
   {name = "Yannick Kuhn", email = "yannick.kuhn@dlr.de"}
@@ -21,7 +24,7 @@ authors = [
 maintainers = [
   {name = "Yannick Kuhn", email = "yannick.kuhn@dlr.de"}
 ]
-requires-python = ">= 3.9"
+requires-python = ">= 3.8"
 dependencies = [
   'elfi',
   'matplotlib',

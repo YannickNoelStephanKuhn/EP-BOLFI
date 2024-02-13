@@ -213,33 +213,27 @@ class Preprocessed_Simulator:
             'self.transform_parameters'.
         """
 
-        # Index of the axis along which a single sample lies.
-        sample_axis = 1
-
         # Get the normed parameter sample.
         normed_parameters = np.apply_along_axis(
             lambda slice: slice + self.normed_means,
-            sample_axis,
+            0,
             search_space_parameters
         )
 
         # Un-norm it into the eigenvector space of Q represenation.
-        transformed_parameters = np.apply_along_axis(
-            lambda slice: self.un_norm_factor @ slice,
-            sample_axis,
-            normed_parameters)
+        transformed_parameters = self.un_norm_factor @ normed_parameters
 
         # Transform it backwards to the transformed model space.
-        transformed_trial_parameters = np.apply_along_axis(
-            lambda slice: self.back_transform_matrix @ slice,
-            sample_axis,
-            transformed_parameters
+        transformed_trial_parameters = (
+            self.back_transform_matrix @ transformed_parameters
         )
 
         # Convert this into a dictionary. The ordering is still given by
         # 'self.free_parameters_names'.
-        return {name: transformed_trial_parameters.T[i]
-                for i, name in self.fixed_parameter_order}
+        return {
+            name: np.array(transformed_trial_parameters[i])
+            for i, name in self.fixed_parameter_order
+        }
 
     def transformed_trial_to_search(self, model_space_parameters):
         """!@brief Transforms model space parameters to model ones.
@@ -256,35 +250,27 @@ class Preprocessed_Simulator:
             In that case, each and every list must have the same length.
         """
 
-        # Index of the axis along which a single sample lies.
-        sample_axis = 1
-
         length = len(model_space_parameters[self.free_parameters_names[0]])
-        transformed_trial_parameters = [
-            [model_space_parameters[name][i]
-                for name in self.free_parameters_names]
-            for i in range(length)
-        ]
+        transformed_trial_parameters = np.matrix([
+            [model_space_parameters[name][j]
+                for _, name in self.fixed_parameter_order]
+            for j in range(length)
+        ]).T
 
         # Transform it forwards to the eigenvector space of Q.
-        transformed_parameters = np.apply_along_axis(
-            lambda slice: self.transform_matrix @ slice,
-            sample_axis,
-            transformed_trial_parameters
+        transformed_parameters = (
+            self.transform_matrix @ transformed_trial_parameters
         )
 
         # Get the normed parameter sample.
-        normed_parameters = np.apply_along_axis(
-            lambda slice: self.norm_factor @ slice,
-            sample_axis,
-            transformed_parameters
-        )
+        normed_parameters = self.norm_factor @ transformed_parameters
 
         # Get the search space parameters.
         search_parameters = np.apply_along_axis(
             lambda slice: slice - self.normed_means,
-            sample_axis,
-            normed_parameters)
+            0,
+            normed_parameters
+        )
 
         return search_parameters
 
@@ -331,7 +317,7 @@ class Preprocessed_Simulator:
         return transformed_trial_parameters
 
     def elfi_simulator(self, *args, **kwargs):
-        """!@brief A battery model simulator that can be used with ELFI.
+        """!@brief A model simulator that can be used with ELFI.
         @param *args
             The parameters as given by the prior nodes. Their
             order has to correspond to that of the parameter
@@ -426,15 +412,14 @@ class Optimizer_State:
             self.current_action = action
         if self.current_action == "sample":
             self.initials = None
-            self.posterior_samples *= self.posterior_sampling_increase
         elif self.current_action == "resample":
             self.initials = None
             self.total_evidence *= self.model_resampling_increase
         elif self.current_action == "sample_from_zero":
             self.initials = np.zeros([self.mcmc_chains, self.input_dim])
-            self.posterior_samples *= self.posterior_sampling_increase
         elif self.current_action == "abort":
             self.initials = None
+        self.posterior_samples *= self.posterior_sampling_increase
 
 
 class EP_BOLFI:
@@ -544,9 +529,13 @@ class EP_BOLFI:
             internal standard distribution. This means that they represent
             the median of the actual distribution.
         @param weights
-            Optional weights to assign to the features. Higher weights
-            give more importance to a feature and vice versa. A list of
-            lists which correspond to the 'feature_extractors'.
+            Optional weights to rescale multi-dimensional features.
+            Has no effect on scalar features, as BOLFI is invariant with
+            respect to constant or linear transformations.
+            A list of lists of numpy.array which correspond to the
+            'feature_extractors'. The numpy.array have to have the same
+            length as their feature, and will be multiplied entry-wise
+            onto the feature before taking the distance to the data.
         @param display_current_feature
             A list of functions. Each corresponds to a feature extractor
             with the same index. Given an index of the array of its
@@ -1258,6 +1247,8 @@ class EP_BOLFI:
                     # If the number of evidence points stayed the same,
                     # this just returns the current posterior.
                     bolfi.fit(n_evidence=state.total_evidence, bar=verbose)
+                    if verbose:
+                        print()  # linebreak after progressbar
                     try:
                         # Make a deepcopy of the BOLFI instance for sampling.
                         # Reason: when the sampling errors out with
@@ -1321,7 +1312,8 @@ class EP_BOLFI:
                     # sample_ess_ratio is the amount of samples
                     # compared to the minimum ESS of any parameter. It's >= 1.
                     sample_ess_ratio = (
-                        2 * len(result.samples_array) / minimum_ess
+                        2 * len(result.samples_array)
+                        / (minimum_ess * independent_mcmc_chains)
                     )
                     maximum_gelman_rubin = np.max(gelman_rubin)
 
@@ -1390,7 +1382,7 @@ class EP_BOLFI:
                 #     print(result.samples_array)
 
                 # Get the raw samples. They are given as a list.
-                normed_samples_0 = np.array(result.samples_array)
+                normed_samples_0 = np.array(result.samples_array).T
 
                 # Un-raw the samples.
                 samples = ps.search_to_transformed_trial(normed_samples_0)
