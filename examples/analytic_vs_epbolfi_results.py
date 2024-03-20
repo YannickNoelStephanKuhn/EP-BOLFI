@@ -141,9 +141,9 @@ matplotlib.rcParams.update({'font.size': 13})
 labels = {
     "discharge relaxation time": "τᵣ",
     "ohmic voltage drop": "R",
-    "GITT square root slope": "GITT-√",
+    "GITT square root slope": "GITT-sqrt",
     "concentration overpotential": "η",
-    "ICI square root slope": "ICI-√",
+    "ICI square root slope": "ICI-sqrt",
 }
 fig_dev, ax_dev = plt.subplots(figsize=(5 * 2**0.5, 5))
 fig_comp, (ax_comp, ax_dev_comp) = plt.subplots(figsize=(8 * 2**0.5, 5),

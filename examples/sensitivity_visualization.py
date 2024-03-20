@@ -18,9 +18,9 @@ with open('../GITT estimation results/boundaries_of_simulated_features.json',
 labels = {
     "discharge relaxation time": "τᵣ",
     "ohmic voltage drop": "R",
-    "GITT square root slope": "GITT-√",
+    "GITT square root slope": "GITT-sqrt",
     "concentration overpotential": "η",
-    "ICI square root slope": "ICI-√",
+    "ICI square root slope": "ICI-sqrt",
 }
 
 p_diff = {

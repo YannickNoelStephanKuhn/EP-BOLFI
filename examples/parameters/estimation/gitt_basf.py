@@ -488,13 +488,13 @@ def feature_visualizer(t, U):
                 "  IR: {0:.4g} V".format(visualizations[-1][2][0]) + "\n"
                 + r"  $\left(\frac{dU}{d\sqrt{t}}\right)^{-1}$"
                 + ": {0:.4g}".format(1.0 /
-                                     visualizations[-1][2][1]) + " √s/V"
+                                     visualizations[-1][2][1]) + " sqrt(s)/V"
             )
         else:
             visualizations[-1][2] = (
                 r"  η: {0:.4g} V".format(visualizations[-1][2][0]) + "\n"
                 + r"  $\left(\frac{dU}{d\sqrt{t}}\right)^{-1}$"
                 + ": {0:.4g}".format(1.0 /
-                                     visualizations[-1][2][1]) + " √s/V"
+                                     visualizations[-1][2][1]) + " sqrt(s)/V"
             )
     return visualizations
