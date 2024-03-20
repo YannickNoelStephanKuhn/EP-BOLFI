@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ep-bolfi"
-version = "2.2"
+version = "2.3"
 description = "EP-BOLFI (Expectation Propagation with Bayesian Optimization for Likelihood-Free Inference) extends the simulator optimizer BOLFI with the data featurization of Expectation Propagation."
 readme = "README.md"
 classifiers = [
