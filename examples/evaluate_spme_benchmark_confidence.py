@@ -63,14 +63,14 @@ def print_mean_and_standard_deviation(filename):
 
 for sample_number in [2080, 4160, 6240, 8320]:
     print_mean_and_standard_deviation(
-        './spme_benchmark_results/unimodal/'
+        '../spme_benchmark_results/unimodal/'
         + str(sample_number)
         + '_samples.json'
     )
 
 for soc_point in range(11):
     print_mean_and_standard_deviation(
-        './spme_benchmark_results/multimodal/individual_excitation_points/'
+        '../spme_benchmark_results/multimodal/individual_excitation_points/'
         + str(6240)
         + '_samples_at_soc_point_'
         + str(soc_point)
@@ -79,7 +79,7 @@ for soc_point in range(11):
 
 for sample_number in [2080, 4160]:
     print_mean_and_standard_deviation(
-        './spme_benchmark_results/multimodal/individual_excitation_points/'
+        '../spme_benchmark_results/multimodal/individual_excitation_points/'
         + str(sample_number)
         + '_samples_at_soc_point_'
         + str(10)

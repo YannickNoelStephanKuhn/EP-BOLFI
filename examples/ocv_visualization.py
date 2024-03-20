@@ -46,7 +46,7 @@ graphite_discharge = [p[i] for i in range(4)
                       for p in [E_0_g_dc, a_g_dc, Δx_g_dc]]
 
 measurement = read_csv_from_measurement_system(
-    "./GITT data/L_ACB440_BP_2_OCV.csv", 'iso-8859-1', 0,
+    "../GITT data/L_ACB440_BP_2_OCV.csv", 'iso-8859-1', 0,
     headers={0: "SOC [-]", 2: "U [V]"}, delimiter=',', decimal='.'
     # headers={0: "SOC [-]", 1: "U [V]"}, delimiter=';', decimal=','
 )

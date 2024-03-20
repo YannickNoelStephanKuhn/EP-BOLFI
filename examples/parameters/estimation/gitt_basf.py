@@ -247,7 +247,7 @@ def beta_p_noise_generator():
 
 """! The experimental data to be used for inference. """
 complete_dataset = read_csv_from_measurement_system(
-    './GITT data/L_ACB440_BP_1.064', 'iso-8859-1', 1,
+    '../GITT data/L_ACB440_BP_1.064', 'iso-8859-1', 1,
     headers={3: "t [s]", 7: "I [A]", 8: "U [V]"},
     delimiter='\t', decimal='.',
     segment_column=2,  # 9,
@@ -266,7 +266,7 @@ starting_OCV = dataset.voltages[0][-1]
 
 """! The dataset with charge-discharge cycles. """
 charge_discharge_cycles = read_csv_from_measurement_system(
-    './GITT data/L_ACB440_BP_1.064', 'iso-8859-1', 1,
+    '../GITT data/L_ACB440_BP_1.064', 'iso-8859-1', 1,
     headers={3: "t [s]", 7: "I [A]", 8: "U [V]"},
     delimiter='\t', decimal='.',
     segment_column=2,  # 9,
@@ -282,7 +282,7 @@ cv = charge_discharge.subslice(1, 2)
 discharge = charge_discharge.subslice(2, 3)
 
 gitt = read_csv_from_measurement_system(
-    './GITT data/L_ACB440_BP_2.064', 'iso-8859-1', 1,
+    '../GITT data/L_ACB440_BP_2.064', 'iso-8859-1', 1,
     headers={3: "t [s]", 7: "I [A]", 8: "U [V]"},
     delimiter='\t', decimal='.',
     segment_column=9,
