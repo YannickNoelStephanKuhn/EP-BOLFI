@@ -20,7 +20,7 @@ from ep_bolfi.utility.fitting_functions import (
 )
 from ep_bolfi.utility.preprocessing import (
     subtract_both_OCV_curves_from_cycles, find_occurrences,
-    calculate_both_SOC_from_OCV
+    calculate_both_SOC_from_OCV, calculate_desired_voltage
 )
 
 from pybamm.models.full_battery_models.lithium_ion import DFN
@@ -448,7 +448,12 @@ def simulator(trial_parameters):
     t0 = gitt_for_estimation.timepoints[0][0]
     for cycle in solution.cycles:
         t_eval = t0 + cycle["Time [h]"].entries * 3600.0
-        u_eval = cycle["Total overpotential [V]"].entries
+        u_eval = calculate_desired_voltage(
+            cycle,
+            t_eval,
+            1.0,  # voltage_scale
+            True,  # overpotential
+        )
         sim_data[0].append(t_eval)
         # Add some noise to imitate the measurement (1 sigma ̂= 0.1 mV).
         if white_noise:

@@ -8,7 +8,7 @@ from pybamm.expression_tree.exceptions import SolverError
 from scipy.fft import rfft, rfftfreq
 from scipy.stats import chi2
 
-from ep_bolfi.EP_BOLFI import EP_BOLFI
+from ep_bolfi.optimization.EP_BOLFI import EP_BOLFI
 # from ep_bolfi.models.SPMe import SPMe
 from pybamm.models.full_battery_models.lithium_ion.spme import SPMe
 from ep_bolfi.models.solversetup import (

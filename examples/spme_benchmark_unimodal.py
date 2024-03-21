@@ -66,8 +66,7 @@ parameters["Current function [A]"] = current
 t_eval = np.linspace(0, 5800, 4000)
 
 
-model = SPMe(halfcell=False, pybamm_control=False)
-# model = SPMe(name="SPMe")
+model = SPMe()
 solver = solver_setup(
     model, parameters, *spectral_mesh_pts_and_method(12, 6, 12, 1, 1, 1,
                                                      halfcell=False),
@@ -250,8 +249,7 @@ free_parameters_boundaries = {
 }
 
 solutions, errorbars = solve_all_parameter_combinations(
-    SPMe(halfcell=False, pybamm_control=False),
-    # SPMe(name="SPMe"),
+    SPMe(),
     t_eval, optimized_parameters,
     free_parameters_boundaries,
     *spectral_mesh_pts_and_method(12, 6, 12, 1, 1, 1, halfcell=False),

@@ -6,10 +6,9 @@ import numpy as np
 from scipy import constants
 from scipy.optimize import minimize
 
-from utility.preprocessing import (
+from ep_bolfi.utility.preprocessing import (
     calculate_both_SOC_from_OCV, calculate_means_and_standard_deviations
 )
-# from utility.read_csv_datasets import read_channels_from_measurement_system
 
 from parameters.estimation.gitt_basf import (
     parameters, positive_SOC_from_cell_SOC, negative_SOC_from_cell_SOC

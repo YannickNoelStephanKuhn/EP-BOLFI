@@ -122,7 +122,7 @@ OCV_cathode = gitt_spline(C_eval) + OCV_anode
 phases = 6
 fit_and_plot_OCV(
     ax3, C_eval, OCV_cathode, "NCM_851005", phases, z=1.0, T=298.15,
-    eval_SOC=[0.15, 1.00], spline_smoothing=1e-5, spline_print='python',
+    eval_SOC=[0.15, 1.00], spline_print='python',
     spline_order=0, parameters_print=True, info_accuracy=False,
     normalized_xaxis=True
 )

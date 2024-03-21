@@ -17,10 +17,7 @@ from ep_bolfi.utility.visualization import (
 )
 from ep_bolfi.models.solversetup import spectral_mesh_pts_and_method
 
-# from pybamm.models.full_battery_models.lithium_ion.dfn import DFN
-from ep_bolfi.models.DFN import DFN
-# from ep_bolfi.models.SPMe import SPMe
-# from ep_bolfi.models.SPM import SPM
+from pybamm.models.full_battery_models.lithium_ion.dfn import DFN
 
 # Set the substitutions for dependent parameters and different names.
 substitutions = {
@@ -73,16 +70,12 @@ parameters.update(free_parameters)
 parameters = SubstitutionDict(data['parameters'], substitutions)
 transform_parameters = data['transform_parameters']
 
-model = (
-    DFN(halfcell=False, pybamm_control=True)
-    # SPMe(halfcell=False, pybamm_control=True)
-    # SPM(halfcell=False, pybamm_control=True)
-)
+model = DFN()
 
 # Doubling beyond 8-20-8 to 16-40-16 changes the features by about
 # 2 promille. Halving from 8-20-8 to 4-10-4 changes them by 2 %.
 solutions, errorbars = simulate_all_parameter_combinations(
-    DFN(halfcell=False, pybamm_control=True), current_input,
+    DFN(), current_input,
     *spectral_mesh_pts_and_method(8, 20, 8, 2, 1, 1, halfcell=False),
     parameters, covariance=covariance,
     order_of_parameter_names=order_of_parameter_names,
@@ -101,18 +94,17 @@ fig, ax = plt.subplots(figsize=(2**0.5 * 5, 5))
 text_objects = plot_comparison(
     ax, solutions, errorbars, experiment,
     title="",
-    xlabel="Experiment run-time  /  h", ylabel="Cell overpotential  /  mV",
+    xlabel="Experiment run-time  /  h", ylabel="Cell Voltage  /  V",
     interactive_plot=False, feature_visualizer=feature_visualizer,
-    voltage_scale=1e-3,
+    voltage_scale=1,
     output_variables={
         "Negative electrode SOC",
         "Positive electrode SOC",
         "Negative particle surface concentration",
         "Positive particle surface concentration",
-        "Total overpotential [V]",
         "Terminal voltage [V]",
     },
-    feature_fontsize=fontsize, overpotential=True, use_cycles=True
+    feature_fontsize=fontsize, overpotential=False, use_cycles=True
 )
 fig.tight_layout()
 plt.show()
