@@ -75,20 +75,34 @@ def main():
 
     model = DFN()
 
+    sublist = [
+        # "Negative electrode exchange-current density [A.m-2]",
+        # "Positive electrode exchange-current density [A.m-2]",
+        # "Negative electrode diffusivity [m2.s-1]",
+        # "Positive electrode diffusivity [m2.s-1]",
+        # "Cation transference number",
+        # "Negative electrode Bruggeman coefficient",
+        # "Positive electrode Bruggeman coefficient"
+    ]
+    free_parameters_to_try = {
+        k: free_parameters_boundaries[k] for k in sublist
+    }
+
     # Doubling beyond 8-20-8 to 16-40-16 changes the features by about
     # 2 promille. Halving from 8-20-8 to 4-10-4 changes them by 2 %.
     solutions, errorbars = simulate_all_parameter_combinations(
         model, current_input,
         *spectral_mesh_pts_and_method(8, 20, 8, 2, 1, 1, halfcell=False),
-        parameters, covariance=covariance,
-        order_of_parameter_names=order_of_parameter_names,
+        parameters,  # covariance=covariance,
+        parameters_to_try=free_parameters_to_try,
+        # order_of_parameter_names=order_of_parameter_names,
         transform_parameters=transform_parameters,
         full_factorial=True, reltol=1e-9, abstol=1e-9, root_tol=1e-6,
         verbose=True
     )
     plt.style.use("default")
-    solutions["simulation"] = solutions.pop("DFN")
-    errorbars.pop("confidence semiaxes")
+    solutions["simulation"] = solutions.pop("Doyle-Fuller-Newman model")
+    # errorbars.pop("confidence semiaxes")
     errorbars["95% confidence"] = errorbars.pop("all parameters")
     fontsize = 13
     matplotlib.rcParams.update({'font.size': fontsize})
@@ -107,7 +121,7 @@ def main():
             "Positive particle surface concentration",
             "Terminal voltage [V]",
         },
-        feature_fontsize=fontsize, overpotential=False, use_cycles=True
+        feature_fontsize=fontsize, overpotential=True, use_cycles=True
     )
     fig.tight_layout()
     plt.show()

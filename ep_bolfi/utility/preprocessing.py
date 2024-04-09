@@ -1025,7 +1025,7 @@ def calculate_desired_voltage(
         if overpotential:
             U = (
                 solution["Voltage [V]"](t_eval)
-                - solution["Bulk open-circuit voltage [V]"](t_eval, x=0),
+                - solution["Bulk open-circuit voltage [V]"](t_eval)
             ) / voltage_scale
         else:
             U = solution["Voltage [V]"](t_eval) / voltage_scale
