@@ -161,37 +161,38 @@ cₙ_max = parameters["Maximum concentration in negative electrode [mol.m-3]"]
 """! Maximum charge concentration in the cathode active material. """
 cₚ_max = parameters["Maximum concentration in positive electrode [mol.m-3]"]
 
+
+def neg_elde_exc_cur_den(cₑ, cₙ, cₙ_max, T):
+    return 3.67e-6 * cₑ ** αₚₙ * cₙ ** αₙₙ * (cₙ_max - cₙ) ** αₚₙ
+
+
+def pos_elde_exc_cur_den(cₑ, cₚ, cₚ_max, T):
+    return 5.06e-6 * cₑ ** αₚₙ * cₚ ** αₙₙ * (cₚ_max - cₚ) ** αₚₙ
+
+
+def neg_elde_exc_cur_den_der(cₑ, cₙ, cₙ_max, T):
+    return 3.67e-6 * αₚₚ * cₑ ** (αₚₚ - 1) * cₙ**αₙₚ * (cₙ_max - cₙ) ** αₚₚ
+
+
+def pos_elde_exc_cur_den_der(cₑ, cₚ, cₚ_max, T):
+    return 5.06e-6 * αₚₚ * cₑ ** (αₚₚ - 1) * cₚ**αₙₚ * (cₚ_max - cₚ) ** αₚₚ
+
+
 parameters["Negative electrode exchange-current density [A.m-2]"] = (
-    lambda cₑ, cₙ, cₙ_max, T: (
-        3.67e-6 * cₑ ** αₚₙ * cₙ ** αₙₙ * (cₙ_max - cₙ) ** αₚₙ
-    )
+    neg_elde_exc_cur_den
 )
 parameters["Positive electrode exchange-current density [A.m-2]"] = (
-    lambda cₑ, cₚ, cₚ_max, T: (
-        5.06e-6 * cₑ ** αₚₙ * cₚ ** αₙₙ * (cₚ_max - cₚ) ** αₚₙ
-    )
+    pos_elde_exc_cur_den
 )
 
 parameters[
     "Negative electrode exchange-current density partial derivative "
     "by electrolyte concentration [A.m.mol-1]"
-] = (
-    lambda cₑ, cₙ, cₙ_max, T: 3.67e-6
-    * αₚₚ
-    * cₑ ** (αₚₚ - 1)
-    * cₙ**αₙₚ
-    * (cₙ_max - cₙ) ** αₚₚ
-)
+] = neg_elde_exc_cur_den_der
 parameters[
     "Positive electrode exchange-current density partial derivative "
     "by electrolyte concentration [A.m.mol-1]"
-] = (
-    lambda cₑ, cₚ, cₚ_max, T: 5.06e-6
-    * αₚₚ
-    * cₑ ** (αₚₚ - 1)
-    * cₚ**αₙₚ
-    * (cₚ_max - cₚ) ** αₚₚ
-)
+] = pos_elde_exc_cur_den_der
 
 ###########################################################
 # Parameters taken from measurements by hand (for now).   #
