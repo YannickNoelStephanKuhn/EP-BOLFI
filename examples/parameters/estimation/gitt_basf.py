@@ -68,7 +68,7 @@ if 'parameter_noise' not in globals():
 
 try:
     with open(
-        '../GITT estimation results/seven_parameter_estimation_seed_0.json',
+        './GITT estimation results/seven_parameter_estimation_seed_0.json',
         'r'
     ) as f:
         results = json.load(f)
@@ -247,7 +247,7 @@ def beta_p_noise_generator():
 
 """! The experimental data to be used for inference. """
 complete_dataset = read_csv_from_measurement_system(
-    '../GITT data/L_ACB440_BP_1.064', 'iso-8859-1', 1,
+    './GITT data/L_ACB440_BP_1.064', 'iso-8859-1', 1,
     headers={3: "t [s]", 7: "I [A]", 8: "U [V]"},
     delimiter='\t', decimal='.',
     segment_column=2,  # 9,
@@ -266,7 +266,7 @@ starting_OCV = dataset.voltages[0][-1]
 
 """! The dataset with charge-discharge cycles. """
 charge_discharge_cycles = read_csv_from_measurement_system(
-    '../GITT data/L_ACB440_BP_1.064', 'iso-8859-1', 1,
+    './GITT data/L_ACB440_BP_1.064', 'iso-8859-1', 1,
     headers={3: "t [s]", 7: "I [A]", 8: "U [V]"},
     delimiter='\t', decimal='.',
     segment_column=2,  # 9,
@@ -282,7 +282,7 @@ cv = charge_discharge.subslice(1, 2)
 discharge = charge_discharge.subslice(2, 3)
 
 gitt = read_csv_from_measurement_system(
-    '../GITT data/L_ACB440_BP_2.064', 'iso-8859-1', 1,
+    './GITT data/L_ACB440_BP_2.064', 'iso-8859-1', 1,
     headers={3: "t [s]", 7: "I [A]", 8: "U [V]"},
     delimiter='\t', decimal='.',
     segment_column=9,
@@ -412,6 +412,16 @@ def simulator(trial_parameters):
     global parameter_noise, d_e_noise_generator, beta_n_noise_generator
     global beta_p_noise_generator, white_noise, white_noise_generator
 
+    trial_parameters["Thermodynamic factor"] = 1.475 / (
+        1 - trial_parameters["Cation transference number"]
+    )
+    for elec_sign in ["Negative ", "Positive "]:
+        for part in [" (electrode)", " (electrolyte)"]:
+            trial_parameters[
+                elec_sign + "electrode Bruggeman coefficient" + part
+            ] = (
+                trial_parameters[elec_sign + "electrode Bruggeman coefficient"]
+            )
     param = {name: trial_parameters[name] for name in solver_free_parameters}
     if parameter_noise:
         param.update({
@@ -424,14 +434,6 @@ def simulator(trial_parameters):
         })
     elif soc_dependent_estimation:
         param.update(parameter_estimates)
-    param["Thermodynamic factor"] = 1.475 / (
-        1 - param["Cation transference number"]
-    )
-    for elec_sign in ["Negative ", "Positive "]:
-        for part in [" (electrode)", " (electrolyte)"]:
-            param[elec_sign + "electrode Bruggeman coefficient" + part] = (
-                param[elec_sign + "electrode Bruggeman coefficient"]
-            )
     # Fail silently if the simulation did not work.
     try:
         solution = solver(
@@ -449,10 +451,7 @@ def simulator(trial_parameters):
     for cycle in solution.cycles:
         t_eval = t0 + cycle["Time [h]"].entries * 3600.0
         u_eval = calculate_desired_voltage(
-            cycle,
-            t_eval,
-            1.0,  # voltage_scale
-            True,  # overpotential
+            cycle, t_eval - t0, voltage_scale=1, overpotential=True
         )
         sim_data[0].append(t_eval)
         # Add some noise to imitate the measurement (1 sigma ̂= 0.1 mV).
