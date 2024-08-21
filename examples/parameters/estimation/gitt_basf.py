@@ -422,9 +422,8 @@ def simulator(trial_parameters):
             ] = (
                 trial_parameters[elec_sign + "electrode Bruggeman coefficient"]
             )
-    param = {name: trial_parameters[name] for name in solver_free_parameters}
     if parameter_noise:
-        param.update({
+        trial_parameters.update({
             "Cation transference number":
                 t_plus_noise_generator(),
             "Negative electrode Bruggeman coefficient":
@@ -433,7 +432,8 @@ def simulator(trial_parameters):
                 beta_p_noise_generator(),
         })
     elif soc_dependent_estimation:
-        param.update(parameter_estimates)
+        trial_parameters.update(parameter_estimates)
+    param = {name: trial_parameters[name] for name in solver_free_parameters}
     # Fail silently if the simulation did not work.
     try:
         solution = solver(
