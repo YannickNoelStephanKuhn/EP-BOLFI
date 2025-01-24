@@ -1,4 +1,4 @@
-"""!@package ep_bolfi.models.assess_effective_parameters
+"""
 Evaluates a parameter set for, e.g., overpotential and capacity.
 """
 
@@ -12,15 +12,17 @@ plt.style.use("default")
 
 
 class Effective_Parameters:
-    """!@brief Calculates, stores and prints effective parameters. """
+    """Calculates, stores and prints effective parameters."""
 
     def __init__(self, parameters, working_electrode='both'):
-        """!@brief Preprocesses the model parameters.
-        @param parameters
+        """
+        Preprocesses the model parameters.
+
+        :param parameters:
             A dictionary of parameter values with the parameter names as
             keys. For these names, please refer to
             ep_bolfi.models.standard_parameters.
-        @param working_electrode
+        :param working_electrode:
             When set to either 'negative' or 'positive', the parameters
             will be treated as a half-cell setup with said electrode.
         """
@@ -41,13 +43,15 @@ class Effective_Parameters:
             T_init, thermal_voltage,
         )
 
-        ## The parameter dictionary converted to PyBaMM form.
-        # Convert SubstitutionDict to dict by iterating over it.
         self.parameters = pybamm.ParameterValues({
             k: v for k, v in parameters.items()
         })
-        ## Sets whether full- or half-cell parameters are calculated.
+        """
+        The parameter dictionary converted to PyBaMM form.
+        Convert SubstitutionDict to dict by iterating over it.
+        """
         self.working_electrode = working_electrode
+        """Sets whether full- or half-cell parameters are calculated."""
         if self.working_electrode == 'positive':
             Lₙ = pybamm.Scalar(0)
             εₙ_scalar = pybamm.Scalar(0)
@@ -70,12 +74,11 @@ class Effective_Parameters:
                 βₑₙ_scalar, βₛₙ_scalar, βₑₚ_scalar, βₛₚ_scalar
             )
 
-        ## Negative electrode theoretical capacity.
         self.Qₙ = (1 - εₙ_scalar) * Lₙ_dim * cₙ * zₙ * F * A
-        ## Positive electrode theoretical capacity.
+        """Negative electrode theoretical capacity."""
         self.Qₚ = (1 - εₚ_scalar) * Lₚ_dim * cₚ * zₚ * F * A
+        """Positive electrode theoretical capacity."""
 
-        ## Integration constant for the electrolyte concentration / I.
         self.R_cₑ_0_1 = (
             (1 - t_plus(cₑ_init)) / (6 * Dₑ(cₑ_init, T_init) * γₑ) * (
                 2 * Lₚ**2 / εₚ_scalar**βₑₚ_scalar
@@ -83,44 +86,50 @@ class Effective_Parameters:
                 + 3 * (Lₙ**2 - Lₚ**2 + 1) / εₛ_scalar**βₑₛ_scalar
             )
         )
-        ## Electrolyte concentration / I at the negative electrode.
+        """
+        Integration constant for the electrolyte concentration / I.
+        """
         self.R_bar_cₑₙ_1 = (
             (1 - t_plus(cₑ_init)) / (6 * Dₑ(cₑ_init, T_init) * γₑ) * (
                 2 * Lₙ / εₙ_scalar**βₑₙ_scalar
                 - 6 * Lₙ / εₛ_scalar**βₑₛ_scalar
             ) + self.R_cₑ_0_1
         )
-        ## Electrolyte concentration / I at the positive electrode.
+        """Electrolyte concentration / I at the negative electrode."""
         self.R_bar_cₑₚ_1 = (
             (1 - t_plus(cₑ_init)) / (6 * Dₑ(cₑ_init, T_init) * γₑ) * (
                 -2 * Lₚ / εₚ_scalar**βₑₚ_scalar
                 - 6 * (1 - Lₚ) / εₛ_scalar**βₑₛ_scalar
             ) + self.R_cₑ_0_1
         )
+        """Electrolyte concentration / I at the positive electrode."""
         if self.working_electrode == 'positive':
-            ## Effective resistance of the negative electrode.
             self.R_bar_φₛₙ_1 = -Lₙ / (σₙ * Cₑ)
+            """Effective resistance of the negative electrode."""
         else:
             self.R_bar_φₛₙ_1 = -Lₙ / (
                 3 * σₙ * (1 - εₙ_scalar)**βₛₙ_scalar * Cₑ
             )
         if self.working_electrode == 'negative':
-            ## Effective resistance of the positive electrode.
             self.R_bar_φₛₚ_1 = Lₚ / (
                 3 * σₚ * (1 - εₚ_scalar)**βₛₚ_scalar * Cₑ
             )
+            """Effective resistance of the positive electrode."""
         else:
             self.R_bar_φₛₚ_1 = Lₚ / (3 * σₚ * (1 - εₚ_scalar)**βₛₚ_scalar * Cₑ)
 
-        ## Negative electrode resistance (as calculated by the SPMe(S)).
         self.Rₙₛ = self.eval(thermal_voltage) * self.eval(
             -Lₙ / (3 * (1 - εₙ_scalar)**βₛₙ_scalar * σₙ)
         )
-        ## Positive electrode resistance (as calculated by the SPMe(S)).
+        """
+        Negative electrode resistance (as calculated by the SPMe(S)).
+        """
         self.Rₚₛ = self.eval(thermal_voltage) * self.eval(
             -Lₚ / (3 * (1 - εₚ_scalar)**βₛₚ_scalar * σₚ)
         )
-        ## Electrolyte resistance (as calculated by the SPMe(S)).
+        """
+        Positive electrode resistance (as calculated by the SPMe(S)).
+        """
         self.Rₑ = self.eval(thermal_voltage * Cₑ) * self.eval(
             (2 * (1 - t_plus(cₑ_init)) * one_plus_dlnf_dlnc(cₑ_init))
             * (self.R_bar_cₑₚ_1 - self.R_bar_cₑₙ_1)
@@ -130,8 +139,8 @@ class Effective_Parameters:
                 + Lₛ / εₛ_scalar**βₑₛ_scalar
             ) / (κₑ(cₑ_init, T_init) * Cₑ * κₑ_hat)
         )
+        """Electrolyte resistance (as calculated by the SPMe(S))."""
 
-        ## SPM(e) negative electrode exchange-current.
         self.iₛₑₙ = lambda ηₙ: (
             self.eval(
                 (γₙ / Cᵣₙ) * iₛₑₙ_0(cₑ_init, SOCₙ_init(0), cₙ, T_init)
@@ -140,7 +149,7 @@ class Effective_Parameters:
                 - np.exp(self.eval(-αₚₙ * zₙ) * ηₙ)
             )
         )
-        ## SPM(e) positive electrode exchange-current.
+        """SPM(e) negative electrode exchange-current."""
         self.iₛₑₚ = lambda ηₚ: (
             self.eval(
                 (γₚ / Cᵣₚ) * iₛₑₚ_0(cₑ_init, SOCₚ_init(1), cₚ, T_init)
@@ -149,19 +158,24 @@ class Effective_Parameters:
                 - np.exp(self.eval(-αₚₚ * zₚ) * ηₚ)
             )
         )
+        """SPM(e) positive electrode exchange-current."""
 
     def eval(self, expression):
-        """!@brief Short-hand for PyBaMM symbol evaluation.
-        @param expression
+        """
+        Short-hand for PyBaMM symbol evaluation.
+
+        :param expression:
             A pybamm.Symbol.
-        @return
+        :returns:
             The numeric value of "expression".
         """
         return self.parameters.process_symbol(expression).evaluate()
 
     def print(self, c_rates=[0.1, 0.2, 0.5, 1.0]):
-        """!@brief Prints the voltage losses for the given C-rates.
-        @param c_rates
+        """
+        Prints the voltage losses for the given C-rates.
+
+        :param c_rates:
             The C-rates (as fraction of "Typical current [A]").
         """
 
@@ -244,7 +258,8 @@ class Effective_Parameters:
         #         ) - bar_ηₙ_1 - bar_cₑₙ_1 / self.eval(zₙ)
         #         - self.eval(2 * (1 - t_plus(cₑ_init))
         #                     * one_plus_dlnf_dlnc(cₑ_init)) * bar_cₑₙ_1
-        #         - c_rates / self.eval(κₑ_hat * Cₑ * κₑ(cₑ_init, T_init))
+        #         - c_rates
+        #         / self.eval(κₑ_hat * Cₑ * κₑ(cₑ_init, T_init))
         #         * self.eval((-Lₙ / (3 * εₙ_scalar**βₑₙ_scalar)
         #                     + Lₙ / εₛ_scalar**βₑₛ_scalar))
         #     )

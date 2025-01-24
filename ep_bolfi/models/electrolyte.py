@@ -1,4 +1,4 @@
-"""!@package ep_bolfi.models.electrolyte
+"""
 Contains a PyBaMM-compatible electrolyte model.
 """
 
@@ -30,7 +30,9 @@ plt.style.use("default")
 
 
 class Electrolyte_internal(pybamm.BaseSubModel):
-    """!@brief Defining equations for a symmetric Li cell with electrolyte.
+    """
+    Defining equations for a symmetric Li cell with electrolyte.
+
     Reference
     ----------
     SG Marquis, V Sulzer, R Timms, CP Please and SJ Chapman.
@@ -46,29 +48,33 @@ class Electrolyte_internal(pybamm.BaseSubModel):
         options={},
         build=True
     ):
-        """!@brief Sets the model properties.
-        @param param
+        """
+        Sets the model properties.
+
+        :param param:
             A class containing all the relevant parameters for this
             model. For example, models.standard_parameters represents a
             valid choice for this parameter.
-        @param pybamm_control
+        :param pybamm_control:
             Per default False, which indicates that the current is given
             as a function. If set to True, this model is compatible with
             PyBaMM experiments, e.g. CC-CV simulations. The current is
             then a variable and it or voltage can be fixed functions.
-        @param options
+        :param options:
             Not used; only here for compatibility with the base class.
-        @param build
+        :param build:
             Not used; only here for compatibility with the base class.
         """
 
         super().__init__(param)
-        ## Current is fixed if False and a variable if True.
         self.pybamm_control = pybamm_control
+        """Current is fixed if False and a variable if True."""
 
     def get_fundamental_variables(self):
-        """!@brief Builds all relevant model variables' symbols.
-        @return
+        """
+        Builds all relevant model variables' symbols.
+
+        :returns:
             A dictionary with the variables' names as keys and their
             symbols (of type pybamm.Symbol) as values.
         """
@@ -265,11 +271,13 @@ class Electrolyte_internal(pybamm.BaseSubModel):
         return variables
 
     def get_coupled_variables(self, variables):
-        """!@brief Builds all model symbols that rely on other models.
-        @param variables
+        """
+        Builds all model symbols that rely on other models.
+
+        :param variables:
             A dictionary containing at least all variable symbols that
             are required for the variable symbols built here.
-        @return
+        :returns:
             A dictionary with the new variables' names as keys and their
             symbols (of type pybamm.Symbol) as values.
         """
@@ -337,7 +345,16 @@ class Electrolyte_internal(pybamm.BaseSubModel):
         }
 
     def set_rhs(self, variables):
-        """!@brief Sets up the right-hand-side equations in self.rhs. """
+        """
+        Sets up the right-hand-side equations in self.rhs.
+
+        :param variables:
+            A dictionary containing at least all variable symbols that
+            are required for the variable symbols built here.
+        :returns:
+            A dictionary with the solvable variables' names as keys and
+            their right-hand-sides as values.
+        """
 
         t = variables["Time [h]"]
         if self.pybamm_control:
@@ -363,7 +380,7 @@ class Electrolyte_internal(pybamm.BaseSubModel):
         self.rhs[cₑ] = (1 / ε) * (-pybamm.div(Nₑ) / Cₑ + iₛₑ / γₑ)
 
     def set_algebraic(self, variables):
-        """!@brief Sets up the algebraic equations in self.algebraic. """
+        """Sets up the algebraic equations in self.algebraic."""
 
         if self.pybamm_control:
             I_cell = variables["Total current density"]
@@ -382,7 +399,16 @@ class Electrolyte_internal(pybamm.BaseSubModel):
         self.algebraic[φₑ] = pybamm.div(iₑ) - iₛₑ
 
     def set_boundary_conditions(self, variables):
-        """!@brief Sets the (self.)boundary(_)conditions. """
+        """
+        Sets the (self.)boundary(_)conditions.
+
+        :param variables:
+            A dictionary containing at least all variable symbols that
+            are required for the variable symbols built here.
+        :returns:
+            A dictionary with the solvable variables' names as keys and
+            their boundary conditions as values.
+        """
 
         if self.pybamm_control:
             I_cell = variables["Total current density"]
@@ -428,7 +454,16 @@ class Electrolyte_internal(pybamm.BaseSubModel):
         }
 
     def set_initial_conditions(self, variables):
-        """!@brief Sets the (self.)initial(_)conditions. """
+        """
+        Sets the (self.)initial(_)conditions.
+
+        :param variables:
+            A dictionary containing at least all variable symbols that
+            are required for the variable symbols built here.
+        :returns:
+            A dictionary with the solvable variables' names as keys and
+            their initial conditions as values.
+        """
 
         # Initial conditions for rhs: actual start values.
         # Initial conditions for algebraic: help for root-finding.
@@ -449,7 +484,16 @@ class Electrolyte_internal(pybamm.BaseSubModel):
         self.initial_conditions[cₑ] = cₑ_init
 
     def set_events(self, variables):
-        """!@brief Sets up the termination switches in self.events. """
+        """
+        Sets up the termination switches in self.events.
+
+        :param variables:
+            A dictionary containing at least all variable symbols that
+            are required for the variable symbols built here.
+        :returns:
+            A dictionary with the event names as keys and their trigger
+            conditions as values.
+        """
 
         SOCₙ_surf = pybamm.Scalar(0)
         SOCₚ_surf = pybamm.Scalar(0)
@@ -483,7 +527,7 @@ class Electrolyte_internal(pybamm.BaseSubModel):
 
 
 class Electrolyte(pybamm.BaseBatteryModel):
-    """!@brief Electrolyte model assuming a symmetric Li-metal cell. """
+    """Electrolyte model assuming a symmetric Li-metal cell."""
 
     def __init__(
         self,
@@ -492,32 +536,33 @@ class Electrolyte(pybamm.BaseBatteryModel):
         options={},
         build=True
     ):
-        """!@brief Sets up an electrolyte model usable by PyBaMM.
-        @param pybamm_control
+        """
+        Sets up an electrolyte model usable by PyBaMM.
+
+        :param pybamm_control:
             Per default False, which indicates that the current is given
             as a function. If set to True, this model is compatible with
             PyBaMM experiments, e.g. CC-CV simulations. The current is
             then a variable and it or voltage can be fixed functions.
-        @param name
+        :param name:
             The optional name of the model. Default is "electrolyte".
-        @param options
+        :param options:
             Used for external circuit if pybamm_control is True.
-        @param build
+        :param build:
             Per default True, which builds the model equations right
             away. If set to False, they remain as symbols for later.
         """
 
         super().__init__(name=name)
-        ## Current is fixed if False and a variable if True.
         self.pybamm_control = pybamm_control
+        """Current is fixed if False and a variable if True."""
         pybamm.citations.register("Marquis2019")
         self.options = options
 
-        ## Contains all the relevant parameters for this model.
         self.param = standard_parameters
-        ## Non-dimensionalization timescale.
+        """Contains all the relevant parameters for this model."""
         self.timescale = τᵈ
-        ## Non-dimensionalization length scales.
+        """Non-dimensionalization timescale."""
         self.length_scales = {
             "negative electrode": L_dim,
             "separator": L_dim,
@@ -527,6 +572,7 @@ class Electrolyte(pybamm.BaseBatteryModel):
             # "current collector y": self.param.L_y,
             # "current collector z": self.param.L_z,
         }
+        """Non-dimensionalization length scales."""
         self.set_standard_output_variables()
 
         if self.pybamm_control:
@@ -539,7 +585,9 @@ class Electrolyte(pybamm.BaseBatteryModel):
             self.build_model()
 
     def set_standard_output_variables(self):
-        """!@brief Adds "the horizontal axis" to self.variables.
+        """
+        Adds "the horizontal axis" to self.variables.
+
         Don't use the super() version of this function, as it
         introduces keys with integer values in self.variables.
         """
@@ -570,11 +618,13 @@ class Electrolyte(pybamm.BaseBatteryModel):
         )
 
     def new_copy(self, build=True):
-        """!@brief Create an empty copy with identical options.
-        @param build
+        """
+        Create an empty copy with identical options.
+
+        :param build:
             If True, the new model gets built right away. This is the
             default behavior. If set to False, it remains as symbols.
-        @return
+        :returns:
             The copy of this model.
         """
 
@@ -606,7 +656,9 @@ class Electrolyte(pybamm.BaseBatteryModel):
         return new_model
 
     def set_voltage_variables(self):
-        """!@brief Adds voltage-specific variables to self.variables.
+        """
+        Adds voltage-specific variables to self.variables.
+
         Override this inherited function, since it adds superfluous
         variables.
         """
@@ -615,7 +667,7 @@ class Electrolyte(pybamm.BaseBatteryModel):
 
     @property
     def default_geometry(self):
-        """!@brief Override: corrects the geometry for half-cells. """
+        """Override: corrects the geometry for half-cells."""
 
         geometry = super().default_geometry
         del geometry["negative electrode"]
