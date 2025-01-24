@@ -68,7 +68,7 @@ def transform_to_unity_interval(segment):
 
 @xmlhelpy.command(
     name='python -m ep_bolfi.kadi_tools.extract_overpotential',
-    version='${VERSION}'
+    version='3.0'
 )
 @xmlhelpy.option(
     'ocv-record',

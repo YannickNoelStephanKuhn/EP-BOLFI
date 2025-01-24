@@ -4,14 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ep-bolfi"
-version = "2.3"
+version = "3.0"
 description = "EP-BOLFI (Expectation Propagation with Bayesian Optimization for Likelihood-Free Inference) extends the simulator optimizer BOLFI with the data featurization of Expectation Propagation."
 readme = "README.md"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Science/Research",
   "Topic :: Scientific/Engineering :: Information Analysis",
-  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "License :: Other/Proprietary License",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
@@ -27,14 +27,17 @@ maintainers = [
 requires-python = ">= 3.8"
 dependencies = [
   'elfi',
+  'h5py',
+  'kadi-apy',
   'matplotlib',
   'numpy',
+  'pyarrow',
   'pybamm',
+  'scikit-learn',
+  'pyimpspec',
   'scipy',
   'sympy',
-  'pyarrow',
-  'pyimpspec',
-  'h5py',
-  'scikit-learn',
   'tabulate',
+  'xmlhelpy',
+  'wheel',
 ]

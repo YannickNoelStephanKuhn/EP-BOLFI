@@ -50,18 +50,14 @@ EP-BOLFI follows the [PEP8 recommendations](https://www.python.org/dev/peps/pep-
 We use [flake8](http://flake8.pycqa.org/en/latest/) to check our PEP8 adherence. To try this on your system, navigate to the ep_bolfi directory in a terminal and type:
 
 ```bash
-flake8 --extend-ignore E266
+flake8
 ```
-
-We ignore the double hashes (E266), since we need them for member documentation with Doxygen. The .flake8 file does this automatically, but only in the top folder.
 
 ### Documentation
 
-The documentation is generated with [Doxygen](https://www.doxygen.nl/) from the source code.
+The documentation is generated with [Sphinx](https://www.sphinx-doc.org/) from the source code.
 
-Hence, please copy the structure of the in-code documentation for your own comments. Here are some less obvious technicalities:
- - Member documentation is supposed to work with something but ##, but it doesn't. Hence please use ## for comments, or they will not show up tin the documentation.
- - Empty lines in docstrings (the """ ... """ ones) make Doxygen treat everything after them as plain text. So do not put empty lines in docstrings.
+Hence, please write the in-code documentation for your own comments as [reStructuredText](https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html).
 
 ## Dependencies and reusing code
 
@@ -80,7 +76,7 @@ pip install build
 python3 -m build
 ```
 
-The wheel file should be at dist/ep_bolfi-${VERSION}-py3-none-any.whl. Please do not commit these.
+The wheel file should be at dist/ep_bolfi-3.0-py3-none-any.whl. Please do not commit these.
 
 ## Infrastructure
 

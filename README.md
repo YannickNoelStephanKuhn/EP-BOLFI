@@ -24,6 +24,42 @@ The examples currently comprise of the code used in the [EP-BOLFI publication](h
 
 Please have a look at [the setup example](Python/parameters/estimation/). [gitt_basf.py](Python/parameters/estimation/gitt_basf.py) contains the preprocessing of the GITT dataset and a GITT simulator. [gitt.py](Python/parameters/estimation/gitt.py) contains one possible definition of features in a GITT measurement. For performing the optimization, please have a look at run_estimation.py. If you wish to re-use an optimization result as starting value, use .Q, .r, .Q_features and .r_features and pass them to the initialization of the EP-BOLFI object.
 
+## Using the Kadi4Mat tools
+
+The files in (ep_bolfi/kadi_tools) are command-line tools. These command-line tools are designed to interface with the database software [Kadi4Mat](https://kadi.iam-cms.kit.edu/), of which we have an internal instance running at (https://kadi-dlr.hiu-batteries.de/).
+
+In order to use these command-line tools in the workflow toolchain of Kadi4Mat, they are implemented with the library [xmlhelpy](https://gitlab.com/iam-cms/workflows/xmlhelpy) which extends the [Click](https://github.com/pallets/click) library for command-line tools with the option to generate machine-readable representations of command-line tools. You can find these representations in `ep_bolfi/kadi_tools/xml_representations`, but only when installing a Release. If they are missing in your installation, please refer to the manual instructions in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+[KadiStudio](https://bwsyncandshare.kit.edu/s/cJSZrE6fDTR6cLQ) can import the .py files, or on a Kadi4Mat instance with the online workflow editor enabled, the .xml files can be imported by uploading them to any Record on the respective Kadi4Mat instance. The command-line tools are then available as building blocks for workflows.
+
+For executing workflows that contain one of these tools, the command `python` has to launch a Python environment with this library installed. Either bake the activation of said environment into the convenience scripts in the following section, or make your command line automatically activate it by following these steps.
+
+On Linux:
+```bash
+nano ~/.profile
+```
+Then add the following line to the bottom of the file:
+```
+source ~/ep_bolfi/bin/activate
+```
+
+On Windows:
+```powershell
+notepad $((Split-Path $profile -Parent) + "\profile.ps1")
+```
+Then add the following line to the bottom of the text file:
+```
+. .\ep_bolfi\Scripts\activate
+```
+
+In the case where spurious lines like "warning in ...: failed to import cython module: falling back to numpy" show up and break workflow scripts, these are due to an unfortunate design decision in GPy. You need to install GPy from source like so to improve performance as well:
+
+```bash
+git clone https://github.com/SheffieldML/GPy.git
+cd GPy
+pip install .
+```
+
 ## Installation
 
 EP-BOLFI requires [Python 3.9](https://www.python.org/downloads/release/python-3913/). Then, install EP-BOLFI and its dependencies via pip:
@@ -48,7 +84,7 @@ py -3.9 -m venv ep_bolfi
 Then install the dependencies and package:
 ```bash
 pip install -r requirements.txt
-pip install ep_bolfi-${VERSION}-py3-none-any.whl
+pip install ep_bolfi-3.0py3-none-any.whl
 ```
 
 ## Contributing to EP-BOLFI
