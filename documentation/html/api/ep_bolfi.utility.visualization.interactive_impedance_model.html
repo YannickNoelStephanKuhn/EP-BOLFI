@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ep_bolfi.utility.visualization.interactive_impedance_model &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=110ea713"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ep_bolfi.utility.visualization.make_segments" href="ep_bolfi.utility.visualization.make_segments.html" />
+    <link rel="prev" title="ep_bolfi.utility.visualization.fit_and_plot_OCV" href="ep_bolfi.utility.visualization.fit_and_plot_OCV.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ep-bolfi-utility-visualization-interactive-impedance-model">
+<h1>ep_bolfi.utility.visualization.interactive_impedance_model<a class="headerlink" href="#ep-bolfi-utility-visualization-interactive-impedance-model" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="ep_bolfi.utility.visualization.interactive_impedance_model">
+<span class="sig-prename descclassname"><span class="pre">ep_bolfi.utility.visualization.</span></span><span class="sig-name descname"><span class="pre">interactive_impedance_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measured_impedances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknowns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_unknowns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">three_electrode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimensionless_reference_electrode_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_dl_and_sei</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.visualization.interactive_impedance_model" title="Link to this definition">¶</a></dt>
+<dd><p>Generates a coarse GUI for manual impedance model parameterization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frequencies</strong> – The frequencies to plot the model over.</p></li>
+<li><p><strong>measured_impedance</strong> – The impedance to compare against. Has to match <em>frequencies</em>.</p></li>
+<li><p><strong>parameters</strong> – The model parameters. See <code class="docutils literal notranslate"><span class="pre">models.analytic_impedance</span></code>.</p></li>
+<li><p><strong>unknowns</strong> – List of parameter names that will be adjustable via sliders.</p></li>
+<li><p><strong>transform_unknowns</strong> – Optional parameter transformations, for e.g. log sliders.
+Dictionary matching <em>unknowns</em>, with values being 2-tuples:
+the first entry being the slider-to-value transform, and
+the second entry being the value-to-slider transform.</p></li>
+<li><p><strong>three_electrode</strong> – With None, does nothing (i.e., cell potentials are used). If
+set to either ‘positive’ or ‘negative’, instead of cell
+potentials, the base for the displayed voltage will be the
+potential of the ‘positive’ or ‘negative’ electrode against a
+reference electrode. For placement of said reference electrode,
+please refer to <em>dimensionless_reference_electrode_location</em>.</p></li>
+<li><p><strong>dimensionless_reference_electrode_location</strong> – The location of the reference electrode, given as a scalar
+between 0 (placed at the point where negative electrode and
+separator meet) and 1 (placed at the point where positive
+electrode and separator meet). Defaults to 0.5 (in the middle).</p></li>
+<li><p><strong>with_dl_and_sei</strong> – If set to True, the Electrochemical Double Layer and Solid
+Electrolyte Interphase models in <code class="docutils literal notranslate"><span class="pre">models.analytic_impedance</span></code>
+get added to the simulation.</p></li>
+<li><p><strong>verbose</strong> – If True, each slider change triggers a log of some
+characteristic model properties to stdout.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ep_bolfi.html">ep_bolfi</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.models.html">ep_bolfi.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.optimization.html">ep_bolfi.optimization</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ep_bolfi.utility.html">ep_bolfi.utility</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.html">ep_bolfi.utility.dataset_formatting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.html">ep_bolfi.utility.fitting_functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.preprocessing.html">ep_bolfi.utility.preprocessing</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="ep_bolfi.utility.visualization.html">ep_bolfi.utility.visualization</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.bode_plot.html">ep_bolfi.utility.visualization.bode_plot</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.cc_cv_visualization.html">ep_bolfi.utility.visualization.cc_cv_visualization</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.colorline.html">ep_bolfi.utility.visualization.colorline</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.fit_and_plot_OCV.html">ep_bolfi.utility.visualization.fit_and_plot_OCV</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">ep_bolfi.utility.visualization.interactive_impedance_model</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ep_bolfi.utility.visualization.interactive_impedance_model"><code class="docutils literal notranslate"><span class="pre">interactive_impedance_model()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.make_segments.html">ep_bolfi.utility.visualization.make_segments</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.nyquist_plot.html">ep_bolfi.utility.visualization.nyquist_plot</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.plot_ICA.html">ep_bolfi.utility.visualization.plot_ICA</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.plot_OCV_from_CC_CV.html">ep_bolfi.utility.visualization.plot_OCV_from_CC_CV</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.plot_comparison.html">ep_bolfi.utility.visualization.plot_comparison</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.plot_measurement.html">ep_bolfi.utility.visualization.plot_measurement</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.push_apart_text.html">ep_bolfi.utility.visualization.push_apart_text</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.set_fontsize.html">ep_bolfi.utility.visualization.set_fontsize</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.update_legend.html">ep_bolfi.utility.visualization.update_legend</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.update_limits.html">ep_bolfi.utility.visualization.update_limits</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.visualize_correlation.html">ep_bolfi.utility.visualization.visualize_correlation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="ep_bolfi.html">ep_bolfi</a><ul>
+  <li><a href="ep_bolfi.utility.html">ep_bolfi.utility</a><ul>
+  <li><a href="ep_bolfi.utility.visualization.html">ep_bolfi.utility.visualization</a><ul>
+      <li>Previous: <a href="ep_bolfi.utility.visualization.fit_and_plot_OCV.html" title="previous chapter">ep_bolfi.utility.visualization.fit_and_plot_OCV</a></li>
+      <li>Next: <a href="ep_bolfi.utility.visualization.make_segments.html" title="next chapter">ep_bolfi.utility.visualization.make_segments</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/ep_bolfi.utility.visualization.interactive_impedance_model.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

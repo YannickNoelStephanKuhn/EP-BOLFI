@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=110ea713"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ep_bolfi.kadi_tools.plot_measurement" href="ep_bolfi.kadi_tools.plot_measurement.html" />
+    <link rel="prev" title="ep_bolfi.kadi_tools.gitt_visualization" href="ep_bolfi.kadi_tools.gitt_visualization.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ep-bolfi-kadi-tools-gitt-visualization-plot-voltage-components">
+<h1>ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components<a class="headerlink" href="#ep-bolfi-kadi-tools-gitt-visualization-plot-voltage-components" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components">
+<span class="sig-prename descclassname"><span class="pre">ep_bolfi.kadi_tools.gitt_visualization.</span></span><span class="sig-name descname"><span class="pre">plot_voltage_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_by_electrode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">three_electrode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimensionless_reference_electrode_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs_fill</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a plot showing the component overpotentials that make up
+the voltage</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<dl>
+<dt>input_data<span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">pybamm.Solution</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">pybamm.Simulation</span></code></span></dt><dd><p>Solution or Simulation object from which to extract voltage
+components.</p>
+</dd>
+<dt>ax<span class="classifier">matplotlib Axis, optional</span></dt><dd><p>The axis on which to put the plot. If None, a new figure and
+axis is created.</p>
+</dd>
+<dt>show_legend<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the legend. Default is True</p>
+</dd>
+<dt>split_by_electrode<span class="classifier">bool, optional</span></dt><dd><p>Whether to show the overpotentials for the negative and positive
+electrodes
+separately. Default is False.</p>
+</dd>
+<dt>three_electrode<span class="classifier">str, optional</span></dt><dd><p>With None, does nothing (i.e., cell potentials are used). If
+set to either ‘positive’ or ‘negative’, instead of cell
+potentials, the base for the displayed voltage will be the
+potential of the ‘positive’ or ‘negative’ electrode against a
+reference electrode. For placement of said reference electrode,
+please refer to “dimensionless_reference_electrode_location”.</p>
+</dd>
+<dt>dimensionless_reference_electrode_location<span class="classifier">float, optional</span></dt><dd><p>The location of the reference electrode, given as a scalar
+between 0 (placed at the point where negative electrode and
+separator meet) and 1 (placed at the point where positive
+electrode and separator meet). Defaults to 0.5 (in the middle).</p>
+</dd>
+<dt>show_plot<span class="classifier">bool, optional</span></dt><dd><p>Whether to show the plots. Default is True. Set to False if you
+want to only display the plot after plt.show() has been called.</p>
+</dd>
+<dt>kwargs_fill</dt><dd><p>Keyword arguments: <code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.axes.Axes.fill_between</span></code></p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ep_bolfi.html">ep_bolfi</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points.html">ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.combine_measurement_segments.html">ep_bolfi.kadi_tools.combine_measurement_segments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.convert_csv_to_parquet.html">ep_bolfi.kadi_tools.convert_csv_to_parquet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.eis_parameterization.html">ep_bolfi.kadi_tools.eis_parameterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.eis_preprocessing.html">ep_bolfi.kadi_tools.eis_preprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.eis_visualization.html">ep_bolfi.kadi_tools.eis_visualization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.extract_measurement_protocol.html">ep_bolfi.kadi_tools.extract_measurement_protocol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.extract_ocv_curve.html">ep_bolfi.kadi_tools.extract_ocv_curve</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.extract_overpotential.html">ep_bolfi.kadi_tools.extract_overpotential</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.fit_and_plot_ocv.html">ep_bolfi.kadi_tools.fit_and_plot_ocv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.fit_exponential_decay.html">ep_bolfi.kadi_tools.fit_exponential_decay</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.gitt_parameterization.html">ep_bolfi.kadi_tools.gitt_parameterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.gitt_preprocessing.html">ep_bolfi.kadi_tools.gitt_preprocessing</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="ep_bolfi.kadi_tools.gitt_visualization.html">ep_bolfi.kadi_tools.gitt_visualization</a><ul class="current">
+<li class="toctree-l5 current"><a class="current reference internal" href="#">ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components"><code class="docutils literal notranslate"><span class="pre">plot_voltage_components()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.plot_measurement.html">ep_bolfi.kadi_tools.plot_measurement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.read_csv_datasets.html">ep_bolfi.kadi_tools.read_csv_datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.read_hdf5_datasets.html">ep_bolfi.kadi_tools.read_hdf5_datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.read_measurement_from_parquet.html">ep_bolfi.kadi_tools.read_measurement_from_parquet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.select_measurement_segments.html">ep_bolfi.kadi_tools.select_measurement_segments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.store_measurement_as_parquet.html">ep_bolfi.kadi_tools.store_measurement_as_parquet</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.models.html">ep_bolfi.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.optimization.html">ep_bolfi.optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.utility.html">ep_bolfi.utility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="ep_bolfi.html">ep_bolfi</a><ul>
+  <li><a href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a><ul>
+  <li><a href="ep_bolfi.kadi_tools.gitt_visualization.html">ep_bolfi.kadi_tools.gitt_visualization</a><ul>
+      <li>Previous: <a href="ep_bolfi.kadi_tools.gitt_visualization.html" title="previous chapter">ep_bolfi.kadi_tools.gitt_visualization</a></li>
+      <li>Next: <a href="ep_bolfi.kadi_tools.plot_measurement.html" title="next chapter">ep_bolfi.kadi_tools.plot_measurement</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

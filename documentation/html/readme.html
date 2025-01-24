@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ReadMe &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=110ea713"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API" href="api.html" />
+    <link rel="prev" title="EP-BOLFI documentation" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="readme">
+<h1>ReadMe<a class="headerlink" href="#readme" title="Link to this heading">¶</a></h1>
+<p># EP-BOLFI</p>
+<p>EP-BOLFI (Expectation Propagation with Bayesian Optimization for Likelihood-Free Inference) extends the simulator optimizer BOLFI with the data featurization of Expectation Propagation. EP-BOLFI inherits the advantages of both: high stability to measurement noise and considerable reduction of computational effort. The performance is one to two orders of magnitude better than Markov-Chain Monte Carlo, counted in the number of simulator evaluations required.</p>
+<p>## Documentation</p>
+<p>[ep_bolfi](ep_bolfi/) contains the EP-BOLFI algorithm, a few example models, and utility functions that cover fitting functions, datafile imports, dataset processing, and visualization. For further details, please refer to [the HTML documentation on GitLab Pages](<a class="reference external" href="https://cec.pages.gitlab.dlr.de/bte/ep-bolfi/">https://cec.pages.gitlab.dlr.de/bte/ep-bolfi/</a>).</p>
+<p>## Examples</p>
+<dl class="simple">
+<dt>The [examples](examples/) currently comprise of the code used in the [EP-BOLFI publication](<a class="reference external" href="https://doi.org/10.48550/arXiv.2208.03289">https://doi.org/10.48550/arXiv.2208.03289</a>). Apart from the SPMe benchmark, they analyze a GITT dataset provided by BASF. You can find the dataset at the DOI [10.5281/zenodo.7478267](<a class="reference external" href="https://doi.org/10.5281/zenodo.7478267">https://doi.org/10.5281/zenodo.7478267</a>). If you wish to re-run the parameterization yourself, copy the contents of GITT_data_and_parameterization_info.zip into [examples](examples/) first.</dt><dd><ul class="simple">
+<li><p>To perform the SPMe benchmarks from Aitio et al., please use spme_benchmark_multimodal.py and spme_benchmark_unimodal.py. To calculate the tabulated results presented in the article, use evaluate_spme_benchmark_confidence.py.</p></li>
+<li><p>To preprocess the OCV curves, please use ocv_from_cccv_and_gitt.py.</p></li>
+<li><p>To view the GITT data, please use measurement_plot.py.</p></li>
+<li><p>To estimate parameters from the GITT data from BASF, use run_estimation.py, and after that collect_gitt_estimation_results.py. This may take more than a week to run.</p></li>
+<li><p>To get the tabulated results for the GITT parameterization, please use evaluate_gitt_estimation_confidence.py.</p></li>
+<li><p>To perform the verification of the GITT data parameterization, please use verify_estimation.py. This may take more than a week to run.</p></li>
+<li><p>To analyze the correlation matrix for the 7-parameter estimation, please use correlation_visualization.py.</p></li>
+<li><p>To plot the results from the GITT estimation procedure, please use gitt_visualization.py.</p></li>
+<li><p>To analyze the precision and reliability of the GITT estimation procedure, please use calculate_experimental_and_simulated_features.py. To plot this analysis, please use analytic_vs_epbolfi_results.py and sensitivity_visualization.py.</p></li>
+<li><p>To plot the joint resistance of the two exchange-current densities, please use joint_resistance.py.</p></li>
+</ul>
+</dd>
+</dl>
+<p>## Using EP-BOLFI to process your measurements with your model</p>
+<p>Please have a look at [the setup example](examples/parameters/estimation/). [gitt_basf.py](examples/parameters/estimation/gitt_basf.py) contains the preprocessing of the GITT dataset and a GITT simulator. [gitt.py](examples/parameters/estimation/gitt.py) contains one possible definition of features in a GITT measurement. For performing the optimization, please have a look at run_estimation.py. If you wish to re-use an optimization result as starting value, use .Q, .r, .Q_features and .r_features and pass them to the initialization of the EP-BOLFI object.</p>
+<p>## Installation</p>
+<p>EP-BOLFI requires [Python 3.8 or greater](<a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>). Just download the newest Release .whl file and [requirements.txt](requirements.txt). Install the dependencies with [requirements.txt](requirements.txt) via [pip](<a class="reference external" href="https://pypi.org/project/pip/">https://pypi.org/project/pip/</a>), then install the .whl file. In case you want to build the package from source, please refer to [CONTRIBUTING.md](CONTRIBUTING.md#building-from-source).</p>
+<p>### Using pip</p>
+<p>Create a virtual environment and activate it. On Linux and Mac:
+<code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">python3.9</span> <span class="pre">-m</span> <span class="pre">venv</span> <span class="pre">ep_bolfi</span>
+<span class="pre">source</span> <span class="pre">ep_bolfi/bin/activate</span>
+<span class="pre">`</span></code>
+On Windows:
+<code class="docutils literal notranslate"><span class="pre">`powershell</span>
+<span class="pre">py</span> <span class="pre">-3.9</span> <span class="pre">-m</span> <span class="pre">venv</span> <span class="pre">ep_bolfi</span>
+<span class="pre">.</span> <span class="pre">.\ep_bolfi\Scripts\activate</span>
+<span class="pre">`</span></code></p>
+<p>Then install the dependencies and package:
+<code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">ep_bolfi-${VERSION}-py3-none-any.whl</span>
+<span class="pre">`</span></code></p>
+<p>### Using [miniforge](<a class="reference external" href="https://github.com/conda-forge/miniforge">https://github.com/conda-forge/miniforge</a>)</p>
+<p>On Windows, first initialize conda to work with PowerShell, assuming you work with PowerShell:
+<code class="docutils literal notranslate"><span class="pre">`powershell</span>
+<span class="pre">conda</span> <span class="pre">init</span> <span class="pre">powershell</span>
+<span class="pre">`</span></code></p>
+<p>Create a new virtual environment:
+<code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">ep_bolfi</span> <span class="pre">python=3.9</span>
+<span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">ep_bolfi</span>
+<span class="pre">`</span></code>
+and install the dependencies there. The fastest way is to use pip to install the packages:
+<code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span>
+<span class="pre">`</span></code>
+If you want to use the conda package manager as much as possible, use these lines instead:
+<code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">conda</span> <span class="pre">env</span> <span class="pre">update</span> <span class="pre">--file</span> <span class="pre">ep_bolfi.yml</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">pip_only_requirements.txt</span>
+<span class="pre">`</span></code></p>
+<p>Then install the dependencies and package:
+<code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">conda</span> <span class="pre">install</span> <span class="pre">ep_bolfi-${VERSION}-py39_0.tar.bz2</span>
+<span class="pre">`</span></code></p>
+<p>### Using the Kadi4Mat tools</p>
+<p>The files in (ep_bolfi/kadi_tools) are command-line tools. These command-line tools are designed to interface with the database software [Kadi4Mat](<a class="reference external" href="https://kadi.iam-cms.kit.edu/">https://kadi.iam-cms.kit.edu/</a>), of which we have an internal instance running at (<a class="reference external" href="https://kadi-dlr.hiu-batteries.de/">https://kadi-dlr.hiu-batteries.de/</a>).</p>
+<p>In order to use these command-line tools in the workflow toolchain of Kadi4Mat, they are implemented with the library [xmlhelpy](<a class="reference external" href="https://gitlab.com/iam-cms/workflows/xmlhelpy">https://gitlab.com/iam-cms/workflows/xmlhelpy</a>) which extends the [Click](<a class="reference external" href="https://github.com/pallets/click">https://github.com/pallets/click</a>) library for command-line tools with the option to generate machine-readable representations of command-line tools. You can find these representations in <cite>ep_bolfi/kadi_tools/xml_representations</cite>, but only when installing a Release. If they are missing in your installation, please refer to the manual instructions in [CONTRIBUTING.md](CONTRIBUTING.md).</p>
+<p>[KadiStudio](<a class="reference external" href="https://bwsyncandshare.kit.edu/s/cJSZrE6fDTR6cLQ">https://bwsyncandshare.kit.edu/s/cJSZrE6fDTR6cLQ</a>) can import the .py files, or on a Kadi4Mat instance with the online workflow editor enabled, the .xml files can be imported by uploading them to any Record on the respective Kadi4Mat instance. The command-line tools are then available as building blocks for workflows.</p>
+<p>For executing workflows that contain one of these tools, the command <cite>python</cite> has to launch a Python environment with this library installed. Either bake the activation of said environment into the convenience scripts in the following section, or make your command line automatically activate it by following these steps.</p>
+<p>On Linux:
+<code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">nano</span> <span class="pre">~/.profile</span>
+<span class="pre">`</span></code>
+Then add the following line to the bottom of the file:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">source</span> <span class="pre">~/ep_bolfi/bin/activate</span>
+<span class="pre">`</span></code></p>
+<p>On Windows:
+<code class="docutils literal notranslate"><span class="pre">`powershell</span>
+<span class="pre">notepad</span> <span class="pre">$((Split-Path</span> <span class="pre">$profile</span> <span class="pre">-Parent)</span> <span class="pre">+</span> <span class="pre">&quot;\profile.ps1&quot;)</span>
+<span class="pre">`</span></code>
+Then add the following line to the bottom of the text file:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">.</span> <span class="pre">.\ep_bolfi\Scripts\activate</span>
+<span class="pre">`</span></code></p>
+<p>In the case where spurious lines like “warning in …: failed to import cython module: falling back to numpy” show up and break workflow scripts, these are due to an unfortunate design decision in GPy. You need to install GPy from source like so to improve performance as well:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/SheffieldML/GPy.git</span>
+<span class="pre">cd</span> <span class="pre">GPy</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">.</span>
+<span class="pre">`</span></code></p>
+<p>For the smoothest installation experience, we recommend using the HPC JUSTUS 2.</p>
+<p>### Convenience scripts to execute Kadi4Mat workflows</p>
+<p>Since [KadiStudio](<a class="reference external" href="https://bwsyncandshare.kit.edu/s/cJSZrE6fDTR6cLQ">https://bwsyncandshare.kit.edu/s/cJSZrE6fDTR6cLQ</a>) is semi-usable at this point in time to work with Kadi4Mat workflows, there are two helper scripts in this repository for executing workflows automatically, including input interactions. First, install the libraries [process engine](<a class="reference external" href="https://gitlab.com/iam-cms/workflows/process-engine">https://gitlab.com/iam-cms/workflows/process-engine</a>) and [process manager](<a class="reference external" href="https://gitlab.com/iam-cms/workflows/process-manager">https://gitlab.com/iam-cms/workflows/process-manager</a>). We recommend Linux or using Linux indirectly via [WSL](<a class="reference external" href="https://learn.microsoft.com/en-us/windows/wsl/install">https://learn.microsoft.com/en-us/windows/wsl/install</a>) on Windows.
+On Linux, (ep_bolfi/utility/execute_workflow_locally.py) can be made into an executable with [PyInstaller](<a class="reference external" href="https://pyinstaller.org/en/stable/">https://pyinstaller.org/en/stable/</a>) that can be registered with your OS or browser to execute workflow files:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pyinstaller</span>
+<span class="pre">pyinstaller</span> <span class="pre">ep_bolfi/utility/execute_workflow_locally.py</span>
+<span class="pre">`</span></code></p>
+<p>You then find the executable inside (dist/execute_workflow_locally/). Do not use (build), and move the whole folder (dist/execute_workflow_locally/) to where you want to store executable, as the executable depends on the folder contents.</p>
+<p>On Windows, use (ep_bolfi/utility/send_workflow_to_wsl.py). It is a wrapper for the case where the process engine and process manager are installed within a WSL on Windows. First, make sure that you installed EP-BOLFI as described above first within WSL. The script assumes you did so within a virtual environment ~/venv in WSL, like so:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">virtualenv</span>
+<span class="pre">cd</span> <span class="pre">~</span>
+<span class="pre">mkdir</span> <span class="pre">venv</span>
+<span class="pre">virtualenv</span> <span class="pre">venv</span>
+<span class="pre">source</span> <span class="pre">venv/bin/activate</span>
+<span class="pre">pip/conda</span> <span class="pre">install</span> <span class="pre">...</span>
+<span class="pre">`</span></code></p>
+<p>Then, instead of (ep_bolfi/utility/execute_workflow_locally.py), you make an executable out of (ep_bolfi/utility/send_workflow_to_wsl.py) in Windows:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`cmd</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pyinstaller</span>
+<span class="pre">pyinstaller</span> <span class="pre">ep_bolfi/utility/send_workflow_to_wsl.py</span>
+<span class="pre">`</span></code></p>
+<p>Then move the folder (dist/send_workflow_to_wsl/) to where you want to store the executable and then register the contained (send_workflow_to_wsl.exe) with your OS or browser to open workflow files. Remember to install and activate [Xming](<a class="reference external" href="http://www.straightrunning.com/XmingNotes/changes.php">http://www.straightrunning.com/XmingNotes/changes.php</a>) if you wish to have graphical outputs.</p>
+<p>## Contributing to EP-BOLFI</p>
+<p>Please refer to the [contributing guidelines](CONTRIBUTING.md) and adhere to the [Code of Conduct](CODE_OF_CONDUCT.md).</p>
+<p>## Licence</p>
+<p>This is a purely internal repository, hence there is no licence. Please note that the lack of a licence bars you from using this code in any way, shape or form outside CEC. Please use the code published on <a class="reference external" href="https://github.com/YannickNoelStephanKuhn/EP-BOLFI">https://github.com/YannickNoelStephanKuhn/EP-BOLFI</a> for those purposes instead.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ReadMe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">EP-BOLFI documentation</a></li>
+      <li>Next: <a href="api.html" title="next chapter">API</a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/readme.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

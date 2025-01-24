@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Contributing &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=110ea713"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="ep_bolfi.utility.visualization.visualize_correlation" href="api/ep_bolfi.utility.visualization.visualize_correlation.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">¶</a></h1>
+<p># Contributing to EP-BOLFI</p>
+<p>If you’d like to contribute to EP-BOLFI, thank you very much and please have a look at the guidelines below.</p>
+<p>## Workflow</p>
+<p>We use [GIT](<a class="reference external" href="https://en.wikipedia.org/wiki/Git">https://en.wikipedia.org/wiki/Git</a>) and [GitLab](<a class="reference external" href="https://en.wikipedia.org/wiki/GitLab">https://en.wikipedia.org/wiki/GitLab</a>) to coordinate our work. When making any kind of update, we try to follow the procedure below.</p>
+<p>### Before you begin</p>
+<ol class="arabic simple">
+<li><p>Create an [issue](<a class="reference external" href="https://docs.gitlab.com/ee/user/project/issues/">https://docs.gitlab.com/ee/user/project/issues/</a>) where new proposals can be discussed before any coding is done.</p></li>
+<li><dl class="simple">
+<dt>Download the source code onto your local system, by cloning the repository:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://gitlab.dlr.de/cec/ep-bolfi</span>
+<span class="pre">`</span></code></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Install the library in editable mode:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">ep-bolfi</span>
+<span class="pre">`</span></code></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Create a branch of this repo, where all changes will be made, and “checkout” that branch so that your changes live in that branch:</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">git</span> <span class="pre">branch</span> <span class="pre">&lt;branch_name&gt;</span>
+<span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">&lt;branch_name&gt;</span>
+<span class="pre">`</span></code>
+Or as a short-hand:
+<code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">&lt;branch_name&gt;</span>
+<span class="pre">`</span></code></p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>### Writing your code</p>
+<ol class="arabic simple" start="4">
+<li><p>EP-BOLFI is written in [Python](<a class="reference external" href="https://en.wikipedia.org/wiki/Python_(programming_language">https://en.wikipedia.org/wiki/Python_(programming_language</a>)), and makes heavy use of [ELFI](<a class="reference external" href="https://github.com/elfi-dev/elfi">https://github.com/elfi-dev/elfi</a>) as well as [PyBaMM](<a class="reference external" href="https://github.com/pybamm-team/PyBaMM">https://github.com/pybamm-team/PyBaMM</a>).</p></li>
+<li><p>Make sure to follow our [coding style guidelines](#coding-style-guidelines).</p></li>
+<li><p>Commit your changes to your branch with [useful, descriptive commit messages](<a class="reference external" href="https://chris.beams.io/posts/git-commit/">https://chris.beams.io/posts/git-commit/</a>): Remember these are visible to all and should still make sense a few months ahead in time. While developing, you can keep using the GitLab issue you’re working on as a place for discussion. [Refer to your commits](<a class="reference external" href="https://stackoverflow.com/questions/8910271/how-can-i-reference-a-commit-in-an-issue-comment-on-github">https://stackoverflow.com/questions/8910271/how-can-i-reference-a-commit-in-an-issue-comment-on-github</a>) when discussing specific lines of code.</p></li>
+<li><p>If you want to add a dependency on another library, or re-use code you found somewhere else, have a look at [these guidelines](#dependencies-and-reusing-code).</p></li>
+</ol>
+<p>### Merging your changes with EP-BOLFI</p>
+<ol class="arabic simple" start="8">
+<li><p>Make sure that your code runs successfully. Ideally, implement tests.</p></li>
+<li><p>Run <cite>flake8</cite> on your code to fix formatting issues ahead of time.</p></li>
+<li><p>When you feel your code is finished, or at least warrants serious discussion, create a [merge request](<a class="reference external" href="https://docs.gitlab.com/ee/user/project/merge_requests/">https://docs.gitlab.com/ee/user/project/merge_requests/</a>) (MR) on the [GitLab page of EP-BOLFI](<a class="reference external" href="https://gitlab.dlr.de/cec/ep-bolfi">https://gitlab.dlr.de/cec/ep-bolfi</a>).</p></li>
+<li><p>Once a MR has been created, it will be reviewed by any member of the group. Changes might be suggested which you can make by simply adding new commits to the branch. When everything’s finished, someone with the right GitLab permissions will merge your changes into the EP-BOLFI main repository.</p></li>
+</ol>
+<p>## Coding style guidelines</p>
+<p>EP-BOLFI follows the [PEP8 recommendations](<a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">https://www.python.org/dev/peps/pep-0008/</a>) for coding style. These are very common guidelines, and community tools have been developed to check how well projects implement them.</p>
+<p>### Flake8</p>
+<p>We use [flake8](<a class="reference external" href="http://flake8.pycqa.org/en/latest/">http://flake8.pycqa.org/en/latest/</a>) to check our PEP8 adherence. To try this on your system, navigate to the ep_bolfi directory in a terminal and type:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">flake8</span>
+<span class="pre">`</span></code></p>
+<p>### Documentation</p>
+<p>The documentation is generated with [Sphinx](<a class="reference external" href="https://www.sphinx-doc.org/">https://www.sphinx-doc.org/</a>) from the source code. This happens automatically during the CI/CD pipeline, with the result being available through GitLab Pages.</p>
+<p>Hence, please copy the structure of the in-code documentation for your own comments. It is known as [reStructuredText](<a class="reference external" href="https://peps.python.org/pep-0287/">https://peps.python.org/pep-0287/</a>).</p>
+<p>## Dependencies and reusing code</p>
+<p>While it’s a bad idea for developers to “reinvent the wheel”, it’s important for users to get a _reasonably_ sized download and an easy install. In addition, external libraries can sometimes cease to be supported, and when they contain bugs it might take a while before fixes become available as automatic downloads to EP-BOLFI users.
+For these reasons, all dependencies in EP-BOLFI should be thought about carefully, and discussed on GitHub.</p>
+<p>Direct inclusion of code from other packages is possible, as long as their license permits it and is compatible with ours, but again should be considered carefully and discussed in the group. Snippets from blogs and [stackoverflow](<a class="reference external" href="https://stackoverflow.com/">https://stackoverflow.com/</a>) are often incompatible with other licences than [CC BY-SA](<a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/">https://creativecommons.org/licenses/by-sa/4.0/</a>) and hence should be avoided. You should attribute (and document) any included code from other packages, by making a comment with a link in the source code.</p>
+<p>## Building from source</p>
+<p>Before pushing your changes, make sure that the version in version.txt is incremented and unique. The CI/CD pipeline will use this to upload a Release with the respective version in each of the kadi tools.</p>
+<p>The following instructions are just here to inform you how to package the code yourself if you so desire.</p>
+<p>### Build and install wheel from source (pip)</p>
+<p>Install the build command and execute it:
+<code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">build</span>
+<span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">build</span>
+<span class="pre">`</span></code></p>
+<p>The wheel file should be at dist/ep_bolfi-${VERSION}-py3-none-any.whl. Please do not commit these.</p>
+<p>### Build conda package from wheel (conda)</p>
+<p>First build the wheel from source via pip. Then install the necessary packages for building conda packages:
+<code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">conda</span> <span class="pre">install</span> <span class="pre">build</span> <span class="pre">conda-build</span> <span class="pre">conda-verify</span>
+<span class="pre">`</span></code></p>
+<p>Then build:
+<code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">conda-build</span> <span class="pre">.</span>
+<span class="pre">`</span></code></p>
+<p>The file you need for installing with conda install lies inside your Anaconda distribution, on Windows at conda-bld/win-64/ep_bolfi-${VERSION}-py39_0.tar.bz2.</p>
+<p>### Building the .xml representations of the kadi tools</p>
+<p>In order to generate the .xml files for the workflow editor from your version of the kadi_tools, you may use the following on Linux only:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">cd</span> <span class="pre">ep_bolfi/kadi_tools</span>
+<span class="pre">mkdir</span> <span class="pre">xml_representations</span>
+<span class="pre">for</span> <span class="pre">file</span> <span class="pre">in</span> <span class="pre">./*.py;</span> <span class="pre">do</span>
+<span class="pre">if</span> <span class="pre">[</span> <span class="pre">$file</span> <span class="pre">=</span> <span class="pre">&quot;./__init__.py&quot;</span> <span class="pre">];</span> <span class="pre">then</span>
+<span class="pre">continue</span>
+<span class="pre">fi</span>
+<span class="pre">python</span> <span class="pre">$file</span> <span class="pre">--xmlhelp</span> <span class="pre">&gt;</span> <span class="pre">xml_representations/${file:2:-3}.xml</span>
+<span class="pre">done</span>
+<span class="pre">`</span></code></p>
+<p>On Windows, the files get the wrong encoding (UTF-16). If you know what this means, you may generate the .xml files on Windows and manually fix the encoding to be UTF-8.</p>
+<p>Please note that, when developing, the version displayed by the workflow editor will always be VERSION, since the actual version is automatically inserted during the CI/CD pipeline.</p>
+<p>In the case where spurious lines like “warning in …: failed to import cython module: falling back to numpy” show up, these are due to an unfortunate design decision in GPy. Either delete them manually, or try installing GPy from source like so to improve performance as well:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`bash</span>
+<span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/SheffieldML/GPy.git</span>
+<span class="pre">cd</span> <span class="pre">GPy</span>
+<span class="pre">pip</span> <span class="pre">install</span> <span class="pre">.</span>
+<span class="pre">`</span></code></p>
+<p>## Infrastructure</p>
+<p>### GitLab</p>
+<p>GitLab does some magic with particular filenames. In particular:</p>
+<ul class="simple">
+<li><p>The first page people see when they go to [our GitLab page](<a class="reference external" href="https://gitlab.dlr.de/cec/ep-bolfi">https://gitlab.dlr.de/cec/ep-bolfi</a>) displays the contents of [README.md](README.md), which is written in the [Markdown](<a class="reference external" href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet</a>) format. Some guidelines can be found [here](<a class="reference external" href="https://help.github.com/articles/about-readmes/">https://help.github.com/articles/about-readmes/</a>).</p></li>
+<li><p>This file, [CONTRIBUTING.md](CONTRIBUTING.md) is recognised as the contribution guidelines and a link is [automatically](<a class="reference external" href="https://github.com/blog/1184-contributing-guidelines">https://github.com/blog/1184-contributing-guidelines</a>) displayed when new issues or pull requests are created.</p></li>
+</ul>
+<p>## Acknowledgements</p>
+<p>This CONTRIBUTING.md file was adapted from the excellent [Pints GitHub repo](<a class="reference external" href="https://github.com/pints-team/pints">https://github.com/pints-team/pints</a>).</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">ReadMe</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="api/ep_bolfi.utility.visualization.visualize_correlation.html" title="previous chapter">ep_bolfi.utility.visualization.visualize_correlation</a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/contributing.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

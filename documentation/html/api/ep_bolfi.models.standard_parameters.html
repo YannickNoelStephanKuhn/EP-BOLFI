@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ep_bolfi.models.standard_parameters &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=110ea713"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ep_bolfi.models.standard_parameters.R" href="ep_bolfi.models.standard_parameters.R.html" />
+    <link rel="prev" title="ep_bolfi.models.solversetup.spectral_mesh_pts_and_method" href="ep_bolfi.models.solversetup.spectral_mesh_pts_and_method.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-ep_bolfi.models.standard_parameters">
+<span id="ep-bolfi-models-standard-parameters"></span><h1>ep_bolfi.models.standard_parameters<a class="headerlink" href="#module-ep_bolfi.models.standard_parameters" title="Link to this heading">¶</a></h1>
+<p>Comprehensive list of parameters of every model.</p>
+<p>SI units are assumed unless stated otherwise. When imported, this
+package turns into the list of variables contained in here.
+The “syntactic sugar” with the lower and upper indexed letters is
+treated by Python to be the same as their normal counterparts.
+E.g., “aₙ” and “an” refer to the exact same variable.
+Greek letters aren’t converted, unless they are also indexed, in which
+case the same as before applies: “εᵝ” is the same as “εβ”.</p>
+<p>Function parameters are defined in accordance with PyBaMM and noted with
+their units in the code here, so for their documentation, look there.</p>
+<p class="rubric">Module Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.R.html#ep_bolfi.models.standard_parameters.R" title="ep_bolfi.models.standard_parameters.R"><code class="xref py py-obj docutils literal notranslate"><span class="pre">R</span></code></a></p></td>
+<td><p>Gas constant.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.F.html#ep_bolfi.models.standard_parameters.F" title="ep_bolfi.models.standard_parameters.F"><code class="xref py py-obj docutils literal notranslate"><span class="pre">F</span></code></a></p></td>
+<td><p>Faraday constant.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.k_B.html#ep_bolfi.models.standard_parameters.k_B" title="ep_bolfi.models.standard_parameters.k_B"><code class="xref py py-obj docutils literal notranslate"><span class="pre">k_B</span></code></a></p></td>
+<td><p>Boltzmann constant.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.qe.html#ep_bolfi.models.standard_parameters.qe" title="ep_bolfi.models.standard_parameters.qe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qe</span></code></a></p></td>
+<td><p>Electron volt.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.T_ref.html#ep_bolfi.models.standard_parameters.T_ref" title="ep_bolfi.models.standard_parameters.T_ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T_ref</span></code></a></p></td>
+<td><p>Reference temperature for non-dimensionalization.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.T_init.html#ep_bolfi.models.standard_parameters.T_init" title="ep_bolfi.models.standard_parameters.T_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">T_init</span></code></a></p></td>
+<td><p>Initial temperature.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Ln_dim.html#ep_bolfi.models.standard_parameters.Ln_dim" title="ep_bolfi.models.standard_parameters.Ln_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ln_dim</span></code></a></p></td>
+<td><p>Anode thickness.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Ls_dim.html#ep_bolfi.models.standard_parameters.Ls_dim" title="ep_bolfi.models.standard_parameters.Ls_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ls_dim</span></code></a></p></td>
+<td><p>Separator thickness.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Lp_dim.html#ep_bolfi.models.standard_parameters.Lp_dim" title="ep_bolfi.models.standard_parameters.Lp_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lp_dim</span></code></a></p></td>
+<td><p>Cathode thickness.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.L_dim.html#ep_bolfi.models.standard_parameters.L_dim" title="ep_bolfi.models.standard_parameters.L_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">L_dim</span></code></a></p></td>
+<td><p>Cell thickness.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.A.html#ep_bolfi.models.standard_parameters.A" title="ep_bolfi.models.standard_parameters.A"><code class="xref py py-obj docutils literal notranslate"><span class="pre">A</span></code></a></p></td>
+<td><p>Cross-section area of the cell.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.V.html#ep_bolfi.models.standard_parameters.V" title="ep_bolfi.models.standard_parameters.V"><code class="xref py py-obj docutils literal notranslate"><span class="pre">V</span></code></a></p></td>
+<td><p>Volume of the cell.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.L_x.html#ep_bolfi.models.standard_parameters.L_x" title="ep_bolfi.models.standard_parameters.L_x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">L_x</span></code></a></p></td>
+<td><p>PyBaMM-compatible name for the cell thickness.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.L_y.html#ep_bolfi.models.standard_parameters.L_y" title="ep_bolfi.models.standard_parameters.L_y"><code class="xref py py-obj docutils literal notranslate"><span class="pre">L_y</span></code></a></p></td>
+<td><p>Width of the electrode for PyBaMM compatibility.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.L_z.html#ep_bolfi.models.standard_parameters.L_z" title="ep_bolfi.models.standard_parameters.L_z"><code class="xref py py-obj docutils literal notranslate"><span class="pre">L_z</span></code></a></p></td>
+<td><p>Height of the electrode for PyBaMM compatibility.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.C.html#ep_bolfi.models.standard_parameters.C" title="ep_bolfi.models.standard_parameters.C"><code class="xref py py-obj docutils literal notranslate"><span class="pre">C</span></code></a></p></td>
+<td><p>C-rate of the battery (in A).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Ul.html#ep_bolfi.models.standard_parameters.Ul" title="ep_bolfi.models.standard_parameters.Ul"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ul</span></code></a></p></td>
+<td><p>Lower threshold for the cell voltage.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Uu.html#ep_bolfi.models.standard_parameters.Uu" title="ep_bolfi.models.standard_parameters.Uu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Uu</span></code></a></p></td>
+<td><p>Upper threshold for the cell voltage.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.ce_typ.html#ep_bolfi.models.standard_parameters.ce_typ" title="ep_bolfi.models.standard_parameters.ce_typ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ce_typ</span></code></a></p></td>
+<td><p>Reference electrolyte concentration for non-dimensionalization.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Cn.html#ep_bolfi.models.standard_parameters.cn" title="ep_bolfi.models.standard_parameters.cn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cn</span></code></a></p></td>
+<td><p>Maximum lithium concentration in the anode active material.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Cp.html#ep_bolfi.models.standard_parameters.cp" title="ep_bolfi.models.standard_parameters.cp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cp</span></code></a></p></td>
+<td><p>Maximum lithium concentration in the cathode active material.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.an_dim.html#ep_bolfi.models.standard_parameters.an_dim" title="ep_bolfi.models.standard_parameters.an_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">an_dim</span></code></a></p></td>
+<td><p>Specific surface area of the anode.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.ap_dim.html#ep_bolfi.models.standard_parameters.ap_dim" title="ep_bolfi.models.standard_parameters.ap_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ap_dim</span></code></a></p></td>
+<td><p>Specific surface area of the cathode.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Rn.html#ep_bolfi.models.standard_parameters.Rn" title="ep_bolfi.models.standard_parameters.Rn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Rn</span></code></a></p></td>
+<td><p>Mean/Median radius of the anode particles.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Rp.html#ep_bolfi.models.standard_parameters.Rp" title="ep_bolfi.models.standard_parameters.Rp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Rp</span></code></a></p></td>
+<td><p>Mean/Median radius of the cathode particles.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.zn.html#ep_bolfi.models.standard_parameters.zn" title="ep_bolfi.models.standard_parameters.zn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zn</span></code></a></p></td>
+<td><p>Charge number of the anode interface reaction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.zp.html#ep_bolfi.models.standard_parameters.zp" title="ep_bolfi.models.standard_parameters.zp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zp</span></code></a></p></td>
+<td><p>Charge number of the cathode interface reaction.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.zn_salt.html#ep_bolfi.models.standard_parameters.zn_salt" title="ep_bolfi.models.standard_parameters.zn_salt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zn_salt</span></code></a></p></td>
+<td><p>Charge number of the salt dissociation (anion).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.zp_salt.html#ep_bolfi.models.standard_parameters.zp_salt" title="ep_bolfi.models.standard_parameters.zp_salt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zp_salt</span></code></a></p></td>
+<td><p>Charge number of the salt dissociation (cation).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.nn.html#ep_bolfi.models.standard_parameters.nn" title="ep_bolfi.models.standard_parameters.nn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nn</span></code></a></p></td>
+<td><p>Stoichiometric coefficient of the salt dissociation (anion).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.np.html#ep_bolfi.models.standard_parameters.np" title="ep_bolfi.models.standard_parameters.np"><code class="xref py py-obj docutils literal notranslate"><span class="pre">np</span></code></a></p></td>
+<td><p>Stoichiometric coefficient of the salt dissociation (cation).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.ce_dim_init.html#ep_bolfi.models.standard_parameters.ce_dim_init" title="ep_bolfi.models.standard_parameters.ce_dim_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ce_dim_init</span></code></a></p></td>
+<td><p>Initial electrolyte concentration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.ce_init.html#ep_bolfi.models.standard_parameters.ce_init" title="ep_bolfi.models.standard_parameters.ce_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ce_init</span></code></a></p></td>
+<td><p>Non-dimensionalized initial electrolyte concentration.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.M_N.html#ep_bolfi.models.standard_parameters.M_N" title="ep_bolfi.models.standard_parameters.M_N"><code class="xref py py-obj docutils literal notranslate"><span class="pre">M_N</span></code></a></p></td>
+<td><p>Solvent molar mass.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.c_N.html#ep_bolfi.models.standard_parameters.c_N" title="ep_bolfi.models.standard_parameters.c_N"><code class="xref py py-obj docutils literal notranslate"><span class="pre">c_N</span></code></a></p></td>
+<td><p>Solvent concentration.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.v_N.html#ep_bolfi.models.standard_parameters.v_N" title="ep_bolfi.models.standard_parameters.v_N"><code class="xref py py-obj docutils literal notranslate"><span class="pre">v_N</span></code></a></p></td>
+<td><p>Solvent partial molar volume.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tilde_ρ_N</span></code></p></td>
+<td><p>Solvent partial mass density (i.e., weight change per volume).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.C_DLn.html#ep_bolfi.models.standard_parameters.C_DLn" title="ep_bolfi.models.standard_parameters.C_DLn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">C_DLn</span></code></a></p></td>
+<td><p>Negative electrode double-layer capacity.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.C_DLp.html#ep_bolfi.models.standard_parameters.C_DLp" title="ep_bolfi.models.standard_parameters.C_DLp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">C_DLp</span></code></a></p></td>
+<td><p>Positive electrode double-layer capacity.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.L_SEI.html#ep_bolfi.models.standard_parameters.L_SEI" title="ep_bolfi.models.standard_parameters.L_SEI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">L_SEI</span></code></a></p></td>
+<td><p>Thickness of the SEI.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.R_SEI.html#ep_bolfi.models.standard_parameters.R_SEI" title="ep_bolfi.models.standard_parameters.R_SEI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">R_SEI</span></code></a></p></td>
+<td><p>Resistance of the SEI.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.permittivity_SEI.html#ep_bolfi.models.standard_parameters.permittivity_SEI" title="ep_bolfi.models.standard_parameters.permittivity_SEI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">permittivity_SEI</span></code></a></p></td>
+<td><p>Relative permittivity of the SEI.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.C_SEI.html#ep_bolfi.models.standard_parameters.C_SEI" title="ep_bolfi.models.standard_parameters.C_SEI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">C_SEI</span></code></a></p></td>
+<td><p>Capacitance of the SEI.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.t_SEI_minus.html#ep_bolfi.models.standard_parameters.t_SEI_minus" title="ep_bolfi.models.standard_parameters.t_SEI_minus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_SEI_minus</span></code></a></p></td>
+<td><p>Transference number of anions in the SEI (with reference to the center-of-mass velocity).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.L_electrolyte_for_SEI_model.html#ep_bolfi.models.standard_parameters.L_electrolyte_for_SEI_model" title="ep_bolfi.models.standard_parameters.L_electrolyte_for_SEI_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">L_electrolyte_for_SEI_model</span></code></a></p></td>
+<td><p>Length-scale for bulk electrolyte contribution in SEI model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.De_typ.html#ep_bolfi.models.standard_parameters.De_typ" title="ep_bolfi.models.standard_parameters.De_typ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">De_typ</span></code></a></p></td>
+<td><p>Reference electrolyte diffusivity for non-dimensionalization.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Dn_typ.html#ep_bolfi.models.standard_parameters.Dn_typ" title="ep_bolfi.models.standard_parameters.Dn_typ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dn_typ</span></code></a></p></td>
+<td><p>Reference anode diffusivity for non-dimensionalization.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Dp_typ.html#ep_bolfi.models.standard_parameters.Dp_typ" title="ep_bolfi.models.standard_parameters.Dp_typ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dp_typ</span></code></a></p></td>
+<td><p>Reference cathode diffusivity for non-dimensionalization.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.isen_0_ref.html#ep_bolfi.models.standard_parameters.isen_0_ref" title="ep_bolfi.models.standard_parameters.isen_0_ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isen_0_ref</span></code></a></p></td>
+<td><p>Reference anode exchange current density for non-dimensionalization.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.isep_0_ref.html#ep_bolfi.models.standard_parameters.isep_0_ref" title="ep_bolfi.models.standard_parameters.isep_0_ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isep_0_ref</span></code></a></p></td>
+<td><p>Reference cathode exchange current density for non-dimensionalization.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.OCVn_ref.html#ep_bolfi.models.standard_parameters.OCVn_ref" title="ep_bolfi.models.standard_parameters.OCVn_ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OCVn_ref</span></code></a></p></td>
+<td><p>Reference anode OCV for non-dimensionalization.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.OCVp_ref.html#ep_bolfi.models.standard_parameters.OCVp_ref" title="ep_bolfi.models.standard_parameters.OCVp_ref"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OCVp_ref</span></code></a></p></td>
+<td><p>Reference cathode OCV for non-dimensionalization.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.an.html#ep_bolfi.models.standard_parameters.an" title="ep_bolfi.models.standard_parameters.an"><code class="xref py py-obj docutils literal notranslate"><span class="pre">an</span></code></a></p></td>
+<td><p>Non-dimensionalized specific surface area of the anode.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.ap.html#ep_bolfi.models.standard_parameters.ap" title="ep_bolfi.models.standard_parameters.ap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ap</span></code></a></p></td>
+<td><p>Non-dimensionalized specific surface area of the cathode.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.timescale.html#ep_bolfi.models.standard_parameters.timescale" title="ep_bolfi.models.standard_parameters.timescale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">timescale</span></code></a></p></td>
+<td><p>Choose the discharge timescale for non-dimensionalization.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Ce.html#ep_bolfi.models.standard_parameters.Ce" title="ep_bolfi.models.standard_parameters.Ce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ce</span></code></a></p></td>
+<td><p>Non-dimensionalized electrolyte diffusion timescale.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cn</span></code></p></td>
+<td><p>Non-dimensionalized anode diffusion timescale.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cp</span></code></p></td>
+<td><p>Non-dimensionalized cathode diffusion timescale.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Crn.html#ep_bolfi.models.standard_parameters.Crn" title="ep_bolfi.models.standard_parameters.Crn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Crn</span></code></a></p></td>
+<td><p>Non-dimensionalized anode interface reaction timescale.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Crp.html#ep_bolfi.models.standard_parameters.Crp" title="ep_bolfi.models.standard_parameters.Crp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Crp</span></code></a></p></td>
+<td><p>Non-dimensionalized cathode interface reaction timescale.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Ln.html#ep_bolfi.models.standard_parameters.Ln" title="ep_bolfi.models.standard_parameters.Ln"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ln</span></code></a></p></td>
+<td><p>Non-dimensionalized anode thickness.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Ls.html#ep_bolfi.models.standard_parameters.Ls" title="ep_bolfi.models.standard_parameters.Ls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ls</span></code></a></p></td>
+<td><p>Non-dimensionlized separator thickness.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Lp.html#ep_bolfi.models.standard_parameters.Lp" title="ep_bolfi.models.standard_parameters.Lp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lp</span></code></a></p></td>
+<td><p>Non-dimensionalized cathode thickness.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Le.html#ep_bolfi.models.standard_parameters.Le" title="ep_bolfi.models.standard_parameters.Le"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Le</span></code></a></p></td>
+<td><p>Non-dimensionalized thicknesses for the whole cell.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.I_extern_dim.html#ep_bolfi.models.standard_parameters.I_extern_dim" title="ep_bolfi.models.standard_parameters.I_extern_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">I_extern_dim</span></code></a></p></td>
+<td><p>Externally applied current for galvanostatic operation (in A).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.I_extern.html#ep_bolfi.models.standard_parameters.I_extern" title="ep_bolfi.models.standard_parameters.I_extern"><code class="xref py py-obj docutils literal notranslate"><span class="pre">I_extern</span></code></a></p></td>
+<td><p>Non-dimensionalized external current.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.n_electrodes_parallel.html#ep_bolfi.models.standard_parameters.n_electrodes_parallel" title="ep_bolfi.models.standard_parameters.n_electrodes_parallel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_electrodes_parallel</span></code></a></p></td>
+<td><p>Current divider.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.n_cells.html#ep_bolfi.models.standard_parameters.n_cells" title="ep_bolfi.models.standard_parameters.n_cells"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_cells</span></code></a></p></td>
+<td><p>Voltage multiplier.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.I_typ.html#ep_bolfi.models.standard_parameters.I_typ" title="ep_bolfi.models.standard_parameters.I_typ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">I_typ</span></code></a></p></td>
+<td><p>Copy of the C-rate of the battery for PyBaMM compatibility.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.A_cc.html#ep_bolfi.models.standard_parameters.A_cc" title="ep_bolfi.models.standard_parameters.A_cc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">A_cc</span></code></a></p></td>
+<td><p>Copy of the cross-section area for PyBaMM compatibility.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.current_with_time.html#ep_bolfi.models.standard_parameters.current_with_time" title="ep_bolfi.models.standard_parameters.current_with_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">current_with_time</span></code></a></p></td>
+<td><p>Copy of the external current for PyBaMM compatibility.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dimensional_current_with_time.html#ep_bolfi.models.standard_parameters.dimensional_current_with_time" title="ep_bolfi.models.standard_parameters.dimensional_current_with_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensional_current_with_time</span></code></a></p></td>
+<td><p>Copy of the dimensional external current for PyBaMM compatibility.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dimensional_current_density_with_time.html#ep_bolfi.models.standard_parameters.dimensional_current_density_with_time" title="ep_bolfi.models.standard_parameters.dimensional_current_density_with_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dimensional_current_density_with_time</span></code></a></p></td>
+<td><p>Copy of the dimensional current density for PyBaMM compatibility.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.voltage_low_cut.html#ep_bolfi.models.standard_parameters.voltage_low_cut" title="ep_bolfi.models.standard_parameters.voltage_low_cut"><code class="xref py py-obj docutils literal notranslate"><span class="pre">voltage_low_cut</span></code></a></p></td>
+<td><p>Copy of the lower voltage threshold for PyBaMM compatibility.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.voltage_high_cut.html#ep_bolfi.models.standard_parameters.voltage_high_cut" title="ep_bolfi.models.standard_parameters.voltage_high_cut"><code class="xref py py-obj docutils literal notranslate"><span class="pre">voltage_high_cut</span></code></a></p></td>
+<td><p>Copy of the upper voltage threshold for PyBaMM compatibility.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.capacity.html#ep_bolfi.models.standard_parameters.capacity" title="ep_bolfi.models.standard_parameters.capacity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">capacity</span></code></a></p></td>
+<td><p>Cell capacity for calculating amperage from C-rates (in Ah).</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.De.html#ep_bolfi.models.standard_parameters.De" title="ep_bolfi.models.standard_parameters.De"><code class="xref py py-obj docutils literal notranslate"><span class="pre">De</span></code></a>(ce, T)</p></td>
+<td><p>Non-dimensionalized electrolyte diffusivity.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.De_dim.html#ep_bolfi.models.standard_parameters.De_dim" title="ep_bolfi.models.standard_parameters.De_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">De_dim</span></code></a>(ce_dim, T_dim)</p></td>
+<td><p>Electrolyte diffusivity.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Dn.html#ep_bolfi.models.standard_parameters.Dn" title="ep_bolfi.models.standard_parameters.Dn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dn</span></code></a>(SOCn, T)</p></td>
+<td><p>Non-dimensionalized anode diffusivity.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Dn_dim.html#ep_bolfi.models.standard_parameters.Dn_dim" title="ep_bolfi.models.standard_parameters.Dn_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dn_dim</span></code></a>(SOCn, T_dim)</p></td>
+<td><p>Anode diffusivity.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Dp.html#ep_bolfi.models.standard_parameters.Dp" title="ep_bolfi.models.standard_parameters.Dp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dp</span></code></a>(SOCp, T)</p></td>
+<td><p>Non-dimensionalized cathode diffusivity.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.Dp_dim.html#ep_bolfi.models.standard_parameters.Dp_dim" title="ep_bolfi.models.standard_parameters.Dp_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dp_dim</span></code></a>(SOCp, T_dim)</p></td>
+<td><p>Cathode diffusivity.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.OCVn.html#ep_bolfi.models.standard_parameters.OCVn" title="ep_bolfi.models.standard_parameters.OCVn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OCVn</span></code></a>(SOCn, T)</p></td>
+<td><p>Non-dimensionalized anode OCV.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.OCVn_dim.html#ep_bolfi.models.standard_parameters.OCVn_dim" title="ep_bolfi.models.standard_parameters.OCVn_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OCVn_dim</span></code></a>(SOCn, T_dim)</p></td>
+<td><p>Anode OCV.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.OCVp.html#ep_bolfi.models.standard_parameters.OCVp" title="ep_bolfi.models.standard_parameters.OCVp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OCVp</span></code></a>(SOCp, T)</p></td>
+<td><p>Non-dimensionalized cathode OCV.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.OCVp_dim.html#ep_bolfi.models.standard_parameters.OCVp_dim" title="ep_bolfi.models.standard_parameters.OCVp_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OCVp_dim</span></code></a>(SOCp, T_dim)</p></td>
+<td><p>Cathode OCV.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.SOCn_dim_init.html#ep_bolfi.models.standard_parameters.SOCn_dim_init" title="ep_bolfi.models.standard_parameters.SOCn_dim_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SOCn_dim_init</span></code></a>(x)</p></td>
+<td><p>Initial SOC of the anode.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.SOCn_init.html#ep_bolfi.models.standard_parameters.SOCn_init" title="ep_bolfi.models.standard_parameters.SOCn_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SOCn_init</span></code></a>(x)</p></td>
+<td><p>Non-dimensionalized initial SOC of the anode.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.SOCp_dim_init.html#ep_bolfi.models.standard_parameters.SOCp_dim_init" title="ep_bolfi.models.standard_parameters.SOCp_dim_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SOCp_dim_init</span></code></a>(x)</p></td>
+<td><p>Initial SOC of the cathode.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.SOCp_init.html#ep_bolfi.models.standard_parameters.SOCp_init" title="ep_bolfi.models.standard_parameters.SOCp_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SOCp_init</span></code></a>(x)</p></td>
+<td><p>Non-dimensionalized initial SOC of the cathode.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVn_dSOCn.html#ep_bolfi.models.standard_parameters.dOCVn_dSOCn" title="ep_bolfi.models.standard_parameters.dOCVn_dSOCn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dOCVn_dSOCn</span></code></a>(SOCn, T)</p></td>
+<td><p>Non-dimensionalized ∂ anode OCV / ∂ anode SOC.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVn_dT.html#ep_bolfi.models.standard_parameters.dOCVn_dT" title="ep_bolfi.models.standard_parameters.dOCVn_dT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dOCVn_dT</span></code></a>(SOCn)</p></td>
+<td><p>Non-dimensionalized ∂ anode OCV / ∂ temperature.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVn_dT_dSOCn.html#ep_bolfi.models.standard_parameters.dOCVn_dT_dSOCn" title="ep_bolfi.models.standard_parameters.dOCVn_dT_dSOCn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dOCVn_dT_dSOCn</span></code></a>(SOCn)</p></td>
+<td><p>Non-dimensionalized (∂ anode OCV / ∂ temperature) / ∂ anode SOC.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVn_dT_dSOCn_dim.html#ep_bolfi.models.standard_parameters.dOCVn_dT_dSOCn_dim" title="ep_bolfi.models.standard_parameters.dOCVn_dT_dSOCn_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dOCVn_dT_dSOCn_dim</span></code></a>(SOCn)</p></td>
+<td><p>(∂ anode OCV / ∂ temperature) / ∂ anode SOC.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVn_dT_dim.html#ep_bolfi.models.standard_parameters.dOCVn_dT_dim" title="ep_bolfi.models.standard_parameters.dOCVn_dT_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dOCVn_dT_dim</span></code></a>(SOCn)</p></td>
+<td><p>∂ anode OCV / ∂ temperature.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVn_dim_dSOCn.html#ep_bolfi.models.standard_parameters.dOCVn_dim_dSOCn" title="ep_bolfi.models.standard_parameters.dOCVn_dim_dSOCn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dOCVn_dim_dSOCn</span></code></a>(SOCn, T_dim)</p></td>
+<td><p>∂ anode OCV / ∂ anode SOC.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVp_dSOCp.html#ep_bolfi.models.standard_parameters.dOCVp_dSOCp" title="ep_bolfi.models.standard_parameters.dOCVp_dSOCp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dOCVp_dSOCp</span></code></a>(SOCp, T)</p></td>
+<td><p>Non-dimensionalized ∂ cathode OCV / ∂ cathode SOC.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVp_dT.html#ep_bolfi.models.standard_parameters.dOCVp_dT" title="ep_bolfi.models.standard_parameters.dOCVp_dT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dOCVp_dT</span></code></a>(SOCp)</p></td>
+<td><p>Non-dimensionalized ∂ cathode OCV / ∂ temperature.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVp_dT_dSOCp.html#ep_bolfi.models.standard_parameters.dOCVp_dT_dSOCp" title="ep_bolfi.models.standard_parameters.dOCVp_dT_dSOCp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dOCVp_dT_dSOCp</span></code></a>(SOCp)</p></td>
+<td><p>Non-dimensionalized (∂ cathode OCV / ∂ temperature) / ∂ cathode SOC.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVp_dT_dSOCp_dim.html#ep_bolfi.models.standard_parameters.dOCVp_dT_dSOCp_dim" title="ep_bolfi.models.standard_parameters.dOCVp_dT_dSOCp_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dOCVp_dT_dSOCp_dim</span></code></a>(SOCp)</p></td>
+<td><p>(∂ cathode OCV / ∂ temperature) / ∂ cathode SOC.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVp_dT_dim.html#ep_bolfi.models.standard_parameters.dOCVp_dT_dim" title="ep_bolfi.models.standard_parameters.dOCVp_dT_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dOCVp_dT_dim</span></code></a>(SOCp)</p></td>
+<td><p>∂ cathode OCV / ∂ temperature.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVp_dim_dSOCp.html#ep_bolfi.models.standard_parameters.dOCVp_dim_dSOCp" title="ep_bolfi.models.standard_parameters.dOCVp_dim_dSOCp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dOCVp_dim_dSOCp</span></code></a>(SOCp, T_dim)</p></td>
+<td><p>∂ cathode OCV / ∂ cathode SOC.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.d_cen_isen_0.html#ep_bolfi.models.standard_parameters.d_cen_isen_0" title="ep_bolfi.models.standard_parameters.d_cen_isen_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">d_cen_isen_0</span></code></a>(cen, SOCn_surf, cn_max, T)</p></td>
+<td><p>The non-dimensionalized version of the prior variable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.d_cen_isen_0_dim.html#ep_bolfi.models.standard_parameters.d_cen_isen_0_dim" title="ep_bolfi.models.standard_parameters.d_cen_isen_0_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">d_cen_isen_0_dim</span></code></a>(cen_dim, SOCn_surf_dim, ...)</p></td>
+<td><p>∂ anode exchange current density / ∂ electrolyte concentration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.d_cep_isep_0.html#ep_bolfi.models.standard_parameters.d_cep_isep_0" title="ep_bolfi.models.standard_parameters.d_cep_isep_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">d_cep_isep_0</span></code></a>(cep, SOCp_surf, cp_max, T)</p></td>
+<td><p>The non-dimensionalized version of the prior variable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.d_cep_isep_0_dim.html#ep_bolfi.models.standard_parameters.d_cep_isep_0_dim" title="ep_bolfi.models.standard_parameters.d_cep_isep_0_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">d_cep_isep_0_dim</span></code></a>(cep_dim, SOCp_surf_dim, ...)</p></td>
+<td><p>∂ cathode exchange current density / ∂ electrolyte concentration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.isen_0.html#ep_bolfi.models.standard_parameters.isen_0" title="ep_bolfi.models.standard_parameters.isen_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isen_0</span></code></a>(cen, SOCn_surf, cn_max, T)</p></td>
+<td><p>Non-dimensionalized anode exchange current density.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.isen_0_dim.html#ep_bolfi.models.standard_parameters.isen_0_dim" title="ep_bolfi.models.standard_parameters.isen_0_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isen_0_dim</span></code></a>(cen_dim, SOCn_surf_dim, cn_max, T_dim)</p></td>
+<td><p>Anode exchange current density.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.isep_0.html#ep_bolfi.models.standard_parameters.isep_0" title="ep_bolfi.models.standard_parameters.isep_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isep_0</span></code></a>(cep, SOCp_surf, cp_max, T)</p></td>
+<td><p>Non-dimensionalized cathode exchange current density.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.isep_0_dim.html#ep_bolfi.models.standard_parameters.isep_0_dim" title="ep_bolfi.models.standard_parameters.isep_0_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isep_0_dim</span></code></a>(cep_dim, SOCp_surf_dim, cp_max, T_dim)</p></td>
+<td><p>Cathode exchange current density.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.one_plus_dlnf_dlnc.html#ep_bolfi.models.standard_parameters.one_plus_dlnf_dlnc" title="ep_bolfi.models.standard_parameters.one_plus_dlnf_dlnc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">one_plus_dlnf_dlnc</span></code></a>(ce)</p></td>
+<td><p>Non-dimensionalized (referring to the input) thermodynamic factor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.one_plus_dlnf_dlnc_dim.html#ep_bolfi.models.standard_parameters.one_plus_dlnf_dlnc_dim" title="ep_bolfi.models.standard_parameters.one_plus_dlnf_dlnc_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">one_plus_dlnf_dlnc_dim</span></code></a>(ce_dim)</p></td>
+<td><p>! Thermodynamic factor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.t_plus.html#ep_bolfi.models.standard_parameters.t_plus" title="ep_bolfi.models.standard_parameters.t_plus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_plus</span></code></a>(ce)</p></td>
+<td><p>Non-dimensionalized (referring to the input) transference number.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.models.standard_parameters.t_plus_dim.html#ep_bolfi.models.standard_parameters.t_plus_dim" title="ep_bolfi.models.standard_parameters.t_plus_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_plus_dim</span></code></a>(ce_dim)</p></td>
+<td><p>Transference number.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ep_bolfi.html">ep_bolfi</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ep_bolfi.models.html">ep_bolfi.models</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.analytic_impedance.html">ep_bolfi.models.analytic_impedance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.assess_effective_parameters.html">ep_bolfi.models.assess_effective_parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.electrolyte.html">ep_bolfi.models.electrolyte</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.html">ep_bolfi.models.equivalent_circuits</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.solversetup.html">ep_bolfi.models.solversetup</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">ep_bolfi.models.standard_parameters</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.R.html">ep_bolfi.models.standard_parameters.R</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.F.html">ep_bolfi.models.standard_parameters.F</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.k_B.html">ep_bolfi.models.standard_parameters.k_B</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.qe.html">ep_bolfi.models.standard_parameters.qe</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.T_ref.html">ep_bolfi.models.standard_parameters.T_ref</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.T_init.html">ep_bolfi.models.standard_parameters.T_init</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Ln_dim.html">ep_bolfi.models.standard_parameters.Ln_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Ls_dim.html">ep_bolfi.models.standard_parameters.Ls_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Lp_dim.html">ep_bolfi.models.standard_parameters.Lp_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.L_dim.html">ep_bolfi.models.standard_parameters.L_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.A.html">ep_bolfi.models.standard_parameters.A</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.V.html">ep_bolfi.models.standard_parameters.V</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.L_x.html">ep_bolfi.models.standard_parameters.L_x</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.L_y.html">ep_bolfi.models.standard_parameters.L_y</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.L_z.html">ep_bolfi.models.standard_parameters.L_z</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.C.html">ep_bolfi.models.standard_parameters.C</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Ul.html">ep_bolfi.models.standard_parameters.Ul</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Uu.html">ep_bolfi.models.standard_parameters.Uu</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.ce_typ.html">ep_bolfi.models.standard_parameters.ce_typ</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.an_dim.html">ep_bolfi.models.standard_parameters.an_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.ap_dim.html">ep_bolfi.models.standard_parameters.ap_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Rn.html">ep_bolfi.models.standard_parameters.Rn</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Rp.html">ep_bolfi.models.standard_parameters.Rp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.zn.html">ep_bolfi.models.standard_parameters.zn</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.zp.html">ep_bolfi.models.standard_parameters.zp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.zn_salt.html">ep_bolfi.models.standard_parameters.zn_salt</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.zp_salt.html">ep_bolfi.models.standard_parameters.zp_salt</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.nn.html">ep_bolfi.models.standard_parameters.nn</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.np.html">ep_bolfi.models.standard_parameters.np</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.ce_dim_init.html">ep_bolfi.models.standard_parameters.ce_dim_init</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.ce_init.html">ep_bolfi.models.standard_parameters.ce_init</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.M_N.html">ep_bolfi.models.standard_parameters.M_N</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.c_N.html">ep_bolfi.models.standard_parameters.c_N</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.v_N.html">ep_bolfi.models.standard_parameters.v_N</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.C_DLn.html">ep_bolfi.models.standard_parameters.C_DLn</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.C_DLp.html">ep_bolfi.models.standard_parameters.C_DLp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.L_SEI.html">ep_bolfi.models.standard_parameters.L_SEI</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.R_SEI.html">ep_bolfi.models.standard_parameters.R_SEI</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.permittivity_SEI.html">ep_bolfi.models.standard_parameters.permittivity_SEI</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.C_SEI.html">ep_bolfi.models.standard_parameters.C_SEI</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.t_SEI_minus.html">ep_bolfi.models.standard_parameters.t_SEI_minus</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.L_electrolyte_for_SEI_model.html">ep_bolfi.models.standard_parameters.L_electrolyte_for_SEI_model</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.De_typ.html">ep_bolfi.models.standard_parameters.De_typ</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Dn_typ.html">ep_bolfi.models.standard_parameters.Dn_typ</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Dp_typ.html">ep_bolfi.models.standard_parameters.Dp_typ</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.isen_0_ref.html">ep_bolfi.models.standard_parameters.isen_0_ref</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.isep_0_ref.html">ep_bolfi.models.standard_parameters.isep_0_ref</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.OCVn_ref.html">ep_bolfi.models.standard_parameters.OCVn_ref</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.OCVp_ref.html">ep_bolfi.models.standard_parameters.OCVp_ref</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.an.html">ep_bolfi.models.standard_parameters.an</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.ap.html">ep_bolfi.models.standard_parameters.ap</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.timescale.html">ep_bolfi.models.standard_parameters.timescale</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Ce.html">ep_bolfi.models.standard_parameters.Ce</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Cn.html">ep_bolfi.models.standard_parameters.cn</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Cp.html">ep_bolfi.models.standard_parameters.cp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Crn.html">ep_bolfi.models.standard_parameters.Crn</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Crp.html">ep_bolfi.models.standard_parameters.Crp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Ln.html">ep_bolfi.models.standard_parameters.Ln</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Ls.html">ep_bolfi.models.standard_parameters.Ls</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Lp.html">ep_bolfi.models.standard_parameters.Lp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Le.html">ep_bolfi.models.standard_parameters.Le</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.I_extern_dim.html">ep_bolfi.models.standard_parameters.I_extern_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.I_extern.html">ep_bolfi.models.standard_parameters.I_extern</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.n_electrodes_parallel.html">ep_bolfi.models.standard_parameters.n_electrodes_parallel</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.n_cells.html">ep_bolfi.models.standard_parameters.n_cells</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.I_typ.html">ep_bolfi.models.standard_parameters.I_typ</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.A_cc.html">ep_bolfi.models.standard_parameters.A_cc</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.current_with_time.html">ep_bolfi.models.standard_parameters.current_with_time</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dimensional_current_with_time.html">ep_bolfi.models.standard_parameters.dimensional_current_with_time</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dimensional_current_density_with_time.html">ep_bolfi.models.standard_parameters.dimensional_current_density_with_time</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.voltage_low_cut.html">ep_bolfi.models.standard_parameters.voltage_low_cut</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.voltage_high_cut.html">ep_bolfi.models.standard_parameters.voltage_high_cut</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.capacity.html">ep_bolfi.models.standard_parameters.capacity</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.De.html">ep_bolfi.models.standard_parameters.De</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.De_dim.html">ep_bolfi.models.standard_parameters.De_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Dn.html">ep_bolfi.models.standard_parameters.Dn</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Dn_dim.html">ep_bolfi.models.standard_parameters.Dn_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Dp.html">ep_bolfi.models.standard_parameters.Dp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.Dp_dim.html">ep_bolfi.models.standard_parameters.Dp_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.OCVn.html">ep_bolfi.models.standard_parameters.OCVn</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.OCVn_dim.html">ep_bolfi.models.standard_parameters.OCVn_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.OCVp.html">ep_bolfi.models.standard_parameters.OCVp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.OCVp_dim.html">ep_bolfi.models.standard_parameters.OCVp_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.SOCn_dim_init.html">ep_bolfi.models.standard_parameters.SOCn_dim_init</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.SOCn_init.html">ep_bolfi.models.standard_parameters.SOCn_init</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.SOCp_dim_init.html">ep_bolfi.models.standard_parameters.SOCp_dim_init</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.SOCp_init.html">ep_bolfi.models.standard_parameters.SOCp_init</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVn_dSOCn.html">ep_bolfi.models.standard_parameters.dOCVn_dSOCn</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVn_dT.html">ep_bolfi.models.standard_parameters.dOCVn_dT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVn_dT_dSOCn.html">ep_bolfi.models.standard_parameters.dOCVn_dT_dSOCn</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVn_dT_dSOCn_dim.html">ep_bolfi.models.standard_parameters.dOCVn_dT_dSOCn_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVn_dT_dim.html">ep_bolfi.models.standard_parameters.dOCVn_dT_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVn_dim_dSOCn.html">ep_bolfi.models.standard_parameters.dOCVn_dim_dSOCn</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVp_dSOCp.html">ep_bolfi.models.standard_parameters.dOCVp_dSOCp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVp_dT.html">ep_bolfi.models.standard_parameters.dOCVp_dT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVp_dT_dSOCp.html">ep_bolfi.models.standard_parameters.dOCVp_dT_dSOCp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVp_dT_dSOCp_dim.html">ep_bolfi.models.standard_parameters.dOCVp_dT_dSOCp_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVp_dT_dim.html">ep_bolfi.models.standard_parameters.dOCVp_dT_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.dOCVp_dim_dSOCp.html">ep_bolfi.models.standard_parameters.dOCVp_dim_dSOCp</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.d_cen_isen_0.html">ep_bolfi.models.standard_parameters.d_cen_isen_0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.d_cen_isen_0_dim.html">ep_bolfi.models.standard_parameters.d_cen_isen_0_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.d_cep_isep_0.html">ep_bolfi.models.standard_parameters.d_cep_isep_0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.d_cep_isep_0_dim.html">ep_bolfi.models.standard_parameters.d_cep_isep_0_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.isen_0.html">ep_bolfi.models.standard_parameters.isen_0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.isen_0_dim.html">ep_bolfi.models.standard_parameters.isen_0_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.isep_0.html">ep_bolfi.models.standard_parameters.isep_0</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.isep_0_dim.html">ep_bolfi.models.standard_parameters.isep_0_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.one_plus_dlnf_dlnc.html">ep_bolfi.models.standard_parameters.one_plus_dlnf_dlnc</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.one_plus_dlnf_dlnc_dim.html">ep_bolfi.models.standard_parameters.one_plus_dlnf_dlnc_dim</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.t_plus.html">ep_bolfi.models.standard_parameters.t_plus</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.standard_parameters.t_plus_dim.html">ep_bolfi.models.standard_parameters.t_plus_dim</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.optimization.html">ep_bolfi.optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.utility.html">ep_bolfi.utility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="ep_bolfi.html">ep_bolfi</a><ul>
+  <li><a href="ep_bolfi.models.html">ep_bolfi.models</a><ul>
+      <li>Previous: <a href="ep_bolfi.models.solversetup.spectral_mesh_pts_and_method.html" title="previous chapter">ep_bolfi.models.solversetup.spectral_mesh_pts_and_method</a></li>
+      <li>Next: <a href="ep_bolfi.models.standard_parameters.R.html" title="next chapter">ep_bolfi.models.standard_parameters.R</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/ep_bolfi.models.standard_parameters.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

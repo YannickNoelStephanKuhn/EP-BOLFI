@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ep_bolfi.utility.preprocessing.SubstitutionDict &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=110ea713"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ep_bolfi.utility.visualization" href="ep_bolfi.utility.visualization.html" />
+    <link rel="prev" title="ep_bolfi.utility.preprocessing.subtract_both_OCV_curves_from_cycles" href="ep_bolfi.utility.preprocessing.subtract_both_OCV_curves_from_cycles.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ep-bolfi-utility-preprocessing-substitutiondict">
+<h1>ep_bolfi.utility.preprocessing.SubstitutionDict<a class="headerlink" href="#ep-bolfi-utility-preprocessing-substitutiondict" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="ep_bolfi.utility.preprocessing.SubstitutionDict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ep_bolfi.utility.preprocessing.</span></span><span class="sig-name descname"><span class="pre">SubstitutionDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">storage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substitutions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.preprocessing.SubstitutionDict" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MutableMapping</span></code></p>
+<p>A dictionary with some automatic substitutions.</p>
+<p><em>substitutions</em> is a dictionary that extends <em>storage</em> with
+automatic substitution rules depending on its value types:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>string, which serves the value of <em>storage</em> at that value.</p></li>
+<li><p>callable which takes one parameter, which will get passed its
+<code class="docutils literal notranslate"><span class="pre">SubstitutionDict</span></code> instance and serves its return value.</p></li>
+<li><p>any other type, which serves the value as-is.</p></li>
+</ul>
+</div></blockquote>
+<p>Assigning values to keys afterwards will overwrite substitutions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.preprocessing.SubstitutionDict.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">storage</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">substitutions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.__init__" title="ep_bolfi.utility.preprocessing.SubstitutionDict.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(storage[, substitutions])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.clear" title="ep_bolfi.utility.preprocessing.SubstitutionDict.clear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.dependent_variables" title="ep_bolfi.utility.preprocessing.SubstitutionDict.dependent_variables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dependent_variables</span></code></a>(parameters)</p></td>
+<td><p>Useful to determine the whole amount of effective keys.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.get" title="ep_bolfi.utility.preprocessing.SubstitutionDict.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code></a>(k[,d])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.items" title="ep_bolfi.utility.preprocessing.SubstitutionDict.items"><code class="xref py py-obj docutils literal notranslate"><span class="pre">items</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.keys" title="ep_bolfi.utility.preprocessing.SubstitutionDict.keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.log_lock" title="ep_bolfi.utility.preprocessing.SubstitutionDict.log_lock"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_lock</span></code></a>()</p></td>
+<td><p>Modifies <em>__get_item__</em> to log the keys it touched and cleans up the <em>self._log</em> after each logging session.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.pop" title="ep_bolfi.utility.preprocessing.SubstitutionDict.pop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pop</span></code></a>(k[,d])</p></td>
+<td><p>If key is not found, d is returned if given, otherwise KeyError is raised.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.popitem" title="ep_bolfi.utility.preprocessing.SubstitutionDict.popitem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">popitem</span></code></a>()</p></td>
+<td><p>as a 2-tuple; but raise KeyError if D is empty.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.setdefault" title="ep_bolfi.utility.preprocessing.SubstitutionDict.setdefault"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setdefault</span></code></a>(k[,d])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.update" title="ep_bolfi.utility.preprocessing.SubstitutionDict.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>([E, ]**F)</p></td>
+<td><p>If E present and has a .keys() method, does:     for k in E: D[k] = E[k] If E present and lacks .keys() method, does:     for (k, v) in E: D[k] = v In either case, this is followed by: for k, v in F.items(): D[k] = v</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.values" title="ep_bolfi.utility.preprocessing.SubstitutionDict.values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.preprocessing.SubstitutionDict.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None.</span>&#160; <span class="pre">Remove</span> <span class="pre">all</span> <span class="pre">items</span> <span class="pre">from</span> <span class="pre">D.</span></span></span><a class="headerlink" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.clear" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.preprocessing.SubstitutionDict.dependent_variables">
+<span class="sig-name descname"><span class="pre">dependent_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.dependent_variables" title="Link to this definition">¶</a></dt>
+<dd><p>Useful to determine the whole amount of effective keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> – A list of keys.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>All keys that were touched during substitution rules to
+produce <code class="docutils literal notranslate"><span class="pre">[self[p]</span> <span class="pre">for</span> <span class="pre">p</span> <span class="pre">in</span> <span class="pre">parameters]</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.preprocessing.SubstitutionDict.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">D[k]</span> <span class="pre">if</span> <span class="pre">k</span> <span class="pre">in</span> <span class="pre">D,</span> <span class="pre">else</span> <span class="pre">d.</span>&#160; <span class="pre">d</span> <span class="pre">defaults</span> <span class="pre">to</span> <span class="pre">None.</span></span></span><a class="headerlink" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.get" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.preprocessing.SubstitutionDict.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">items</span></span></span><a class="headerlink" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.items" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.preprocessing.SubstitutionDict.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">keys</span></span></span><a class="headerlink" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.keys" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.preprocessing.SubstitutionDict.log_lock">
+<span class="sig-name descname"><span class="pre">log_lock</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.log_lock" title="Link to this definition">¶</a></dt>
+<dd><p>Modifies <em>__get_item__</em> to log the keys it touched and cleans up
+the <em>self._log</em> after each logging session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.preprocessing.SubstitutionDict.pop">
+<span class="sig-name descname"><span class="pre">pop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">v,</span> <span class="pre">remove</span> <span class="pre">specified</span> <span class="pre">key</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">the</span> <span class="pre">corresponding</span> <span class="pre">value.</span></span></span><a class="headerlink" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.pop" title="Link to this definition">¶</a></dt>
+<dd><p>If key is not found, d is returned if given, otherwise KeyError is raised.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.preprocessing.SubstitutionDict.popitem">
+<span class="sig-name descname"><span class="pre">popitem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">(k,</span> <span class="pre">v),</span> <span class="pre">remove</span> <span class="pre">and</span> <span class="pre">return</span> <span class="pre">some</span> <span class="pre">(key,</span> <span class="pre">value)</span> <span class="pre">pair</span></span></span><a class="headerlink" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.popitem" title="Link to this definition">¶</a></dt>
+<dd><p>as a 2-tuple; but raise KeyError if D is empty.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.preprocessing.SubstitutionDict.setdefault">
+<span class="sig-name descname"><span class="pre">setdefault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="optional">]</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">D.get(k,d),</span> <span class="pre">also</span> <span class="pre">set</span> <span class="pre">D[k]=d</span> <span class="pre">if</span> <span class="pre">k</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">D</span></span></span><a class="headerlink" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.setdefault" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.preprocessing.SubstitutionDict.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">E</span></span></em>, <span class="optional">]</span><em class="sig-param"><span class="n"><span class="pre">**F</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None.</span>&#160; <span class="pre">Update</span> <span class="pre">D</span> <span class="pre">from</span> <span class="pre">mapping/iterable</span> <span class="pre">E</span> <span class="pre">and</span> <span class="pre">F.</span></span></span><a class="headerlink" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.update" title="Link to this definition">¶</a></dt>
+<dd><p>If E present and has a .keys() method, does:     for k in E: D[k] = E[k]
+If E present and lacks .keys() method, does:     for (k, v) in E: D[k] = v
+In either case, this is followed by: for k, v in F.items(): D[k] = v</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.preprocessing.SubstitutionDict.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">an</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">values</span></span></span><a class="headerlink" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.values" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ep_bolfi.html">ep_bolfi</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.models.html">ep_bolfi.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.optimization.html">ep_bolfi.optimization</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ep_bolfi.utility.html">ep_bolfi.utility</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.html">ep_bolfi.utility.dataset_formatting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.html">ep_bolfi.utility.fitting_functions</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="ep_bolfi.utility.preprocessing.html">ep_bolfi.utility.preprocessing</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.OCV_from_CC_CV.html">ep_bolfi.utility.preprocessing.OCV_from_CC_CV</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.approximate_confidence_ellipsoid.html">ep_bolfi.utility.preprocessing.approximate_confidence_ellipsoid</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.calculate_SOC.html">ep_bolfi.utility.preprocessing.calculate_SOC</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.calculate_both_SOC_from_OCV.html">ep_bolfi.utility.preprocessing.calculate_both_SOC_from_OCV</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.calculate_desired_voltage.html">ep_bolfi.utility.preprocessing.calculate_desired_voltage</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.calculate_means_and_standard_deviations.html">ep_bolfi.utility.preprocessing.calculate_means_and_standard_deviations</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.capacity.html">ep_bolfi.utility.preprocessing.capacity</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.combine_parameters_to_try.html">ep_bolfi.utility.preprocessing.combine_parameters_to_try</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.find_occurrences.html">ep_bolfi.utility.preprocessing.find_occurrences</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.fix_parameters.html">ep_bolfi.utility.preprocessing.fix_parameters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.laplace_transform.html">ep_bolfi.utility.preprocessing.laplace_transform</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.parallel_simulator_with_setup.html">ep_bolfi.utility.preprocessing.parallel_simulator_with_setup</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.prepare_parameter_combinations.html">ep_bolfi.utility.preprocessing.prepare_parameter_combinations</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.simulate_all_parameter_combinations.html">ep_bolfi.utility.preprocessing.simulate_all_parameter_combinations</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.solve_all_parameter_combinations.html">ep_bolfi.utility.preprocessing.solve_all_parameter_combinations</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.subtract_OCV_curve_from_cycles.html">ep_bolfi.utility.preprocessing.subtract_OCV_curve_from_cycles</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.preprocessing.subtract_both_OCV_curves_from_cycles.html">ep_bolfi.utility.preprocessing.subtract_both_OCV_curves_from_cycles</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">ep_bolfi.utility.preprocessing.SubstitutionDict</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict"><code class="docutils literal notranslate"><span class="pre">SubstitutionDict</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.__init__"><code class="docutils literal notranslate"><span class="pre">SubstitutionDict.__init__()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.clear"><code class="docutils literal notranslate"><span class="pre">SubstitutionDict.clear()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.dependent_variables"><code class="docutils literal notranslate"><span class="pre">SubstitutionDict.dependent_variables()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.get"><code class="docutils literal notranslate"><span class="pre">SubstitutionDict.get()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.items"><code class="docutils literal notranslate"><span class="pre">SubstitutionDict.items()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.keys"><code class="docutils literal notranslate"><span class="pre">SubstitutionDict.keys()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.log_lock"><code class="docutils literal notranslate"><span class="pre">SubstitutionDict.log_lock()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.pop"><code class="docutils literal notranslate"><span class="pre">SubstitutionDict.pop()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.popitem"><code class="docutils literal notranslate"><span class="pre">SubstitutionDict.popitem()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.setdefault"><code class="docutils literal notranslate"><span class="pre">SubstitutionDict.setdefault()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.update"><code class="docutils literal notranslate"><span class="pre">SubstitutionDict.update()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.preprocessing.SubstitutionDict.values"><code class="docutils literal notranslate"><span class="pre">SubstitutionDict.values()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.visualization.html">ep_bolfi.utility.visualization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="ep_bolfi.html">ep_bolfi</a><ul>
+  <li><a href="ep_bolfi.utility.html">ep_bolfi.utility</a><ul>
+  <li><a href="ep_bolfi.utility.preprocessing.html">ep_bolfi.utility.preprocessing</a><ul>
+      <li>Previous: <a href="ep_bolfi.utility.preprocessing.subtract_both_OCV_curves_from_cycles.html" title="previous chapter">ep_bolfi.utility.preprocessing.subtract_both_OCV_curves_from_cycles</a></li>
+      <li>Next: <a href="ep_bolfi.utility.visualization.html" title="next chapter">ep_bolfi.utility.visualization</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/ep_bolfi.utility.preprocessing.SubstitutionDict.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

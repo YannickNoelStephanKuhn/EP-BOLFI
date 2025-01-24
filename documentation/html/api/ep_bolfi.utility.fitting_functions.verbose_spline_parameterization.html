@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ep_bolfi.utility.fitting_functions.verbose_spline_parameterization &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=110ea713"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ep_bolfi.utility.fitting_functions.NDArrayEncoder" href="ep_bolfi.utility.fitting_functions.NDArrayEncoder.html" />
+    <link rel="prev" title="ep_bolfi.utility.fitting_functions.smooth_fit" href="ep_bolfi.utility.fitting_functions.smooth_fit.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ep-bolfi-utility-fitting-functions-verbose-spline-parameterization">
+<h1>ep_bolfi.utility.fitting_functions.verbose_spline_parameterization<a class="headerlink" href="#ep-bolfi-utility-fitting-functions-verbose-spline-parameterization" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.verbose_spline_parameterization">
+<span class="sig-prename descclassname"><span class="pre">ep_bolfi.utility.fitting_functions.</span></span><span class="sig-name descname"><span class="pre">verbose_spline_parameterization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coeffs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'python'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'OCV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SOC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">derivatives</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spline_transformation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.verbose_spline_parameterization" title="Link to this definition">¶</a></dt>
+<dd><p>Gives the monomic representation of a B-spline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coeffs</strong> – The B-spline coefficients as used in <code class="docutils literal notranslate"><span class="pre">scipy.interpolate</span></code>.</p></li>
+<li><p><strong>knots</strong> – The B-spline knots as used in <code class="docutils literal notranslate"><span class="pre">scipy.interpolate</span></code>.</p></li>
+<li><p><strong>order</strong> – The order of the B-spline.</p></li>
+<li><p><strong>format</strong> – Gives the file/language format for the function representation.
+Default is ‘python’. The other choice is ‘matlab’.</p></li>
+<li><p><strong>function_name</strong> – An optional name for the printed Python function.</p></li>
+<li><p><strong>function_args</strong> – An optional string for the arguments of the function.</p></li>
+<li><p><strong>derivatives</strong> – The derivatives of the spline to also include in the return.
+Default is 0, which gives the spline. 1 would give the spline,
+followed by its derivative. Can not be higher than spline order.
+Derivatives are only continuous when <code class="docutils literal notranslate"><span class="pre">derivatives</span> <span class="pre">&lt;</span> <span class="pre">order</span></code>.</p></li>
+<li><p><strong>spline_transformation</strong> – Give a string if you want to include a function that gets
+applied to the whole spline, e.g. ‘exp’. Note that only this
+one extra case gets handled for the first derivative.</p></li>
+<li><p><strong>verbose</strong> – Print information about the progress of the conversion.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A string that gives a Python function when “exec”-uted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ep_bolfi.html">ep_bolfi</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.models.html">ep_bolfi.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.optimization.html">ep_bolfi.optimization</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ep_bolfi.utility.html">ep_bolfi.utility</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.html">ep_bolfi.utility.dataset_formatting</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.html">ep_bolfi.utility.fitting_functions</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.OCV_fit_function.html">ep_bolfi.utility.fitting_functions.OCV_fit_function</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.a_fit.html">ep_bolfi.utility.fitting_functions.a_fit</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.d2_dE2_OCV_fit_function.html">ep_bolfi.utility.fitting_functions.d2_dE2_OCV_fit_function</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.d_dE_OCV_fit_function.html">ep_bolfi.utility.fitting_functions.d_dE_OCV_fit_function</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.find_occurrences.html">ep_bolfi.utility.fitting_functions.find_occurrences</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_OCV.html">ep_bolfi.utility.fitting_functions.fit_OCV</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_drt.html">ep_bolfi.utility.fitting_functions.fit_drt</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_exponential_decay.html">ep_bolfi.utility.fitting_functions.fit_exponential_decay</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_exponential_decay_with_warnings.html">ep_bolfi.utility.fitting_functions.fit_exponential_decay_with_warnings</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_pwrlaw.html">ep_bolfi.utility.fitting_functions.fit_pwrlaw</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_pwrlawCL.html">ep_bolfi.utility.fitting_functions.fit_pwrlawCL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_sqrt.html">ep_bolfi.utility.fitting_functions.fit_sqrt</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_sqrt_with_warnings.html">ep_bolfi.utility.fitting_functions.fit_sqrt_with_warnings</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.inverse_OCV_fit_function.html">ep_bolfi.utility.fitting_functions.inverse_OCV_fit_function</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.inverse_d2_dSOC2_OCV_fit_function.html">ep_bolfi.utility.fitting_functions.inverse_d2_dSOC2_OCV_fit_function</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.inverse_d_dSOC_OCV_fit_function.html">ep_bolfi.utility.fitting_functions.inverse_d_dSOC_OCV_fit_function</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.laplace_transform.html">ep_bolfi.utility.fitting_functions.laplace_transform</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.smooth_fit.html">ep_bolfi.utility.fitting_functions.smooth_fit</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">ep_bolfi.utility.fitting_functions.verbose_spline_parameterization</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.verbose_spline_parameterization"><code class="docutils literal notranslate"><span class="pre">verbose_spline_parameterization()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.NDArrayEncoder.html">ep_bolfi.utility.fitting_functions.NDArrayEncoder</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.OCV_fit_result.html">ep_bolfi.utility.fitting_functions.OCV_fit_result</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.preprocessing.html">ep_bolfi.utility.preprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.visualization.html">ep_bolfi.utility.visualization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="ep_bolfi.html">ep_bolfi</a><ul>
+  <li><a href="ep_bolfi.utility.html">ep_bolfi.utility</a><ul>
+  <li><a href="ep_bolfi.utility.fitting_functions.html">ep_bolfi.utility.fitting_functions</a><ul>
+      <li>Previous: <a href="ep_bolfi.utility.fitting_functions.smooth_fit.html" title="previous chapter">ep_bolfi.utility.fitting_functions.smooth_fit</a></li>
+      <li>Next: <a href="ep_bolfi.utility.fitting_functions.NDArrayEncoder.html" title="next chapter">ep_bolfi.utility.fitting_functions.NDArrayEncoder</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/ep_bolfi.utility.fitting_functions.verbose_spline_parameterization.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

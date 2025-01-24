@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ep_bolfi.utility.fitting_functions.OCV_fit_result &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=110ea713"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ep_bolfi.utility.preprocessing" href="ep_bolfi.utility.preprocessing.html" />
+    <link rel="prev" title="ep_bolfi.utility.fitting_functions.NDArrayEncoder" href="ep_bolfi.utility.fitting_functions.NDArrayEncoder.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ep-bolfi-utility-fitting-functions-ocv-fit-result">
+<h1>ep_bolfi.utility.fitting_functions.OCV_fit_result<a class="headerlink" href="#ep-bolfi-utility-fitting-functions-ocv-fit-result" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ep_bolfi.utility.fitting_functions.</span></span><span class="sig-name descname"><span class="pre">OCV_fit_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SOC</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OCV</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SOC_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SOC_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimize_result</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spline_interpolation_knots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spline_interpolation_coefficients</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Contains OCV fit parameters and related information.</p>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
+<p>C. R. Birkl, E. McTurk, M. R. Roberts, P. G. Bruce and D. A. Howey.
+“A Parametric Open Circuit Voltage Model for Lithium Ion Batteries”.
+Journal of The Electrochemical Society, 162(12):A2271-A2280, 2015</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SOC</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">OCV</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SOC_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SOC_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimize_result</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spline_interpolation_knots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spline_interpolation_coefficients</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fit</strong> – The fit parameters of the OCV function from Birkl et al.,
+either with or without the estimated SOC range at the
+beginning, and optionally without the last Δx entry, which
+is then fixed to ensure that the sum over Δx is 1.
+Order of parameters: [E₀_0, a_0, Δx_0, E₀_1, a_1, …].</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_adjusted" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_adjusted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SOC_adjusted</span></code></a>([soc])</p></td>
+<td><p>Gives the adjusted SOC values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_other_electrode" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_other_electrode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SOC_other_electrode</span></code></a>([soc])</p></td>
+<td><p>Relates the SOCs of the two electrodes to each other.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.__init__" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(fit, SOC, OCV[, SOC_offset, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.to_json" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code></a>()</p></td>
+<td><p>Gives a complete representation in JSON format.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_range" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_range"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SOC_range</span></code></a></p></td>
+<td><p>The SOC range of the data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.fit" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a></p></td>
+<td><p>The fit parameters of the OCV function from Birkl et al., excluding the estimated SOC range.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.E_0" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.E_0"><code class="xref py py-obj docutils literal notranslate"><span class="pre">E_0</span></code></a></p></td>
+<td><p>The E₀ (plateau voltages) parameters.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.a" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.a"><code class="xref py py-obj docutils literal notranslate"><span class="pre">a</span></code></a></p></td>
+<td><p>The a (inverse plateau widths) parameters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.x" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.Δx"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Δx</span></code></a></p></td>
+<td><p>The Δx (phase proportion) parameters.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SOC</span></code></a></p></td>
+<td><p>The SOC data points.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.OCV" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.OCV"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OCV</span></code></a></p></td>
+<td><p>The OCV data points.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_offset" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SOC_offset</span></code></a></p></td>
+<td><p>If another electrode was factored out in the data, this may contain its SOC at SOC 0 of the electrode of interest.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_scale" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_scale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SOC_scale</span></code></a></p></td>
+<td><p>If another electrode was factored out in the data, this may contain the the rate of change of its SOC to that of the electrode of interest.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.optimize_result" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.optimize_result"><code class="xref py py-obj docutils literal notranslate"><span class="pre">optimize_result</span></code></a></p></td>
+<td><p>The scipy.optimize.OptimizeResult that led to the fit.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.spline_interpolation_knots" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.spline_interpolation_knots"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spline_interpolation_knots</span></code></a></p></td>
+<td><p>The knots of the interpolating spline fitted to the inverse.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.spline_interpolation_coefficients" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.spline_interpolation_coefficients"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spline_interpolation_coefficients</span></code></a></p></td>
+<td><p>The coefficients of the interpolating spline fitted to the inverse.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.function_string" title="ep_bolfi.utility.fitting_functions.OCV_fit_result.function_string"><code class="xref py py-obj docutils literal notranslate"><span class="pre">function_string</span></code></a></p></td>
+<td><p>The string representation of the interpolating spline fitted to the inverse.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.E_0">
+<span class="sig-name descname"><span class="pre">E_0</span></span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.E_0" title="Link to this definition">¶</a></dt>
+<dd><p>The E₀ (plateau voltages) parameters.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.OCV">
+<span class="sig-name descname"><span class="pre">OCV</span></span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.OCV" title="Link to this definition">¶</a></dt>
+<dd><p>The OCV data points. May be adjusted from the original data.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC">
+<span class="sig-name descname"><span class="pre">SOC</span></span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC" title="Link to this definition">¶</a></dt>
+<dd><p>The SOC data points.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_adjusted">
+<span class="sig-name descname"><span class="pre">SOC_adjusted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_adjusted" title="Link to this definition">¶</a></dt>
+<dd><p>Gives the adjusted SOC values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>soc</strong> – The SOC as assigned in the original data. This usually
+corresponds to the range available during a measurement.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The SOC as corrected by the OCV model. These values will try
+to correspond to the level of lithiation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_offset">
+<span class="sig-name descname"><span class="pre">SOC_offset</span></span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_offset" title="Link to this definition">¶</a></dt>
+<dd><p>If another electrode was factored out in the data, this may
+contain its SOC at SOC 0 of the electrode of interest.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_other_electrode">
+<span class="sig-name descname"><span class="pre">SOC_other_electrode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_other_electrode" title="Link to this definition">¶</a></dt>
+<dd><p>Relates the SOCs of the two electrodes to each other.</p>
+<p>If the original data was of a full cell and the other
+electrode was factored out, this may contain the function that
+takes the SOC of the electrode of interest and gives the SOC
+of the other electrode, i.e., the stoichiometric relation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>soc</strong> – The SOC of the electrode of interest.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The SOC of the other electrode that was factored out.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_range">
+<span class="sig-name descname"><span class="pre">SOC_range</span></span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_range" title="Link to this definition">¶</a></dt>
+<dd><p>The SOC range of the data.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_scale">
+<span class="sig-name descname"><span class="pre">SOC_scale</span></span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_scale" title="Link to this definition">¶</a></dt>
+<dd><p>If another electrode was factored out in the data, this may
+contain the the rate of change of its SOC to that of the
+electrode of interest.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.a">
+<span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.a" title="Link to this definition">¶</a></dt>
+<dd><p>The a (inverse plateau widths) parameters.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.fit" title="Link to this definition">¶</a></dt>
+<dd><p>The fit parameters of the OCV function from Birkl et al.,
+excluding the estimated SOC range.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.function_string">
+<span class="sig-name descname"><span class="pre">function_string</span></span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.function_string" title="Link to this definition">¶</a></dt>
+<dd><p>The string representation of the interpolating spline fitted to
+the inverse.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.optimize_result">
+<span class="sig-name descname"><span class="pre">optimize_result</span></span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.optimize_result" title="Link to this definition">¶</a></dt>
+<dd><p>The scipy.optimize.OptimizeResult that led to the fit.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.spline_interpolation_coefficients">
+<span class="sig-name descname"><span class="pre">spline_interpolation_coefficients</span></span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.spline_interpolation_coefficients" title="Link to this definition">¶</a></dt>
+<dd><p>The coefficients of the interpolating spline fitted to the
+inverse.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.spline_interpolation_knots">
+<span class="sig-name descname"><span class="pre">spline_interpolation_knots</span></span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.spline_interpolation_knots" title="Link to this definition">¶</a></dt>
+<dd><p>The knots of the interpolating spline fitted to the inverse.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.to_json" title="Link to this definition">¶</a></dt>
+<dd><p>Gives a complete representation in JSON format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A JSON-formatted string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.fitting_functions.OCV_fit_result.x">
+<span class="sig-name descname"><span class="pre">Δx</span></span><a class="headerlink" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.x" title="Link to this definition">¶</a></dt>
+<dd><p>The Δx (phase proportion) parameters.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ep_bolfi.html">ep_bolfi</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.models.html">ep_bolfi.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.optimization.html">ep_bolfi.optimization</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ep_bolfi.utility.html">ep_bolfi.utility</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.html">ep_bolfi.utility.dataset_formatting</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.html">ep_bolfi.utility.fitting_functions</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.OCV_fit_function.html">ep_bolfi.utility.fitting_functions.OCV_fit_function</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.a_fit.html">ep_bolfi.utility.fitting_functions.a_fit</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.d2_dE2_OCV_fit_function.html">ep_bolfi.utility.fitting_functions.d2_dE2_OCV_fit_function</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.d_dE_OCV_fit_function.html">ep_bolfi.utility.fitting_functions.d_dE_OCV_fit_function</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.find_occurrences.html">ep_bolfi.utility.fitting_functions.find_occurrences</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_OCV.html">ep_bolfi.utility.fitting_functions.fit_OCV</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_drt.html">ep_bolfi.utility.fitting_functions.fit_drt</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_exponential_decay.html">ep_bolfi.utility.fitting_functions.fit_exponential_decay</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_exponential_decay_with_warnings.html">ep_bolfi.utility.fitting_functions.fit_exponential_decay_with_warnings</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_pwrlaw.html">ep_bolfi.utility.fitting_functions.fit_pwrlaw</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_pwrlawCL.html">ep_bolfi.utility.fitting_functions.fit_pwrlawCL</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_sqrt.html">ep_bolfi.utility.fitting_functions.fit_sqrt</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.fit_sqrt_with_warnings.html">ep_bolfi.utility.fitting_functions.fit_sqrt_with_warnings</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.inverse_OCV_fit_function.html">ep_bolfi.utility.fitting_functions.inverse_OCV_fit_function</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.inverse_d2_dSOC2_OCV_fit_function.html">ep_bolfi.utility.fitting_functions.inverse_d2_dSOC2_OCV_fit_function</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.inverse_d_dSOC_OCV_fit_function.html">ep_bolfi.utility.fitting_functions.inverse_d_dSOC_OCV_fit_function</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.laplace_transform.html">ep_bolfi.utility.fitting_functions.laplace_transform</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.smooth_fit.html">ep_bolfi.utility.fitting_functions.smooth_fit</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.verbose_spline_parameterization.html">ep_bolfi.utility.fitting_functions.verbose_spline_parameterization</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.NDArrayEncoder.html">ep_bolfi.utility.fitting_functions.NDArrayEncoder</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">ep_bolfi.utility.fitting_functions.OCV_fit_result</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.__init__"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.__init__()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.E_0"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.E_0</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.OCV"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.OCV</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.SOC</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_adjusted"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.SOC_adjusted()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_offset"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.SOC_offset</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_other_electrode"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.SOC_other_electrode()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_range"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.SOC_range</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.SOC_scale"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.SOC_scale</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.a"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.a</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.fit"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.fit</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.function_string"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.function_string</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.optimize_result"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.optimize_result</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.spline_interpolation_coefficients"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.spline_interpolation_coefficients</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.spline_interpolation_knots"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.spline_interpolation_knots</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.to_json"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.to_json()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.fitting_functions.OCV_fit_result.x"><code class="docutils literal notranslate"><span class="pre">OCV_fit_result.Δx</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.preprocessing.html">ep_bolfi.utility.preprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.visualization.html">ep_bolfi.utility.visualization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="ep_bolfi.html">ep_bolfi</a><ul>
+  <li><a href="ep_bolfi.utility.html">ep_bolfi.utility</a><ul>
+  <li><a href="ep_bolfi.utility.fitting_functions.html">ep_bolfi.utility.fitting_functions</a><ul>
+      <li>Previous: <a href="ep_bolfi.utility.fitting_functions.NDArrayEncoder.html" title="previous chapter">ep_bolfi.utility.fitting_functions.NDArrayEncoder</a></li>
+      <li>Next: <a href="ep_bolfi.utility.preprocessing.html" title="next chapter">ep_bolfi.utility.preprocessing</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/ep_bolfi.utility.fitting_functions.OCV_fit_result.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

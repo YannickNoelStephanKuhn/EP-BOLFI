@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=110ea713"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ep_bolfi.utility" href="ep_bolfi.utility.html" />
+    <link rel="prev" title="ep_bolfi.optimization.EP_BOLFI.Optimizer_State" href="ep_bolfi.optimization.EP_BOLFI.Optimizer_State.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ep-bolfi-optimization-ep-bolfi-preprocessed-simulator">
+<h1>ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator<a class="headerlink" href="#ep-bolfi-optimization-ep-bolfi-preprocessed-simulator" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ep_bolfi.optimization.EP_BOLFI.</span></span><span class="sig-name descname"><span class="pre">Preprocessed_Simulator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">free_parameters_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experimental_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_extractor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_parameter_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Normalizes sampling to a standard normal distribution.</p>
+<p>In order to help BOLFI to work efficiently with the least amount of
+setup required, this class mediates between the model parameters
+and a standard normal distribution for sampling. In a sense, the
+simulator output gets transformed into covariance eigenvectors.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">free_parameters_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experimental_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_extractor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_parameter_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>simulator</strong> – The function that returns results given parameters.</p></li>
+<li><p><strong>fixed_parameters</strong> – Dictionary of parameters that stay fixed and their values.</p></li>
+<li><p><strong>free_parameters_names</strong> – List of the names of parameters which shall be inferred.</p></li>
+<li><p><strong>r</strong> – <em>Q</em> times the mean of the distribution of free parameters.</p></li>
+<li><p><strong>Q</strong> – Inverse covariance matrix of free parameters, the precision.
+It is used to transform the free parameters given to the
+‘simulator’ into the ones used in the model. Most notably,
+these univariate standard normal distributions get
+transformed into a multivariate normal distribution
+corresponding to <em>Q</em> and <em>r</em>.</p></li>
+<li><p><strong>experimental_data</strong> – The experimental data that the model will be fitted to.
+It has to have the same structure as the <em>simulator</em> output.</p></li>
+<li><p><strong>feature_extractor</strong> – A function that takes the output of <em>simulator</em> or the
+<em>experimental_data</em> and returns a list of numbers.</p></li>
+<li><p><strong>transform_parameters</strong> – Optional transformations between the parameter space that is
+used for searching for optimal parameters and the battery
+model parameters. <em>Q</em> and <em>r</em> define a normal distribution in
+that search space. The keys are the names of the free
+parameters. The values are 2-tuples. The first entry is a
+function taking the search space parameter and returning the
+model parameter. The second entry is the inverse function.</p></li>
+<li><p><strong>fixed_parameter_order</strong> – Optional fixed parameter order. Prevents erroneous behaviour
+when the parameter dictionaries get reshuffled.
+Highly recommended.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.__init__" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(simulator, fixed_parameters, ...[, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.apply_transformation" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.apply_transformation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_transformation</span></code></a>(trial_parameters)</p></td>
+<td><p>Apply the transforms in <em>self.transform_parameters</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.elfi_simulator" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.elfi_simulator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">elfi_simulator</span></code></a>(*args, **kwargs)</p></td>
+<td><p>A model simulator that can be used with ELFI.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.search_to_transformed_trial" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.search_to_transformed_trial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">search_to_transformed_trial</span></code></a>(...)</p></td>
+<td><p>Transforms search space parameters to model ones.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transformed_trial_to_search" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transformed_trial_to_search"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transformed_trial_to_search</span></code></a>(...)</p></td>
+<td><p>Transforms model space parameters to search ones.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.undo_transformation" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.undo_transformation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">undo_transformation</span></code></a>(transformed_trial_parameters)</p></td>
+<td><p>Undo the transforms in <em>self.transform_parameters</em>.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.log_of_tried_parameters" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.log_of_tried_parameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_of_tried_parameters</span></code></a></p></td>
+<td><p>Stores all parameter combinations that have been tried.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.experimental_features" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.experimental_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">experimental_features</span></code></a></p></td>
+<td><p>Extract the features from the experimental data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.input_dim" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.input_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">input_dim</span></code></a></p></td>
+<td><p>Input dimension of the estimation task.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.output_dim" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.output_dim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">output_dim</span></code></a></p></td>
+<td><p>Output dimension of the estimation task (number of features).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.add_parameters" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.add_parameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_parameters</span></code></a></p></td>
+<td><p>Create a function to combine the free and fixed parameters.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.inv_variances" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.inv_variances"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inv_variances</span></code></a></p></td>
+<td><p>Compute the linear transformation of parameters for which the covariance of the underlying multivariate normal distribution is a diagonal matrix.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.back_transform_matrix" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.back_transform_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">back_transform_matrix</span></code></a></p></td>
+<td><p>Compute the linear transformation of parameters for which the covariance of the underlying multivariate normal distribution is a diagonal matrix.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.variances" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.variances"><code class="xref py py-obj docutils literal notranslate"><span class="pre">variances</span></code></a></p></td>
+<td><p>Variances of the model parameters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transform_matrix" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transform_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform_matrix</span></code></a></p></td>
+<td><p>Inverse of <em>back_transform_matrix</em>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transformed_means" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transformed_means"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transformed_means</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">transform_matrix</span> <span class="pre">&#64;</span> <span class="pre">Q</span> <span class="pre">&#64;</span> <span class="pre">back_transform_matrix</span></code> is diagonal.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.norm_factor" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.norm_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">norm_factor</span></code></a></p></td>
+<td><p>Now that the multivariate normal distribution is decomposed into various univariate ones, norm them to have equal variance 1.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.un_norm_factor" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.un_norm_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">un_norm_factor</span></code></a></p></td>
+<td><p>Inverse of norm_factor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.normed_means" title="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.normed_means"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normed_means</span></code></a></p></td>
+<td><p>Expectation value of the normed univariate normal distributions.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.add_parameters">
+<span class="sig-name descname"><span class="pre">add_parameters</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.add_parameters" title="Link to this definition">¶</a></dt>
+<dd><p>Create a function to combine the free and fixed parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.apply_transformation">
+<span class="sig-name descname"><span class="pre">apply_transformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial_parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.apply_transformation" title="Link to this definition">¶</a></dt>
+<dd><p>Apply the transforms in <em>self.transform_parameters</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>trial_parameters</strong> – A dictionary. The keys are the <em>free_parameters_names</em>
+and the values are the actual model parameters.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The given dictionary with the vales transformed to the
+modified parameter space as specified in
+<em>self.transform_parameters</em>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.back_transform_matrix">
+<span class="sig-name descname"><span class="pre">back_transform_matrix</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.back_transform_matrix" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the linear transformation of parameters for which the
+covariance of the underlying multivariate normal distribution
+is a diagonal matrix. That is, compute the eigenvectors of <em>Q</em>.
+It is more stable since <em>Q</em> has growing eigenvectors in
+convergence.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.elfi_simulator">
+<span class="sig-name descname"><span class="pre">elfi_simulator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.elfi_simulator" title="Link to this definition">¶</a></dt>
+<dd><p>A model simulator that can be used with ELFI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – <p>The parameters as given by the prior nodes. Their
+order has to correspond to that of the parameter
+‘free_parameters’ given to ‘return_simulator’.</p>
+</p></li>
+<li><p><strong>**kwargs</strong> – <p>Keyword parameters batch_size and random_state,
+but both are unused (they just get passed by BOLFI).</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Simulated features for the given free parameters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.experimental_features">
+<span class="sig-name descname"><span class="pre">experimental_features</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.experimental_features" title="Link to this definition">¶</a></dt>
+<dd><p>Extract the features from the experimental data.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.input_dim">
+<span class="sig-name descname"><span class="pre">input_dim</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.input_dim" title="Link to this definition">¶</a></dt>
+<dd><p>Input dimension of the estimation task.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.inv_variances">
+<span class="sig-name descname"><span class="pre">inv_variances</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.inv_variances" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the linear transformation of parameters for which the
+covariance of the underlying multivariate normal distribution
+is a diagonal matrix. That is, compute the eigenvectors of <em>Q</em>.
+It is more stable since <em>Q</em> has growing eigenvectors in
+convergence.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.log_of_tried_parameters">
+<span class="sig-name descname"><span class="pre">log_of_tried_parameters</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.log_of_tried_parameters" title="Link to this definition">¶</a></dt>
+<dd><p>Stores all parameter combinations that have been tried.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.norm_factor">
+<span class="sig-name descname"><span class="pre">norm_factor</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.norm_factor" title="Link to this definition">¶</a></dt>
+<dd><p>Now that the multivariate normal distribution is decomposed into
+various univariate ones, norm them to have equal variance 1.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.normed_means">
+<span class="sig-name descname"><span class="pre">normed_means</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.normed_means" title="Link to this definition">¶</a></dt>
+<dd><p>Expectation value of the normed univariate normal distributions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.output_dim">
+<span class="sig-name descname"><span class="pre">output_dim</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.output_dim" title="Link to this definition">¶</a></dt>
+<dd><p>Output dimension of the estimation task (number of features).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.search_to_transformed_trial">
+<span class="sig-name descname"><span class="pre">search_to_transformed_trial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_space_parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.search_to_transformed_trial" title="Link to this definition">¶</a></dt>
+<dd><p>Transforms search space parameters to model ones.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>search_space_parameters</strong> – A list of lists which each contain a single search space
+parameter sample as it is returned by the sample functions
+of ELFI. In the case of only sample, a list also works.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary with its keys as the names of the parameters.
+Their order in the <em>search_space_parameters</em> is given by the
+order of <em>self.free_parameters_names</em>. The values yield the
+model parameters when passed through the functions in
+<em>self.transform_parameters</em>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transform_matrix">
+<span class="sig-name descname"><span class="pre">transform_matrix</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transform_matrix" title="Link to this definition">¶</a></dt>
+<dd><p>Inverse of <em>back_transform_matrix</em>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transformed_means">
+<span class="sig-name descname"><span class="pre">transformed_means</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transformed_means" title="Link to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">transform_matrix</span> <span class="pre">&#64;</span> <span class="pre">Q</span> <span class="pre">&#64;</span> <span class="pre">back_transform_matrix</span></code> is diagonal.
+The correct transformation for vectors <code class="docutils literal notranslate"><span class="pre">v</span></code> is then
+<code class="docutils literal notranslate"><span class="pre">transform_matrix</span> <span class="pre">&#64;</span> <span class="pre">v</span></code>. The product below corresponds to
+<code class="docutils literal notranslate"><span class="pre">Q⁻¹</span> <span class="pre">&#64;</span> <span class="pre">r</span></code>. It is just expressed in the eigenvector space of
+<em>Q</em> for efficiency.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transformed_trial_to_search">
+<span class="sig-name descname"><span class="pre">transformed_trial_to_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_space_parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transformed_trial_to_search" title="Link to this definition">¶</a></dt>
+<dd><p>Transforms model space parameters to search ones.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model_space_parameters</strong> – A dictionary. The keys are the <em>self.free_parameters_names</em>
+and the values are the model parameters after applying the
+transformations given in <em>self.transform_parameters</em>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list (of lists) which each contain a single search space
+parameter sample as it is returned by the sample functions
+of ELFI. If the <em>model_space_parameters</em> dictionary values
+are numbers, the returned value is a list. If they are
+lists, the returned value is a list of corresponding lists.
+In that case, each and every list must have the same length.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.un_norm_factor">
+<span class="sig-name descname"><span class="pre">un_norm_factor</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.un_norm_factor" title="Link to this definition">¶</a></dt>
+<dd><p>Inverse of norm_factor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.undo_transformation">
+<span class="sig-name descname"><span class="pre">undo_transformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformed_trial_parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.undo_transformation" title="Link to this definition">¶</a></dt>
+<dd><p>Undo the transforms in <em>self.transform_parameters</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>transformed_trial_parameters</strong> – A dictionary. The keys are the <em>free_parameters_names</em> and
+the values are the model parameters after they have been
+transformed as specified in <em>self.transform_parameters</em>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The given dictionary with the values transformed back to the
+actual model parameter values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.variances">
+<span class="sig-name descname"><span class="pre">variances</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.variances" title="Link to this definition">¶</a></dt>
+<dd><p>Variances of the model parameters.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ep_bolfi.html">ep_bolfi</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.models.html">ep_bolfi.models</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ep_bolfi.optimization.html">ep_bolfi.optimization</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="ep_bolfi.optimization.EP_BOLFI.html">ep_bolfi.optimization.EP_BOLFI</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.optimization.EP_BOLFI.combine_parameters_to_try.html">ep_bolfi.optimization.EP_BOLFI.combine_parameters_to_try</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.optimization.EP_BOLFI.fix_parameters.html">ep_bolfi.optimization.EP_BOLFI.fix_parameters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.html">ep_bolfi.optimization.EP_BOLFI.EP_BOLFI</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.optimization.EP_BOLFI.NDArrayEncoder.html">ep_bolfi.optimization.EP_BOLFI.NDArrayEncoder</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.optimization.EP_BOLFI.Optimizer_State.html">ep_bolfi.optimization.EP_BOLFI.Optimizer_State</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.__init__"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.__init__()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.add_parameters"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.add_parameters</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.apply_transformation"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.apply_transformation()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.back_transform_matrix"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.back_transform_matrix</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.elfi_simulator"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.elfi_simulator()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.experimental_features"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.experimental_features</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.input_dim"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.input_dim</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.inv_variances"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.inv_variances</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.log_of_tried_parameters"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.log_of_tried_parameters</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.norm_factor"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.norm_factor</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.normed_means"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.normed_means</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.output_dim"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.output_dim</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.search_to_transformed_trial"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.search_to_transformed_trial()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transform_matrix"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.transform_matrix</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transformed_means"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.transformed_means</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.transformed_trial_to_search"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.transformed_trial_to_search()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.un_norm_factor"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.un_norm_factor</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.undo_transformation"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.undo_transformation()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.variances"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.variances</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.utility.html">ep_bolfi.utility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="ep_bolfi.html">ep_bolfi</a><ul>
+  <li><a href="ep_bolfi.optimization.html">ep_bolfi.optimization</a><ul>
+  <li><a href="ep_bolfi.optimization.EP_BOLFI.html">ep_bolfi.optimization.EP_BOLFI</a><ul>
+      <li>Previous: <a href="ep_bolfi.optimization.EP_BOLFI.Optimizer_State.html" title="previous chapter">ep_bolfi.optimization.EP_BOLFI.Optimizer_State</a></li>
+      <li>Next: <a href="ep_bolfi.utility.html" title="next chapter">ep_bolfi.utility</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

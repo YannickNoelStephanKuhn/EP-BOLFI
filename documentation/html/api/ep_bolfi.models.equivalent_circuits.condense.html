@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ep_bolfi.models.equivalent_circuits.condense &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=110ea713"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ep_bolfi.models.equivalent_circuits.parallel" href="ep_bolfi.models.equivalent_circuits.parallel.html" />
+    <link rel="prev" title="ep_bolfi.models.equivalent_circuits" href="ep_bolfi.models.equivalent_circuits.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ep-bolfi-models-equivalent-circuits-condense">
+<h1>ep_bolfi.models.equivalent_circuits.condense<a class="headerlink" href="#ep-bolfi-models-equivalent-circuits-condense" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="ep_bolfi.models.equivalent_circuits.condense">
+<span class="sig-prename descclassname"><span class="pre">ep_bolfi.models.equivalent_circuits.</span></span><span class="sig-name descname"><span class="pre">condense</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eq</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.equivalent_circuits.condense" title="Link to this definition">¶</a></dt>
+<dd><p>collapse additive/multiplicative constants into single
+variables, returning condensed expression and replacement
+values.</p>
+<p><a class="reference external" href="https://stackoverflow.com/questions/71315789/optimize-sympy-expression">https://stackoverflow.com/questions/71315789/optimize-sympy-expression</a>-
+evaluation-by-combining-as-many-free-symbols-as-possib
+by smichr under CC-BY-SA 4.0:
+<a class="reference external" href="https://creativecommons.org/licenses/by-sa/4.0/">https://creativecommons.org/licenses/by-sa/4.0/</a></p>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<p>Simple constants are left unchanged</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">condense</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="go">(2*x + 2, {})</span>
+</pre></div>
+</div>
+<p>More complex constants are replaced by a single variable</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first</span> <span class="o">=</span> <span class="n">condense</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span> <span class="n">first</span>
+<span class="go">(c6*(c5 - 2*sqrt(d*(c4 + x))), {c4: a*b - c - e, c6: 1/(b - 1),</span>
+<span class="go"> c5: a*b*c**2})</span>
+</pre></div>
+</div>
+<p>If a condensed expression is expanded, there may be more simplification
+possible:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">second</span> <span class="o">=</span> <span class="n">condense</span><span class="p">(</span><span class="n">first</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">expand</span><span class="p">(),</span> <span class="n">x</span><span class="p">);</span> <span class="n">second</span>
+<span class="go">(c0 + c2*sqrt(c1 + d*x), {c1: c4*d, c2: -2*c6, c0: c5*c6})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">full_reps</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">xreplace</span><span class="p">(</span><span class="n">first</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">second</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()};</span>
+<span class="go">    full_reps</span>
+<span class="go">{c1: d*(a*b - c - e), c2: -2/(b - 1), c0: a*b*c**2/(b - 1)}</span>
+</pre></div>
+</div>
+<p>More than 1 variable can be designated:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">condense</span><span class="p">(</span><span class="n">eq</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<span class="go">(c4*(c**2*c1 - 2*sqrt(d*(-c + c2 - e))), {c4: 1/(b - 1), c1: a*b,</span>
+<span class="go"> c2: a*b + x})</span>
+</pre></div>
+</div>
+</section>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ep_bolfi.html">ep_bolfi</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ep_bolfi.models.html">ep_bolfi.models</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.analytic_impedance.html">ep_bolfi.models.analytic_impedance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.assess_effective_parameters.html">ep_bolfi.models.assess_effective_parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.electrolyte.html">ep_bolfi.models.electrolyte</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.html">ep_bolfi.models.equivalent_circuits</a><ul class="current">
+<li class="toctree-l5 current"><a class="current reference internal" href="#">ep_bolfi.models.equivalent_circuits.condense</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ep_bolfi.models.equivalent_circuits.condense"><code class="docutils literal notranslate"><span class="pre">condense()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.parallel.html">ep_bolfi.models.equivalent_circuits.parallel</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.series.html">ep_bolfi.models.equivalent_circuits.series</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.C.html">ep_bolfi.models.equivalent_circuits.C</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.ECM.html">ep_bolfi.models.equivalent_circuits.ECM</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.L.html">ep_bolfi.models.equivalent_circuits.L</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.Q.html">ep_bolfi.models.equivalent_circuits.Q</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.R.html">ep_bolfi.models.equivalent_circuits.R</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.RC_chain.html">ep_bolfi.models.equivalent_circuits.RC_chain</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.SCR.html">ep_bolfi.models.equivalent_circuits.SCR</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.SCRF.html">ep_bolfi.models.equivalent_circuits.SCRF</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch.html">ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.W.html">ep_bolfi.models.equivalent_circuits.W</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.aluminium_electrode.html">ep_bolfi.models.equivalent_circuits.aluminium_electrode</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.aluminium_electrode_variant.html">ep_bolfi.models.equivalent_circuits.aluminium_electrode_variant</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.debye.html">ep_bolfi.models.equivalent_circuits.debye</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.debye_variant.html">ep_bolfi.models.equivalent_circuits.debye_variant</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.randles.html">ep_bolfi.models.equivalent_circuits.randles</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.randles_variant.html">ep_bolfi.models.equivalent_circuits.randles_variant</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.warburg_open.html">ep_bolfi.models.equivalent_circuits.warburg_open</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.warburg_short.html">ep_bolfi.models.equivalent_circuits.warburg_short</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.wrong_randles.html">ep_bolfi.models.equivalent_circuits.wrong_randles</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.wrong_randles_variant.html">ep_bolfi.models.equivalent_circuits.wrong_randles_variant</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.solversetup.html">ep_bolfi.models.solversetup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.standard_parameters.html">ep_bolfi.models.standard_parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.optimization.html">ep_bolfi.optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.utility.html">ep_bolfi.utility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="ep_bolfi.html">ep_bolfi</a><ul>
+  <li><a href="ep_bolfi.models.html">ep_bolfi.models</a><ul>
+  <li><a href="ep_bolfi.models.equivalent_circuits.html">ep_bolfi.models.equivalent_circuits</a><ul>
+      <li>Previous: <a href="ep_bolfi.models.equivalent_circuits.html" title="previous chapter">ep_bolfi.models.equivalent_circuits</a></li>
+      <li>Next: <a href="ep_bolfi.models.equivalent_circuits.parallel.html" title="next chapter">ep_bolfi.models.equivalent_circuits.parallel</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/ep_bolfi.models.equivalent_circuits.condense.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

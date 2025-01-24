@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ep_bolfi.utility.dataset_formatting.Impedance_Measurement &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=110ea713"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ep_bolfi.utility.dataset_formatting.Measurement" href="ep_bolfi.utility.dataset_formatting.Measurement.html" />
+    <link rel="prev" title="ep_bolfi.utility.dataset_formatting.Cycling_Information" href="ep_bolfi.utility.dataset_formatting.Cycling_Information.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ep-bolfi-utility-dataset-formatting-impedance-measurement">
+<h1>ep_bolfi.utility.dataset_formatting.Impedance_Measurement<a class="headerlink" href="#ep-bolfi-utility-dataset-formatting-impedance-measurement" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ep_bolfi.utility.dataset_formatting.</span></span><span class="sig-name descname"><span class="pre">Impedance_Measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_impedances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imaginary_impedances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="ep_bolfi.utility.dataset_formatting.Measurement.html#ep_bolfi.utility.dataset_formatting.Measurement" title="ep_bolfi.utility.dataset_formatting.Measurement"><code class="xref py py-class docutils literal notranslate"><span class="pre">Measurement</span></code></a></p>
+<p>Contains basic impedance data. Each member variable is a list and
+has the same length as the other ones.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_impedances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imaginary_impedances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.__init__" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(frequencies, real_impedances, ...)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.example_table_row" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.example_table_row"><code class="xref py py-obj docutils literal notranslate"><span class="pre">example_table_row</span></code></a>()</p></td>
+<td><p>Makes singular <em>self.indices</em> entries into lists and returns an exempular line for table formatting.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.extend" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.extend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extend</span></code></a>(other)</p></td>
+<td><p>Extends <em>self</em> with the <em>other</em> <code class="docutils literal notranslate"><span class="pre">Measurement</span></code> object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.from_json" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.from_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code></a>(json_string)</p></td>
+<td><p>Reads this object from JSON that was prepared with <code class="docutils literal notranslate"><span class="pre">to_json</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.segment_tables" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.segment_tables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">segment_tables</span></code></a>([start, stop, step])</p></td>
+<td><p>Iterator that gives data segments in Apache Parquet syntax.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.subarray" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.subarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subarray</span></code></a>(array)</p></td>
+<td><p>Returns a <code class="docutils literal notranslate"><span class="pre">Measurement</span></code> object containing <em>array</em> segments.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.subslice" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.subslice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subslice</span></code></a>(start, stop[, step])</p></td>
+<td><p>Returns a <code class="docutils literal notranslate"><span class="pre">Measurement</span></code> object containing the requested slice.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.table_descriptors" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.table_descriptors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">table_descriptors</span></code></a>()</p></td>
+<td><p>Gives the headings for table formatting.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.table_mapping" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.table_mapping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">table_mapping</span></code></a>()</p></td>
+<td><p>Gives the mapping from attributes to headings.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.to_json" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code></a>()</p></td>
+<td><p>Losslessly transforms this object into JSON.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">complex_impedances</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.frequencies" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frequencies</span></code></a></p></td>
+<td><p>The frequencies at which impedances were measured.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.real_impedances" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.real_impedances"><code class="xref py py-obj docutils literal notranslate"><span class="pre">real_impedances</span></code></a></p></td>
+<td><p>The real part of the impedances measured at those frequencies.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.imaginary_impedances" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.imaginary_impedances"><code class="xref py py-obj docutils literal notranslate"><span class="pre">imaginary_impedances</span></code></a></p></td>
+<td><p>The imaginary part of the impedances measured at those frequencies.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.phases" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.phases"><code class="xref py py-obj docutils literal notranslate"><span class="pre">phases</span></code></a></p></td>
+<td><p>The phases of the impedance measured at those frequencies.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.other_columns" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.other_columns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">other_columns</span></code></a></p></td>
+<td><p>The contents of any other columns.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.indices" title="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.indices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">indices</span></code></a></p></td>
+<td><p>The indices of the individual segments.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.example_table_row">
+<span class="sig-name descname"><span class="pre">example_table_row</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.example_table_row" title="Link to this definition">¶</a></dt>
+<dd><p>Makes singular <em>self.indices</em> entries into lists and returns an
+exempular line for table formatting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list with the entries for each column.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.extend">
+<span class="sig-name descname"><span class="pre">extend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.extend" title="Link to this definition">¶</a></dt>
+<dd><p>Extends <em>self</em> with the <em>other</em> <code class="docutils literal notranslate"><span class="pre">Measurement</span></code> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> – Another <code class="docutils literal notranslate"><span class="pre">Measurement</span> <span class="pre">object</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.frequencies">
+<span class="sig-name descname"><span class="pre">frequencies</span></span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.frequencies" title="Link to this definition">¶</a></dt>
+<dd><p>The frequencies at which impedances were measured. Usually a
+list of lists where each list corresponds to a different
+equilibrium.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.from_json">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.from_json" title="Link to this definition">¶</a></dt>
+<dd><p>Reads this object from JSON that was prepared with <code class="docutils literal notranslate"><span class="pre">to_json</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json_string</strong> – The JSON, fed in as a string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.imaginary_impedances">
+<span class="sig-name descname"><span class="pre">imaginary_impedances</span></span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.imaginary_impedances" title="Link to this definition">¶</a></dt>
+<dd><p>The imaginary part of the impedances measured at those
+frequencies.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.indices">
+<span class="sig-name descname"><span class="pre">indices</span></span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.indices" title="Link to this definition">¶</a></dt>
+<dd><p>The indices of the individual segments. Defaults to a simple
+numbering of the segments present. May be used for plotting
+purposes, e.g., for colourcoding the segments by cycle.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.other_columns">
+<span class="sig-name descname"><span class="pre">other_columns</span></span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.other_columns" title="Link to this definition">¶</a></dt>
+<dd><p>The contents of any other columns. A dictionary (“columns”)
+which values are lists which contain lists for segments.
+The keys should match user input for the columns.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.phases">
+<span class="sig-name descname"><span class="pre">phases</span></span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.phases" title="Link to this definition">¶</a></dt>
+<dd><p>The phases of the impedance measured at those frequencies.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.real_impedances">
+<span class="sig-name descname"><span class="pre">real_impedances</span></span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.real_impedances" title="Link to this definition">¶</a></dt>
+<dd><p>The real part of the impedances measured at those frequencies.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.segment_tables">
+<span class="sig-name descname"><span class="pre">segment_tables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.segment_tables" title="Link to this definition">¶</a></dt>
+<dd><p>Iterator that gives data segments in Apache Parquet syntax.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> – First data segment.</p></li>
+<li><p><strong>stop</strong> – Last data segment.</p></li>
+<li><p><strong>step</strong> – Step size in each iteration.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.subarray">
+<span class="sig-name descname"><span class="pre">subarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.subarray" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a <code class="docutils literal notranslate"><span class="pre">Measurement</span></code> object containing <em>array</em> segments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>array</strong> – A list of integers denoting the segments to collect.
+Does not correspond to <em>self.indices</em>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">Measurement[array]</span></code> object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.subslice">
+<span class="sig-name descname"><span class="pre">subslice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.subslice" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a <code class="docutils literal notranslate"><span class="pre">Measurement</span></code> object containing the requested slice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> – First data segment.</p></li>
+<li><p><strong>stop</strong> – Last data segment.</p></li>
+<li><p><strong>step</strong> – Step size in each iteration.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">Measurement[start:stop:step]</span></code> object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.table_descriptors">
+<span class="sig-name descname"><span class="pre">table_descriptors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.table_descriptors" title="Link to this definition">¶</a></dt>
+<dd><p>Gives the headings for table formatting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Table headings in Apache Parquet syntax.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.table_mapping">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">table_mapping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.table_mapping" title="Link to this definition">¶</a></dt>
+<dd><p>Gives the mapping from attributes to headings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary: keys are attribute names, values are headings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.to_json" title="Link to this definition">¶</a></dt>
+<dd><p>Losslessly transforms this object into JSON.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The JSON representation, given as a string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ep_bolfi.html">ep_bolfi</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.models.html">ep_bolfi.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.optimization.html">ep_bolfi.optimization</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ep_bolfi.utility.html">ep_bolfi.utility</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.html">ep_bolfi.utility.dataset_formatting</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.convert_none_notation_to_slicing.html">ep_bolfi.utility.dataset_formatting.convert_none_notation_to_slicing</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.get_hdf5_dataset_by_path.html">ep_bolfi.utility.dataset_formatting.get_hdf5_dataset_by_path</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.print_hdf5_structure.html">ep_bolfi.utility.dataset_formatting.print_hdf5_structure</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.read_csv_from_measurement_system.html">ep_bolfi.utility.dataset_formatting.read_csv_from_measurement_system</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.read_hdf5_table.html">ep_bolfi.utility.dataset_formatting.read_hdf5_table</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.read_parquet_table.html">ep_bolfi.utility.dataset_formatting.read_parquet_table</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.store_parquet_table.html">ep_bolfi.utility.dataset_formatting.store_parquet_table</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.Cycling_Information.html">ep_bolfi.utility.dataset_formatting.Cycling_Information</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">ep_bolfi.utility.dataset_formatting.Impedance_Measurement</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.__init__"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.__init__()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.example_table_row"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.example_table_row()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.extend"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.extend()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.frequencies"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.frequencies</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.from_json"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.from_json()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.imaginary_impedances"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.imaginary_impedances</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.indices"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.indices</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.other_columns"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.other_columns</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.phases"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.phases</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.real_impedances"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.real_impedances</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.segment_tables"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.segment_tables()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.subarray"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.subarray()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.subslice"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.subslice()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.table_descriptors"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.table_descriptors()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.table_mapping"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.table_mapping()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.to_json"><code class="docutils literal notranslate"><span class="pre">Impedance_Measurement.to_json()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.Measurement.html">ep_bolfi.utility.dataset_formatting.Measurement</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.Static_Information.html">ep_bolfi.utility.dataset_formatting.Static_Information</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.html">ep_bolfi.utility.fitting_functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.preprocessing.html">ep_bolfi.utility.preprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.visualization.html">ep_bolfi.utility.visualization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="ep_bolfi.html">ep_bolfi</a><ul>
+  <li><a href="ep_bolfi.utility.html">ep_bolfi.utility</a><ul>
+  <li><a href="ep_bolfi.utility.dataset_formatting.html">ep_bolfi.utility.dataset_formatting</a><ul>
+      <li>Previous: <a href="ep_bolfi.utility.dataset_formatting.Cycling_Information.html" title="previous chapter">ep_bolfi.utility.dataset_formatting.Cycling_Information</a></li>
+      <li>Next: <a href="ep_bolfi.utility.dataset_formatting.Measurement.html" title="next chapter">ep_bolfi.utility.dataset_formatting.Measurement</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/ep_bolfi.utility.dataset_formatting.Impedance_Measurement.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

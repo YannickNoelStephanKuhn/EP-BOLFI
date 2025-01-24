@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ep_bolfi.utility.visualization.plot_OCV_from_CC_CV &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=110ea713"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ep_bolfi.utility.visualization.plot_comparison" href="ep_bolfi.utility.visualization.plot_comparison.html" />
+    <link rel="prev" title="ep_bolfi.utility.visualization.plot_ICA" href="ep_bolfi.utility.visualization.plot_ICA.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ep-bolfi-utility-visualization-plot-ocv-from-cc-cv">
+<h1>ep_bolfi.utility.visualization.plot_OCV_from_CC_CV<a class="headerlink" href="#ep-bolfi-utility-visualization-plot-ocv-from-cc-cv" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="ep_bolfi.utility.visualization.plot_OCV_from_CC_CV">
+<span class="sig-prename descclassname"><span class="pre">ep_bolfi.utility.visualization.</span></span><span class="sig-name descname"><span class="pre">plot_OCV_from_CC_CV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax_ICA_meas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax_ICA_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax_OCV_meas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax_OCV_mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charge</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discharge</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spline_SOC_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.01,</span> <span class="pre">0.99)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spline_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spline_smoothing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.002</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spline_print</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters_print</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.visualization.plot_OCV_from_CC_CV" title="Link to this definition">¶</a></dt>
+<dd><p>Visualizes the <code class="docutils literal notranslate"><span class="pre">OCV_fitting.OCV_from_CC_CV</span></code> output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ax_ICA_meas</strong> – The <code class="docutils literal notranslate"><span class="pre">Axes</span></code> where the Incremental Capacity Analysis of the
+measured charge and discharge cycle(s) shall be plotted.</p></li>
+<li><p><strong>ax_OCV_meas</strong> – The <code class="docutils literal notranslate"><span class="pre">Axes</span></code> where the measured voltage curves shall be plotted.</p></li>
+<li><p><strong>ax_OCV_mean</strong> – The <code class="docutils literal notranslate"><span class="pre">Axes</span></code> where the mean voltage curves shall be plotted.</p></li>
+<li><p><strong>charge</strong> – A <code class="docutils literal notranslate"><span class="pre">Cycling_Information</span></code> object containing the constant charge
+cycle(s). If more than one CC-CV-cycle shall be analyzed, please
+make sure that the order of this, <em>cv</em>, and <em>discharge</em> align.</p></li>
+<li><p><strong>cv</strong> – A <code class="docutils literal notranslate"><span class="pre">Cycling_Information</span></code> object containing the constant voltage
+part between charge and discharge cycle(s).</p></li>
+<li><p><strong>discharge</strong> – A <code class="docutils literal notranslate"><span class="pre">Cycling_Information</span></code> object containing the constant
+discharge cycle(s). These occur after each <em>cv</em> cycle.</p></li>
+<li><p><strong>name</strong> – Name of the material for which the CC-CV-cycling was measured.</p></li>
+<li><p><strong>phases</strong> – Number of phases in the <code class="docutils literal notranslate"><span class="pre">fitting_functions.OCV_fit_function</span></code>.
+The higher it is, the more (over-)fitted the model becomes.</p></li>
+<li><p><strong>eval_points</strong> – The number of points for plotting of the OCV curves.</p></li>
+<li><p><strong>spline_SOC_range</strong> – 2-tuple giving the SOC range in which the inverted
+fitting_functions.OCV_fit_function will be interpolated by a
+smoothing spline. Outside of this range the spline is used for
+extrapolation. Use this to fit the SOC range of interest more
+precisely, since a fit of the whole range usually fails due to
+the singularities at SOC 0 and 1. Please note that this range
+considers the 0-1-range in which the given SOC lies and not the
+linear transformation of it from the fitting process.</p></li>
+<li><p><strong>spline_order</strong> – Order of this smoothing spline. If it is set to 0, this only
+calculates and plots the <code class="docutils literal notranslate"><span class="pre">fitting_functions.OCV_fit_function</span></code>.</p></li>
+<li><p><strong>spline_smoothing</strong> – Smoothing factor for this smoothing spline. Default: 2e-3. Lower
+numbers give more precision, while higher numbers give a simpler
+spline that smoothes over steep steps in the fitted OCV curve.</p></li>
+<li><p><strong>spline_print</strong> – If set to either ‘python’ or ‘matlab’, a string representation
+of the smoothing spline is printed in the respective format.</p></li>
+<li><p><strong>parameters_print</strong> – Set to True if the fit parameters should be printed to stdout.</p></li>
+</ul>
+</dd>
+<dt class="field-even">&#64;param ax_ICA_mean<span class="colon">:</span></dt>
+<dd class="field-even"><p>The <code class="docutils literal notranslate"><span class="pre">Axes</span></code> where the Incremental Capacity Analysis of the mean
+voltages of charge and discharge cycle(s) shall be plotted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ep_bolfi.html">ep_bolfi</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.models.html">ep_bolfi.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.optimization.html">ep_bolfi.optimization</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ep_bolfi.utility.html">ep_bolfi.utility</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.dataset_formatting.html">ep_bolfi.utility.dataset_formatting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.fitting_functions.html">ep_bolfi.utility.fitting_functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.utility.preprocessing.html">ep_bolfi.utility.preprocessing</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="ep_bolfi.utility.visualization.html">ep_bolfi.utility.visualization</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.bode_plot.html">ep_bolfi.utility.visualization.bode_plot</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.cc_cv_visualization.html">ep_bolfi.utility.visualization.cc_cv_visualization</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.colorline.html">ep_bolfi.utility.visualization.colorline</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.fit_and_plot_OCV.html">ep_bolfi.utility.visualization.fit_and_plot_OCV</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.interactive_impedance_model.html">ep_bolfi.utility.visualization.interactive_impedance_model</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.make_segments.html">ep_bolfi.utility.visualization.make_segments</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.nyquist_plot.html">ep_bolfi.utility.visualization.nyquist_plot</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.plot_ICA.html">ep_bolfi.utility.visualization.plot_ICA</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">ep_bolfi.utility.visualization.plot_OCV_from_CC_CV</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ep_bolfi.utility.visualization.plot_OCV_from_CC_CV"><code class="docutils literal notranslate"><span class="pre">plot_OCV_from_CC_CV()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.plot_comparison.html">ep_bolfi.utility.visualization.plot_comparison</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.plot_measurement.html">ep_bolfi.utility.visualization.plot_measurement</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.push_apart_text.html">ep_bolfi.utility.visualization.push_apart_text</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.set_fontsize.html">ep_bolfi.utility.visualization.set_fontsize</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.update_legend.html">ep_bolfi.utility.visualization.update_legend</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.update_limits.html">ep_bolfi.utility.visualization.update_limits</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.utility.visualization.visualize_correlation.html">ep_bolfi.utility.visualization.visualize_correlation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="ep_bolfi.html">ep_bolfi</a><ul>
+  <li><a href="ep_bolfi.utility.html">ep_bolfi.utility</a><ul>
+  <li><a href="ep_bolfi.utility.visualization.html">ep_bolfi.utility.visualization</a><ul>
+      <li>Previous: <a href="ep_bolfi.utility.visualization.plot_ICA.html" title="previous chapter">ep_bolfi.utility.visualization.plot_ICA</a></li>
+      <li>Next: <a href="ep_bolfi.utility.visualization.plot_comparison.html" title="next chapter">ep_bolfi.utility.visualization.plot_comparison</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/ep_bolfi.utility.visualization.plot_OCV_from_CC_CV.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

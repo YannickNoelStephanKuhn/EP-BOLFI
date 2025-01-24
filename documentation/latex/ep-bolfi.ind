@@ -1,0 +1,786 @@
+\begin{sphinxtheindex}
+\let\lettergroup\sphinxstyleindexlettergroup
+\let\lettergroupDefault\sphinxstyleindexlettergroupDefault
+\let\spxpagem\sphinxstyleindexpagemain
+\let\spxentry\sphinxstyleindexentry
+\let\spxextra\sphinxstyleindexextra
+
+
+  \lettergroupDefault{default}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{16}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters method}, \hyperpage{31}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{33}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{40}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.aluminium\_electrode method}, \hyperpage{56}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.aluminium\_electrode\_variant method}, \hyperpage{57}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.C method}, \hyperpage{48}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.debye method}, \hyperpage{57}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.debye\_variant method}, \hyperpage{58}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.ECM method}, \hyperpage{49}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.L method}, \hyperpage{50}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.Q method}, \hyperpage{50}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.R method}, \hyperpage{51}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.randles method}, \hyperpage{59}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.randles\_variant method}, \hyperpage{60}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.RC\_chain method}, \hyperpage{52}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.SCR method}, \hyperpage{52}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.SCRF method}, \hyperpage{53}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.Two\_RC\_Optimized\_for\_Torch method}, \hyperpage{54}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.W method}, \hyperpage{55}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.warburg\_open method}, \hyperpage{60}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.warburg\_short method}, \hyperpage{61}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.wrong\_randles method}, \hyperpage{62}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.models.equivalent\_circuits.wrong\_randles\_variant method}, \hyperpage{63}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI method}, \hyperpage{89}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.NDArrayEncoder method}, \hyperpage{94}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Optimizer\_State method}, \hyperpage{96}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator method}, \hyperpage{96}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information method}, \hyperpage{106}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement method}, \hyperpage{108}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Measurement method}, \hyperpage{110}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information method}, \hyperpage{112}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.utility.fitting\_functions.NDArrayEncoder method}, \hyperpage{125}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result method}, \hyperpage{127}
+  \item \spxentry{\_\_init\_\_()}\spxextra{ep\_bolfi.utility.preprocessing.SubstitutionDict method}, \hyperpage{142}
+  \item \spxentry{Δx}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result attribute}, \hyperpage{129}
+  \item \spxentry{β\_SEI}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{30}
+  \item \spxentry{βn}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{30}
+  \item \spxentry{βp}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{30}
+  \item \spxentry{βs}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{30}
+  \item \spxentry{γe}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{30}
+  \item \spxentry{ε\_SEI}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{30}
+  \item \spxentry{εn}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{30}
+  \item \spxentry{εp}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{30}
+  \item \spxentry{εs}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{30}
+  \item \spxentry{κe}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{30}
+  \item \spxentry{ρ\_N}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{30}
+  \item \spxentry{ρe}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{30}
+  \item \spxentry{ρe\_plus}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{30}
+
+  \indexspace
+
+  \lettergroup{A}
+  \item \spxentry{a}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result attribute}, \hyperpage{129}
+  \item \spxentry{A}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{70}
+  \item \spxentry{A\_cc}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{80}
+  \item \spxentry{a\_fit()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{117}
+  \item \spxentry{add\_parameters}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator attribute}, \hyperpage{98}
+  \item \spxentry{aluminium\_electrode}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{56}
+  \item \spxentry{aluminium\_electrode\_variant}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{57}
+  \item \spxentry{an}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{77}
+  \item \spxentry{An()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{19}
+  \item \spxentry{an\_dim}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{72}
+  \item \spxentry{AnalyticImpedance}\spxextra{class in ep\_bolfi.models.analytic\_impedance}, \hyperpage{16}
+  \item \spxentry{ap}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{77}
+  \item \spxentry{ap\_dim}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{72}
+  \item \spxentry{apply\_transformation()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator method}, \hyperpage{98}
+  \item \spxentry{approximate\_confidence\_ellipsoid()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{132}
+  \item \spxentry{As()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{19}
+  \item \spxentry{As\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{19}
+  \item \spxentry{asymptotic\_voltages}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information attribute}, \hyperpage{113}
+  \item \spxentry{auto\_var\_pts()}\spxextra{in module ep\_bolfi.models.solversetup}, \hyperpage{64}
+
+  \indexspace
+
+  \lettergroup{B}
+  \item \spxentry{back\_transform\_matrix}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator attribute}, \hyperpage{98}
+  \item \spxentry{bar\_cen\_1()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{26}
+  \item \spxentry{bar\_cep\_1()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{26}
+  \item \spxentry{bar\_cep\_1\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{26}
+  \item \spxentry{bode\_plot()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{144}
+  \item \spxentry{Bs()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{20}
+  \item \spxentry{Bs\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{20}
+
+  \indexspace
+
+  \lettergroup{C}
+  \item \spxentry{C}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{48}
+  \item \spxentry{C}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{20}
+  \item \spxentry{C}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{71}
+  \item \spxentry{C\_DLn}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{20}
+  \item \spxentry{C\_DLn}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{74}
+  \item \spxentry{C\_DLp}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{20}
+  \item \spxentry{C\_DLp}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{74}
+  \item \spxentry{c\_N}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{26}
+  \item \spxentry{c\_N}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{74}
+  \item \spxentry{C\_SEI}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{20}
+  \item \spxentry{C\_SEI}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{75}
+  \item \spxentry{calculate\_both\_SOC\_from\_OCV()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{133}
+  \item \spxentry{calculate\_desired\_voltage()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{133}
+  \item \spxentry{calculate\_means\_and\_standard\_deviations()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{134}
+  \item \spxentry{calculate\_SOC()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{132}
+  \item \spxentry{capacity}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{81}
+  \item \spxentry{capacity()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{135}
+  \item \spxentry{cc\_cv\_visualization()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{144}
+  \item \spxentry{Ce}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{20}
+  \item \spxentry{Ce}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{78}
+  \item \spxentry{ce\_dim\_init}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{73}
+  \item \spxentry{ce\_init}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{74}
+  \item \spxentry{ce\_typ}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{72}
+  \item \spxentry{cen\_1()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{26}
+  \item \spxentry{cep\_1()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{27}
+  \item \spxentry{cep\_1\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{27}
+  \item \spxentry{ces\_1()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{27}
+  \item \spxentry{ces\_1\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{27}
+  \item \spxentry{check\_algebraic\_equations()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{35}
+  \item \spxentry{check\_algebraic\_equations()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{42}
+  \item \spxentry{check\_discretised\_or\_discretise\_inplace\_if\_0D()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{35}
+  \item \spxentry{check\_discretised\_or\_discretise\_inplace\_if\_0D()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{42}
+  \item \spxentry{check\_ics\_bcs()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{35}
+  \item \spxentry{check\_ics\_bcs()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{42}
+  \item \spxentry{check\_no\_repeated\_keys()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{35}
+  \item \spxentry{check\_no\_repeated\_keys()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{42}
+  \item \spxentry{check\_well\_determined()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{35}
+  \item \spxentry{check\_well\_determined()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{42}
+  \item \spxentry{check\_well\_posedness()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{35}
+  \item \spxentry{check\_well\_posedness()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{42}
+  \item \spxentry{clear()}\spxextra{ep\_bolfi.utility.preprocessing.SubstitutionDict method}, \hyperpage{142}
+  \item \spxentry{cn}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{78}
+  \item \spxentry{colorline()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{145}
+  \item \spxentry{combine\_parameters\_to\_try()}\spxextra{in module ep\_bolfi.optimization.EP\_BOLFI}, \hyperpage{88}
+  \item \spxentry{combine\_parameters\_to\_try()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{135}
+  \item \spxentry{condense()}\spxextra{in module ep\_bolfi.models.equivalent\_circuits}, \hyperpage{47}
+  \item \spxentry{constants}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{27}
+  \item \spxentry{convert\_none\_notation\_to\_slicing()}\spxextra{in module ep\_bolfi.utility.dataset\_formatting}, \hyperpage{101}
+  \item \spxentry{cp}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{78}
+  \item \spxentry{Cp()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{20}
+  \item \spxentry{Cp\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{20}
+  \item \spxentry{Crn}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{78}
+  \item \spxentry{Crp}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{78}
+  \item \spxentry{current\_with\_time}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{80}
+  \item \spxentry{currents}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information attribute}, \hyperpage{106}
+  \item \spxentry{currents}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information attribute}, \hyperpage{113}
+  \item \spxentry{Cycling\_Information}\spxextra{class in ep\_bolfi.utility.dataset\_formatting}, \hyperpage{106}
+
+  \indexspace
+
+  \lettergroup{D}
+  \item \spxentry{d2\_dE2\_OCV\_fit\_function()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{117}
+  \item \spxentry{d\_cen\_isen\_0()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{86}
+  \item \spxentry{d\_cen\_isen\_0\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{86}
+  \item \spxentry{d\_cep\_isep\_0()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{86}
+  \item \spxentry{d\_cep\_isep\_0\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{86}
+  \item \spxentry{d\_dE\_OCV\_fit\_function()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{118}
+  \item \spxentry{d\_dx\_cen\_1()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{28}
+  \item \spxentry{d\_dx\_cep\_1()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{28}
+  \item \spxentry{d\_dx\_cep\_1\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{28}
+  \item \spxentry{d\_dx\_ces\_1()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{28}
+  \item \spxentry{d\_dx\_ces\_1\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{29}
+  \item \spxentry{De}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{De()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{83}
+  \item \spxentry{De\_dim}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{De\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{83}
+  \item \spxentry{De\_typ}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{76}
+  \item \spxentry{debye}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{57}
+  \item \spxentry{debye\_variant}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{58}
+  \item \spxentry{default()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.NDArrayEncoder method}, \hyperpage{95}
+  \item \spxentry{default()}\spxextra{ep\_bolfi.utility.fitting\_functions.NDArrayEncoder method}, \hyperpage{126}
+  \item \spxentry{default\_geometry}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte property}, \hyperpage{36}
+  \item \spxentry{default\_solver}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte property}, \hyperpage{36}
+  \item \spxentry{default\_solver}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal property}, \hyperpage{43}
+  \item \spxentry{dependent\_variables()}\spxextra{ep\_bolfi.utility.preprocessing.SubstitutionDict method}, \hyperpage{142}
+  \item \spxentry{deserialise()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte class method}, \hyperpage{36}
+  \item \spxentry{deserialise()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal class method}, \hyperpage{43}
+  \item \spxentry{dimensional\_current\_density\_with\_time}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{81}
+  \item \spxentry{dimensional\_current\_with\_time}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{81}
+  \item \spxentry{Dn()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{83}
+  \item \spxentry{Dn\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{83}
+  \item \spxentry{Dn\_typ}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{76}
+  \item \spxentry{dOCVn\_dim\_dSOCn()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{85}
+  \item \spxentry{dOCVn\_dSOCn()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{84}
+  \item \spxentry{dOCVn\_dT()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{84}
+  \item \spxentry{dOCVn\_dT\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{85}
+  \item \spxentry{dOCVn\_dT\_dSOCn()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{85}
+  \item \spxentry{dOCVn\_dT\_dSOCn\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{85}
+  \item \spxentry{dOCVp\_dim\_dSOCp()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{86}
+  \item \spxentry{dOCVp\_dSOCp()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{85}
+  \item \spxentry{dOCVp\_dT()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{85}
+  \item \spxentry{dOCVp\_dT\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{86}
+  \item \spxentry{dOCVp\_dT\_dSOCp()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{85}
+  \item \spxentry{dOCVp\_dT\_dSOCp\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{85}
+  \item \spxentry{Dp()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{83}
+  \item \spxentry{Dp\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{83}
+  \item \spxentry{Dp\_typ}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{76}
+
+  \indexspace
+
+  \lettergroup{E}
+  \item \spxentry{E\_0}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result attribute}, \hyperpage{128}
+  \item \spxentry{ECM}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{49}
+  \item \spxentry{Effective\_Parameters}\spxextra{class in ep\_bolfi.models.assess\_effective\_parameters}, \hyperpage{31}
+  \item \spxentry{eis\_feature\_visualizer()}\spxextra{in module ep\_bolfi.kadi\_tools.eis\_preprocessing}, \hyperpage{9}
+  \item \spxentry{eis\_features()}\spxextra{in module ep\_bolfi.kadi\_tools.eis\_preprocessing}, \hyperpage{10}
+  \item \spxentry{eis\_features\_by\_segment()}\spxextra{in module ep\_bolfi.kadi\_tools.eis\_preprocessing}, \hyperpage{10}
+  \item \spxentry{Electrolyte}\spxextra{class in ep\_bolfi.models.electrolyte}, \hyperpage{33}
+  \item \spxentry{Electrolyte\_internal}\spxextra{class in ep\_bolfi.models.electrolyte}, \hyperpage{40}
+  \item \spxentry{elfi\_simulator()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator method}, \hyperpage{98}
+  \item \spxentry{encode()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.NDArrayEncoder method}, \hyperpage{95}
+  \item \spxentry{encode()}\spxextra{ep\_bolfi.utility.fitting\_functions.NDArrayEncoder method}, \hyperpage{126}
+  \item \spxentry{ep\_bolfi}
+    \subitem \spxentry{module}, \hyperpage{5}
+  \item \spxentry{EP\_BOLFI}\spxextra{class in ep\_bolfi.optimization.EP\_BOLFI}, \hyperpage{89}
+  \item \spxentry{ep\_bolfi.kadi\_tools}
+    \subitem \spxentry{module}, \hyperpage{5}
+  \item \spxentry{ep\_bolfi.kadi\_tools.collect\_and\_fit\_spline\_to\_parameterization\_points}
+    \subitem \spxentry{module}, \hyperpage{8}
+  \item \spxentry{ep\_bolfi.kadi\_tools.combine\_measurement\_segments}
+    \subitem \spxentry{module}, \hyperpage{8}
+  \item \spxentry{ep\_bolfi.kadi\_tools.convert\_csv\_to\_parquet}
+    \subitem \spxentry{module}, \hyperpage{9}
+  \item \spxentry{ep\_bolfi.kadi\_tools.eis\_parameterization}
+    \subitem \spxentry{module}, \hyperpage{9}
+  \item \spxentry{ep\_bolfi.kadi\_tools.eis\_preprocessing}
+    \subitem \spxentry{module}, \hyperpage{9}
+  \item \spxentry{ep\_bolfi.kadi\_tools.eis\_visualization}
+    \subitem \spxentry{module}, \hyperpage{10}
+  \item \spxentry{ep\_bolfi.kadi\_tools.extract\_measurement\_protocol}
+    \subitem \spxentry{module}, \hyperpage{11}
+  \item \spxentry{ep\_bolfi.kadi\_tools.extract\_ocv\_curve}
+    \subitem \spxentry{module}, \hyperpage{11}
+  \item \spxentry{ep\_bolfi.kadi\_tools.extract\_overpotential}
+    \subitem \spxentry{module}, \hyperpage{11}
+  \item \spxentry{ep\_bolfi.kadi\_tools.fit\_and\_plot\_ocv}
+    \subitem \spxentry{module}, \hyperpage{12}
+  \item \spxentry{ep\_bolfi.kadi\_tools.fit\_exponential\_decay}
+    \subitem \spxentry{module}, \hyperpage{12}
+  \item \spxentry{ep\_bolfi.kadi\_tools.gitt\_parameterization}
+    \subitem \spxentry{module}, \hyperpage{12}
+  \item \spxentry{ep\_bolfi.kadi\_tools.gitt\_preprocessing}
+    \subitem \spxentry{module}, \hyperpage{12}
+  \item \spxentry{ep\_bolfi.kadi\_tools.gitt\_visualization}
+    \subitem \spxentry{module}, \hyperpage{14}
+  \item \spxentry{ep\_bolfi.kadi\_tools.plot\_measurement}
+    \subitem \spxentry{module}, \hyperpage{15}
+  \item \spxentry{ep\_bolfi.kadi\_tools.read\_csv\_datasets}
+    \subitem \spxentry{module}, \hyperpage{15}
+  \item \spxentry{ep\_bolfi.kadi\_tools.read\_hdf5\_datasets}
+    \subitem \spxentry{module}, \hyperpage{15}
+  \item \spxentry{ep\_bolfi.kadi\_tools.read\_measurement\_from\_parquet}
+    \subitem \spxentry{module}, \hyperpage{15}
+  \item \spxentry{ep\_bolfi.kadi\_tools.select\_measurement\_segments}
+    \subitem \spxentry{module}, \hyperpage{15}
+  \item \spxentry{ep\_bolfi.kadi\_tools.store\_measurement\_as\_parquet}
+    \subitem \spxentry{module}, \hyperpage{15}
+  \item \spxentry{ep\_bolfi.models}
+    \subitem \spxentry{module}, \hyperpage{15}
+  \item \spxentry{ep\_bolfi.models.analytic\_impedance}
+    \subitem \spxentry{module}, \hyperpage{16}
+  \item \spxentry{ep\_bolfi.models.assess\_effective\_parameters}
+    \subitem \spxentry{module}, \hyperpage{30}
+  \item \spxentry{ep\_bolfi.models.electrolyte}
+    \subitem \spxentry{module}, \hyperpage{33}
+  \item \spxentry{ep\_bolfi.models.equivalent\_circuits}
+    \subitem \spxentry{module}, \hyperpage{47}
+  \item \spxentry{ep\_bolfi.models.solversetup}
+    \subitem \spxentry{module}, \hyperpage{63}
+  \item \spxentry{ep\_bolfi.models.standard\_parameters}
+    \subitem \spxentry{module}, \hyperpage{67}
+  \item \spxentry{ep\_bolfi.optimization}
+    \subitem \spxentry{module}, \hyperpage{87}
+  \item \spxentry{ep\_bolfi.optimization.EP\_BOLFI}
+    \subitem \spxentry{module}, \hyperpage{88}
+  \item \spxentry{ep\_bolfi.utility}
+    \subitem \spxentry{module}, \hyperpage{100}
+  \item \spxentry{ep\_bolfi.utility.dataset\_formatting}
+    \subitem \spxentry{module}, \hyperpage{100}
+  \item \spxentry{ep\_bolfi.utility.fitting\_functions}
+    \subitem \spxentry{module}, \hyperpage{115}
+  \item \spxentry{ep\_bolfi.utility.preprocessing}
+    \subitem \spxentry{module}, \hyperpage{129}
+  \item \spxentry{ep\_bolfi.utility.visualization}
+    \subitem \spxentry{module}, \hyperpage{143}
+  \item \spxentry{eval()}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters method}, \hyperpage{32}
+  \item \spxentry{example\_table\_row()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information method}, \hyperpage{106}
+  \item \spxentry{example\_table\_row()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement method}, \hyperpage{109}
+  \item \spxentry{example\_table\_row()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Measurement method}, \hyperpage{111}
+  \item \spxentry{example\_table\_row()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information method}, \hyperpage{113}
+  \item \spxentry{exp\_I\_decays}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information attribute}, \hyperpage{113}
+  \item \spxentry{exp\_U\_decays}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information attribute}, \hyperpage{113}
+  \item \spxentry{experimental\_features}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{91}
+  \item \spxentry{experimental\_features}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator attribute}, \hyperpage{99}
+  \item \spxentry{export\_casadi\_objects()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{36}
+  \item \spxentry{export\_casadi\_objects()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{43}
+  \item \spxentry{extend()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information method}, \hyperpage{106}
+  \item \spxentry{extend()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement method}, \hyperpage{109}
+  \item \spxentry{extend()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Measurement method}, \hyperpage{111}
+  \item \spxentry{extend()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information method}, \hyperpage{114}
+
+  \indexspace
+
+  \lettergroup{F}
+  \item \spxentry{F}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{F}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{69}
+  \item \spxentry{final\_correlation}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{91}
+  \item \spxentry{final\_covariance}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{91}
+  \item \spxentry{final\_error\_bounds}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{91}
+  \item \spxentry{final\_expectation}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{91}
+  \item \spxentry{find\_occurrences()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{118}
+  \item \spxentry{find\_occurrences()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{135}
+  \item \spxentry{fit}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result attribute}, \hyperpage{129}
+  \item \spxentry{fit\_and\_plot\_OCV()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{145}
+  \item \spxentry{fit\_drt()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{120}
+  \item \spxentry{fit\_exponential\_decay()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{120}
+  \item \spxentry{fit\_exponential\_decay\_with\_warnings()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{120}
+  \item \spxentry{fit\_OCV()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{119}
+  \item \spxentry{fit\_pwrlaw()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{121}
+  \item \spxentry{fit\_pwrlawCL()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{121}
+  \item \spxentry{fit\_sqrt()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{121}
+  \item \spxentry{fit\_sqrt\_with\_warnings()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{122}
+  \item \spxentry{fix\_parameters()}\spxextra{in module ep\_bolfi.optimization.EP\_BOLFI}, \hyperpage{88}
+  \item \spxentry{fix\_parameters()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{136}
+  \item \spxentry{fixed\_parameter\_order}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{91}
+  \item \spxentry{frequencies}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement attribute}, \hyperpage{109}
+  \item \spxentry{from\_json()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information class method}, \hyperpage{107}
+  \item \spxentry{from\_json()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement class method}, \hyperpage{109}
+  \item \spxentry{from\_json()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Measurement class method}, \hyperpage{111}
+  \item \spxentry{from\_json()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information class method}, \hyperpage{114}
+  \item \spxentry{function\_string}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result attribute}, \hyperpage{129}
+
+  \indexspace
+
+  \lettergroup{G}
+  \item \spxentry{generate()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{36}
+  \item \spxentry{generate()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{43}
+  \item \spxentry{get()}\spxextra{ep\_bolfi.utility.preprocessing.SubstitutionDict method}, \hyperpage{143}
+  \item \spxentry{get\_coupled\_variables()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{43}
+  \item \spxentry{get\_fundamental\_variables()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{44}
+  \item \spxentry{get\_hdf5\_dataset\_by\_path()}\spxextra{in module ep\_bolfi.utility.dataset\_formatting}, \hyperpage{101}
+  \item \spxentry{get\_parameter\_info()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{37}
+  \item \spxentry{get\_parameter\_info()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{44}
+  \item \spxentry{get\_valid\_filename()}\spxextra{in module ep\_bolfi.kadi\_tools.collect\_and\_fit\_spline\_to\_parameterization\_points}, \hyperpage{8}
+  \item \spxentry{gitt\_feature\_visualizer()}\spxextra{in module ep\_bolfi.kadi\_tools.gitt\_preprocessing}, \hyperpage{13}
+  \item \spxentry{gitt\_features()}\spxextra{in module ep\_bolfi.kadi\_tools.gitt\_preprocessing}, \hyperpage{13}
+
+  \indexspace
+
+  \lettergroup{I}
+  \item \spxentry{I\_extern}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{80}
+  \item \spxentry{I\_extern\_dim}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{79}
+  \item \spxentry{I\_typ}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{80}
+  \item \spxentry{imaginary\_impedances}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement attribute}, \hyperpage{109}
+  \item \spxentry{imaginary\_part()}\spxextra{ep\_bolfi.models.equivalent\_circuits.Two\_RC\_Optimized\_for\_Torch method}, \hyperpage{54}
+  \item \spxentry{Impedance\_Measurement}\spxextra{class in ep\_bolfi.utility.dataset\_formatting}, \hyperpage{108}
+  \item \spxentry{indices}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information attribute}, \hyperpage{107}
+  \item \spxentry{indices}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement attribute}, \hyperpage{109}
+  \item \spxentry{indices}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information attribute}, \hyperpage{114}
+  \item \spxentry{inferred\_parameters}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{91}
+  \item \spxentry{info()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{37}
+  \item \spxentry{info()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{44}
+  \item \spxentry{initial\_guesses}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{92}
+  \item \spxentry{initial\_Q}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{91}
+  \item \spxentry{initial\_r}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{92}
+  \item \spxentry{input\_dim}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{92}
+  \item \spxentry{input\_dim}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator attribute}, \hyperpage{99}
+  \item \spxentry{input\_parameters}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte property}, \hyperpage{37}
+  \item \spxentry{input\_parameters}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal property}, \hyperpage{44}
+  \item \spxentry{interactive\_impedance\_model()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{147}
+  \item \spxentry{inv\_variances}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator attribute}, \hyperpage{99}
+  \item \spxentry{inverse\_d2\_dSOC2\_OCV\_fit\_function()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{122}
+  \item \spxentry{inverse\_d\_dSOC\_OCV\_fit\_function()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{123}
+  \item \spxentry{inverse\_OCV\_fit\_function()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{122}
+  \item \spxentry{ir\_steps}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information attribute}, \hyperpage{114}
+  \item \spxentry{isen}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{32}
+  \item \spxentry{isen\_0()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{86}
+  \item \spxentry{isen\_0\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{87}
+  \item \spxentry{isen\_0\_ref}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{76}
+  \item \spxentry{isep}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{32}
+  \item \spxentry{isep\_0()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{87}
+  \item \spxentry{isep\_0\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{87}
+  \item \spxentry{isep\_0\_ref}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{76}
+  \item \spxentry{items()}\spxextra{ep\_bolfi.utility.preprocessing.SubstitutionDict method}, \hyperpage{143}
+  \item \spxentry{iterencode()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.NDArrayEncoder method}, \hyperpage{95}
+  \item \spxentry{iterencode()}\spxextra{ep\_bolfi.utility.fitting\_functions.NDArrayEncoder method}, \hyperpage{127}
+
+  \indexspace
+
+  \lettergroup{K}
+  \item \spxentry{k\_B}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{69}
+  \item \spxentry{keys()}\spxextra{ep\_bolfi.utility.preprocessing.SubstitutionDict method}, \hyperpage{143}
+
+  \indexspace
+
+  \lettergroup{L}
+  \item \spxentry{L}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{50}
+  \item \spxentry{L\_dim}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{70}
+  \item \spxentry{L\_electrolyte\_for\_SEI\_model}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{L\_electrolyte\_for\_SEI\_model}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{75}
+  \item \spxentry{L\_SEI}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{L\_SEI}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{75}
+  \item \spxentry{L\_x}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{71}
+  \item \spxentry{L\_y}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{71}
+  \item \spxentry{L\_z}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{71}
+  \item \spxentry{laplace\_transform()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{123}
+  \item \spxentry{laplace\_transform()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{136}
+  \item \spxentry{latexify()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{37}
+  \item \spxentry{latexify()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{44}
+  \item \spxentry{Le}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{79}
+  \item \spxentry{length\_scales}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte property}, \hyperpage{38}
+  \item \spxentry{Ln}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{Ln}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{79}
+  \item \spxentry{Ln\_dim}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{70}
+  \item \spxentry{log\_lock()}\spxextra{ep\_bolfi.utility.preprocessing.SubstitutionDict method}, \hyperpage{143}
+  \item \spxentry{log\_of\_discrepancies}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{92}
+  \item \spxentry{log\_of\_raw\_tried\_parameters}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{92}
+  \item \spxentry{log\_of\_tried\_parameters}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{92}
+  \item \spxentry{log\_of\_tried\_parameters}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator attribute}, \hyperpage{99}
+  \item \spxentry{log\_to\_json()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI method}, \hyperpage{92}
+  \item \spxentry{Lp}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{Lp}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{79}
+  \item \spxentry{Lp\_dim}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{70}
+  \item \spxentry{Ls}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{Ls}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{79}
+  \item \spxentry{Ls\_dim}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{70}
+
+  \indexspace
+
+  \lettergroup{M}
+  \item \spxentry{M\_N}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{M\_N}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{74}
+  \item \spxentry{make\_segments()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{148}
+  \item \spxentry{Measurement}\spxextra{class in ep\_bolfi.utility.dataset\_formatting}, \hyperpage{110}
+  \item \spxentry{module}
+    \subitem \spxentry{ep\_bolfi}, \hyperpage{5}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools}, \hyperpage{5}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.collect\_and\_fit\_spline\_to\_parameterization\_points}, \hyperpage{8}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.combine\_measurement\_segments}, \hyperpage{8}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.convert\_csv\_to\_parquet}, \hyperpage{9}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.eis\_parameterization}, \hyperpage{9}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.eis\_preprocessing}, \hyperpage{9}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.eis\_visualization}, \hyperpage{10}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.extract\_measurement\_protocol}, \hyperpage{11}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.extract\_ocv\_curve}, \hyperpage{11}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.extract\_overpotential}, \hyperpage{11}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.fit\_and\_plot\_ocv}, \hyperpage{12}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.fit\_exponential\_decay}, \hyperpage{12}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.gitt\_parameterization}, \hyperpage{12}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.gitt\_preprocessing}, \hyperpage{12}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.gitt\_visualization}, \hyperpage{14}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.plot\_measurement}, \hyperpage{15}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.read\_csv\_datasets}, \hyperpage{15}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.read\_hdf5\_datasets}, \hyperpage{15}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.read\_measurement\_from\_parquet}, \hyperpage{15}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.select\_measurement\_segments}, \hyperpage{15}
+    \subitem \spxentry{ep\_bolfi.kadi\_tools.store\_measurement\_as\_parquet}, \hyperpage{15}
+    \subitem \spxentry{ep\_bolfi.models}, \hyperpage{15}
+    \subitem \spxentry{ep\_bolfi.models.analytic\_impedance}, \hyperpage{16}
+    \subitem \spxentry{ep\_bolfi.models.assess\_effective\_parameters}, \hyperpage{30}
+    \subitem \spxentry{ep\_bolfi.models.electrolyte}, \hyperpage{33}
+    \subitem \spxentry{ep\_bolfi.models.equivalent\_circuits}, \hyperpage{47}
+    \subitem \spxentry{ep\_bolfi.models.solversetup}, \hyperpage{63}
+    \subitem \spxentry{ep\_bolfi.models.standard\_parameters}, \hyperpage{67}
+    \subitem \spxentry{ep\_bolfi.optimization}, \hyperpage{87}
+    \subitem \spxentry{ep\_bolfi.optimization.EP\_BOLFI}, \hyperpage{88}
+    \subitem \spxentry{ep\_bolfi.utility}, \hyperpage{100}
+    \subitem \spxentry{ep\_bolfi.utility.dataset\_formatting}, \hyperpage{100}
+    \subitem \spxentry{ep\_bolfi.utility.fitting\_functions}, \hyperpage{115}
+    \subitem \spxentry{ep\_bolfi.utility.preprocessing}, \hyperpage{129}
+    \subitem \spxentry{ep\_bolfi.utility.visualization}, \hyperpage{143}
+
+  \indexspace
+
+  \lettergroup{N}
+  \item \spxentry{n\_cells}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{80}
+  \item \spxentry{n\_electrodes\_parallel}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{80}
+  \item \spxentry{NDArrayEncoder}\spxextra{class in ep\_bolfi.optimization.EP\_BOLFI}, \hyperpage{94}
+  \item \spxentry{NDArrayEncoder}\spxextra{class in ep\_bolfi.utility.fitting\_functions}, \hyperpage{125}
+  \item \spxentry{new\_copy()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{38}
+  \item \spxentry{new\_copy()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{44}
+  \item \spxentry{nn}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{nn}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{73}
+  \item \spxentry{norm\_factor}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator attribute}, \hyperpage{99}
+  \item \spxentry{normalised\_input()}\spxextra{ep\_bolfi.models.equivalent\_circuits.Two\_RC\_Optimized\_for\_Torch method}, \hyperpage{55}
+  \item \spxentry{normed\_means}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator attribute}, \hyperpage{99}
+  \item \spxentry{np}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{np}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{73}
+  \item \spxentry{nyquist\_plot()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{148}
+
+  \indexspace
+
+  \lettergroup{O}
+  \item \spxentry{OCV}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result attribute}, \hyperpage{128}
+  \item \spxentry{OCV\_fit\_function()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{116}
+  \item \spxentry{OCV\_fit\_result}\spxextra{class in ep\_bolfi.utility.fitting\_functions}, \hyperpage{127}
+  \item \spxentry{OCV\_from\_CC\_CV()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{130}
+  \item \spxentry{ocv\_mismatch()}\spxextra{in module ep\_bolfi.kadi\_tools.extract\_overpotential}, \hyperpage{11}
+  \item \spxentry{OCVn()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{83}
+  \item \spxentry{OCVn\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{83}
+  \item \spxentry{OCVn\_ref}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{77}
+  \item \spxentry{OCVp()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{84}
+  \item \spxentry{OCVp\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{84}
+  \item \spxentry{OCVp\_ref}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{77}
+  \item \spxentry{one\_plus\_dlnf\_dlnc}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{one\_plus\_dlnf\_dlnc()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{87}
+  \item \spxentry{one\_plus\_dlnf\_dlnc\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{87}
+  \item \spxentry{optimize\_result}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result attribute}, \hyperpage{129}
+  \item \spxentry{Optimizer\_State}\spxextra{class in ep\_bolfi.optimization.EP\_BOLFI}, \hyperpage{96}
+  \item \spxentry{other\_columns}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information attribute}, \hyperpage{107}
+  \item \spxentry{other\_columns}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement attribute}, \hyperpage{109}
+  \item \spxentry{other\_columns}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information attribute}, \hyperpage{114}
+  \item \spxentry{output\_dim}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{92}
+  \item \spxentry{output\_dim}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator attribute}, \hyperpage{99}
+
+  \indexspace
+
+  \lettergroup{P}
+  \item \spxentry{parallel()}\spxextra{in module ep\_bolfi.models.equivalent\_circuits}, \hyperpage{48}
+  \item \spxentry{parallel\_simulator\_with\_setup()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{136}
+  \item \spxentry{param}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte property}, \hyperpage{38}
+  \item \spxentry{parameters}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{parameters}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{32}
+  \item \spxentry{parameters}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte property}, \hyperpage{38}
+  \item \spxentry{parameters}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal property}, \hyperpage{44}
+  \item \spxentry{perform\_combination()}\spxextra{in module ep\_bolfi.kadi\_tools.combine\_measurement\_segments}, \hyperpage{8}
+  \item \spxentry{permittivity\_SEI}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{75}
+  \item \spxentry{phases}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement attribute}, \hyperpage{109}
+  \item \spxentry{plot\_comparison()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{150}
+  \item \spxentry{plot\_ICA()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{149}
+  \item \spxentry{plot\_measurement()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{152}
+  \item \spxentry{plot\_OCV\_from\_CC\_CV()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{149}
+  \item \spxentry{plot\_voltage\_components()}\spxextra{in module ep\_bolfi.kadi\_tools.gitt\_visualization}, \hyperpage{14}
+  \item \spxentry{pop()}\spxextra{ep\_bolfi.utility.preprocessing.SubstitutionDict method}, \hyperpage{143}
+  \item \spxentry{popitem()}\spxextra{ep\_bolfi.utility.preprocessing.SubstitutionDict method}, \hyperpage{143}
+  \item \spxentry{prepare\_parameter\_combinations()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{137}
+  \item \spxentry{Preprocessed\_Simulator}\spxextra{class in ep\_bolfi.optimization.EP\_BOLFI}, \hyperpage{96}
+  \item \spxentry{print()}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters method}, \hyperpage{32}
+  \item \spxentry{print\_hdf5\_structure()}\spxextra{in module ep\_bolfi.utility.dataset\_formatting}, \hyperpage{101}
+  \item \spxentry{print\_parameter\_info()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{38}
+  \item \spxentry{print\_parameter\_info()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{44}
+  \item \spxentry{process\_parameters\_and\_discretise()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{38}
+  \item \spxentry{process\_parameters\_and\_discretise()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{45}
+  \item \spxentry{push\_apart\_text()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{152}
+  \item \spxentry{pybamm\_control}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte attribute}, \hyperpage{39}
+  \item \spxentry{pybamm\_control}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal attribute}, \hyperpage{45}
+
+  \indexspace
+
+  \lettergroup{Q}
+  \item \spxentry{Q}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{50}
+  \item \spxentry{Q}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{91}
+  \item \spxentry{Q\_features}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{91}
+  \item \spxentry{qe}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{69}
+  \item \spxentry{Qn}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{31}
+  \item \spxentry{Qp}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{31}
+
+  \indexspace
+
+  \lettergroup{R}
+  \item \spxentry{R}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{51}
+  \item \spxentry{r}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{92}
+  \item \spxentry{R}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{69}
+  \item \spxentry{R\_bar\_cen\_1}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{31}
+  \item \spxentry{R\_bar\_cep\_1}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{32}
+  \item \spxentry{R\_bar\_φsn\_1}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{32}
+  \item \spxentry{R\_bar\_φsp\_1}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{32}
+  \item \spxentry{R\_ce\_0\_1}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{32}
+  \item \spxentry{r\_features}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{92}
+  \item \spxentry{R\_SEI}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{R\_SEI}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{75}
+  \item \spxentry{randles}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{59}
+  \item \spxentry{randles\_variant}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{59}
+  \item \spxentry{RC\_chain}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{52}
+  \item \spxentry{Re}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{Re}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{32}
+  \item \spxentry{Re\_metal\_counter}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{read\_csv\_from\_measurement\_system()}\spxextra{in module ep\_bolfi.utility.dataset\_formatting}, \hyperpage{102}
+  \item \spxentry{read\_hdf5\_table()}\spxextra{in module ep\_bolfi.utility.dataset\_formatting}, \hyperpage{103}
+  \item \spxentry{read\_parquet\_table()}\spxextra{in module ep\_bolfi.utility.dataset\_formatting}, \hyperpage{105}
+  \item \spxentry{real\_impedances}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement attribute}, \hyperpage{109}
+  \item \spxentry{real\_part()}\spxextra{ep\_bolfi.models.equivalent\_circuits.Two\_RC\_Optimized\_for\_Torch method}, \hyperpage{55}
+  \item \spxentry{result\_to\_json()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI method}, \hyperpage{92}
+  \item \spxentry{Rn}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{72}
+  \item \spxentry{Rn\_int}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{Rns}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{32}
+  \item \spxentry{Rp}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{72}
+  \item \spxentry{Rp\_int}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{Rps}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{32}
+  \item \spxentry{Rs}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{Rs\_metal\_counter}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{Rse}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{Rsen}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{Rsep}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{Rsn}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{21}
+  \item \spxentry{Rsp}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{22}
+  \item \spxentry{run()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI method}, \hyperpage{92}
+
+  \indexspace
+
+  \lettergroup{S}
+  \item \spxentry{save\_model()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{39}
+  \item \spxentry{save\_model()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{45}
+  \item \spxentry{SCR}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{52}
+  \item \spxentry{SCRF}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{53}
+  \item \spxentry{search\_to\_transformed\_trial()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator method}, \hyperpage{99}
+  \item \spxentry{segment\_tables()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information method}, \hyperpage{107}
+  \item \spxentry{segment\_tables()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement method}, \hyperpage{109}
+  \item \spxentry{segment\_tables()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Measurement method}, \hyperpage{111}
+  \item \spxentry{segment\_tables()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information method}, \hyperpage{114}
+  \item \spxentry{series()}\spxextra{in module ep\_bolfi.models.equivalent\_circuits}, \hyperpage{48}
+  \item \spxentry{set\_algebraic()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{45}
+  \item \spxentry{set\_boundary\_conditions()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{45}
+  \item \spxentry{set\_degradation\_variables()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{39}
+  \item \spxentry{set\_events()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{46}
+  \item \spxentry{set\_external\_circuit\_submodel()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{39}
+  \item \spxentry{set\_fontsize()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{153}
+  \item \spxentry{set\_initial\_conditions()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{46}
+  \item \spxentry{set\_initial\_conditions\_from()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{39}
+  \item \spxentry{set\_initial\_conditions\_from()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{46}
+  \item \spxentry{set\_rhs()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{46}
+  \item \spxentry{set\_soc\_variables()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{39}
+  \item \spxentry{set\_standard\_output\_variables()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{39}
+  \item \spxentry{set\_voltage\_variables()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{39}
+  \item \spxentry{setdefault()}\spxextra{ep\_bolfi.utility.preprocessing.SubstitutionDict method}, \hyperpage{143}
+  \item \spxentry{simulate\_all\_parameter\_combinations()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{138}
+  \item \spxentry{simulation\_setup()}\spxextra{in module ep\_bolfi.models.solversetup}, \hyperpage{64}
+  \item \spxentry{simulator\_index\_by\_feature}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{94}
+  \item \spxentry{smooth\_fit()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{124}
+  \item \spxentry{SOC}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result attribute}, \hyperpage{128}
+  \item \spxentry{SOC\_adjusted()}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result method}, \hyperpage{128}
+  \item \spxentry{SOC\_offset}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result attribute}, \hyperpage{128}
+  \item \spxentry{SOC\_other\_electrode()}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result method}, \hyperpage{128}
+  \item \spxentry{SOC\_range}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result attribute}, \hyperpage{129}
+  \item \spxentry{SOC\_scale}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result attribute}, \hyperpage{129}
+  \item \spxentry{SOCn\_dim\_init()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{84}
+  \item \spxentry{SOCn\_init()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{84}
+  \item \spxentry{SOCp\_dim\_init()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{84}
+  \item \spxentry{SOCp\_init()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{84}
+  \item \spxentry{solve\_all\_parameter\_combinations()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{140}
+  \item \spxentry{solver\_setup()}\spxextra{in module ep\_bolfi.models.solversetup}, \hyperpage{65}
+  \item \spxentry{spectral\_mesh\_pts\_and\_method()}\spxextra{in module ep\_bolfi.models.solversetup}, \hyperpage{66}
+  \item \spxentry{spline\_interpolation\_coefficients}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result attribute}, \hyperpage{129}
+  \item \spxentry{spline\_interpolation\_knots}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result attribute}, \hyperpage{129}
+  \item \spxentry{Static\_Information}\spxextra{class in ep\_bolfi.utility.dataset\_formatting}, \hyperpage{112}
+  \item \spxentry{store\_parquet\_table()}\spxextra{in module ep\_bolfi.utility.dataset\_formatting}, \hyperpage{105}
+  \item \spxentry{sub\_index\_by\_feature}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{94}
+  \item \spxentry{subarray()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information method}, \hyperpage{107}
+  \item \spxentry{subarray()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement method}, \hyperpage{110}
+  \item \spxentry{subarray()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Measurement method}, \hyperpage{111}
+  \item \spxentry{subarray()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information method}, \hyperpage{114}
+  \item \spxentry{subslice()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information method}, \hyperpage{107}
+  \item \spxentry{subslice()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement method}, \hyperpage{110}
+  \item \spxentry{subslice()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Measurement method}, \hyperpage{111}
+  \item \spxentry{subslice()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information method}, \hyperpage{114}
+  \item \spxentry{SubstitutionDict}\spxextra{class in ep\_bolfi.utility.preprocessing}, \hyperpage{142}
+  \item \spxentry{subtract\_both\_OCV\_curves\_from\_cycles()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{141}
+  \item \spxentry{subtract\_OCV\_curve\_from\_cycles()}\spxextra{in module ep\_bolfi.utility.preprocessing}, \hyperpage{140}
+  \item \spxentry{symbolic\_constants}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+
+  \indexspace
+
+  \lettergroup{T}
+  \item \spxentry{T\_init}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{70}
+  \item \spxentry{t\_plus}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{t\_plus()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{87}
+  \item \spxentry{t\_plus\_dim()}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{87}
+  \item \spxentry{T\_ref}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{69}
+  \item \spxentry{t\_SEI\_minus}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{t\_SEI\_minus}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{75}
+  \item \spxentry{table\_descriptors()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information method}, \hyperpage{107}
+  \item \spxentry{table\_descriptors()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement method}, \hyperpage{110}
+  \item \spxentry{table\_descriptors()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Measurement method}, \hyperpage{112}
+  \item \spxentry{table\_descriptors()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information method}, \hyperpage{115}
+  \item \spxentry{table\_mapping()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information class method}, \hyperpage{107}
+  \item \spxentry{table\_mapping()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement class method}, \hyperpage{110}
+  \item \spxentry{table\_mapping()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Measurement class method}, \hyperpage{112}
+  \item \spxentry{table\_mapping()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information class method}, \hyperpage{115}
+  \item \spxentry{thermal\_voltage}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{tilde\_ρ\_N}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{timepoints}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information attribute}, \hyperpage{107}
+  \item \spxentry{timepoints}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information attribute}, \hyperpage{115}
+  \item \spxentry{timescale}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{timescale}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte property}, \hyperpage{39}
+  \item \spxentry{timescale}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{77}
+  \item \spxentry{to\_json()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information method}, \hyperpage{108}
+  \item \spxentry{to\_json()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Impedance\_Measurement method}, \hyperpage{110}
+  \item \spxentry{to\_json()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Measurement method}, \hyperpage{112}
+  \item \spxentry{to\_json()}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information method}, \hyperpage{115}
+  \item \spxentry{to\_json()}\spxextra{ep\_bolfi.utility.fitting\_functions.OCV\_fit\_result method}, \hyperpage{129}
+  \item \spxentry{transform\_matrix}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator attribute}, \hyperpage{99}
+  \item \spxentry{transform\_to\_unity\_interval()}\spxextra{in module ep\_bolfi.kadi\_tools.extract\_overpotential}, \hyperpage{12}
+  \item \spxentry{transformed\_means}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator attribute}, \hyperpage{99}
+  \item \spxentry{transformed\_trial\_to\_search()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator method}, \hyperpage{99}
+  \item \spxentry{Two\_RC\_Optimized\_for\_Torch}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{54}
+
+  \indexspace
+
+  \lettergroup{U}
+  \item \spxentry{Ul}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{71}
+  \item \spxentry{un\_norm\_factor}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator attribute}, \hyperpage{100}
+  \item \spxentry{undo\_transformation()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator method}, \hyperpage{100}
+  \item \spxentry{unnormalise\_tau()}\spxextra{ep\_bolfi.models.equivalent\_circuits.Two\_RC\_Optimized\_for\_Torch method}, \hyperpage{55}
+  \item \spxentry{update()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte method}, \hyperpage{39}
+  \item \spxentry{update()}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal method}, \hyperpage{46}
+  \item \spxentry{update()}\spxextra{ep\_bolfi.utility.preprocessing.SubstitutionDict method}, \hyperpage{143}
+  \item \spxentry{update\_legend()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{153}
+  \item \spxentry{update\_limits()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{153}
+  \item \spxentry{Uu}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{72}
+
+  \indexspace
+
+  \lettergroup{V}
+  \item \spxentry{V}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{71}
+  \item \spxentry{v\_N}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{v\_N}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{74}
+  \item \spxentry{values()}\spxextra{ep\_bolfi.utility.preprocessing.SubstitutionDict method}, \hyperpage{143}
+  \item \spxentry{variables\_and\_events}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte property}, \hyperpage{40}
+  \item \spxentry{variables\_and\_events}\spxextra{ep\_bolfi.models.electrolyte.Electrolyte\_internal property}, \hyperpage{47}
+  \item \spxentry{variances}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator attribute}, \hyperpage{100}
+  \item \spxentry{verbose\_spline\_parameterization()}\spxextra{in module ep\_bolfi.utility.fitting\_functions}, \hyperpage{124}
+  \item \spxentry{visualize\_correlation()}\spxextra{in module ep\_bolfi.utility.visualization}, \hyperpage{154}
+  \item \spxentry{visualize\_parameter\_distribution()}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI method}, \hyperpage{94}
+  \item \spxentry{voltage\_high\_cut}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{81}
+  \item \spxentry{voltage\_low\_cut}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{81}
+  \item \spxentry{voltages}\spxextra{ep\_bolfi.utility.dataset\_formatting.Cycling\_Information attribute}, \hyperpage{108}
+  \item \spxentry{voltages}\spxextra{ep\_bolfi.utility.dataset\_formatting.Static\_Information attribute}, \hyperpage{115}
+
+  \indexspace
+
+  \lettergroup{W}
+  \item \spxentry{W}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{55}
+  \item \spxentry{warburg\_open}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{60}
+  \item \spxentry{warburg\_short}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{61}
+  \item \spxentry{weights}\spxextra{ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI attribute}, \hyperpage{94}
+  \item \spxentry{working\_electrode}\spxextra{ep\_bolfi.models.assess\_effective\_parameters.Effective\_Parameters attribute}, \hyperpage{32}
+  \item \spxentry{wrong\_randles}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{62}
+  \item \spxentry{wrong\_randles\_variant}\spxextra{class in ep\_bolfi.models.equivalent\_circuits}, \hyperpage{63}
+
+  \indexspace
+
+  \lettergroup{Z}
+  \item \spxentry{Z\_cen}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{25}
+  \item \spxentry{Z\_cep}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{26}
+  \item \spxentry{Z\_ces}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{26}
+  \item \spxentry{Z\_DL()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{22}
+  \item \spxentry{Z\_SEI()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{22}
+  \item \spxentry{Z\_SPM()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{22}
+  \item \spxentry{Z\_SPM\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{22}
+  \item \spxentry{Z\_SPM\_offset()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{22}
+  \item \spxentry{Z\_SPM\_offset\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{22}
+  \item \spxentry{Z\_SPM\_offset\_reference\_electrode()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{22}
+  \item \spxentry{Z\_SPM\_reference\_electrode()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{23}
+  \item \spxentry{Z\_SPMe()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{23}
+  \item \spxentry{Z\_SPMe\_1()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{23}
+  \item \spxentry{Z\_SPMe\_1\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{23}
+  \item \spxentry{Z\_SPMe\_1\_offset()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{23}
+  \item \spxentry{Z\_SPMe\_1\_offset\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{23}
+  \item \spxentry{Z\_SPMe\_1\_offset\_reference\_electrode()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{24}
+  \item \spxentry{Z\_SPMe\_1\_reference\_electrode()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{24}
+  \item \spxentry{Z\_SPMe\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{24}
+  \item \spxentry{Z\_SPMe\_offset()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{24}
+  \item \spxentry{Z\_SPMe\_offset\_metal\_counter()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{24}
+  \item \spxentry{Z\_SPMe\_offset\_reference\_electrode()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{24}
+  \item \spxentry{Z\_SPMe\_reference\_electrode()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{25}
+  \item \spxentry{Z\_SPMe\_with\_double\_layer\_and\_SEI()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{25}
+  \item \spxentry{Z\_SPMe\_with\_double\_layer\_and\_SEI\_offset()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{25}
+  \item \spxentry{Z\_SPMe\_with\_double\_layer\_and\_SEI\_reference\_electrode()}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance method}, \hyperpage{25}
+  \item \spxentry{zn}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{zn}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{72}
+  \item \spxentry{Zn\_int}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{26}
+  \item \spxentry{zn\_salt}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{zn\_salt}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{73}
+  \item \spxentry{zp}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{zp}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{73}
+  \item \spxentry{Zp\_int}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{26}
+  \item \spxentry{zp\_salt}\spxextra{ep\_bolfi.models.analytic\_impedance.AnalyticImpedance attribute}, \hyperpage{29}
+  \item \spxentry{zp\_salt}\spxextra{in module ep\_bolfi.models.standard\_parameters}, \hyperpage{73}
+
+\end{sphinxtheindex}

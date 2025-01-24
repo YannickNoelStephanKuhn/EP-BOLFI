@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ep_bolfi.models.solversetup.simulation_setup &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=110ea713"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ep_bolfi.models.solversetup.solver_setup" href="ep_bolfi.models.solversetup.solver_setup.html" />
+    <link rel="prev" title="ep_bolfi.models.solversetup.auto_var_pts" href="ep_bolfi.models.solversetup.auto_var_pts.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ep-bolfi-models-solversetup-simulation-setup">
+<h1>ep_bolfi.models.solversetup.simulation_setup<a class="headerlink" href="#ep-bolfi-models-solversetup-simulation-setup" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="ep_bolfi.models.solversetup.simulation_setup">
+<span class="sig-prename descclassname"><span class="pre">ep_bolfi.models.solversetup.</span></span><span class="sig-name descname"><span class="pre">simulation_setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operation_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">submesh_types</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_methods</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reltol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abstol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">free_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logging_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.solversetup.simulation_setup" title="Link to this definition">¶</a></dt>
+<dd><p>Processes the model and returns a runnable solver.</p>
+<p>In contrast to <code class="docutils literal notranslate"><span class="pre">solversetup.solver_setup</span></code>, this allows for a more
+verbose description of the operating conditions and should be
+preferred.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – A PyBaMM model. Use one of the models in this folder.</p></li>
+<li><p><strong>operation_input</strong> – A list of strings which describe the operating conditions. These
+exactly match the PyBaMM usage for pybamm.Experiment. Examples:
+“Hold at 4 V for 60 s”, “Discharge at 1 A for 30 s”,
+“Rest for 1800 s”, “Charge at 1 C for 30 s”.</p></li>
+<li><p><strong>parameters</strong> – The parameters that the model requires as a dictionary.
+Please refer to models.standard_parameters for the names
+or adapt one of the examples in parameters.models.</p></li>
+<li><p><strong>submesh_types</strong> – A dictionary of the meshes to be used. The keys have to
+match the geometry names in the model. Use
+#spectral_mesh_and_method as reference or a shortcut.</p></li>
+<li><p><strong>var_pts</strong> – A dictionary giving the number of discretization volumes.
+Since the keys have to be special variables determined by
+PyBaMM, use #auto_var_pts as a shortcut.</p></li>
+<li><p><strong>spatial_methods</strong> – A dictionary of the spatial methods to be used. The keys
+have to match the geometry names in the model. Use
+#spectral_mesh_and_method as reference or a shortcut.</p></li>
+<li><p><strong>geometry</strong> – The geometry of the model in dictionary form. Usually,
+model.default_geometry is sufficient, which is the default.</p></li>
+<li><p><strong>reltol</strong> – The relative tolerance that the Casadi solver should use.
+Default is 1e-6.</p></li>
+<li><p><strong>abstol</strong> – The absolute tolerance that the Casadi solver should use.
+Default is 1e-6.</p></li>
+<li><p><strong>root_tol</strong> – The tolerance for rootfinding that the Casadi solver should use.
+Default is 1e-3.</p></li>
+<li><p><strong>dt_max</strong> – The maximum timestep size for the Casadi solver in seconds.
+Default is chosen by PyBaMM.</p></li>
+<li><p><strong>free_parameters</strong> – A list of parameter names that shall be input later. They may be
+given to the solve() function of the returned Simulation object
+as a dictionary to the keyword parameter “inputs” with the
+names as keys and the values of the parameters as values.
+DO NOT USE GEOMETRICAL PARAMETERS, THEY WILL CRASH THE MESH.
+Instead, just use this function with a complete set of
+parameters where the relevant parameters are changed.</p></li>
+<li><p><strong>verbose</strong> – The default (False) sets the PyBaMM flag to only
+show warnings. True will show the details of preprocessing
+and the runtime of the solver. This applies globally, so
+don’t set this to True if running simulations in parallel.</p></li>
+<li><p><strong>logging_file</strong> – Optional name of a file to store the logs in.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A 2-tuple of a pybamm.Simulation.solve call that runs the
+simulation when called, and the proper callback for the logging
+file if specified (else None).
+Please use solve(check_model=False) if it doesn’t
+work properly with redundant model checks in place.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ep_bolfi.html">ep_bolfi</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="ep_bolfi.models.html">ep_bolfi.models</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.analytic_impedance.html">ep_bolfi.models.analytic_impedance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.assess_effective_parameters.html">ep_bolfi.models.assess_effective_parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.electrolyte.html">ep_bolfi.models.electrolyte</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.html">ep_bolfi.models.equivalent_circuits</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="ep_bolfi.models.solversetup.html">ep_bolfi.models.solversetup</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.solversetup.auto_var_pts.html">ep_bolfi.models.solversetup.auto_var_pts</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">ep_bolfi.models.solversetup.simulation_setup</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ep_bolfi.models.solversetup.simulation_setup"><code class="docutils literal notranslate"><span class="pre">simulation_setup()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.solversetup.solver_setup.html">ep_bolfi.models.solversetup.solver_setup</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.models.solversetup.spectral_mesh_pts_and_method.html">ep_bolfi.models.solversetup.spectral_mesh_pts_and_method</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.standard_parameters.html">ep_bolfi.models.standard_parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.optimization.html">ep_bolfi.optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.utility.html">ep_bolfi.utility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="ep_bolfi.html">ep_bolfi</a><ul>
+  <li><a href="ep_bolfi.models.html">ep_bolfi.models</a><ul>
+  <li><a href="ep_bolfi.models.solversetup.html">ep_bolfi.models.solversetup</a><ul>
+      <li>Previous: <a href="ep_bolfi.models.solversetup.auto_var_pts.html" title="previous chapter">ep_bolfi.models.solversetup.auto_var_pts</a></li>
+      <li>Next: <a href="ep_bolfi.models.solversetup.solver_setup.html" title="next chapter">ep_bolfi.models.solversetup.solver_setup</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/ep_bolfi.models.solversetup.simulation_setup.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ep_bolfi.kadi_tools.gitt_preprocessing.gitt_features &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=110ea713"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ep_bolfi.kadi_tools.gitt_visualization" href="ep_bolfi.kadi_tools.gitt_visualization.html" />
+    <link rel="prev" title="ep_bolfi.kadi_tools.gitt_preprocessing.gitt_feature_visualizer" href="ep_bolfi.kadi_tools.gitt_preprocessing.gitt_feature_visualizer.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ep-bolfi-kadi-tools-gitt-preprocessing-gitt-features">
+<h1>ep_bolfi.kadi_tools.gitt_preprocessing.gitt_features<a class="headerlink" href="#ep-bolfi-kadi-tools-gitt-preprocessing-gitt-features" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="ep_bolfi.kadi_tools.gitt_preprocessing.gitt_features">
+<span class="sig-prename descclassname"><span class="pre">ep_bolfi.kadi_tools.gitt_preprocessing.</span></span><span class="sig-name descname"><span class="pre">gitt_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_of_feature_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sqrt_cutoff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sqrt_start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_cutoff</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.kadi_tools.gitt_preprocessing.gitt_features" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates diffusion features for each GITT segment. They are
+flattened into one list, with each five entries referring to:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>asymptotic concentration overpotential</p></li>
+<li><p>exponential magnitude</p></li>
+<li><p>exponential timescale</p></li>
+<li><p>initial voltage</p></li>
+<li><p>inverse square-root slope at beginning (d√t / dU)</p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> – A <code class="docutils literal notranslate"><span class="pre">Cycling_Information</span></code> object.</p></li>
+<li><p><strong>list_of_feature_indices</strong> – The indices from the whole list to retain for fitting.</p></li>
+<li><p><strong>sqrt_cutoff</strong> – The upper time limit on data to use in each segment for the
+square-root fit. The time limit counts from the segment start.</p></li>
+<li><p><strong>sqrt_start</strong> – The lower time limit on data to use in each segment for the
+square-root fit. The time limit counts from the segment start.</p></li>
+<li><p><strong>exp_cutoff</strong> – The lower time limit on data to use in each segment for the
+exponential fit. The time limit counts from the segment end.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The flattened list of selected diffusion features.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ep_bolfi.html">ep_bolfi</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points.html">ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.combine_measurement_segments.html">ep_bolfi.kadi_tools.combine_measurement_segments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.convert_csv_to_parquet.html">ep_bolfi.kadi_tools.convert_csv_to_parquet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.eis_parameterization.html">ep_bolfi.kadi_tools.eis_parameterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.eis_preprocessing.html">ep_bolfi.kadi_tools.eis_preprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.eis_visualization.html">ep_bolfi.kadi_tools.eis_visualization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.extract_measurement_protocol.html">ep_bolfi.kadi_tools.extract_measurement_protocol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.extract_ocv_curve.html">ep_bolfi.kadi_tools.extract_ocv_curve</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.extract_overpotential.html">ep_bolfi.kadi_tools.extract_overpotential</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.fit_and_plot_ocv.html">ep_bolfi.kadi_tools.fit_and_plot_ocv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.fit_exponential_decay.html">ep_bolfi.kadi_tools.fit_exponential_decay</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.gitt_parameterization.html">ep_bolfi.kadi_tools.gitt_parameterization</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="ep_bolfi.kadi_tools.gitt_preprocessing.html">ep_bolfi.kadi_tools.gitt_preprocessing</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="ep_bolfi.kadi_tools.gitt_preprocessing.gitt_feature_visualizer.html">ep_bolfi.kadi_tools.gitt_preprocessing.gitt_feature_visualizer</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">ep_bolfi.kadi_tools.gitt_preprocessing.gitt_features</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#ep_bolfi.kadi_tools.gitt_preprocessing.gitt_features"><code class="docutils literal notranslate"><span class="pre">gitt_features()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.gitt_visualization.html">ep_bolfi.kadi_tools.gitt_visualization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.plot_measurement.html">ep_bolfi.kadi_tools.plot_measurement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.read_csv_datasets.html">ep_bolfi.kadi_tools.read_csv_datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.read_hdf5_datasets.html">ep_bolfi.kadi_tools.read_hdf5_datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.read_measurement_from_parquet.html">ep_bolfi.kadi_tools.read_measurement_from_parquet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.select_measurement_segments.html">ep_bolfi.kadi_tools.select_measurement_segments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.store_measurement_as_parquet.html">ep_bolfi.kadi_tools.store_measurement_as_parquet</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.models.html">ep_bolfi.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.optimization.html">ep_bolfi.optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.utility.html">ep_bolfi.utility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="ep_bolfi.html">ep_bolfi</a><ul>
+  <li><a href="ep_bolfi.kadi_tools.html">ep_bolfi.kadi_tools</a><ul>
+  <li><a href="ep_bolfi.kadi_tools.gitt_preprocessing.html">ep_bolfi.kadi_tools.gitt_preprocessing</a><ul>
+      <li>Previous: <a href="ep_bolfi.kadi_tools.gitt_preprocessing.gitt_feature_visualizer.html" title="previous chapter">ep_bolfi.kadi_tools.gitt_preprocessing.gitt_feature_visualizer</a></li>
+      <li>Next: <a href="ep_bolfi.kadi_tools.gitt_visualization.html" title="next chapter">ep_bolfi.kadi_tools.gitt_visualization</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/ep_bolfi.kadi_tools.gitt_preprocessing.gitt_features.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

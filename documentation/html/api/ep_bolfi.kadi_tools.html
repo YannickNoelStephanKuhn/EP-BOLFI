@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ep_bolfi.kadi_tools &#8212; EP-BOLFI 3.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <script src="../_static/documentation_options.js?v=110ea713"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points" href="ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points.html" />
+    <link rel="prev" title="ep_bolfi" href="ep_bolfi.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-ep_bolfi.kadi_tools">
+<span id="ep-bolfi-kadi-tools"></span><h1>ep_bolfi.kadi_tools<a class="headerlink" href="#module-ep_bolfi.kadi_tools" title="Link to this heading">¶</a></h1>
+<dl class="simple">
+<dt>Each file in here is a CLI-executable tool, in the format:</dt><dd><ul class="simple">
+<li><p>python -m ep_bolfi.kadi_tools.&lt;<a href="#id1"><span class="problematic" id="id2">filename_without_</span></a>.py&gt;</p></li>
+</ul>
+</dd>
+</dl>
+<p>Due to the way the CLI-executableness is implemented, the methods are
+not directly callable the way they appear in the source code, so please
+refer to their –help outputs, which are stored alongside documentation.</p>
+<p>If you want to use the methods from inside a Python script, you need to
+imitate the CLI execution, for example:</p>
+<p>from subprocess import run
+from ep_bolfi.utility.dataset_formatting import Cycling_Information
+read_call = run([</p>
+<blockquote>
+<div><p>“python”,
+“-m”,
+“ep_bolfi.kadi_tools.read_measurement_from_parquet”,
+“-r”,
+“&lt;record_id&gt;”,
+“-n”,
+“&lt;filename&gt;”,</p>
+</div></blockquote>
+<p>], capture_output=True)
+data = Cycling_Information.from_json(read_call.stdout)</p>
+<p class="rubric">Modules</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points.html#module-ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points" title="ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collect_and_fit_spline_to_parameterization_points</span></code></a></p></td>
+<td><p>Reads in multiple parameterization result files representing individual data points of a function dependent on some independent variable, and fits a spline to data points given their independent variable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.combine_measurement_segments.html#module-ep_bolfi.kadi_tools.combine_measurement_segments" title="ep_bolfi.kadi_tools.combine_measurement_segments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">combine_measurement_segments</span></code></a></p></td>
+<td><p>Reads in a JSON representation of a <code class="docutils literal notranslate"><span class="pre">Measurement</span></code> object, combines segments of it as per the given rules, and outputs the resulting <code class="docutils literal notranslate"><span class="pre">Measurement</span></code> object in a JSON representation again.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.convert_csv_to_parquet.html#module-ep_bolfi.kadi_tools.convert_csv_to_parquet" title="ep_bolfi.kadi_tools.convert_csv_to_parquet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_csv_to_parquet</span></code></a></p></td>
+<td><p>Stores CSV file contents in an Apache Parquet file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.eis_parameterization.html#module-ep_bolfi.kadi_tools.eis_parameterization" title="ep_bolfi.kadi_tools.eis_parameterization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">eis_parameterization</span></code></a></p></td>
+<td><p>Reads in an input file prepared by <code class="docutils literal notranslate"><span class="pre">ep_bolfi.kadi_tools.eis_preprocessing</span></code> and runs EP-BOLFI on it.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.eis_preprocessing.html#module-ep_bolfi.kadi_tools.eis_preprocessing" title="ep_bolfi.kadi_tools.eis_preprocessing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">eis_preprocessing</span></code></a></p></td>
+<td><p>Reads in an <code class="docutils literal notranslate"><span class="pre">Impedance_Measurement</span></code> json representation and preprocesses it as EIS data, assuming each segment corresponds to an equilibrium.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.eis_visualization.html#module-ep_bolfi.kadi_tools.eis_visualization" title="ep_bolfi.kadi_tools.eis_visualization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">eis_visualization</span></code></a></p></td>
+<td><p>Reads in an input file prepared by <code class="docutils literal notranslate"><span class="pre">ep_bolfi.kadi_tools.eis_preprocessing</span></code> and runs and compares the simulations for the initial parameter guesses against the data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.extract_measurement_protocol.html#module-ep_bolfi.kadi_tools.extract_measurement_protocol" title="ep_bolfi.kadi_tools.extract_measurement_protocol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_measurement_protocol</span></code></a></p></td>
+<td><p>Reads in a <code class="docutils literal notranslate"><span class="pre">Cycling_Information</span></code> json representation and outputs a text-based representation of the different segments that corresponds to <code class="docutils literal notranslate"><span class="pre">pybamm.Experiment</span></code> inputs.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.extract_ocv_curve.html#module-ep_bolfi.kadi_tools.extract_ocv_curve" title="ep_bolfi.kadi_tools.extract_ocv_curve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_ocv_curve</span></code></a></p></td>
+<td><p>Reads in a <code class="docutils literal notranslate"><span class="pre">Cycling_Information</span></code> json representation and extracts OCV information from it, assuming it represents a GITT measurement.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.extract_overpotential.html#module-ep_bolfi.kadi_tools.extract_overpotential" title="ep_bolfi.kadi_tools.extract_overpotential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_overpotential</span></code></a></p></td>
+<td><p>Reads in a <code class="docutils literal notranslate"><span class="pre">Cycling_Information</span></code> json representation and applies a PyBaMM model parameter set to subtract the OCP curve(s) from it, leaving us with only the overpotential.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.fit_and_plot_ocv.html#module-ep_bolfi.kadi_tools.fit_and_plot_ocv" title="ep_bolfi.kadi_tools.fit_and_plot_ocv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_and_plot_ocv</span></code></a></p></td>
+<td><p>Reads in a json file containing OCV information and fits the model from Birkl2015 (A Parametric OCV Model for Li-Ion Batteries, DOI 10.1149/2.0331512jes) to it.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.fit_exponential_decay.html#module-ep_bolfi.kadi_tools.fit_exponential_decay" title="ep_bolfi.kadi_tools.fit_exponential_decay"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_exponential_decay</span></code></a></p></td>
+<td><p>Reads in a <code class="docutils literal notranslate"><span class="pre">Cycling_Information</span></code> json representation and fits an exponential fit function to its first segment.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.gitt_parameterization.html#module-ep_bolfi.kadi_tools.gitt_parameterization" title="ep_bolfi.kadi_tools.gitt_parameterization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gitt_parameterization</span></code></a></p></td>
+<td><p>Reads in a <code class="docutils literal notranslate"><span class="pre">Cycling_Information</span></code> json representation and uses it in conjunction with input files generated by <code class="docutils literal notranslate"><span class="pre">ep_bolfi.kadi_tools.gitt_preprocessing</span></code> to fit any PyBaMM model to it via EP-BOLFI.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.gitt_preprocessing.html#module-ep_bolfi.kadi_tools.gitt_preprocessing" title="ep_bolfi.kadi_tools.gitt_preprocessing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gitt_preprocessing</span></code></a></p></td>
+<td><p>Reads in a <code class="docutils literal notranslate"><span class="pre">Cycling_Information</span></code> json representation and preprocesses it as GITT data, assuming each segment corresponds to a pulse or pause.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.gitt_visualization.html#module-ep_bolfi.kadi_tools.gitt_visualization" title="ep_bolfi.kadi_tools.gitt_visualization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gitt_visualization</span></code></a></p></td>
+<td><p>Reads in an input file prepared by <code class="docutils literal notranslate"><span class="pre">ep_bolfi.kadi_tools.gitt_preprocessing</span></code> and runs and compares the simulations for the initial parameter guesses against the data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.plot_measurement.html#module-ep_bolfi.kadi_tools.plot_measurement" title="ep_bolfi.kadi_tools.plot_measurement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_measurement</span></code></a></p></td>
+<td><p>Reads in a <code class="docutils literal notranslate"><span class="pre">Cycling_Information</span></code> json representation and plots it.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.read_csv_datasets.html#module-ep_bolfi.kadi_tools.read_csv_datasets" title="ep_bolfi.kadi_tools.read_csv_datasets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_csv_datasets</span></code></a></p></td>
+<td><p>Preprocesses commonly encountered CSV measurement files to the datatypes defined in <code class="docutils literal notranslate"><span class="pre">ep_bolfi.utility.dataset_formatting</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.read_hdf5_datasets.html#module-ep_bolfi.kadi_tools.read_hdf5_datasets" title="ep_bolfi.kadi_tools.read_hdf5_datasets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_hdf5_datasets</span></code></a></p></td>
+<td><p>Provides preprocessing from HDF5 contents to the datatypes defined in <code class="docutils literal notranslate"><span class="pre">ep_bolfi.utility.dataset_formatting</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.read_measurement_from_parquet.html#module-ep_bolfi.kadi_tools.read_measurement_from_parquet" title="ep_bolfi.kadi_tools.read_measurement_from_parquet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_measurement_from_parquet</span></code></a></p></td>
+<td><p>Reads a <code class="docutils literal notranslate"><span class="pre">Measurement</span></code> object that got stored in an Apache Parquet file with <code class="docutils literal notranslate"><span class="pre">ep_bolfi.kadi_tools.store_measurement_in_parquet</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.select_measurement_segments.html#module-ep_bolfi.kadi_tools.select_measurement_segments" title="ep_bolfi.kadi_tools.select_measurement_segments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_measurement_segments</span></code></a></p></td>
+<td><p>Selects specified segments of the <code class="docutils literal notranslate"><span class="pre">Measurement</span></code> and returns them.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ep_bolfi.kadi_tools.store_measurement_as_parquet.html#module-ep_bolfi.kadi_tools.store_measurement_as_parquet" title="ep_bolfi.kadi_tools.store_measurement_as_parquet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">store_measurement_as_parquet</span></code></a></p></td>
+<td><p>Stores a <code class="docutils literal notranslate"><span class="pre">Measurement</span></code> object in an Apache Parquet file.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EP-BOLFI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ep_bolfi.html">ep_bolfi</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">ep_bolfi.kadi_tools</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points.html">ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.combine_measurement_segments.html">ep_bolfi.kadi_tools.combine_measurement_segments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.convert_csv_to_parquet.html">ep_bolfi.kadi_tools.convert_csv_to_parquet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.eis_parameterization.html">ep_bolfi.kadi_tools.eis_parameterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.eis_preprocessing.html">ep_bolfi.kadi_tools.eis_preprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.eis_visualization.html">ep_bolfi.kadi_tools.eis_visualization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.extract_measurement_protocol.html">ep_bolfi.kadi_tools.extract_measurement_protocol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.extract_ocv_curve.html">ep_bolfi.kadi_tools.extract_ocv_curve</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.extract_overpotential.html">ep_bolfi.kadi_tools.extract_overpotential</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.fit_and_plot_ocv.html">ep_bolfi.kadi_tools.fit_and_plot_ocv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.fit_exponential_decay.html">ep_bolfi.kadi_tools.fit_exponential_decay</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.gitt_parameterization.html">ep_bolfi.kadi_tools.gitt_parameterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.gitt_preprocessing.html">ep_bolfi.kadi_tools.gitt_preprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.gitt_visualization.html">ep_bolfi.kadi_tools.gitt_visualization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.plot_measurement.html">ep_bolfi.kadi_tools.plot_measurement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.read_csv_datasets.html">ep_bolfi.kadi_tools.read_csv_datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.read_hdf5_datasets.html">ep_bolfi.kadi_tools.read_hdf5_datasets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.read_measurement_from_parquet.html">ep_bolfi.kadi_tools.read_measurement_from_parquet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.select_measurement_segments.html">ep_bolfi.kadi_tools.select_measurement_segments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.kadi_tools.store_measurement_as_parquet.html">ep_bolfi.kadi_tools.store_measurement_as_parquet</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.models.html">ep_bolfi.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.optimization.html">ep_bolfi.optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ep_bolfi.utility.html">ep_bolfi.utility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+  <li><a href="ep_bolfi.html">ep_bolfi</a><ul>
+      <li>Previous: <a href="ep_bolfi.html" title="previous chapter">ep_bolfi</a></li>
+      <li>Next: <a href="ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points.html" title="next chapter">ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2022-%Y, Yannick Kuhn.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/api/ep_bolfi.kadi_tools.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
