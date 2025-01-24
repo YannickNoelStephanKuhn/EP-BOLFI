@@ -94,3 +94,7 @@ Please refer to the [contributing guidelines](CONTRIBUTING.md) and adhere to the
 ## Licence
 
 GPLv3, see LICENSE file.
+
+## Acknowledgements
+
+This work was supported by the German Aerospace Center (DLR). The authors thank BASF for providing the experimental data. EP-BOLFI has received funding by the Helmholtz Association through grant agreement number KW-BASF-6 (Initiative and Networking Fund) and from the European Union's Horizon 2020 innovation program under grant agreement number 101103997 (DigiBatt).
