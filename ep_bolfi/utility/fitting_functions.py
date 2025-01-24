@@ -1,4 +1,4 @@
-"""!@package ep_bolfi.utility.fitting_functions
+"""
 Various helper and fitting functions for processing measurement curves.
 """
 
@@ -6,12 +6,14 @@ import json
 import re
 
 import numpy as np
+from os import linesep
 from pyimpspec import calculate_drt_tr_nnls, DataSet, TRNNLSResult
 import scipy.optimize as so
 from scipy.optimize import root_scalar, minimize
 from scipy import interpolate as ip
 from sklearn.cluster import KMeans
 import sympy as sp
+import warnings
 
 
 class NDArrayEncoder(json.JSONEncoder):
@@ -21,8 +23,10 @@ class NDArrayEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, item)
 
 
-class OCV_fit_result(object):
-    """!@brief Contains OCV fit parameters and related information.
+class OCV_fit_result:
+    """
+    Contains OCV fit parameters and related information.
+
     Reference
     ----------
     C. R. Birkl, E. McTurk, M. R. Roberts, P. G. Bruce and D. A. Howey.
@@ -42,21 +46,31 @@ class OCV_fit_result(object):
         spline_interpolation_coefficients=None,
         function_string=None,
     ):
+        """
+        :param fit:
+            The fit parameters of the OCV function from Birkl et al.,
+            either with or without the estimated SOC range at the
+            beginning, and optionally without the last Δx entry, which
+            is then fixed to ensure that the sum over Δx is 1.
+            Order of parameters: [E₀_0, a_0, Δx_0, E₀_1, a_1, ...].
+        """
         if len(fit) % 3:
-            ## The SOC range of the data.
             self.SOC_range = np.array(fit[0:2])
-            ## The fit parameters of the OCV function from Birkl. et al.,
-            # excluding the estimated SOC range.
+            """The SOC range of the data."""
             self.fit = np.array(fit[2:])
+            """
+            The fit parameters of the OCV function from Birkl et al.,
+            excluding the estimated SOC range.
+            """
         else:
             self.SOC_range = np.array([0, 1])
             self.fit = np.array(fit)
-        ## The E₀ (plateau voltages) parameters.
         self.E_0 = np.array(self.fit[0::3])
-        ## The a (inverse plateau widths) parameters.
+        """The E₀ (plateau voltages) parameters."""
         self.a = np.array(self.fit[1::3])
-        ## The Δx (phase proportion) parameters.
+        """The a (inverse plateau widths) parameters."""
         self.Δx = np.array(self.fit[2::3])
+        """The Δx (phase proportion) parameters."""
         if len(self.Δx) < len(self.E_0):
             last_Δx = 1 - np.sum(self.Δx)
             self.Δx = np.append(self.Δx, last_Δx)
@@ -76,30 +90,49 @@ class OCV_fit_result(object):
             ):
                 print("Warning (OCV_fit_result): At least two fitted summands "
                       "coincide.")
-        ## The SOC data points.
         self.SOC = np.array(SOC)
-        ## The OCV data points. May be adjusted from the original data.
+        """The SOC data points."""
         self.OCV = np.array(OCV)
-        ## If another electrode was factored out in the data, this may
-        # contain its SOC at SOC 0 of the electrode of interest.
+        """
+        The OCV data points. May be adjusted from the original data.
+        """
         self.SOC_offset = SOC_offset
-        ## If another electrode was factored out in the data, this may
-        # contain the the rate of change of its SOC to that of the
-        # electrode of interest.
+        """
+        If another electrode was factored out in the data, this may
+        contain its SOC at SOC 0 of the electrode of interest.
+        """
         self.SOC_scale = SOC_scale
-        ## The scipy.optimize.OptimizeResult that led to the fit.
+        """
+        If another electrode was factored out in the data, this may
+        contain the the rate of change of its SOC to that of the
+        electrode of interest.
+        """
         self.optimize_result = optimize_result
-        ## The knots of the interpolating spline fitted to the inverse.
+        """The scipy.optimize.OptimizeResult that led to the fit."""
         self.spline_interpolation_knots = spline_interpolation_knots
-        ## The coefficients of the interpolating spline fitted to the inverse.
+        """
+        The knots of the interpolating spline fitted to the inverse.
+        """
         self.spline_interpolation_coefficients = (
             spline_interpolation_coefficients
         )
-        ## The string representation of the interpolating spline fitted to the
-        # inverse.
+        """
+        The coefficients of the interpolating spline fitted to the
+        inverse.
+        """
         self.function_string = function_string
+        """
+        The string representation of the interpolating spline fitted to
+        the inverse.
+        """
 
     def to_json(self):
+        """
+        Gives a complete representation in JSON format.
+
+        :returns:
+            A JSON-formatted string.
+        """
         return json.dumps({
             'fit': {
                 'parameters': self.fit,
@@ -125,11 +158,13 @@ class OCV_fit_result(object):
         }, cls=NDArrayEncoder)
 
     def SOC_adjusted(self, soc=None):
-        """!@brief Gives the adjusted SOC values.
-        @param soc
+        """
+        Gives the adjusted SOC values.
+
+        :param soc:
             The SOC as assigned in the original data. This usually
             corresponds to the range available during a measurement.
-        @return
+        :returns:
             The SOC as corrected by the OCV model. These values will try
             to correspond to the level of lithiation.
         """
@@ -142,14 +177,17 @@ class OCV_fit_result(object):
         )
 
     def SOC_other_electrode(self, soc=None):
-        """!@brief Relates the SOCs of the two electrodes to each other.
+        """
+        Relates the SOCs of the two electrodes to each other.
+
         If the original data was of a full cell and the other
         electrode was factored out, this may contain the function that
         takes the SOC of the electrode of interest and gives the SOC
         of the other electrode, i.e., the stoichiometric relation.
-        @param soc
+
+        :param soc:
             The SOC of the electrode of interest.
-        @return
+        :returns:
             The SOC of the other electrode that was factored out.
         """
 
@@ -160,15 +198,17 @@ class OCV_fit_result(object):
 
 
 def find_occurrences(sequence, value):
-    """!@brief Gives indices in sequence where it is closest to value.
-    @param sequence
+    """
+    Gives indices in sequence where it is closest to value.
+
+    :param sequence:
         A list that represents a differentiable function.
-    @param value
-        The value that is searched for in "sequence". Also, crossings of
-        consecutive values in "sequence" with "value" are searched for.
-    @return
-        A list of indices in "sequence" in ascending order where "value"
-        or a close match for "value" was found.
+    :param value:
+        The value that is searched for in *sequence*. Also, crossings of
+        consecutive values in *sequence* with *value* are searched for.
+    :returns:
+        A list of indices in *sequence* in ascending order where *value*
+        or a close match for *value* was found.
     """
     root_finder = np.array(sequence) - value
     crossings = (
@@ -190,37 +230,41 @@ def find_occurrences(sequence, value):
 def smooth_fit(
     x, y, order=3, splits=None, w=None, s=None, display=False, derivatives=0
 ):
-    """!@brief Calculates a smoothed spline with derivatives.
-    Note: the "roots" function of a spline only works if it is cubic,
-    i.e. of third order. Each "derivative" reduces the order by one.
-    @param x
+    """
+    Calculates a smoothed spline with derivatives.
+
+    Note: the ``roots`` method of a spline only works if it is cubic,
+    i.e. of third order. Each ``derivative`` reduces the order by one.
+
+    :param x:
         The independent variable.
-    @param y
-        The dependent variable ("plotted over x").
-    @param order
+    :param y:
+        The dependent variable ("plotted over *x*").
+    :param order:
         Interpolation order of the spline.
-    @param splits
+    :param splits:
         Optional tuning parameter. A list of points between which
         splines will be fitted first. The returned spline then is a fit
         of these individual splines.
-    @param w
-        Optional list of weights. Works best if 1 / w approximates the
-        standard deviation of the noise in y at each point. Defaults to
-        SciPy default behaviour of scipy.interpolate.UnivariateSpline.
-    @param s
+    :param w:
+        Optional list of weights. Works best if ``1 / w`` approximates
+        the standard deviation of the noise in *y* at each point.
+        Defaults to the SciPy default behaviour of
+        ``scipy.interpolate.UnivariateSpline``.
+    :param s:
         Optional tuning parameter. Higher values lead to coarser, but
         more smooth interpolations and vice versa. Defaults to SciPy
-        default behaviour of scipy.interpolate.UnivariateSpline.
-    @param display
+        default behaviour of ``scipy.interpolate.UnivariateSpline``.
+    :param display:
         If set to True, the fit parameters of the spline will be printed
         to console. If possible, a monomial representation is printed.
-    @param derivatives
+    :param derivatives:
         The derivatives of the spline to also include in the return.
         Default is 0, which gives the spline. 1 would give the spline,
         followed by its derivative. Can not be higher than spline order.
-        Derivatives are only continuous when derivatives < order.
-    @return
-        A smoothing spline in the form of scipy.UnivariateSpline.
+        Derivatives are only continuous when ``derivatives < order``.
+    :returns:
+        A smoothing spline in the form of ``scipy.UnivariateSpline``.
     """
 
     # Clean up multiple-valued ranges.
@@ -295,28 +339,31 @@ def smooth_fit(
     return spline
 
 
-def fit_exponential_decay(
+def fit_exponential_decay_with_warnings(
     timepoints, voltages, recursive_depth=1, threshold=0.95
 ):
-    """!@brief Extracts a set amount of exponential decay curves.
-    @param timepoints
+    """
+    Extracts a set amount of exponential decay curves.
+
+    :param timepoints:
         The timepoints of the measurements.
-    @param voltages
+    :param voltages:
         The corresponding voltages.
-    @param recursive_depth
-        The default (1) fits one exponential curve to the data. For
+    :param recursive_depth::
+        The default 1 fits one exponential curve to the data. For
         higher values that fit is repeated with the data minus the
         preceding fit(s) for this amount of times minus one.
-    @param threshold
+    :param threshold:
         The lower threshold value for the R² coefficient of
-        determination. If "threshold" is smaller than 1, the subset of
+        determination. If *threshold* is smaller than 1, the subset of
         the exponential decay data is searched that just fulfills it.
         Defaults to 0.95. Values above 1 are set to 1.
-    @return
-        A list of length "recursive_depth" where each element is a
+    :returns:
+        A list of length *recursive_depth* where each element is a
         3-tuple with the timepoints, the fitted voltage evaluations
         and a 3-tuple of the parameters of the following decay function:
-        t, (U_0, ΔU, τᵣ⁻¹) ↦ U_0 + ΔU * np.exp(-τᵣ⁻¹ * (t - timepoints[0])).
+        ``t, (U_0, ΔU, τᵣ⁻¹):
+        U_0 + ΔU * np.exp(-τᵣ⁻¹ * (t - timepoints[0]))``.
     """
 
     t_eval = np.atleast_1d(timepoints)
@@ -329,11 +376,11 @@ def fit_exponential_decay(
         return []
 
     def exp_fit_function(t, b, c, d, t_0=t_eval[0]):
-        """! Exponential decay function. """
+        """Exponential decay function."""
         return b + c * np.exp(-d * (t - t_0))
 
     def log_inverse_fit_function(y, b, c, d, t_0=t_eval[0]):
-        """! Corresponding logarithm function. """
+        """Corresponding logarithm function."""
         log_arg = (y - b) / c
         log_arg[log_arg <= 0] = 0.1**d
         return t_0 - np.log(log_arg) / d
@@ -342,20 +389,24 @@ def fit_exponential_decay(
     bracket = [0, end]
     curves = []
     depth_counter = 0
-    fit_guess = [u_eval[end], u_eval[end // 10] - u_eval[end],
-                 1.0 / (t_eval[end] - t_eval[end // 10])]
+    fit_guess = [
+        np.nan_to_num(u_eval[end]),
+        np.nan_to_num(u_eval[end // 10] - u_eval[end]),
+        np.nan_to_num(1.0 / (t_eval[end] - t_eval[end // 10])),
+    ]
 
     # Evaluate the R² value for a split at the middle of the data.
     split = int(0.5 * (bracket[0] + bracket[1]))
     argmax_R_squared = split
+
     fit_split = so.minimize(
-        lambda x: np.sum(
-            (exp_fit_function(t_eval[split:end], *x) - u_eval[split:end])**2
-        )**0.5, x0=fit_guess, method='trust-constr'
+        lambda x: np.sum((
+            exp_fit_function(t_eval[split:end], *x) - u_eval[split:end]
+        )**2)**0.5, x0=fit_guess, method='trust-constr'
     ).x
     test_t_split = log_inverse_fit_function(u_eval[split:end], *fit_split)
-    R_squared_split = (
-        1 - np.sum(np.nan_to_num(t_eval[split:end] - test_t_split)**2)
+    R_squared_split = np.nan_to_num(
+        1 - np.sum((t_eval[split:end] - test_t_split)**2)
         / np.sum((t_eval[split:end] - np.mean(t_eval[split:end]))**2)
     )
 
@@ -372,14 +423,15 @@ def fit_exponential_decay(
             if depth_counter >= recursive_depth:
                 break
             fit_guess = [
-                u_eval[end], u_eval[end // 10] - u_eval[end],
-                1.0 / (t_eval[end] - t_eval[end // 10])
+                np.nan_to_num(u_eval[end]),
+                np.nan_to_num(u_eval[end // 10] - u_eval[end]),
+                np.nan_to_num(1.0 / (t_eval[end] - t_eval[end // 10])),
             ]
         # If the threshold wasn't reached, use the highest R² value.
         if bracket[1] - bracket[0] <= 1:
             fit_argmax = so.minimize(lambda x: np.sum(
                 (exp_fit_function(t_eval[argmax_R_squared:end], *x)
-                 - u_eval[argmax_R_squared:end])**2
+                    - u_eval[argmax_R_squared:end])**2
             )**0.5, x0=fit_guess, method='trust-constr').x
             fit_eval = exp_fit_function(t_eval, *fit_argmax)
             end = split
@@ -390,8 +442,9 @@ def fit_exponential_decay(
             if depth_counter >= recursive_depth:
                 break
             fit_guess = [
-                u_eval[end], u_eval[end // 10] - u_eval[end],
-                1.0 / (t_eval[end] - t_eval[end // 10])
+                np.nan_to_num(u_eval[end]),
+                np.nan_to_num(u_eval[end // 10] - u_eval[end]),
+                np.nan_to_num(1.0 / (t_eval[end] - t_eval[end // 10])),
             ]
         left = int(0.75 * bracket[0] + 0.25 * bracket[1])
         split = int(0.5 * (bracket[0] + bracket[1]))
@@ -399,22 +452,26 @@ def fit_exponential_decay(
         # Fit an exponential decay for both "left" and "right" splits.
         fit_left = so.minimize(lambda x: np.sum(
             (exp_fit_function(t_eval[left:end], *x)
-             - u_eval[left:end])**2
+                - u_eval[left:end])**2
         )**0.5, x0=fit_guess, method='trust-constr').x
         fit_right = so.minimize(lambda x: np.sum(
             (exp_fit_function(t_eval[right:end], *x)
-             - u_eval[right:end])**2
+                - u_eval[right:end])**2
         )**0.5, x0=fit_guess, method='trust-constr').x
         # Take the logarithm corresponding to the fit. If the fit is
         # good, it should give a line, and thus, a high R² value.
-        test_t_left = log_inverse_fit_function(u_eval[left:end], *fit_left)
-        R_squared_left = (
-            1 - np.sum(np.nan_to_num(t_eval[left:end] - test_t_left)**2)
+        test_t_left = log_inverse_fit_function(
+            u_eval[left:end], *fit_left
+        )
+        R_squared_left = np.nan_to_num(
+            1 - np.sum((t_eval[left:end] - test_t_left)**2)
             / np.sum((t_eval[left:end] - np.mean(t_eval[left:end]))**2)
         )
-        test_t_right = log_inverse_fit_function(u_eval[right:end], *fit_right)
-        R_squared_right = (
-            1 - np.sum(np.nan_to_num(t_eval[right:end] - test_t_right)**2)
+        test_t_right = log_inverse_fit_function(
+            u_eval[right:end], *fit_right
+        )
+        R_squared_right = np.nan_to_num(
+            1 - np.sum((t_eval[right:end] - test_t_right)**2)
             / np.sum((t_eval[right:end] - np.mean(t_eval[right:end]))**2)
         )
         # Step in the direction of ascending R² value.
@@ -434,21 +491,69 @@ def fit_exponential_decay(
     return curves
 
 
-def fit_sqrt(timepoints, voltages, threshold=0.95):
-    """!@brief Extracts a square root at the beginning of the data.
-    @param timepoints
+def fit_exponential_decay(
+    timepoints, voltages, recursive_depth=1, threshold=0.95
+):
+    """
+    See ``fit_exponential_decay_with_warnings`` for details. This method
+    does the same, but suppresses inconsequential NumPy warnings.
+    """
+    with warnings.catch_warnings():
+        warnings.filterwarnings(
+            'ignore',
+            'delta_grad == 0.0. Check if the approximated function is '
+            'linear. If the function is linear better results can be '
+            'obtained by defining the Hessian as zero instead of '
+            'using quasi-Newton approximations.'
+        )
+        warnings.filterwarnings(
+            'ignore',
+            'invalid value encountered in scalar multiply'
+        )
+        warnings.filterwarnings(
+            'ignore',
+            'invalid value encountered in scalar divide'
+        )
+        warnings.filterwarnings(
+            'ignore',
+            'divide by zero encountered in divide'
+        )
+        warnings.filterwarnings(
+            'ignore',
+            'overflow encountered in scalar power'
+        )
+        warnings.filterwarnings(
+            'ignore',
+            'The occurrence of roundoff error is detected, which prevents '
+            'the requested tolerance from being achieved.  The error may be '
+            'underestimated.'
+        )
+        warnings.filterwarnings(
+            'ignore',
+            'invalid value encountered in subtract'
+        )
+        return fit_exponential_decay_with_warnings(
+            timepoints, voltages, recursive_depth, threshold
+        )
+
+
+def fit_sqrt_with_warnings(timepoints, voltages, threshold=0.95):
+    """
+    Extracts a square root at the beginning of the data.
+
+    :param timepoints:
         The timepoints of the measurements.
-    @param voltages
+    :param voltages:
         The corresponding voltages.
-    @param threshold
+    :param threshold:
         The lower threshold value for the R² coefficient of
-        determination. If "threshold" is smaller than 1, the subset of
+        determination. If *threshold* is smaller than 1, the subset of
         the experimental data is searched that just fulfills it.
         Defaults to 0.95. Values above 1 are set to 1.
-    @return
+    :returns:
         A 3-tuple with the timepoints, the fitted voltage evaluations
         and a 2-tuple of the parameters of the following sqrt function:
-        t, (U_0, dU_d√t) ↦ U_0 + dU_d√t * √(t - timepoints[0]).
+        ``t, (U_0, dU_d√t): U_0 + dU_d√t * √(t - timepoints[0])``.
     """
 
     t_eval = np.atleast_1d(timepoints)
@@ -461,17 +566,22 @@ def fit_sqrt(timepoints, voltages, threshold=0.95):
         return []
 
     def sqrt_fit_function(t, b, c, t_0=t_eval[0]):
-        """! Square root function. """
+        """Square root function."""
         return b + c * np.sqrt(t - t_0)
 
     def square_inverse_fit_function(y, b, c, t_0=t_eval[0]):
-        """! Corresponding square function. """
+        """Corresponding square function."""
         return t_0 + ((y - b) / c)**2
 
-    end = len(t_eval) - 1
+    end = len(t_eval)
     bracket = [0, end]
-    fit_guess = [u_eval[0],
-                 (u_eval[end] - u_eval[0]) / np.sqrt(t_eval[end] - t_eval[0])]
+    fit_guess = [
+        np.nan_to_num(u_eval[0]),
+        np.nan_to_num(
+            (u_eval[end - 1] - u_eval[0])
+            / np.sqrt(t_eval[end - 1] - t_eval[0])
+        )
+    ]
 
     # Evaluate the R² value for a split at the middle of the data.
     split = int(0.5 * (bracket[0] + bracket[1]))
@@ -480,8 +590,8 @@ def fit_sqrt(timepoints, voltages, threshold=0.95):
         (sqrt_fit_function(t_eval[0:split], *x) - u_eval[0:split])**2
     )**0.5, x0=fit_guess, method='trust-constr').x
     test_t_split = square_inverse_fit_function(u_eval[0:split], *fit_split)
-    R_squared_split = (
-        1 - np.sum(np.nan_to_num(t_eval[0:split] - test_t_split)**2)
+    R_squared_split = np.nan_to_num(
+        1 - np.sum((t_eval[0:split] - test_t_split)**2)
         / np.sum((t_eval[0:split] - np.mean(t_eval[0:split]))**2)
     )
 
@@ -495,7 +605,7 @@ def fit_sqrt(timepoints, voltages, threshold=0.95):
             fit_argmax = so.minimize(
                 lambda x: np.sum(
                     (sqrt_fit_function(t_eval[0:argmax_R_squared], *x)
-                     - u_eval[0:argmax_R_squared])**2
+                        - u_eval[0:argmax_R_squared])**2
                 )**0.5, x0=fit_guess, method='trust-constr'
             ).x
             fit_eval = sqrt_fit_function(t_eval, *fit_argmax)
@@ -512,14 +622,18 @@ def fit_sqrt(timepoints, voltages, threshold=0.95):
         )**0.5, x0=fit_guess, method='trust-constr').x
         # Take the square corresponding to the fit. If the fit is
         # good, it should give a line, and thus, a high R² value.
-        test_t_left = square_inverse_fit_function(u_eval[0:left], *fit_left)
-        R_squared_left = (
-            1 - np.sum(np.nan_to_num(t_eval[0:left] - test_t_left)**2)
+        test_t_left = square_inverse_fit_function(
+            u_eval[0:left], *fit_left
+        )
+        R_squared_left = np.nan_to_num(
+            1 - np.sum((t_eval[0:left] - test_t_left)**2)
             / np.sum((t_eval[0:left] - np.mean(t_eval[0:left]))**2)
         )
-        test_t_right = square_inverse_fit_function(u_eval[0:right], *fit_right)
-        R_squared_right = (
-            1 - np.sum(np.nan_to_num(t_eval[0:right] - test_t_right)**2)
+        test_t_right = square_inverse_fit_function(
+            u_eval[0:right], *fit_right
+        )
+        R_squared_right = np.nan_to_num(
+            1 - np.sum((t_eval[0:right] - test_t_right)**2)
             / np.sum((t_eval[0:right] - np.mean(t_eval[0:right]))**2)
         )
         # Step in the direction of ascending R² value.
@@ -537,22 +651,276 @@ def fit_sqrt(timepoints, voltages, threshold=0.95):
             fit_split = fit_right
 
 
+def fit_sqrt(timepoints, voltages, threshold=0.95):
+    """
+    See ``fit_sqrt_with_warnings`` for details.  This method
+    does the same, but suppresses inconsequential NumPy warnings.
+    """
+    with warnings.catch_warnings():
+        warnings.filterwarnings(
+            'ignore',
+            'delta_grad == 0.0. Check if the approximated function is '
+            'linear. If the function is linear better results can be '
+            'obtained by defining the Hessian as zero instead of '
+            'using quasi-Newton approximations.'
+        )
+        warnings.filterwarnings(
+            'ignore',
+            'invalid value encountered in scalar multiply'
+        )
+        warnings.filterwarnings(
+            'ignore',
+            'invalid value encountered in scalar divide'
+        )
+        warnings.filterwarnings(
+            'ignore',
+            'divide by zero encountered in divide'
+        )
+        warnings.filterwarnings(
+            'ignore',
+            'overflow encountered in scalar power'
+        )
+        warnings.filterwarnings(
+            'ignore',
+            'The occurrence of roundoff error is detected, which prevents '
+            'the requested tolerance from being achieved.  The error may be '
+            'underestimated.'
+        )
+        warnings.filterwarnings(
+            'ignore',
+            'invalid value encountered in subtract'
+        )
+        warnings.filterwarnings(
+            'ignore',
+            'overflow encountered in square'
+        )
+        return fit_sqrt_with_warnings(timepoints, voltages, threshold)
+
+
+def fit_pwrlaw(timepoints, quantity, threshold=0.95):
+    """
+    Extracts a powerlaw from the data..
+
+    :param timepoints:
+        The timepoints of the measurements.
+    :param quantity:
+        The corresponding quantity, to which a powerlaw-behaviour should
+        be fitted.
+    :param threshold:
+        The lower threshold value for the R² coefficient of
+        determination. If *threshold* is larger than the R² coefficient,
+        a warning is issued and the parameters may be NaN or Inf.
+        Defaults to 0.95. Values above 1 are set to 0.98.
+    :returns:
+        A 3-tuple with the timepoints, the fitted quantity evaluations
+        and a 4-tuple of the parameters of the following powerlaw:
+        ``t, (q0, dq_dt, q_trans, n): q0 + dq_dt * (t - q_trans)**n``.
+    """
+
+    t_eval = np.atleast_1d(timepoints)
+    q_eval = np.atleast_1d(quantity)
+    threshold = threshold if threshold <= 1 else 0.98
+
+    # Make sure that invalid inputs don't crash anything.
+    if len(t_eval) < 2:
+        print("Warning: fit_pwrlaw was given insufficient data.")
+        return []
+
+    corv = 1e40  # Avoid small differences and numerical issues
+
+    def pwrlaw_fit_function(t, k, n, t_0=t_eval[0], b=q_eval[0]):
+        """Power law function."""
+        return (b + k * np.maximum(0, (t - t_0))**n)*corv
+
+    def pwrlaw_inverse_fit_function(y, k, n, t_0=t_eval[0], b=q_eval[0]):
+        """Corresponding inverse function."""
+        return t_0 + ((y - b) / k)**(1/n)
+
+    end = len(t_eval) - 1
+    p0 = [
+        np.maximum(
+            1e-20,
+            np.minimum(
+                0.9e-11,
+                (q_eval[end] - q_eval[0])/(t_eval[end]-t_eval[0])
+            )
+        ),
+        0.9
+    ]
+
+    # Check if the NumPy array contains any NaN value
+    if (np.isnan(t_eval).any()):
+        print("t_eval contains NaN values")
+    if (np.isinf(t_eval).any()):
+        print("t_eval contains inf values")
+
+    if (np.isnan(q_eval*corv).any()):
+        print("q_eval contains NaN values")
+    if (np.isinf(q_eval*corv).any()):
+        print("q_eval contains inf values")
+
+    if (np.isnan(p0).any()):
+        print("p0 contains NaN values")
+    if (np.isinf(p0).any()):
+        print("p0 contains inf values")
+
+    p0_cor = np.nan_to_num(p0, nan=1e-13, posinf=1e-11, neginf=1e-17)
+    params, pcov = so.curve_fit(
+        pwrlaw_fit_function,
+        t_eval,
+        q_eval * corv,
+        p0=p0_cor,
+        bounds=([0, 0.5], [1e-11, 1.1]),
+        maxfev=int(1e6)
+    )
+
+    test_t_split = pwrlaw_inverse_fit_function(q_eval, *params)
+    R_squared_inv = np.nan_to_num(
+        1 - np.sum((t_eval - test_t_split)**2)
+        / np.sum((t_eval - np.mean(t_eval))**2)
+    )
+
+    # Return the result if the threshold is matched.
+    if R_squared_inv >= threshold:
+        fit_eval = pwrlaw_fit_function(t_eval, *params)
+        params = [np.log(params[0]), params[1]]
+        return [t_eval, list(fit_eval), params]
+    else:
+        print("Power-law fit gone wrong")
+        fit_eval = pwrlaw_fit_function(t_eval, *params)
+        return [t_eval, list(fit_eval), params]
+
+
+def fit_pwrlawCL(timepoints, quantity, threshold=0.95):
+    """
+    Extracts a powerlaw from the data. Does the same as ``fit_pwrlaw``,
+    and additionally logs its internal states to stdout.
+
+    :param timepoints:
+        The timepoints of the measurements.
+    :param quantity:
+        The corresponding quantity, to which a powerlaw-behaviour should
+        be fitted.
+    :param threshold:
+        The lower threshold value for the R² coefficient of
+        determination. If *threshold* is larger than the R² coefficient,
+        a warning is issued and the parameters may be NaN or Inf.
+        Defaults to 0.95. Values above 1 are set to 0.98.
+    :returns:
+        A 3-tuple with the timepoints, the fitted quantity evaluations
+        and a 4-tuple of the parameters of the following powerlaw:
+        t, (q0, dq_dt, q_trans, n) ↦ q0 + dq_dt * (t - q_trans)**n
+    """
+
+    t_eval = np.atleast_1d(timepoints)
+    q_eval = np.atleast_1d(quantity)
+    threshold = threshold if threshold <= 1 else 0.98
+
+    # Make sure that invalid inputs don't crash anything.
+    if len(t_eval) < 3:
+        print("Warning: fit_pwrlawCL was given insufficient data.")
+        print("t_eval:", t_eval)
+        params = [1e-20, -2]
+        return [t_eval, list(0), params]
+    if len(q_eval) < 3:
+        print("Warning: fit_pwrlawCL was given insufficient data.")
+        print("q_eval:", q_eval)
+        params = [1e-20, -2]
+        return [t_eval, [0], params]
+
+    corv = 1e0  # Avoid small differences and resulting numerical issues
+
+    def pwrlaw_fit_function(t, k, n, t_0=t_eval[0], b=q_eval[0]):
+        """Power law function."""
+        return (b + k * np.maximum(0, (t - t_0))**n)*corv
+
+    def pwrlaw_inverse_fit_function(y, k, n, t_0=t_eval[0], b=q_eval[0]):
+        """Corresponding inverse function."""
+        return t_0 + ((y - b) / k)**(1/n)
+
+    end = len(t_eval) - 1
+    p0 = [
+        np.maximum(
+            1e-20,
+            np.minimum(
+                0.9e-11,
+                (q_eval[end] - q_eval[0])/(t_eval[end]-t_eval[0])
+            )
+        ),
+        0.9
+    ]
+
+    # Check if the NumPy array contains any NaN value
+    if (np.isnan(t_eval).any()):
+        print("t_eval contains NaN values")
+    if (np.isinf(t_eval).any()):
+        print("t_eval contains inf values")
+
+    if (np.isnan(q_eval*corv).any()):
+        print("q_eval contains NaN values")
+    if (np.isinf(q_eval*corv).any()):
+        print("q_eval contains inf values")
+
+    if (np.isnan(p0).any()):
+        print("p0 contains NaN values")
+    if (np.isinf(p0).any()):
+        print("p0 contains inf values")
+
+    p0_cor = np.nan_to_num(p0, nan=1e-13, posinf=1e-11, neginf=1e-17)
+    params, pcov = so.curve_fit(
+        pwrlaw_fit_function,
+        t_eval,
+        q_eval * corv,
+        p0=p0_cor,
+        bounds=([0, 0.1], [1e-2, 3]),
+        maxfev=int(1e6)
+    )
+    print(params)
+    test_q = pwrlaw_fit_function(t_eval, *params)
+    R_squared_split = np.nan_to_num(
+        1 - np.sum((q_eval - test_q/corv)**2)
+        / np.sum((q_eval - np.mean(q_eval))**2)
+    )
+    print("R_squared_split:", R_squared_split)
+
+    test_t_split = pwrlaw_inverse_fit_function(q_eval, *params)
+    R_squared_inv = np.nan_to_num(
+        1 - np.sum((t_eval - test_t_split)**2)
+        / np.sum((t_eval - np.mean(t_eval))**2)
+    )
+
+    print("R_squared_inv:", R_squared_inv)
+    # Return the result if the threshold is matched.
+    if R_squared_inv >= threshold:
+        fit_eval = pwrlaw_fit_function(t_eval, *params)
+        params = [np.log(params[0]), params[1]]
+        return [t_eval, list(fit_eval), params]
+    else:
+        print("Power-law fit gone wrong")
+        fit_eval = pwrlaw_fit_function(t_eval, *params)
+        return [t_eval, list(fit_eval), params]
+
+
 def fit_drt(frequencies, impedances, lambda_value=-2.0):
-    """Distribution of Relaxation Times.
-    @param frequencies
+    """
+    A Distribution of Relaxation Times approximation via ``pyimpspec``.
+
+    :param frequencies:
         Array of the measured frequencies.
-    @param impedances
+    :param impedances:
         Array of the measured complex impedances.
-    @param lambda_value
+    :param lambda_value:
         Takes the place of the R² value as a tuning parameter.
-        Consult the pyimpspec documentation for the precise usage.
-        Default is -2, which "uses the L-curve approach to estimate lambda".
-        -1 uses a different heuristic, and values > 0 set lambda directly.
-    @return
-        A 3-tuple of characteristic DRT time constants, their corresponding
-        resistances, and the whole TRNNLSResult object returned by pyimpspec.
-        Note that the .pseudo_chisqr attribute is not useful for the same
-        reasons that went into the R² calculations in the other fit functions.
+        Consult the ``pyimpspec`` documentation for the precise usage.
+        Default is -2, which "uses the L-curve approach to estimate λ".
+        -1 uses a different heuristic, and values > 0 set λ directly.
+    :returns:
+        A 3-tuple of characteristic DRT time constants, their
+        corresponding resistances, and the whole ``TRNNLSResult`` object
+        returned by ``pyimpspec``. Note that the ``.pseudo_chisqr``
+        attribute is not useful for the same reasons that went into the
+        R² calculations in the other fit functions: a "pseudo-R²"
+        does not use the inverse function to obtain a sensible R².
     """
 
     # Clean up any "inductive" impedances, i.e., those with imag < 0.
@@ -563,10 +931,11 @@ def fit_drt(frequencies, impedances, lambda_value=-2.0):
     drt: TRNNLSResult = calculate_drt_tr_nnls(
         pyimpspec_dataset, lambda_value=lambda_value
     )
-    # Assume that the peaks are sharp. So the adjacent discrete time constants
-    # have all the weight of every peak (rest of the gammas should be zero).
-    # Since Z = R_0 + ∫₀∞ gamma / (1 + s w) dw, the actual resistances are the
-    # integrals around the peaks.
+    # Assume that the peaks are sharp. So the adjacent discrete time
+    # constants have all the weight of every peak (rest of the gammas
+    # should be zero).
+    # Since Z = R_0 + ∫₀∞ gamma / (1 + s w) dw, the actual resistances
+    # are the integrals around the peaks.
     # pyimpspec uses a logarithmic transform for the integral, i.e.,
     # the "dw" is actually a "d(log(w))".
     peaks = drt.get_peaks(threshold=0.0)
@@ -592,7 +961,7 @@ def fit_drt(frequencies, impedances, lambda_value=-2.0):
             )]
         )
         log_time_constants = np.log(extended_time_constants)
-        # Count from one index further, since the frond got appended to.
+        # Count from one index further, since the front got appended to.
         integration_weights = np.diff(log_time_constants[pi - 1: pi + 4])
         peak_integral = np.sum(
             0.5 * (peak_surrounding[1:] + peak_surrounding[:-1])
@@ -603,16 +972,18 @@ def fit_drt(frequencies, impedances, lambda_value=-2.0):
 
 
 def laplace_transform(x, y, s):
-    """!@brief Performs a basic laplace transformation.
-    @param x
+    """
+    Performs a basic Laplace transformation.
+
+    :param x:
         The independent variable.
-    @param y
+    :param y:
         The dependent variable.
-    @param s
+    :param s:
         The (possibly complex) frequencies for which to perform the
         transform.
-    @return
-        The evaluation of the laplace transform at s.
+    :returns:
+        The evaluation of the laplace transform at *s*.
     """
 
     x = np.array(x)
@@ -624,10 +995,12 @@ def laplace_transform(x, y, s):
 
 
 def a_fit(γUeminus1):
-    """!@brief Calculates the conversion from "A parametric OCV model".
-    @param γUeminus1
-        γ * Uᵢ / e from "A parametric OCV model".
-    @return
+    """
+    Calculates the conversion from "A parametric OCV model" (Birkl).
+
+    :param γUeminus1:
+        γ * Uᵢ / e (see "A parametric OCV model").
+    :returns:
         The approximation factor aᵢ from "A parametric OCV model".
     """
 
@@ -643,38 +1016,40 @@ def OCV_fit_function(
     fit_SOC_range=False,
     rescale=False,
 ):
-    """!@brief The OCV model from "A parametric OCV model".
+    """
+    The OCV model from "A parametric OCV model".
+
     Reference
     ----------
     C. R. Birkl, E. McTurk, M. R. Roberts, P. G. Bruce and D. A. Howey.
     “A Parametric Open Circuit Voltage Model for Lithium Ion Batteries”.
     Journal of The Electrochemical Society, 162(12):A2271-A2280, 2015
 
-    @param E_OCV
+    :param E_OCV:
         The voltages for which the SOCs shall be evaluated.
-    @param args
+    :param *args:
         A list which length is dividable by three. These are the
         parameters E₀, a and Δx from the paper referenced above in the
-        order (E₀_0, a_0, Δx_0, E₀_1, a_1, Δx_1...). If "fit_SOC_range"
+        order (E₀_0, a_0, Δx_0, E₀_1, a_1, Δx_1...). If *fit_SOC_range*
         is True, two additional arguments are at the front (see there).
         The last Δx_j may be omitted to force ∑ⱼ Δx_j = 1.
-    @param z
+    :param z:
         The charge number of the electrode interface reaction.
-    @param T
+    :param T:
         The temperature of the electrode.
-    @param individual
+    :param individual:
         If True, the model function summands are not summed up.
-    @param fit_SOC_range
+    :param fit_SOC_range:
         If True, this function takes two additional arguments at the
-        start of "args" that may be used to adjust the data SOC range.
-    @param rescale
-        If True, the expected "args" now contain the slopes of the
+        start of *args* that may be used to adjust the data SOC range.
+    :param rescale:
+        If True, the expected *args* now contain the slopes of the
         summands at their respective origins instead of a. Formula:
-        a / slope = -4 * (k_B / e) * T / (Δx * z).
-    @return
+        ``a / slope = -4 * (k_B / e) * T / (Δx * z)``.
+    :returns:
         The evaluation of the model function. This is the referenced fit
-        function on a linearly transformed SOC range if "fit_SOC_range"
-        is True. If "individual" is True, the individual summands in the
+        function on a linearly transformed SOC range if *fit_SOC_range*
+        is True. If *individual* is True, the individual summands in the
         model function get returned as a list.
     """
 
@@ -735,28 +1110,30 @@ def d_dE_OCV_fit_function(
     fit_SOC_range=False,
     rescale=False,
 ):
-    """!@brief The derivative of fitting_functions.OCV_fit_function.
-    @param E_OCV
+    """
+    The derivative of ``fitting_functions.OCV_fit_function``.
+
+    :param E_OCV:
         The voltages for which the derivative shall be evaluated.
-    @param args
+    :param *args:
         A list which length is dividable by three. These are the
         parameters E₀, a and Δx from "A parametric OCV model" in the
         order (E₀_0, a_0, Δx_0, E₀_1, a_1, Δx_1...).
         The last Δx_j may be omitted to force ∑ⱼ Δx_j = 1.
-    @param z
+    :param z:
         The charge number of the electrode interface reaction.
-    @param T
+    :param T:
         The temperature of the electrode.
-    @param individual
+    :param individual:
         If True, the model function summands are not summed up.
-    @param fit_SOC_range
+    :param fit_SOC_range:
         If True, this function takes two additional arguments at the
         start of "args" that may be used to adjust the data SOC range.
-    @param rescale
+    :param rescale:
         If True, the expected "args" now contain the slopes of the
         summands at their respective origins instead of a. Formula:
-        a / slope = -4 * (k_B / e) * T / (Δx * z).
-    @return
+        ``a / slope = -4 * (k_B / e) * T / (Δx * z)``.
+    :return:
         The evaluation of ∂OCV_fit_function(OCV) / ∂OCV.
     """
 
@@ -816,29 +1193,31 @@ def d2_dE2_OCV_fit_function(
     fit_SOC_range=False,
     rescale=False,
 ):
-    """!@brief The 2ⁿᵈ derivative of fitting_functions.OCV_fit_function.
-    @param E_OCV
+    """
+    The 2ⁿᵈ derivative of ``fitting_functions.OCV_fit_function``.
+
+    :param E_OCV:
         The voltages for which the 2ⁿᵈ derivative shall be evaluated.
-    @param args
+    :param *args:
         A list which length is dividable by three. These are the
         parameters E₀, a and Δx from "A parametric OCV model" in the
         order (E₀_0, a_0, Δx_0, E₀_1, a_1, Δx_1...).
         The last Δx_j may be omitted to force ∑ⱼ Δx_j = 1.
-    @param z
+    :param z:
         The charge number of the electrode interface reaction.
-    @param T
+    :param T:
         The temperature of the electrode.
-    @param individual
+    :param individual:
         If True, the model function summands are not summed up.
-    @param fit_SOC_range
+    :param fit_SOC_range:
         If True, this function takes two additional arguments at the
-        start of "args" that may be used to adjust the data SOC range.
-    @param rescale
-        If True, the expected "args" now contain the slopes of the
+        start of *args* that may be used to adjust the data SOC range.
+    :param rescale:
+        If True, the expected *args* now contain the slopes of the
         summands at their respective origins instead of a. Formula:
-        a / slope = -4 * (k_B / e) * T / (Δx * z).
-    @return
-        The evaluation of ∂²OCV_fit_function(OCV) / ∂²OCV.
+        ``a / slope = -4 * (k_B / e) * T / (Δx * z)``.
+    :returns:
+        The evaluation of ∂²OCV_fit_function(OCV) / ∂OCV².
     """
 
     if fit_SOC_range:
@@ -892,25 +1271,27 @@ def d2_dE2_OCV_fit_function(
 
 
 def inverse_OCV_fit_function(SOC, *args, z=1.0, T=298.15, inverted=True):
-    """!@brief The inverse of fitting_functions.OCV_fit_function.
-    Basically OCV(SOC). Requires that the Δx entries are sorted by x.
+    """
+    The inverse of ``fitting_functions.OCV_fit_function``.
+
+    Approximately OCV(SOC). Requires that Δx entries are sorted by x.
     This corresponds to the parameters being sorted by decreasing E_0.
 
-    @param E_OCV
+    :param E_OCV:
         The SOCs for which the voltages shall be evaluated.
-    @param args
+    :param *args:
         A list which length is dividable by three. These are the
         parameters E₀, a and Δx from "A parametric OCV model" in the
         order (E₀_0, a_0, Δx_0, E₀_1, a_1, Δx_1...).
-    @param z
+    :param z:
         The charge number of the electrode interface reaction.
-    @param T
+    :param T:
         The temperature of the electrode.
-    @param inverted
-        The default (False) uses the formulation from "A parametric
-        OCV model". If True, the SOC argument gets flipped internally to
-        give the more widely adopted convention for the SOC direction.
-    @return
+    :param inverted:
+        False uses the formulation from "A parametric OCV model".
+        The default True flips the SOC argument internally to correspond
+        to the more widely adopted convention for the SOC direction.
+    :returns:
         The evaluation of the inverse model function.
     """
 
@@ -970,25 +1351,26 @@ def inverse_d_dSOC_OCV_fit_function(
     SOC, *args, z=1.0, T=298.15, inverted=True
 ):
     """!
-    @brief The derivative of the inverse of fitting_functions.OCV_fit_function.
-    Basically OCV'(SOC). Requires that the Δx entries are sorted by x.
+    The derivative of the inverse of ``OCV_fit_function``.
+
+    Approximately OCV'(SOC). Requires that Δx entries are sorted by x.
     This corresponds to the parameters being sorted by decreasing E_0.
 
-    @param E_OCV
+    :param E_OCV:
         The SOCs for which the voltages shall be evaluated.
-    @param args
+    :param args:
         A list which length is dividable by three. These are the
         parameters E₀, a and Δx from "A parametric OCV model" in the
         order (E₀_0, a_0, Δx_0, E₀_1, a_1, Δx_1...).
-    @param z
+    :param z:
         The charge number of the electrode interface reaction.
-    @param T
+    :param T:
         The temperature of the electrode.
-    @param inverted
-        The default (False) uses the formulation from "A parametric
-        OCV model". If True, the SOC argument gets flipped internally to
-        give the more widely adopted convention for the SOC direction.
-    @return
+    :param inverted:
+        False uses the formulation from "A parametric OCV model".
+        The default True flips the SOC argument internally to correspond
+        to the more widely adopted convention for the SOC direction.
+    :returns:
         The evaluation of the derivative of the inverse model function.
     """
 
@@ -1002,26 +1384,28 @@ def inverse_d_dSOC_OCV_fit_function(
 def inverse_d2_dSOC2_OCV_fit_function(
     SOC, *args, z=1.0, T=298.15, inverted=True
 ):
-    """! The 2nd derivative of the inverse of .OCV_fit_function.
-    Basically OCV'(SOC). Requires that the Δx entries are sorted by x.
+    """
+    The 2ⁿᵈ derivative of the inverse of ``OCV_fit_function``.
+
+    Approximately OCV''(SOC). Requires that Δx entries are sorted by x.
     This corresponds to the parameters being sorted by decreasing E_0.
 
-    @param E_OCV
+    :param E_OCV:
         The SOCs for which the voltages shall be evaluated.
-    @param args
+    :param args:
         A list which length is dividable by three. These are the
         parameters E₀, a and Δx from "A parametric OCV model" in the
         order (E₀_0, a_0, Δx_0, E₀_1, a_1, Δx_1...).
-    @param z
+    :param z:
         The charge number of the electrode interface reaction.
-    @param T
+    :param T:
         The temperature of the electrode.
-    @param inverted
-        The default (False) uses the formulation from "A parametric
-        OCV model". If True, the SOC argument gets flipped internally to
-        give the more widely adopted convention for the SOC direction.
-    @return
-        The evaluation of the derivative of the inverse model function.
+    :param inverted:
+        False uses the formulation from "A parametric OCV model".
+        The default True flips the SOC argument internally to correspond
+        to the more widely adopted convention for the SOC direction.
+    :returns:
+        The second derivative of the inverse model function.
     """
 
     roots = np.array(inverse_OCV_fit_function(
@@ -1049,62 +1433,61 @@ def fit_OCV(
     initial_parameters=None,
     minimize_options=None,
 ):
-    """!@brief Fits data to fitting_functions.OCV_fit_function.
+    """
+    Fits data to ``fitting_functions.OCV_fit_function``.
+
     In addition to the fit itself, a model-based correction
-    to the provided SOC-OCV-data is made. If "SOC" lives in a
+    to the provided SOC-OCV-data is made. If *SOC* lives in a
     (0,1)-range, the correction is given as its transformation to the
     (SOC_start, SOC_end)-range given as the first two returned numbers.
-    If "other_electrode" is not None, the stoichiometric offset and the
-    scaling that gives the (adjusted) SOC of this electrode given the
-    SOC of the "other_electrode" are put before SOC_start and SOC_end.
 
-    @param SOC
+    :param SOC:
         The SOCs at which measurements were made.
-    @param OCV
+    :param OCV:
         The corresponding open-circuit voltages.
-    @param N
+    :param N:
         The number of phases of the OCV model.
-    @param SOC_range_bounds
+    :param SOC_range_bounds:
         Optional hard upper and lower bounds for the SOC correction from
         the left and the right side, respectively, as a 2-tuple. Use it
         as a limiting guess for the actual SOC range represented in the
         measurement. Has to be inside (0.0, 1.0). Set to (0.0, 1.0) to
         effectively disable SOC range estimation.
-    @param SOC_range_limits
+    :param SOC_range_limits:
         Optional hard lower and upper bounds for the SOC correction from
         the left and the right side, respectively, as a 2-tuple. Use it
         if you know that your OCV data is incomplete and by how much.
         Has to be inside (0.0, 1.0). Set to (0.0, 1.0) to allow the
         SOC range estimation to assign datapoints to the asymptotes.
-    @param z
+    :param z:
         The charge number of the electrode interface reaction.
-    @param T
+    :param T:
         The temperature of the electrode.
-    @param inverted
+    :param inverted:
         If True (default), the widely adopted SOC convention is assumed.
         If False, the formulation of "A parametric OCV model" is used.
-    @param fit_SOC_range
+    :param fit_SOC_range:
         If True (default), a model-based correction to the provided
         SOC-OCV-data is made.
-    @param distance_order
+    :param distance_order:
         The order of the norm of the vector of the distances between OCV
         data and OCV model. Default is 2, i.e., the Euclidean norm.
-        1 sets it to absolute distance, and float('inf') sets it to
+        1 sets it to absolute distance, and ``float('inf')`` sets it to
         maximum distance. Note that 1 will lead to worse performance.
-    @param weights
+    :param weights:
         Optional weights to apply to the vector of the distances between
         OCV data and OCV model. Defaults to equal weights.
-    @param initial_parameters
+    :param initial_parameters:
         Optional initial guess for the model parameters. If left as-is,
         this will be automatically gleaned from the data. Use only if
         you have another fit to data of the same electrode material.
-    @param minimize_options
+    :param minimize_options:
         Dictionary that gets passed to scipy.optimize.minimize with the
-        method 'trust-constr'. See scipy.optimize.show_options with the
-        arguments 'minimize' and 'trust-constr' for details.
-    @return
-        The fitted parameters of fitting_functions.OCV_fit_function plus
-        the fitted SOC range prepended.
+        method ``trust-constr``. See scipy.optimize.show_options with
+        the arguments 'minimize' and 'trust-constr' for details.
+    :returns:
+        The fitted parameters of ``fitting_functions.OCV_fit_function``
+        plus the fitted SOC range prepended.
     """
 
     e = 1.602176634e-19
@@ -1296,6 +1679,9 @@ def fit_OCV(
     else:
         fit = [0, 1] + fit
 
+    if inverted:
+        SOC = SOC[::-1]
+
     return OCV_fit_result(fit, SOC, OCV, optimize_result=optimize_result)
 
 
@@ -1310,31 +1696,34 @@ def verbose_spline_parameterization(
     spline_transformation='',
     verbose=False,
 ):
-    """!@brief Gives the monomic representation of a B-spline.
-    @param coeffs
-        The B-spline coefficients as structured by scipy.interpolate.
-    @param knots
-        The B-spline knots as structured by scipy.interpolate.
-    @param order
+    """
+    Gives the monomic representation of a B-spline.
+
+    :param coeffs:
+        The B-spline coefficients as used in ``scipy.interpolate``.
+    :param knots:
+        The B-spline knots as used in ``scipy.interpolate``.
+    :param order:
         The order of the B-spline.
-    @param format
+    :param format:
         Gives the file/language format for the function representation.
         Default is 'python'. The other choice is 'matlab'.
-    @param function_name
+    :param function_name:
         An optional name for the printed Python function.
-    @param function_args
+    :param function_args:
         An optional string for the arguments of the function.
-    @param derivatives
+    :param derivatives:
         The derivatives of the spline to also include in the return.
         Default is 0, which gives the spline. 1 would give the spline,
         followed by its derivative. Can not be higher than spline order.
-        Derivatives are only continuous when derivatives < order.
-    @param spline_transformation
+        Derivatives are only continuous when ``derivatives < order``.
+    :param spline_transformation:
         Give a string if you want to include a function that gets
-        applied to the whole spline, e.g. 'exp'.
-    @param verbose
+        applied to the whole spline, e.g. 'exp'. Note that only this
+        one extra case gets handled for the first derivative.
+    :param verbose:
         Print information about the progress of the conversion.
-    @return
+    :returns:
         A string that gives a Python function when "exec"-uted.
     """
 
@@ -1354,13 +1743,13 @@ def verbose_spline_parameterization(
     function_args = re.sub(r'\W|^(?=\d)', '_', function_args)
 
     tab = " " * 4
-    nl = " ...\r\n" if format == 'matlab' else "\r\n"
+    nl = " ..." + linesep if format == 'matlab' else linesep
     if format == 'python':
         func = "def " + function_name + "(" + function_args + "):" + nl
         func += tab + "return " + spline_transformation + "("
     elif format == 'matlab':
         func = ("function [U] = " + function_name + "(" + function_args
-                + ")\r\nU = (")
+                + ")" + nl + "U = (")
     else:
         func = ""
 
@@ -1410,19 +1799,37 @@ def verbose_spline_parameterization(
             func += (" * " + function_args + nl + tab * 3 + "+ " + str(poly[0])
                      + ")")
 
-        func += (nl + tab + ")\r\nend" if format == 'matlab' else
+        func += (nl + tab + ")" + nl + "end" if format == 'matlab' else
                  nl + tab + ")" + nl)
 
         if derivatives == 1:
 
             func += nl
-            if format == 'python':
-                func += ("def derivative_" + function_name + "("
-                         + function_args + "):" + nl)
-                func += tab + "return " + spline_transformation + "("
-            elif format == 'matlab':
-                func += ("function [U] = derivative_" + function_name + "("
-                         + function_args + ")\r\nU = (")
+            if spline_transformation == '':
+                if format == 'python':
+                    func += ("def derivative_" + function_name + "("
+                             + function_args + "):" + nl)
+                    func += tab + "return ("
+                elif format == 'matlab':
+                    func += ("function [U] = derivative_" + function_name + "("
+                             + function_args + ")" + nl + "U = (")
+            elif spline_transformation == 'exp':
+                if format == 'python':
+                    func += ("def derivative_" + function_name + "("
+                             + function_args + "):" + nl)
+                    func += (tab + "return " + function_name + "("
+                             + function_args + ") * (")
+                elif format == 'matlab':
+                    func += ("function [U] = derivative_" + function_name + "("
+                             + function_args + ")" + nl + "U = (")
+                    func += (tab + "return " + function_name + "("
+                             + function_args + ") * (")
+            else:
+                raise ValueError(
+                    "verbose_spline_parameterization got a "
+                    "spline_transformation that is not supported: "
+                    + spline_transformation + ". Use '' or 'exp'."
+                )
 
             for i, poly in enumerate(p_c):
                 func += nl
@@ -1447,7 +1854,7 @@ def verbose_spline_parameterization(
                 #              + ")")
                 func += "(" + nl + tab * 3 + str(poly[1]) + ")"
 
-            func += (nl + tab + ")\r\nend" if format == 'matlab' else
+            func += (nl + tab + ")" + nl + "end" if format == 'matlab' else
                      nl + tab + ")" + nl)
 
     elif order == 2:
@@ -1531,19 +1938,49 @@ def verbose_spline_parameterization(
             func += (" * " + function_args + nl + tab * 3 + "+ " + str(poly[0])
                      + ")")
 
-        func += (nl + tab + ")\r\nend" if format == 'matlab' else
+        func += (nl + tab + ")" + nl + "end" if format == 'matlab' else
                  nl + tab + ")" + nl)
 
         if derivatives == 1:
 
             func += nl
-            if format == 'python':
-                func += ("def derivative_" + function_name + "("
-                         + function_args + "):" + nl)
-                func += tab + "return " + spline_transformation + "("
-            elif format == 'matlab':
-                func += ("function [U] = derivative_" + function_name + "("
-                         + function_args + ")\r\nU = (")
+            if spline_transformation == '':
+                if format == 'python':
+                    func += (
+                        "def derivative_" + function_name + "("
+                        + function_args + "):" + nl
+                    )
+                    func += tab + "return ("
+                elif format == 'matlab':
+                    func += (
+                        "function [U] = derivative_" + function_name
+                        + "(" + function_args + ")" + nl + "U = ("
+                    )
+            elif spline_transformation == 'exp':
+                if format == 'python':
+                    func += (
+                        "def derivative_" + function_name + "("
+                        + function_args + "):" + nl
+                    )
+                    func += (
+                        tab + "return " + function_name + "("
+                        + function_args + ") * ("
+                    )
+                elif format == 'matlab':
+                    func += (
+                        "function [U] = derivative_" + function_name
+                        + "(" + function_args + ")" + nl + "U = ("
+                    )
+                    func += (
+                        tab + "return " + function_name + "("
+                        + function_args + ") * ("
+                    )
+            else:
+                raise ValueError(
+                    "verbose_spline_parameterization got a "
+                    "spline_transformation that is not supported: "
+                    + spline_transformation + ". Use '' or 'exp'."
+                )
 
             for i, poly in enumerate(p_c):
                 func += nl
@@ -1569,7 +2006,7 @@ def verbose_spline_parameterization(
                 func += (" * " + function_args + nl + tab * 3 + "+ "
                          + str(poly[1]) + ")")
 
-            func += (nl + tab + ")\r\nend" if format == 'matlab' else
+            func += (nl + tab + ")" + nl + "end" if format == 'matlab' else
                      nl + tab + ")" + nl)
 
     else:
@@ -1674,13 +2111,31 @@ def verbose_spline_parameterization(
 
             if i == 1:
                 func += nl
-                if format == 'python':
-                    func += ("def derivative_" + function_name + "("
-                             + function_args + "):" + nl)
-                    func += tab + "return " + spline_transformation + "("
-                elif format == 'matlab':
-                    func += ("function [U] = derivative_" + function_name + "("
-                             + function_args + ")\r\nU = (")
+                if spline_transformation == '':
+                    if format == 'python':
+                        func += ("def derivative_" + function_name + "("
+                                 + function_args + "):" + nl)
+                        func += tab + "return ("
+                    elif format == 'matlab':
+                        func += ("function [U] = derivative_" + function_name
+                                 + "(" + function_args + ")" + nl + "U = (")
+                elif spline_transformation == 'exp':
+                    if format == 'python':
+                        func += ("def derivative_" + function_name + "("
+                                 + function_args + "):" + nl)
+                        func += (tab + "return " + function_name + "("
+                                 + function_args + ") * (")
+                    elif format == 'matlab':
+                        func += ("function [U] = derivative_" + function_name
+                                 + "(" + function_args + ")" + nl + "U = (")
+                        func += (tab + "return " + function_name + "("
+                                 + function_args + ") * (")
+                else:
+                    raise ValueError(
+                        "verbose_spline_parameterization got a "
+                        "spline_transformation that is not supported: "
+                        + spline_transformation + ". Use '' or 'exp'."
+                    )
 
             polys_sorted_by_definition = [[], [], []]
             for part in ip_spline.args:
@@ -1719,7 +2174,7 @@ def verbose_spline_parameterization(
                              + str(poly[j + 1]) + ")")
                 func += (" * " + function_args + nl + tab * 3 + "+ "
                          + str(poly[-1]) + ")")
-            func += (nl + tab + ")\r\nend" if format == 'matlab' else
+            func += (nl + tab + ")" + nl + "end" if format == 'matlab' else
                      nl + tab + ")" + nl + nl)
 
     return func

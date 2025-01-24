@@ -1,4 +1,4 @@
-"""!@package ep_bolfi.utility.preprocessing
+"""
 Contains frequently used workflows in dataset preprocessing.
 
 The functions herein are a collection of simple, but frequent,
@@ -23,12 +23,14 @@ from ep_bolfi.utility.fitting_functions import (
 
 
 class SubstitutionDict(MutableMapping):
-    """!@brief A dictionary with some automatic substitutions.
-    "substitutions" is a dictionary that extends "storage" with
+    """
+    A dictionary with some automatic substitutions.
+
+    *substitutions* is a dictionary that extends *storage* with
     automatic substitution rules depending on its value types:
-     - string, which serves the value of "storage" at that value.
+     - string, which serves the value of *storage* at that value.
      - callable which takes one parameter, which will get passed its
-       SubstitutionDict instance and serves its return value.
+       ``SubstitutionDict`` instance and serves its return value.
      - any other type, which serves the value as-is.
     Assigning values to keys afterwards will overwrite substitutions.
     """
@@ -37,21 +39,35 @@ class SubstitutionDict(MutableMapping):
         self._storage = storage
         self._substitutions = substitutions
         self._log = []
+        """Used to log keys used in a "single" key evaluation."""
         self._log_switch = False
+        """Used in a property lock on *_log*. See *log_lock*."""
 
     def __delitem__(self, key):
+        """
+        Deletes *key* from *self._storage* and *self._substitutions*.
+
+        :param key:
+            The key to delete, be it from *storage* or *substitutions*.
+        """
         if key in self._storage.keys():
             self._storage.__delitem__(key)
         if key in self._substitutions.keys():
             self._substitutions.__delitem__(key)
         if (
             key not in self._storage.keys()
-            and
-            key not in self._substitutions.keys()
+
+            and key not in self._substitutions.keys()
         ):
             raise KeyError(key)
 
     def __getitem__(self, key):
+        """
+        Gets *key*, as described in the class description.
+
+        :param key:
+            The key of the value to get; might cascade.
+        """
         if self._log_switch:
             self._log.append(key)
         if key in self._substitutions.keys():
@@ -71,28 +87,62 @@ class SubstitutionDict(MutableMapping):
             raise KeyError(key)
 
     def __iter__(self):
+        """
+        Iterates through both *self._storage* and *self._substitutions*.
+        """
         return chain(self._storage, self._substitutions)
 
     def __len__(self):
+        """
+        Length of *self._storage* and *self._substitutions* combined.
+
+        :returns:
+            The integer of the length.
+        """
         return len(set(
             list(self._storage.keys()) + list(self._substitutions.keys())
         ))
 
     def __setitem__(self, key, value):
+        """
+        Sets *key*, deleting a substitution under it if there was one.
+
+        :param key:
+            The key under which to set the new value.
+        :param value:
+            The new value to set. Can not be a substitution rule.
+        """
         if key in self._substitutions.keys():
             del self._substitutions[key]
         self._storage[key] = value
 
     def __str__(self):
+        """
+        The same string representation as if this were a normal dict.
+
+        :returns:
+            A string representation, with all substitutions applied.
+        """
         return '{' + ', '.join(
             [str(k) + ': ' + str(v) for k, v in self.items()]
         ) + '}'
 
     def __repr__(self):
+        """
+        The same as the string represenation, as internal states are
+        intentionally hidden and not properly displayable in all cases.
+
+        :returns:
+            A string representation, with all substitutions applied.
+        """
         return self.__str__()
 
     @contextmanager
     def log_lock(self):
+        """
+        Modifies *__get_item__* to log the keys it touched and cleans up
+        the *self._log* after each logging session.
+        """
         self._log_switch = True
         self._log = []
         try:
@@ -102,6 +152,15 @@ class SubstitutionDict(MutableMapping):
             self._log = []
 
     def dependent_variables(self, parameters):
+        """
+        Useful to determine the whole amount of effective keys.
+
+        :param parameters:
+            A list of keys.
+        :returns:
+            All keys that were touched during substitution rules to
+            produce ``[self[p] for p in parameters]``.
+        """
         with self.log_lock():
             for p in parameters:
                 self[p]
@@ -117,24 +176,28 @@ class SubstitutionDict(MutableMapping):
 
 
 def fix_parameters(parameters_to_be_fixed):
-    """!@brief Returns a function which sets some parameters in advance.
-    @param parameters_to_be_fixed
-        These parameters will at least be a
-        part of the dictionary that the returned function returns.
-    @return
-        The function which adds additional parameters to a
-        dictionary or replaces existing parameters with the new ones.
+    """
+    Returns a function which sets some parameters in advance.
+
+    :param parameters_to_be_fixed:
+        These parameters will at least be a part of the dictionary that
+        the returned function returns.
+    :returns:
+        The function which adds additional parameters to a dictionary or
+        replaces existing parameters with the new ones.
     """
 
     def return_all_parameters(free_parameters):
-        """!@brief Adds the 'free_parameters' to a pool of parameters.
-        @param free_parameters
+        """
+        Adds the *free_parameters* to a pool of parameters.
+
+        :param free_parameters:
             A dictionary which gets added to the fixed pool of
-            parameters (see the function 'fix_parameters').
-        @return
+            parameters (see the function ``fix_parameters``).
+        :returns:
             A dictionary containing free_parameters and some other
-            key-value-pairs as defined by 'fix_parameters'. If a key is
-            present in both, the value from 'free_parameters' is used.
+            key-value-pairs as defined by ``fix_parameters``. If a key
+            is present in both the value from *free_parameters* is used.
         """
 
         return_dict = copy.deepcopy(parameters_to_be_fixed)
@@ -145,15 +208,18 @@ def fix_parameters(parameters_to_be_fixed):
 
 
 def combine_parameters_to_try(parameters, parameters_to_try_dict):
-    """!@brief Give every combination as full parameter sets.
-    Compatible with SubstitutionDict, if "parameters" is one.
-    @param parameters
+    """
+    Give every combination as full parameter sets.
+
+    Compatible with ``SubstitutionDict``, if *parameters* is one.
+
+    :param parameters:
         The base full parameter set as a dictionary.
-    @param parameters_to_try_dict
-        The keys of this dictionary correspond to the "parameters"' keys
+    :param parameters_to_try_dict:
+        The keys of this dictionary correspond to the *parameters*' keys
         where different values are to be inserted. These are given by
         the tuples which are the values of this dictionary.
-    @return
+    :returns:
         A 2-tuple where the first item is the list of all parameter set
         combinations and the second the list of the combinations only.
     """
@@ -164,7 +230,14 @@ def combine_parameters_to_try(parameters, parameters_to_try_dict):
         parameters_to_try.append((key, value))
 
     def recursive_combination(last_index):
-        """! Recursively get every combination of parameters to try. """
+        """
+        Recursively get every combination of parameters to try.
+
+        :param last_index:
+            The recursion index; start off at ``len(dict) - 1``.
+        :returns:
+            At the end, returns the whole list of combinations.
+        """
         return_list = []
         if last_index == 0:
             key = parameters_to_try[0][0]
@@ -172,7 +245,7 @@ def combine_parameters_to_try(parameters, parameters_to_try_dict):
                 return_list.append({key: value})
         elif last_index > 0:
             key = parameters_to_try[last_index][0]
-            list_of_combinations = recursive_combination(last_index-1)
+            list_of_combinations = recursive_combination(last_index - 1)
             for value in parameters_to_try[last_index][1]:
                 for combination in list_of_combinations:
                     return_dict = {key: value}
@@ -180,7 +253,7 @@ def combine_parameters_to_try(parameters, parameters_to_try_dict):
                     return_list.append(return_dict)
         return return_list
 
-    combinations = recursive_combination(len(parameters_to_try)-1)
+    combinations = recursive_combination(len(parameters_to_try) - 1)
     parameters_list = []
     for combination in combinations:
         parameters_list.append(fix_parameters(parameters)(combination))
@@ -195,19 +268,22 @@ def calculate_means_and_standard_deviations(
     bounds_in_standard_deviations=1,
     **kwargs
 ):
-    """!@brief Calculate means and standard deviations.
+    """
+    Calculate means and standard deviations.
+
     Please note that standard deviations translate differently into
     confidence regions in different dimensions. For the confidence
-    region, use "approximate_confidence_ellipsoid".
-    @param mean
+    region, use ``approximate_confidence_ellipsoid``.
+
+    :param mean:
         The mean of the uncertain parameters as a dictionary.
-    @param covariance
+    :param covariance:
         The covariance of the uncertain parameters as a two-dimensional
-        numpy array.
-    @param free_parameters_names
+        NumPy array.
+    :param free_parameters_names:
         The names of the parameters that are uncertain as a list. This
-        parameter maps the order of parameters in "covariance".
-    @param transform_parameters
+        parameter maps the order of parameters in *covariance*.
+    :param transform_parameters:
         Optional transformations between the parameter space that is
         used for searching for optimal parameters and the model
         parameters. Any missing free parameter is not transformed.
@@ -217,13 +293,13 @@ def calculate_means_and_standard_deviations(
         For convenience, any value may also be one of the following:
          - 'none' => (identity, identity)
          - 'log' => (exp, log)
-    @param bounds_in_standard_deviations
+    :param bounds_in_standard_deviations:
         Sets how many standard deviations in each direction the returned
         error bounds are. These are first applied and then transformed.
-    @param **kwargs
-        Keyword arguments for scipy.integrate.quad, which is used to
+    :param **kwargs:
+        Keyword arguments for ``scipy.integrate.quad``, which is used to
         numerically calculate mean and variance.
-    @return
+    :returns:
         A 3-tuple with three dictionaries. Their keys are the free
         parameters' names as keys and their values are those parameters'
         means, standard deviations, and error bounds.
@@ -292,25 +368,28 @@ def approximate_confidence_ellipsoid(
     refinement=True,
     confidence=0.95
 ):
-    """!@brief Approximate a confidence ellipsoid.
-    Compatible with SubstitutionDict, if "parameters" is one.
+    """
+    Approximate a confidence ellipsoid.
+
+    Compatible with SubstitutionDict, if *parameters* is one.
     The geometric approximation is a refinement of the polytope with
     nodes on the semiaxes of the confidence ellipsoid. The refinement
     step adds a node for each face, i.e., each sub-polytope with
     dimension smaller by 1. This node is centered on that face and
     projected onto the confidence ellipsoid.
-    @param parameters
+
+    :param parameters:
         The base full parameter set as a dictionary.
-    @param free_parameters_names
+    :param free_parameters_names:
         The names of the parameters that are uncertain as a list. This
-        parameter has to match the order of parameters in "covariance".
-    @param covariance
+        parameter has to match the order of parameters in *covariance*.
+    :param covariance:
         The covariance of the uncertain parameters as a two-dimensional
-        numpy array.
-    @param mean
+        NumPy array.
+    :param mean:
         The mean of the uncertain parameters as a dictionary. If not
-        set, the values from 'parameters' will be used.
-    @param transform_parameters
+        set, the values from *parameters* will be used.
+    :param transform_parameters:
         Optional transformations between the parameter space that is
         used for searching for optimal parameters and the model
         parameters. Any missing free parameter is not transformed.
@@ -320,13 +399,13 @@ def approximate_confidence_ellipsoid(
         For convenience, any value may also be one of the following:
          - 'none' => (identity, identity)
          - 'log' => (exp, log)
-    @param confidence
+    :param confidence:
         The confidence within the ellipsoid. Defaults to 0.95, i.e., the
         95% confidence ellipsoid.
-    @param refinement
+    :param refinement:
         If False, only the nodes on the semiaxes get returned. If True,
         the nodes centered on the faces get returned as well.
-    @return
+    :returns:
         A 2-tuple where the first item is the list of all parameter set
         combinations and the second the ellipsoid nodes only as a
         two-dimensional numpy array with each node in on row.
@@ -382,7 +461,16 @@ def approximate_confidence_ellipsoid(
         ) / np.sqrt(len(free_parameters_names))
 
         def recursive_combination(length, index=0):
-            """! Recursively get every combination of nodes. """
+            """
+            Recursively get every combination of node edges.
+
+            :param length:
+                The recursion depth; start off at ``len(list) - 1``.
+            :param index:
+                The recursion index; start off at 0.
+            :returns:
+                At the end, returns the whole list of nodes.
+            """
             return_list = []
             if index == length - 1:
                 for entry in diagonal.T[index]:
@@ -425,13 +513,15 @@ def approximate_confidence_ellipsoid(
 
 
 def capacity(parameters, electrode="positive"):
-    """!@brief Convenience function for calculating the capacity.
-    @param parameters
-        A parameter file as defined by models.standard_parameters.
-    @param electrode
+    """
+    Convenience function for calculating the capacity.
+
+    :param parameters:
+        A parameter file as defined by ``models.standard_parameters``.
+    :param electrode:
         The prefix of the electrode to use for capacity calculation.
         Change to "negative" to use the one with the lower OCP.
-    @return
+    :returns:
         The capacity of the parameterized battery in C.
     """
 
@@ -450,18 +540,20 @@ def capacity(parameters, electrode="positive"):
 
 
 def calculate_SOC(timepoints, currents, initial_SOC=0, sign=1, capacity=1):
-    """!@brief Transforms applied current over time into SOC.
-    @param timepoints
+    """
+    Transforms applied current over time into SOC.
+
+    :param timepoints:
         Array of the timepoint segments.
-    @param currents
+    :param currents:
         Array of the current segments.
-    @param initial_SOC
+    :param initial_SOC:
         The SOC value to start accumulating from.
-    @param sign
+    :param sign:
         The value by which to multiply the current.
-    @param capacity
+    :param capacity:
         A scaling by which to convert from C to dimensionless SOC.
-    @return
+    :returns:
         An array of the same shape describing SOC in C.
     """
 
@@ -487,21 +579,24 @@ def calculate_both_SOC_from_OCV(
     positive_SOC_from_cell_SOC,
     OCV
 ):
-    """!@brief Calculates the SOC of both electrodes from their OCV.
-    The SOCs are substitued in the given "parameters". The SOC of the
+    """
+    Calculates the SOC of both electrodes from their OCV.
+
+    The SOCs are substitued in the given *parameters*. The SOC of the
     cell as a whole gets returned in case it is needed.
-    @param parameters
+
+    :param parameters:
         The parameters of the battery as used for the PyBaMM simulations
-        (see models.standard_parameters).
-    @param negative_SOC_from_cell_SOC
+        (see ``models.standard_parameters``).
+    :param negative_SOC_from_cell_SOC:
         A function that takes the SOC of the cell and returns the SOC of
         the negative electrode.
-    @param positive_SOC_from_cell_SOC
+    :param positive_SOC_from_cell_SOC:
         A function that takes the SOC of the cell and returns the SOC of
         the positive electrode.
-    @param OCV
+    :param OCV:
         The OCV for which the SOCs shall be calculated.
-    @return
+    :returns:
         The SOC of the cell as a whole.
     """
 
@@ -535,32 +630,38 @@ def subtract_OCV_curve_from_cycles(
     current_sign=0,
     voltage_sign=0,
 ):
-    """!@brief Removes the OCV curve from a cycling measurement.
-    @param dataset
-        A Cycling_Information object of the measurement.
-    @param parameters
+    """
+    Removes the OCV curve from a cycling measurement.
+
+    :param dataset:
+        A ``Cycling_Information`` object of the measurement.
+    :param parameters:
         The parameters of the battery as used for the PyBaMM simulations
-        (see models.standard_parameters).
-    @param starting_SOC
+        (see ``models.standard_parameters``).
+    :param starting_SOC:
         The SOC at the beginning of the measurement. If not given, the
         OCV curve will be inverted to determine the initial SOC.
-    @param starting_OCV
+    :param starting_OCV:
         The OCV at the beginning of the measurement. If not given and
-        starting_SOC is also not given, the first entry of voltages is
-        used for this. If not given, but starting_SOC is, the OCP
-        function will be evaluated at starting_SOC to get the OCV.
-    @param electrode
-        "positive" (default) or "negative" for current sign correction and
-        capacity calculation. "positive" adds SOC with positive current and
-        vice versa. The sign corrections can be overwritten with '*_sign'.
-    @param current_sign
-        1 adds SOC, -1 subtracts it, 0 follows the default behaviour above.
-    @param voltage_sign
-        1 subtracts the OCP, -1 adds it, 0 follows the default behaviour above.
-    @return
-        2-tuple. First entry are the voltages minus the OCV as estimated for
-        each data point. These are structured in exactly the same way as in the
-        "dataset". Second entry are the electrode SOCs as counted in the data.
+        *starting_SOC* is also not given, the first entry of voltages is
+        used for this. If not given, but *starting_SOC* is, the OCP
+        function will be evaluated at *starting_SOC* to get the OCV.
+    :param electrode:
+        "positive" (default) or "negative" for current sign correction
+        and capacity calculation. "positive" adds SOC with positive
+        current and vice versa. The sign corrections can be overwritten
+        with *x_sign*.
+    :param current_sign:
+        1 adds SOC, -1 subtracts it, 0 follows the default behaviour
+        above.
+    :param voltage_sign:
+        1 subtracts the OCP, -1 adds it, 0 follows the default behaviour
+        above.
+    :returns:
+        2-tuple. First entry are the voltages minus the OCV as estimated
+        for each data point. These are structured in exactly the same
+        way as in the *dataset*. Second entry are the electrode SOCs as
+        Coulomb-counted in the data.
     """
 
     if current_sign == 0:
@@ -638,28 +739,31 @@ def subtract_both_OCV_curves_from_cycles(
     starting_SOC=None,
     starting_OCV=None,
 ):
-    """!@brief Removes the OCV curve from a single cycle.
-    @param dataset
-        A Cycling_Information object of the measurement.
-    @param parameters
+    """
+    Removes the OCV curve from a single cycle.
+
+    :param dataset:
+        A ``Cycling_Information`` object of the measurement.
+    :param parameters:
         The parameters of the battery as used for the PyBaMM simulations
-        (see models.standard_parameters).
-    @param negative_SOC_from_cell_SOC
+        (see ``models.standard_parameters``).
+    :param negative_SOC_from_cell_SOC:
         A function that takes the SOC of the cell and returns the SOC of
         the negative electrode.
-    @param positive_SOC_from_cell_SOC
+    :param positive_SOC_from_cell_SOC:
         A function that takes the SOC of the cell and returns the SOC of
         the positive electrode.
-    @param starting_SOC
+    :param starting_SOC:
         The SOC at the beginning of the measurement. If not given, the
         OCV curves will be inverted to determine the initial SOC.
-    @param starting_OCV
+    :param starting_OCV:
         The OCV at the beginning of the measurement. If not given, the
         first entry of voltages is used for this.
-    @return
-        2-tuple. First entry are the voltages minus the OCV as estimated for
-        each data point. These are structured in exactly the same way as in the
-        "dataset". Second entry are the electrode SOCs as counted in the data.
+    :returns:
+        2-tuple. First entry are the voltages minus the OCV as estimated
+        for each data point. These are structured in exactly the same
+        way as in the *dataset*. Second entry are the electrode SOCs as
+        counted in the data.
     """
 
     positive_OCV = parameters["Positive electrode OCP [V]"]
@@ -717,15 +821,17 @@ def subtract_both_OCV_curves_from_cycles(
 
 
 def laplace_transform(x, y, s):
-    """!@brief Performs a basic laplace transformation.
-    @param x
+    """
+    Performs a basic Laplace transformation.
+
+    :param x:
         The independent variable.
-    @param y
+    :param y:
         The dependent variable.
-    @param s
+    :param s:
         The (possibly complex) frequencies for which to perform the
         transform.
-    @return
+    :returns:
         The evaluation of the laplace transform at s.
     """
 
@@ -738,15 +844,17 @@ def laplace_transform(x, y, s):
 
 
 def find_occurrences(sequence, value):
-    """!@brief Gives indices in sequence where it is closest to value.
-    @param sequence
+    """
+    Gives indices in *sequence* where it is closest to *value*.
+
+    :param sequence:
         A list that represents a differentiable function.
-    @param value
-        The value that is searched for in "sequence". Also, crossings of
-        consecutive values in "sequence" with "value" are searched for.
+    :param value:
+        The value that is searched for in *sequence*. Also, crossings of
+        consecutive values in *sequence* with *value* are searched for.
     @return
-        A list of indices in "sequence" in ascending order where "value"
-        or a close match for "value" was found.
+        A list of indices in *sequence* in ascending order where *value*
+        or a close match for *value* was found.
     """
     root_finder = np.array(sequence) - value
     crossings = (
@@ -778,25 +886,28 @@ def OCV_from_CC_CV(
     spline_print=None,
     parameters_print=False
 ):
-    """!@brief Tries to extract the OCV curve from CC-CV cycling data.
-    @param charge
-        A Cycling_Information object containing the constant charge
+    """
+    Tries to extract the OCV curve from CC-CV cycling data.
+
+    :param charge:
+        A ``Cycling_Information`` object containing the constant charge
         cycle(s). If more than one CC-CV-cycle shall be analyzed, please
         make sure that the order of this, cv and discharge align.
-    @param cv
-        A Cycling_Information object containing the constant voltage
+    :param cv:
+        A ``Cycling_Information`` object containing the constant voltage
         part between charge and discharge cycle(s).
-    @param discharge
-        A Cycling_Information object containing the constant discharge
-        cycle(s). These occur after each cv cycle.
-    @param name
+    :param discharge:
+        A ``Cycling_Information`` object containing the constant
+        discharge cycle(s). These occur after each cv cycle.
+    :param name:
         Name of the material for which the CC-CV-cycling was measured.
-    @param phases
-        Number of phases in the fitting_functions.OCV_fit_function as an
-        int. The higher it is, the more (over-)fitted the model becomes.
-    @param eval_points
+    :param phases:
+        Number of phases in the ``fitting_functions.OCV_fit_function``
+        as an int. The higher it is, the more (over-)fitted the model
+        becomes.
+    :param eval_points:
         The number of points for plotting of the OCV curves.
-    @param spline_SOC_range
+    :param spline_SOC_range:
         2-tuple giving the SOC range in which the inverted
         fitting_functions.OCV_fit_function will be interpolated by a
         smoothing spline. Outside of this range the spline is used for
@@ -805,23 +916,23 @@ def OCV_from_CC_CV(
         the singularities at SOC 0 and 1. Please note that this range
         considers the 0-1-range in which the given SOC lies and not the
         linear transformation of it from the fitting process.
-    @param spline_order
-        Order of this smoothing spline. If it is set to 0, only the
-        fitting_functions.OCV_fit_function is calculated and plotted.
-    @param spline_smoothing
+    :param spline_order:
+        Order of this smoothing spline. If it is set to 0, this only
+        calculates and plots the ``fitting_functions.OCV_fit_function``.
+    :param spline_smoothing:
         Smoothing factor for this smoothing spline. Default: 2e-3. Lower
         numbers give more precision, while higher numbers give a simpler
         spline that smoothes over steep steps in the fitted OCV curve.
-    @param spline_print
+    :param spline_print:
         If set to either 'python' or 'matlab', a string representation
         of the smoothing spline is printed in the respective format.
-    @param parameters_print
+    :param parameters_print:
         Set to True if the fit parameters should be printed to console.
-    @return
-        A 8-tuple consisting of the following:
+    :returns:
+        An 8-tuple consisting of the following:
         0: OCV_fits
             The fitted OCV curve parameters for each CC-CV cycle as
-            returned by fitting_functions.fit_OCV.
+            returned by ``fitting_functions.fit_OCV``.
         1: I_mean
             The currents assigned to each CC-CV cycle (without CV).
         2: C_charge
@@ -929,41 +1040,44 @@ def OCV_from_CC_CV(
 
 
 def calculate_desired_voltage(
-        solution,
-        t_eval,
-        voltage_scale,
-        overpotential,
-        three_electrode=None,
-        dimensionless_reference_electrode_location=0.5,
-        parameters={},
+    solution,
+    t_eval,
+    voltage_scale,
+    overpotential,
+    three_electrode=None,
+    dimensionless_reference_electrode_location=0.5,
+    parameters={},
 ):
-    """!
-    @param solution
-        The pybamm.Solution object from which to calculate the voltage.
-    @param t_eval
-        The times at which to evaluate the "solution".
-    @param voltage_scale
+    """
+    Takes a ``pybamm.Solution`` object and postprocesses its voltage
+    information, to give overpotentials and/or three-electrode setups.
+
+    :param solution:
+        The ``pybamm.Solution`` object to calculate the voltage from.
+    :param t_eval:
+        The times at which to evaluate the *solution*.
+    :param voltage_scale:
         The returned voltage gets divided by this value. For example,
-        1e-3 would produce a plot in [mV].
-    @param overpotential
-        If True, only the overpotential of "solutions" gets plotted.
+        1e-3 would produce a plot in [mV], and -1 would flip the sign.
+    :param overpotential:
+        If True, only the overpotential of *solutions* gets plotted.
         Otherwise, the cell voltage (OCV + overpotential) is plotted.
-    @param three_electrode
+    :param three_electrode:
         With None, does nothing (i.e., cell potentials are used). If
         set to either 'positive' or 'negative', instead of cell
         potentials, the base for the displayed voltage will be the
         potential of the 'positive' or 'negative' electrode against a
         reference electrode. For placement of said reference electrode,
-        please refer to "dimensionless_reference_electrode_location".
-    @param dimensionless_reference_electrode_location
+        please refer to *dimensionless_reference_electrode_location*.
+    :param dimensionless_reference_electrode_location:
         The location of the reference electrode, given as a scalar
         between 0 (placed at the point where negative electrode and
         separator meet) and 1 (placed at the point where positive
         electrode and separator meet). Defaults to 0.5 (in the middle).
-    @param parameters
+    :param parameters:
         The parameter dictionary that was used for the simulation. Only
-        needed for a three-electrode output.
-    @return
+        needed for a three-electrode output for the cell geometry.
+    :returns:
         The array of the specified voltages over time.
     """
 
@@ -1043,36 +1157,38 @@ def solve_all_parameter_combinations(
     full_factorial=True,
     **kwargs
 ):
-    """!
-    @param model
+    """
+    Creates permutations of *parameters_to_try* and solves them.
+
+    :param model:
         The PyBaMM battery model that is to be solved.
-    @param t_eval
+    :param t_eval:
         The timepoints in s at which this model is to be solved.
-    @param parameters
+    :param parameters:
         The model parameters as a dictionary.
-    @param parameters_to_try
+    :param parameters_to_try:
         A dictionary with the names of the model parameters as keys and
         lists of the values that are to be tried out for them as values.
-    @param submesh_types
+    :param submesh_types:
         The submeshes for discretization. See
-        solversetup.spectral_mesh_pts_and_method.
-    @param var_pts
+        ``solversetup.spectral_mesh_pts_and_method``.
+    :param var_pts:
         The number of discretization points. See
-        solversetup.spectral_mesh_pts_and_method.
-    @param spatial_methods
+        ``solversetup.spectral_mesh_pts_and_method``.
+    :param spatial_methods:
         The spatial methods for discretization. See
-        solversetup.spectral_mesh_pts_and_method.
-    @param full_factorial
+        ``solversetup.spectral_mesh_pts_and_method``.
+    :param full_factorial:
         If True, all parameter combinations are tried out. If False,
         only each parameter is varied with the others staying fixed.
-    @param kwargs
-        The optional parameters for solversetup.solver_setup. See there.
-    @return
-        A 2-tuple with the model solution for parameters as first entry.
-        The second entry mimics parameters_to_try with each entry in
+    :param **kwargs:
+        The optional parameters for ``solversetup.solver_setup``.
+    :returns:
+        A 2-tuple with the model solution for *parameters* as 1ˢᵗ entry.
+        The second entry mimics *parameters_to_try* with each entry in
         their lists replaced by the model solution for the corresponding
         parameter substitution. The second entry has one additional key
-        "all parameters", where all parameters_to_try combinations are
+        "all parameters", where all *parameters_to_try* combinations are
         the value.
     """
 
@@ -1113,24 +1229,26 @@ def prepare_parameter_combinations(
     transform_parameters,
     confidence
 ):
-    """!@brief Calculates all permutations of the parameter boundaries.
-    @param parameters
+    """
+    Calculates all permutations of the parameter boundaries.
+
+    :param parameters:
         The model parameters as a dictionary.
-    @param parameters_to_try
+    :param parameters_to_try:
         A dictionary with the names of the model parameters as keys and
         lists of the values that are to be tried out for them as values.
-        Mutually exclusive to "covariance".
-    @param covariance
+        Mutually exclusive to *covariance*.
+    :param covariance:
         A covariance matrix describing an estimation result of model
         parameters. Will be used to calculate parameters to try that
         together approximate the confidence ellipsoid. This confidence
-        ellipsoid will be centered on "parameters".
-        Mutually exclusive to "parameters_to_try".
-    @param order_of_parameter_names
-        A list of names from "parameters" that correspond to the order
-        these parameters appear in the rows and columns of "covariance".
-        Only needed when "covariance" is set.
-    @param transform_parameters
+        ellipsoid will be centered on *parameters*.
+        Mutually exclusive to *parameters_to_try*.
+    :param order_of_parameter_names:
+        A list of names from *parameters* that correspond to the order
+        these parameters appear in the rows and columns of *covariance*.
+        Only needed when *covariance* is set.
+    :param transform_parameters:
         Optional transformations between the parameter space that is
         used for searching for optimal parameters and the model
         parameters. Any missing free parameter is not transformed.
@@ -1140,10 +1258,10 @@ def prepare_parameter_combinations(
         For convenience, any value may also be one of the following:
          - 'none' => (identity, identity)
          - 'log' => (exp, log)
-    @param confidence
+    :param confidence:
         The confidence within the ellipsoid. Defaults to 0.95, i.e., the
         95% confidence ellipsoid.
-    @return
+    :returns:
         A 2-tuple with the individual parameter variations and then all
         permutations of them.
     """
@@ -1202,6 +1320,10 @@ def parallel_simulator_with_setup(
     dimensionless_reference_electrode_location,
     kwargs
 ):
+    """
+    A ``multiprocessing``-compatible part of
+    ``simulate_all_parameter_combinations``. See there for details.
+    """
     par_var = copy.deepcopy(parameters)
     par_var.update(inputs)
     solver, callback = simulation_setup(
@@ -1209,9 +1331,7 @@ def parallel_simulator_with_setup(
         submesh_types, var_pts, spatial_methods,
         **kwargs
     )
-    solution = solver(
-        check_model=False, calc_esoh=calc_esoh, callbacks=callback
-    )
+    solution = solver(calc_esoh=calc_esoh, callbacks=callback)
     variable = calculate_desired_voltage(
         solution,
         t_eval,
@@ -1243,42 +1363,47 @@ def simulate_all_parameter_combinations(
     overpotential=False,
     three_electrode=None,
     dimensionless_reference_electrode_location=0.5,
+    t_eval=None,
     **kwargs
 ):
-    """!
-    @param model
+    """
+    Creates permutations of *parameters_to_try* and simulates them.
+
+    :param model:
         The PyBaMM battery model that is to be solved.
-    @param current_input
-        The list of battery operation conditions. See pybamm.Simulation.
-    @param submesh_types
+    :param current_input:
+        The list of battery operation conditions, in the format of
+        ``pybamm.Simulation``.
+    :param submesh_types:
         The submeshes for discretization. See
-        solversetup.spectral_mesh_pts_and_method.
-    @param var_pts
+        ``solversetup.spectral_mesh_pts_and_method``.
+    :param var_pts:
         The number of discretization points. See
-        solversetup.spectral_mesh_pts_and_method.
-    @param spatial_methods
+        ``solversetup.spectral_mesh_pts_and_method``.
+    :param spatial_methods:
         The spatial methods for discretization. See
-        solversetup.spectral_mesh_pts_and_method.
-    @param parameters
+        ``solversetup.spectral_mesh_pts_and_method``.
+    :param parameters:
         The model parameters as a dictionary.
-    @param parameters_to_try
+    :param parameters_to_try:
         A dictionary with the names of the model parameters as keys and
         lists of the values that are to be tried out for them as values.
-        Mutually exclusive to "covariance".
-    @param covariance
+        Mutually exclusive to *covariance*.
+    :param covariance:
         A covariance matrix describing an estimation result of model
         parameters. Will be used to calculate parameters to try that
         together approximate the confidence ellipsoid. This confidence
-        ellipsoid will be centered on "parameters".
-        Mutually exclusive to "parameters_to_try".
-    @param order_of_parameter_names
-        A list of names from "parameters" that correspond to the order
-        these parameters appear in the rows and columns of "covariance".
-        Only needed when "covariance" is set.
-    @param additional_input_parameters
+        ellipsoid will be centered on *parameters*.
+        Mutually exclusive to *parameters_to_try*.
+    :param order_of_parameter_names:
+        A list of names from *parameters* that correspond to the order
+        these parameters appear in the rows and columns of *covariance*.
+        Only needed when *covariance* is set.
+    :param additional_input_parameters:
         A list of the parameter names that are changed by any of the
-        variable parameters, if "parameters" is a SubstitutionDict.
-    @param transform_parameters
+        variable parameters, if *parameters* is a ``SubstitutionDict``.
+        Use its ``dependent_variables`` method to obtain this list.
+    :param transform_parameters:
         Optional transformations between the parameter space that is
         used for searching for optimal parameters and the model
         parameters. Any missing free parameter is not transformed.
@@ -1288,11 +1413,11 @@ def simulate_all_parameter_combinations(
         For convenience, any value may also be one of the following:
          - 'none' => (identity, identity)
          - 'log' => (exp, log)
-    @param confidence
+    :param confidence:
         The confidence within the ellipsoid. Defaults to 0.95, i.e., the
         95% confidence ellipsoid.
-    @param full_factorial
-        When "parameters_to_try" is set:
+    :param full_factorial:
+        When *parameters_to_try* is set:
          - If True, all parameter combinations are tried out. If False,
            only each parameter is varied with the others staying fixed.
         When "covariance" is set:
@@ -1301,16 +1426,20 @@ def simulate_all_parameter_combinations(
            centres of the faces of the polytope of these points get
            added to the parameters to try, projected onto the surface
            of the confidence ellipsoid.
-    @param calc_esoh
-        Passed on to pybamm.Simulator, see there.
-    @param kwargs
-        The optional parameters for solversetup.solver_setup. See there.
-    @return
-        A 2-tuple with the model solution for parameters as first entry.
-        The second entry mimics parameters_to_try with each entry in
+    :param calc_esoh:
+        Passed on to ``pybamm.Simulator``, see there.
+    :param t_eval:
+        The timepoints at which the "errorbars" shall be evaluated in s.
+        If None are given, the timepoints of the solutions will be
+        chosen.
+    :param **kwargs:
+        The optional parameters for ``solversetup.solver_setup``.
+    :returns:
+        A 2-tuple with the model solution for *parameters* as 1ˢᵗ entry.
+        The second entry mimics *parameters_to_try* with each entry in
         their lists replaced by the model solution for the corresponding
         parameter substitution. The second entry has one additional key
-        "all parameters", where all parameters_to_try combinations are
+        "all parameters", where all *parameters_to_try* combinations are
         the value.
     """
 
@@ -1362,14 +1491,13 @@ def simulate_all_parameter_combinations(
     errorbars = {}
 
     solver, callback = simulation_setup(
-        model, current_input, parameters,
+        copy.deepcopy(model), current_input, copy.deepcopy(parameters),
         submesh_types, var_pts, spatial_methods,
         **kwargs
     )
-    solutions[model.name] = solver(
-        check_model=False, calc_esoh=calc_esoh, callbacks=callback
-    )
-    t_eval = solutions[model.name].t
+    solutions[model.name] = solver(calc_esoh=calc_esoh, callbacks=callback)
+    if t_eval is None:
+        t_eval = solutions[model.name].t
 
     parallel_arguments = []
     indices_of_individual_bounds = {}

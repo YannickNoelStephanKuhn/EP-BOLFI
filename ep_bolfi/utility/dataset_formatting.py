@@ -1,79 +1,200 @@
-"""!@package ep_bolfi.utility.dataset_formatting
+"""
 Defines datatypes for further processing.
 """
 
 import csv
 import h5py
 import json
+import pyarrow
 import re
 
 from ep_bolfi.utility.fitting_functions import fit_exponential_decay
 from math import pi
 from os import linesep
+from pyarrow import parquet
 
 
 class Measurement:
-    """!@brief Defines common methods for measurement objects. """
+    """Defines common methods for measurement objects."""
+
+    def __len__(self):
+        """
+        Gives the number of data segments.
+
+        :returns:
+            # of data segments.
+        """
+        raise NotImplementedError
 
     def to_json(self):
+        """
+        Losslessly transforms this object into JSON.
+
+        :returns:
+            The JSON representation, given as a string.
+        """
         raise NotImplementedError
 
     @classmethod
     def from_json(cls, json_string):
+        """
+        Reads this object from JSON that was prepared with ``to_json``.
+
+        :param json_string:
+            The JSON, fed in as a string.
+        """
         raise NotImplementedError
 
     def table_descriptors(self):
+        """
+        Gives the headings for table formatting.
+
+        :returns:
+            Table headings in Apache Parquet syntax.
+        """
         raise NotImplementedError
 
     @classmethod
     def table_mapping(cls):
+        """
+        Gives the mapping from attributes to headings.
+
+        :returns:
+            A dictionary: keys are attribute names, values are headings.
+        """
         raise NotImplementedError
 
     def segment_tables(self, start=0, stop=None, step=1):
+        """
+        Iterator that gives data segments in Apache Parquet syntax.
+
+        :param start:
+            First data segment.
+        :param stop:
+            Last data segment.
+        :param step:
+            Step size in each iteration.
+        """
         raise NotImplementedError
 
     def example_table_row(self):
-        raise NotImplementedError
+        """
+        Makes singular *self.indices* entries into lists and returns an
+        exempular line for table formatting.
+
+        :returns:
+            A list with the entries for each column.
+        """
+        indices_into_columns = False
+        try:
+            self.indices[0][0]
+        except (TypeError, IndexError):
+            indices_into_columns = True
+        if type(self.indices[0]) is str:
+            indices_into_columns = True
+        if indices_into_columns:
+            print("Transforming indices into columns for tabular view.")
+            lengths_of_segments = []
+            for i in range(len(self)):
+                try:
+                    length = len(self.timepoints[i])
+                    if length > 0:
+                        lengths_of_segments.append(length)
+                        continue
+                except AttributeError:
+                    try:
+                        length = len(self.frequencies[i])
+                        if length > 0:
+                            lengths_of_segments.append(length)
+                            continue
+                    except IndexError:
+                        pass
+                except IndexError:
+                    pass
+                key = list(self.other_columns.keys())[0]
+                lengths_of_segments.append((len(self.other_columns[key][i])))
+            self.indices = [
+                [index] * length
+                for index, length in zip(self.indices, lengths_of_segments)
+            ]
 
     def subslice(self, start, stop, step=1):
+        """
+        Returns a ``Measurement`` object containing the requested slice.
+
+        :param start:
+            First data segment.
+        :param stop:
+            Last data segment.
+        :param step:
+            Step size in each iteration.
+        :returns:
+            A ``Measurement[start:stop:step]`` object.
+        """
         raise NotImplementedError
 
     def subarray(self, array):
+        """
+        Returns a ``Measurement`` object containing *array* segments.
+
+        :param array:
+            A list of integers denoting the segments to collect.
+            Does not correspond to *self.indices*.
+        :returns:
+            A ``Measurement[array]`` object.
+        """
         raise NotImplementedError
 
     def extend(self, other):
+        """
+        Extends *self* with the *other* ``Measurement`` object.
+
+        :param other:
+            Another ``Measurement object``.
+        """
         raise NotImplementedError
 
 
 class Cycling_Information(Measurement):
-    """!@brief Contains basic cycling informations.
-    Each member variable is a list and has the same length as the other ones.
+    """
+    Contains basic cycling informations. Each member variable is a list
+    and has the same length as the other ones.
     """
 
     def __init__(
         self, timepoints, currents, voltages, other_columns={}, indices=None
     ):
-        ## The times at which measurements were taken. Usually a list of
-        # lists where each list corresponds to a segment of the
-        # measurement.
         self.timepoints = timepoints
-        ## The measured current at those times. A list which usually
-        # contains lists for segments with variable current and floats
-        # for segments with constant current.
+        """
+        The times at which measurements were taken. Usually a list of
+        lists where each list corresponds to a segment of the
+        measurement.
+        """
         self.currents = currents
-        ## The measured voltage at those times. A list which usually
-        # contains lists for segments with variable voltage and floats
-        # for segments with constant voltage.
+        """
+        The measured current at those times. A list which usually
+        contains lists for segments with variable current and floats
+        for segments with constant current.
+        """
         self.voltages = voltages
-        ## The contents of any other columns. A dictionary ("columns")
-        # which values are lists which contain lists for segments.
-        # The keys should match user input for the columns.
+        """
+        The measured voltage at those times. A list which usually
+        contains lists for segments with variable voltage and floats
+        for segments with constant voltage.
+        """
         self.other_columns = other_columns
-        if indices is None:
-            ## The indices of the individual segments. Defaults to a simple
-            # numbering of the segments present. May be used for plotting
-            # purposes, e.g., for colourcoding the segments by cycle.
+        """
+        The contents of any other columns. A dictionary ("columns")
+        which values are lists which contain lists for segments.
+        The keys should match user input for the columns.
+        """
+        if indices is None or indices is []:
             self.indices = [i for i in range(len(self))]
+            """
+            The indices of the individual segments. Defaults to a simple
+            numbering of the segments present. May be used for plotting
+            purposes, e.g., for colourcoding the segments by cycle.
+            """
         else:
             self.indices = indices
         # This syntax doesn't work when arrays are involved, apparently.
@@ -137,64 +258,22 @@ class Cycling_Information(Measurement):
             yield segment
 
     def example_table_row(self):
-        try:
-            example = []
-            example.append([self.indices[0][0]])
-            if self.timepoints:
-                example.append([self.timepoints[0][0]])
-            if self.currents:
-                example.append([self.currents[0][0]])
-            if self.voltages:
-                example.append([self.voltages[0][0]])
-            example.extend([
-                [column[0][0]]
-                for column in self.other_columns.values()
-            ])
-            return example
-        except (TypeError, IndexError):
-            print("Transforming indices into columns for tabular view.")
-            lengths_of_segments = []
-            for i in range(len(self)):
-                try:
-                    length = len(self.timepoints[i])
-                    if length > 0:
-                        lengths_of_segments.append(length)
-                        continue
-                except IndexError:
-                    pass
-                key = list(self.other_columns.keys())[0]
-                lengths_of_segments.append((len(self.other_columns[key][i])))
-            self.indices = [
-                [index] * length
-                for index, length in zip(self.indices, lengths_of_segments)
-            ]
-            example = []
-            example.append([self.indices[0][0]])
-            if self.timepoints:
-                example.append([self.timepoints[0][0]])
-            if self.currents:
-                example.append([self.currents[0][0]])
-            if self.voltages:
-                example.append([self.voltages[0][0]])
-            example.extend([
-                [column[0][0]]
-                for column in self.other_columns.values()
-            ])
-            return example
+        super().example_table_row()
+        example = []
+        example.append([self.indices[0][0]])
+        if self.timepoints:
+            example.append([self.timepoints[0][0]])
+        if self.currents:
+            example.append([self.currents[0][0]])
+        if self.voltages:
+            example.append([self.voltages[0][0]])
+        example.extend([
+            [column[0][0]]
+            for column in self.other_columns.values()
+        ])
+        return example
 
     def subslice(self, start, stop, step=1):
-        """!@brief Selects a subslice of the data segments.
-        The arguments exactly match the slice(...) notation.
-        @param start
-            The index of the first segment to be included.
-        @param stop
-            The index of the first segment to not be included.
-        @param step
-            Steps between selected segments. Default: 1.
-        @return
-            A new Cycling_Information object containing the slice.
-        """
-
         return Cycling_Information(
             self.timepoints[start:stop:step],
             self.currents[start:stop:step],
@@ -205,13 +284,6 @@ class Cycling_Information(Measurement):
         )
 
     def subarray(self, array):
-        """!@brief Selects the data segments with the given indices.
-        @param array
-            The indices of the segments that are to be returned.
-        @return
-            A new Cycling_Information object containing the subset.
-        """
-
         return Cycling_Information(
             [self.timepoints[index] for index in array],
             [self.currents[index] for index in array],
@@ -234,9 +306,9 @@ class Cycling_Information(Measurement):
 
 
 class Static_Information(Cycling_Information):
-    """!@brief Contains additional informations, e.g. for GITT.
-    Each member variable is a list and has the same length as the other
-    ones.
+    """
+    Contains additional informations, e.g. for GITT. Each member
+    variable is a list and has the same length as the other ones.
     """
 
     def __init__(
@@ -271,22 +343,27 @@ class Static_Information(Cycling_Information):
             last_U = U[-1]
         ir_steps[0] = 0.0
 
-        ## The voltages that the voltage curve seems to converge to in a
-        # segment. Only makes sense for those segments that are rest
-        # periods or when the OCV was subtracted.
         self.asymptotic_voltages = asymptotic_voltages
-        ## The instantaneous IR drops before each segment. Positive
-        # values are voltage rises and negative values voltage drops.
+        """
+        The voltages that the voltage curve seems to converge to in a
+        segment. Only makes sense for those segments that are rest
+        periods or when the OCV was subtracted.
+        """
         self.ir_steps = ir_steps
-        ## Same as exp_U_decays for current decays (PITT).
-        #
+        """
+        The instantaneous IR drops before each segment. Positive
+        values are voltage rises and negative values voltage drops.
+        """
         self.exp_I_decays = exp_I_decays
-        ## The fit parameters of the exponential voltage decays in each
-        # segment. Each set of fit parameters is a 3-tuple (a,b,c) where
-        # the fit function has the following form:
-        #     a + b * exp(-c * (t - t_end_of_segment)).
-        # Failed or missing fits are best indicated by (NaN, NaN, NaN). """
+        """Same as exp_U_decays for current decays (PITT)."""
         self.exp_U_decays = exp_U_decays
+        """
+        The fit parameters of the exponential voltage decays in each
+        segment. Each set of fit parameters is a 3-tuple (a,b,c) where
+        the fit function has the following form:
+            a + b * exp(-c * (t - t_end_of_segment)).
+        Failed or missing fits are best indicated by (NaN, NaN, NaN).
+        """
 
     def to_json(self):
         return json.dumps({
@@ -302,18 +379,6 @@ class Static_Information(Cycling_Information):
         })
 
     def subslice(self, start, stop, step=1):
-        """!@brief Selects a subslice of the data segments.
-        The arguments exactly match the slice(...) notation.
-        @param start
-            The index of the first segment to be included.
-        @param stop
-            The index of the first segment to not be included.
-        @param step
-            Steps between selected segments. Default: 1.
-        @return
-            A new Static_Information object containing the slice.
-        """
-
         return Static_Information(
             self.timepoints[start:stop:step],
             self.currents[start:stop:step],
@@ -328,13 +393,6 @@ class Static_Information(Cycling_Information):
         )
 
     def subarray(self, array):
-        """!@brief Selects the data segments with the given indices.
-        @param array
-            The indices of the segments that are to be returned.
-        @return
-            A new Static_Information object containing the subset.
-        """
-
         return Static_Information(
             [self.timepoints[index] for index in array],
             [self.currents[index] for index in array],
@@ -365,9 +423,9 @@ class Static_Information(Cycling_Information):
 
 
 class Impedance_Measurement(Measurement):
-    """!@brief Contains basic impedance data.
-    Each member variable is a list and has the same length as the other
-    ones.
+    """
+    Contains basic impedance data. Each member variable is a list and
+    has the same length as the other ones.
     """
 
     def __init__(
@@ -379,25 +437,36 @@ class Impedance_Measurement(Measurement):
         other_columns={},
         indices=None
     ):
-        ## The frequencies at which impedances were measured. Usually a list
-        # of lists where each list corresponds to a different equilibrium.
         self.frequencies = frequencies
-        ## The real part of the impedances measured at those frequencies.
+        """
+        The frequencies at which impedances were measured. Usually a
+        list of lists where each list corresponds to a different
+        equilibrium.
+        """
         self.real_impedances = real_impedances
-        ## The imaginary part of the impedances measured at those
-        # frequencies.
+        """
+        The real part of the impedances measured at those frequencies.
+        """
         self.imaginary_impedances = imaginary_impedances
-        ## The phases of the impedance measured at those frequencies.
+        """
+        The imaginary part of the impedances measured at those
+        frequencies.
+        """
         self.phases = phases
-        ## The contents of any other columns. A dictionary ("columns")
-        # which values are lists which contain lists for segments.
-        # The keys should match user input for the columns.
+        """The phases of the impedance measured at those frequencies."""
         self.other_columns = other_columns
-        ## The indices of the individual segments. Defaults to a simple
-        # numbering of the segments present. May be used for plotting
-        # purposes, e.g., for colourcoding the segments by cycle.
+        """
+        The contents of any other columns. A dictionary ("columns")
+        which values are lists which contain lists for segments.
+        The keys should match user input for the columns.
+        """
         if indices is None:
             self.indices = [i for i in range(len(self))]
+            """
+            The indices of the individual segments. Defaults to a simple
+            numbering of the segments present. May be used for plotting
+            purposes, e.g., for colourcoding the segments by cycle.
+            """
         else:
             self.indices = indices
 
@@ -474,68 +543,24 @@ class Impedance_Measurement(Measurement):
             yield segment
 
     def example_table_row(self):
-        try:
-            example = []
-            example.append([self.indices[0][0]])
-            if self.frequencies:
-                example.append([self.frequencies[0][0]])
-            if self.real_impedances:
-                example.append([self.real_impedances[0][0]])
-            if self.imaginary_impedances:
-                example.append([self.imaginary_impedances[0][0]])
-            if self.phases:
-                example.append([self.phases[0][0]])
-            example.extend([
-                [column[0][0]]
-                for column in self.other_columns.values()
-            ])
-            return example
-        except (TypeError, IndexError):
-            print("Transforming indices into columns for tabular view.")
-            lengths_of_segments = []
-            for i in range(len(self)):
-                try:
-                    length = len(self.frequencies[i])
-                    if length > 0:
-                        lengths_of_segments.append(length)
-                        continue
-                except IndexError:
-                    pass
-                key = list(self.other_columns.keys())[0]
-                lengths_of_segments.append((len(self.other_columns[key][i])))
-            self.indices = [
-                [index] * length
-                for index, length in zip(self.indices, lengths_of_segments)
-            ]
-            example = []
-            example.append([self.indices[0][0]])
-            if self.frequencies:
-                example.append([self.frequencies[0][0]])
-            if self.real_impedances:
-                example.append([self.real_impedances[0][0]])
-            if self.imaginary_impedances:
-                example.append([self.imaginary_impedances[0][0]])
-            if self.phases:
-                example.append([self.phases[0][0]])
-            example.extend([
-                [column[0][0]]
-                for column in self.other_columns.values()
-            ])
-            return example
+        super().example_table_row()
+        example = []
+        example.append([self.indices[0][0]])
+        if self.frequencies:
+            example.append([self.frequencies[0][0]])
+        if self.real_impedances:
+            example.append([self.real_impedances[0][0]])
+        if self.imaginary_impedances:
+            example.append([self.imaginary_impedances[0][0]])
+        if self.phases:
+            example.append([self.phases[0][0]])
+        example.extend([
+            [column[0][0]]
+            for column in self.other_columns.values()
+        ])
+        return example
 
     def subslice(self, start, stop, step=1):
-        """!@brief Selects a subslice of the data segments.
-        The arguments exactly match the slice(...) notation.
-        @param start
-            The index of the first segment to be included.
-        @param stop
-            The index of the first segment to not be included.
-        @param step
-            Steps between selected segments. Default: 1.
-        @return
-            A new Impedance_Measurement object containing the slice.
-        """
-
         return Impedance_Measurement(
             self.frequencies[start:stop:step],
             self.real_impedances[start:stop:step],
@@ -547,13 +572,6 @@ class Impedance_Measurement(Measurement):
         )
 
     def subarray(self, array):
-        """!@brief Selects the data segments with the given indices.
-        @param array
-            The indices of the segments that are to be returned.
-        @return
-            A new Impedance_Measurement object containing the subset.
-        """
-
         return Impedance_Measurement(
             [self.frequencies[index] for index in array],
             [self.real_impedances[index] for index in array],
@@ -593,74 +611,77 @@ def read_csv_from_measurement_system(
     flip_imaginary_impedance_sign=False,
     max_number_of_lines=-1
 ):
-    """!@brief Read the measurements as returned by common instruments.
+    """
+    Read the measurements as returned by common instruments.
+
     Example: cycling measurements from Basytec devices. Their format
     resembles a csv file with one title and one header comment line.
     So the first line will be ignored and the second used for headers.
-    @param path
+
+    :param path:
         The full or relative path to the measurement file.
-    @param encoding
+    :param encoding:
         The encoding of that file, e.g. "iso-8859-1".
-    @param number_of_comment_lines
+    :param number_of_comment_lines:
         The number of lines that have to be skipped over in order to
         arrive at the first dataset line.
-    @param headers
+    :param headers:
         A dictionary. Its keys are the indices of the columns
         which are to be read in. The corresponding values are there to
         tell this function which kind of data is in which column. The
         following format has to be used: "<name> [<unit>]" where "name"
-        is "U" (voltage), "I" (current) or "t" (time) and "unit" is
-        "V", "A", "h", "m" or "s" with the optional prefixes "k", "m",
-        "µ" or "n". This converts the data to prefix-less SI units.
+        is "U" (voltage), "I" (current), or "t" (time) and "unit" is
+        "V", "A", "h", "m" ,or "s" with the optional prefixes "k", "m",
+        "µ", or "n". This converts the data to prefix-less SI units.
         Additional columns may be read in with keys not in this format.
         The columns for segments and sign correction are only given by
-        #segment_column and #correction_column.
-    @param delimiter
+        *segment_column* and *correction_column*.
+    :param delimiter:
         The delimiter string between datapoints. The default is "\t".
-    @param decimal
+    :param decimal:
         The string used for the decimal point. Default: ".".
-    @param datatype
+    :param datatype:
         Default is "cycling", where cycling information is assumed in
         the file. "static" will trigger the additional extraction of
         exponential decays that are relevant to e.g. GITT.
         "impedance" will treat the file as an impedance measurement
         with frequencies and impedances instead of time and voltage.
-    @param segment_column
+    :param segment_column:
         The index of the column that stores the index
         of the current segment. If it changes from one data point to the
         next, that is used as the dividing line between two segments.
         Default is -1, which returns the dataset in one segment.
-    @param segments_to_process
+    :param segments_to_process:
         A list of indices which give the segments that shall be
         processed. Default is None, i.e., the whole file gets processed.
-    @param current_sign_correction
+    :param current_sign_correction:
         A dictionary. Its keys are the
         strings used in the file to indicate a state. The column from
-        which this state is retrieved is given by #correction_column.
+        which this state is retrieved is given by *correction_column*.
         The dictionaries' values are used to correct/normalize the
         current value in the file. For example, if discharge currents
         have the same positive sign as charge currents in the file, use
         -1 to correct that, or if the values are to be scaled by weight,
         use the scaling factor. The default is the empty dictionary.
-    @param correction_column
+    :param correction_column:
         See #current_sign_correction. Default: -1.
-    @param max_number_of_lines
+    :param max_number_of_lines:
         The maximum number of dataset lines that are to be read in.
         Default: -1 (no limit).
-    @param flip_voltage_sign
+    :param flip_voltage_sign:
         Defaults to False, where measured voltage remains unaltered.
         Change to True if the voltage shall be multiplied by -1.
         Also applies to impedances; real and imaginary parts.
-    @param flip_imaginary_impedance_sign
+    :param flip_imaginary_impedance_sign:
         Defaults to False, where measured impedance remains unaltered.
         Change to True if the imaginary part of the impedance shall be
-        multiplied by -1. Cancels out with 'flip-voltage-sign'.
-    @return
+        multiplied by -1. Cancels out with *flip_voltage_sign*.
+    :returns:
         The measurement, packaged in a Measurement subclass. It depends
         on "datatype" which one it is:
-         - "cycling": Cycling_Information
-         - "static": Static_Information
-         - "impedance": Impedance_Measurement
+         - "cycling": ``Cycling_Information``
+         - "static": ``Static_Information``
+         - "impedance": ``Impedance_Measurement``
     """
 
     file = open(path, encoding=encoding)
@@ -675,18 +696,32 @@ def read_csv_from_measurement_system(
     file.seek(length_of_comments)
 
     csv_file = csv.reader(file, delimiter=delimiter)
+    extra_sign_column = max(headers.keys()) + 1
     data = [] if segment_column != -1 else [
-        {index: [] for index in headers.keys()}
+        {index: [] for index in list(headers.keys()) + [extra_sign_column]}
     ]
+    indices = []
     last_segment_id = ""
     for i, row in enumerate(csv_file):
         if max_number_of_lines != -1 and i > max_number_of_lines:
             break
         try:
             if segment_column != -1 and row[segment_column] != last_segment_id:
-                data.append({index: [] for index in headers.keys()})
-                data[-1][correction_column] = []
+                data.append({
+                    index: []
+                    for index in list(headers.keys()) + [extra_sign_column]
+                })
                 last_segment_id = row[segment_column]
+                stored_index = last_segment_id
+                try:
+                    stored_index_str = str(stored_index)
+                    if '.' in stored_index_str:
+                        stored_index = float(stored_index)
+                    else:
+                        stored_index = int(stored_index)
+                except (TypeError, ValueError):
+                    ...
+                indices.append(stored_index)
         except IndexError:
             raise IndexError((
                 "correction_column or segment_column are set to values outside"
@@ -700,7 +735,7 @@ def read_csv_from_measurement_system(
             )
         try:
             if correction_column != -1:
-                data[-1][correction_column].append(
+                data[-1][extra_sign_column].append(
                     current_sign_correction[row[correction_column]]
                 )
         except IndexError:
@@ -712,8 +747,7 @@ def read_csv_from_measurement_system(
                 + "Contents of affected row:" + linesep
                 + linesep.join(
                     [str(j) + ' ' + str(entry) for j, entry in enumerate(row)]
-            )
-            )
+            ))
         except ValueError:
             raise ValueError((
                 "current_sign_correction is missing an entry for the content "
@@ -784,7 +818,7 @@ def read_csv_from_measurement_system(
                         prefixes[header_info["I"][1]] * sign * current
                         for (current, sign) in zip(
                             segment[header_info["I"][0]],
-                            segment[correction_column]
+                            segment[extra_sign_column]
                         )
                     ])
                 else:
@@ -815,11 +849,11 @@ def read_csv_from_measurement_system(
 
         if datatype == "cycling":
             return Cycling_Information(
-                timepoints, currents, voltages, other_columns
+                timepoints, currents, voltages, other_columns, indices
             )
         elif datatype == "static":
             return Static_Information(
-                timepoints, currents, voltages, other_columns
+                timepoints, currents, voltages, other_columns, indices
             )
     elif datatype == "impedance":
         frequencies = []
@@ -886,7 +920,8 @@ def read_csv_from_measurement_system(
             real_impedances,
             imaginary_impedances,
             phases,
-            other_columns
+            other_columns,
+            indices
         )
     else:
         raise ValueError(
@@ -902,17 +937,20 @@ def print_hdf5_structure(
     table_limit=4,
     verbose_limit=64
 ):
-    """!brief Simple HDF5 structure viewer.
-    @param h5py_object
-        The HDF5 object wrapped by H5Py, for example h5py.File(filename, 'r').
-    @param depth
+    """
+    Simple HDF5 structure viewer.
+
+    :param h5py_object:
+        The HDF5 object wrapped by H5Py, for example
+        ``h5py.File(filename, 'r')``.
+    :param depth:
         For pretty printing the recursive depth. Do not change.
-    @param table_limit
-        h5py.Dataset object tables will be truncated prior to printing up to
-        this number in the higher dimension.
-    @param verbose_limit
-        h5py.Dataset objects will be truncated to at most this number in any
-        dimension.
+    :param table_limit:
+        h5py.Dataset object tables will be truncated prior to printing
+        up to this number in the higher dimension.
+    :param verbose_limit:
+        h5py.Dataset objects will be truncated to at most this number
+        in any dimension.
     """
 
     tree_visualizer = (depth - 1) * "  " + "|_"
@@ -939,12 +977,17 @@ def print_hdf5_structure(
 
 
 def convert_none_notation_to_slicing(h5py_object, index):
-    """!@brief Access a slice of an HDF5 object by transferable notation.
-    @param h5py_object
-        The HDF5 object wrapped by H5Py, for example h5py.File(filename, 'r').
-    @param index
-        A 2-tuple or a 2-list. (None, x) denotes slicing [:, x] and (x, None)
-        denotes slicing [x, :].
+    """
+    Access a slice of an HDF5 object by transferable notation.
+
+    :param h5py_object:
+        The HDF5 object wrapped by H5Py, for example
+        ``h5py.File(filename, 'r')``.
+    :param index:
+        A 2-tuple or a 2-list. (None, x) denotes slicing [:, x] and
+        (x, None) denotes slicing [x, :].
+    :returns:
+        The None-notation sliced h5py object.
     """
 
     if len(index) != 2:
@@ -965,16 +1008,19 @@ def convert_none_notation_to_slicing(h5py_object, index):
 
 
 def get_hdf5_dataset_by_path(h5py_object, path):
-    """!@brief Follow the structure of a HDF object to get a certain part.
-    @param h5py_object
-        The HDF5 object wrapped by H5Py, for example h5py.File(filename, 'r').
-    @param path
-        A list. Each entry goes one level deeper into the HDF structure. Each
-        entry can either be the index to go into next itself, or a 2-tuple or a
-        2-list. In the latter case, (None, x) denotes slicing [:, x] and
-        (x, None) denotes slicing [x, :].
-    @return
-        Returns the HDF5 object found at the end of "path".
+    """
+    Follow the structure of a HDF object to get a certain part.
+
+    :param h5py_object:
+        The HDF5 object wrapped by H5Py, for example
+        ``h5py.File(filename, 'r')``.
+    :param path:
+        A list. Each entry goes one level deeper into the HDF structure.
+        Each entry can either be the index to go into next itself, or a
+        2-tuple or a 2-list. In the latter case, (None, x) denotes
+        slicing [:, x] and (x, None) denotes slicing [x, :].
+    :returns:
+        Returns the HDF5 object found at the end of *path*.
     """
 
     target_dataset = h5py_object
@@ -1000,70 +1046,73 @@ def read_hdf5_table(
     flip_voltage_sign=False,
     flip_imaginary_impedance_sign=False
 ):
-    """!@brief Read the measurements as stored in a HDF5 file.
-    @param path
+    """
+    Read the measurements as stored in a HDF5 file.
+
+    :param path:
         The full or relative path to the measurement file.
-    @param data_location
-        A list. Gives the location in the HDF5 file where the data table is
-        stored. Set to None if everything is stored at the top level.
+    :param data_location:
+        A list. Gives the location in the HDF5 file where the data table
+        is stored. Set to None if everything is stored at the top level.
         Each entry goes one level deeper into the HDF structure. Each
-        entry can either be the index to go into next itself, or a 2-tuple or a
-        2-list. In the latter case, (None, x) denotes slicing [:, x] and
-        (x, None) denotes slicing [x, :].
-    @param headers
-        A dictionary. Its keys are 2-tuples, slicing the data which are to
-        be read in. Use the format "(x, None)" or "(None, x)" to slice
-        the dimension with "None". The corresponding values are there to
-        tell this function which kind of data is in which column.
-        If necessary, the keys may also be tuples like 'data_location'.
-        The following format has to be used: "<name> [<unit>]" where "name"
-        is "U" (voltage), "I" (current) or "t" (time) and "unit" is
-        "V", "A", "h", "m" or "s" with the optional prefixes "k", "m",
-        "µ" or "n". This converts the data to prefix-less SI units.
-        Additional columns may be read in with keys not in this format.
-        The columns for segments and sign correction are only given by
-        "segment_column" and "correction_column".
-    @param datatype
+        entry can either be the index to go into next itself, or a
+        2-tuple or a 2-list. In the latter case, (None, x) denotes
+        slicing [:, x] and (x, None) denotes slicing [x, :].
+    :param headers:
+        A dictionary. Its keys are 2-tuples, slicing the data which are
+        to be read in. Use the format "(x, None)" or "(None, x)" to
+        slice the dimension with "None". The corresponding values are
+        there to tell this function which kind of data is in which
+        column. If necessary, the keys may also be tuples like
+        *data_location*.
+        The following format has to be used: "<name> [<unit>]" where
+        "name" is "U" (voltage), "I" (current), or "t" (time) and "unit"
+        is "V", "A", "h", "m", or "s" with the optional prefixes "k",
+        "m", "µ", or "n". This converts the data to prefix-less SI
+        units. Additional columns may be read in with keys not in this
+        format. The columns for segments and sign correction are only
+        given by *segment_column* and *correction_column*.
+    :param datatype:
         Default is "cycling", where cycling information is assumed in
         the file. "static" will trigger the additional extraction of
         exponential decays that are relevant to e.g. GITT.
         "impedance" will treat the file as an impedance measurement
         with frequencies and impedances instead of time and voltage.
-    @segment_location
-        A list, with the same format as "data_location". It points to the part
-        of the data that stores the index of the current segment. If it changes
-        from one data point to the next, that is used as the dividing line
-        between two segments.
+    :segment_location:
+        A list, with the same format as *data_location*. It points to
+        the part of the data that stores the index of the current
+        segment. If it changes from one data point to the next, that is
+        used as the dividing line between two segments.
         Default is None, which returns the dataset in one segment.
-    @param segments_to_process
+    :param segments_to_process:
         A list of indices which give the segments that shall be
         processed. Default is None, i.e., the whole file gets processed.
-    @param current_sign_correction
-        A dictionary. Its keys are the strings used in the file to indicate a
-        state. The column from which this state is retrieved is given by
-        "correction_column".
+    :param current_sign_correction:
+        A dictionary. Its keys are the strings used in the file to
+        indicate a state. The column from which this state is retrieved
+        is given by *correction_column*.
         The dictionaries' values are used to correct/normalize the
         current value in the file. For example, if discharge currents
         have the same positive sign as charge currents in the file, use
         -1 to correct that, or if the values are to be scaled by weight,
         use the scaling factor. The default is the empty dictionary.
-    @param correction_location
-        A list, with the same format as "data_location".
-        For its use, see "current_sign_correction". Default: None.
-    @param flip_voltage_sign
+    :param correction_location:
+        A list, with the same format as *data_location*.
+        For its use, see *current_sign_correction*. Default: None.
+    :param flip_voltage_sign:
         Defaults to False, where measured voltage remains unaltered.
         Change to True if the voltage shall be multiplied by -1.
         Also applies to impedances; real and imaginary parts.
-    @param flip_imaginary_impedance_sign
+    :param flip_imaginary_impedance_sign:
         Defaults to False, where measured impedance remains unaltered.
         Change to True if the imaginary part of the impedance shall be
-        multiplied by -1. Cancels out with 'flip-voltage-sign'.
-    @return
+        multiplied by -1. Cancels out with *flip_voltage_sign*.
+    :returns:
         The measurement, packaged in a Measurement subclass. It depends
         on "datatype" which one it is:
-         - "cycling": Cycling_Information
-         - "static": Static_Information
-         - "impedance": Impedance_Measurement
+         - "cycling": ``Cycling_Information``
+         - "static": ``Static_Information``
+         - "impedance": ``Impedance_Measurement``
     """
 
     file = h5py.File(path, 'r')
@@ -1144,9 +1193,11 @@ def read_hdf5_table(
                 ])
             except KeyError:
                 pass
-            # timesteps.append([t1 - t0
-            #                   for (t0, t1) in zip(timepoints[-1][:-1],
-            #                                       timepoints[-1][1:])])
+            # timesteps.append([
+            #     t1 - t0 for (t0, t1) in zip(
+            #         timepoints[-1][:-1], timepoints[-1][1:]
+            #     )
+            # ])
             try:
                 if correction_location:
                     for i, (start, stop) in enumerate(
@@ -1268,3 +1319,168 @@ def read_hdf5_table(
             + str(datatype)
             + ". Must be one of 'cycling', 'static', or 'impedance'."
         )
+
+
+def read_parquet_table(file_name, datatype):
+    """
+    Read an Apache Parquet serialization of a ``Measurement`` object.
+    For storing such a serialization, refer to ``store_parquet_table``.
+
+    :param file_name:
+        The full name of the file to read from.
+    :param datatype:
+        One of the following, denoting what ``Measurement`` was stored:
+         - 'cycling': ``Cycling_Information``
+         - 'static': ``Static_Information``
+         - 'impedance': ``Impedance_Information``
+    :returns:
+        The ``Measurement`` object of choice.
+    """
+
+    datafile = parquet.ParquetFile(file_name)
+
+    indices = []
+    other_columns = {}
+
+    if datatype == "cycling":
+        table_mapping = Cycling_Information.table_mapping()
+    elif datatype == "static":
+        table_mapping = Static_Information.table_mapping()
+    elif datatype == "impedance":
+        table_mapping = Impedance_Measurement.table_mapping()
+
+    if datatype in ["cycling", "static"]:
+        timepoints = []
+        currents = []
+        voltages = []
+        for row_group_number in range(datafile.num_row_groups):
+            row_group = datafile.read_row_group(row_group_number)
+            # Each segment can only have one index; assume all are the same.
+            indices.append(
+                row_group.column(table_mapping['indices'])[0].as_py()
+            )
+            try:
+                timepoints.append(row_group.column(
+                    table_mapping['timepoints']
+                ).combine_chunks().to_numpy().tolist())
+            except KeyError:
+                pass
+            try:
+                currents.append(row_group.column(
+                    table_mapping['currents']
+                ).combine_chunks().to_numpy().tolist())
+            except KeyError:
+                pass
+            try:
+                voltages.append(row_group.column(
+                    table_mapping['voltages']
+                ).combine_chunks().to_numpy().tolist())
+            except KeyError:
+                pass
+            other_names = (
+                set(row_group.column_names) - set(table_mapping.values())
+            )
+            for name in other_names:
+                if name not in other_columns.keys():
+                    other_columns[name] = []
+                # Pray and hope that to_numpy has enough coverage.
+                other_columns[name].append(
+                    row_group.column(name).to_numpy().tolist()
+                )
+        if datatype == "cycling":
+            data = Cycling_Information(
+                timepoints, currents, voltages, other_columns, indices
+            )
+        elif datatype == "static":
+            data = Static_Information(
+                timepoints, currents, voltages, other_columns, indices
+            )
+    elif datatype == "impedance":
+        frequencies = []
+        real_impedances = []
+        imaginary_impedances = []
+        phases = []
+        for row_group_number in range(datafile.num_row_groups):
+            row_group = datafile.read_row_group(row_group_number)
+            # Each segment can only have one index; assume all are the same.
+            indices.append(
+                row_group.column(table_mapping['indices'])[0].as_py()
+            )
+            try:
+                frequencies.append(row_group.column(
+                    table_mapping['frequencies']
+                ).combine_chunks().to_numpy().tolist())
+            except KeyError:
+                pass
+            try:
+                real_impedances.append(row_group.column(
+                    table_mapping['real_impedances']
+                ).combine_chunks().to_numpy().tolist())
+            except KeyError:
+                pass
+            try:
+                imaginary_impedances.append(row_group.column(
+                    table_mapping['imaginary_impedances']
+                ).combine_chunks().to_numpy().tolist())
+            except KeyError:
+                pass
+            try:
+                phases.append(row_group.column(
+                    table_mapping['phases']
+                ).combine_chunks().to_numpy().tolist())
+            except KeyError:
+                pass
+            other_names = (
+                set(row_group.column_names) - set(table_mapping.values())
+            )
+            for name in other_names:
+                if name not in other_columns.keys():
+                    other_columns[name] = []
+                # Assume that to_numpy has enough coverage.
+                other_columns[name].append(
+                    row_group.column(name).to_numpy().tolist()
+                )
+        data = Impedance_Measurement(
+            frequencies,
+            real_impedances,
+            imaginary_impedances,
+            phases,
+            other_columns,
+            indices
+        )
+    return data
+
+
+def store_parquet_table(measurement, file_prefix, compression_level=22):
+    """
+    Store an Apache Parquet serialization of a ``Measurement`` object.
+    For reading such a serialization, refer to ``read_parquet_table``.
+
+    :param measurement:
+        The ``Measurement`` object to serialize.
+    :param file_prefix:
+        The filename to write into. A '.parquet' ending is appended.
+    :param compression_level:
+        Compression level of the compression algorithm Zstandard.
+        -7 gives the largest files with highest compression speed.
+        22 gives the smallest files with slowest compression speed.
+        Note that decompression has the same (fast) speed at any level.
+    """
+
+    table_schema = pyarrow.table(
+        measurement.example_table_row(), names=measurement.table_descriptors(),
+    ).schema
+
+    # Write each segment in a separate ParquetWriter call. This sets up
+    # the row groups to correspond to segments for faster reading.
+    with parquet.ParquetWriter(
+        file_prefix + '.parquet',
+        table_schema,
+        compression='zstd',
+        compression_level=compression_level,
+    ) as writer:
+        for segment in measurement.segment_tables():
+            segment_table = pyarrow.table(
+                segment, names=measurement.table_descriptors(),
+            )
+            writer.write_table(segment_table)
