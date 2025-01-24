@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<program name="python -m ep_bolfi.kadi_tools.eis_visualization" description="Please refer to the --help output of this file." version="3.0">
+  <param description="Persistent record identifier of the record with the preprocessed data and model parameters." type="long" name="input-record" char="r" required="true"/>
+  <param description="File name of the preprocessed data file." type="string" name="input-file" char="d" required="true"/>
+  <param description="File name of the model parameters. It must be a Python file and contain the following global variables:&#10;&#10; - parameters: The dictionary of parameters to pass on to the solver. May be a ep_bolfi.utility.preprocessing.SubstitutionDict.&#10;&#10;It may contain the additional following global variables:&#10;&#10; - unknowns: The dictionary of unknown parameters. Instead of single values as in 'parameters', input 2-tuples with their lower and upper bounds, e.g. from literature." type="string" name="parameters-file" char="m" required="true"/>
+  <param description="Optional persistent record identifier of a record with parameterization results. When given, this result will be used for determining the 95% confidence bounds of the simulation. Else, if present, the 'unknowns' in the parameter file will be used." type="long" name="parameterization-result-record" char="u"/>
+  <param description="Name of the file with the parameterization results." type="string" name="parameterization-result-file" char="z"/>
+  <param description="Persistent record identifier of the record to store the plot and the log of the solver in." type="long" name="output-record" char="o" required="true"/>
+  <param description="If 'unknowns' are present in the parameters file, or if a parameterization result is provided, this determines whether only each parameter is explored in its bounds (False), or if all combinations of them at their bounds are explored (True) for the 95% confidence interval of the simulation." type="bool" name="full-factorial" char="e" default="true"/>
+  <param description="By default, the uncertainties get evaluated at their 95% intervals. Set to False to only evaluate the 95% confidence of the unknowns." type="bool" name="include-uncertainties" char="c" default="true"/>
+  <param description="Title of the plot. Defaults to the template file name." type="string" name="title" char="t"/>
+  <param description="Fontsize used for the feature labels." type="long" name="feature-fontsize" char="b" default="14"/>
+  <param description="Format of generated image file." type="choice" choices="eps|jpg|jpeg|pdf|pgf|png|ps|raw|rgba|svg|svgz|tif|tiff" case_sensitive="true" name="format" char="f" default="pdf"/>
+  <param description="Whether or not an already existing file by the same name in the record gets overwritten." type="bool" name="overwrite" char="w" default="false"/>
+  <param description="Toggle to display the plot on the machine this script runs on." type="flag" name="display" char="v" default="false"/>
+  <param description="Togggle to display an interactive plot to explore the search parameter space with. Only works with one EIS segment at a time." type="flag" name="interactive-plot" char="i" default="false" relations="display"/>
+</program>

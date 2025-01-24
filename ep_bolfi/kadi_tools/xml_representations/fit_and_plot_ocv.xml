@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<program name="python -m ep_bolfi.kadi_tools.fit_and_plot_ocv" description="Please refer to the --help output of this file." version="3.0">
+  <param description="Persistent record identifier where the input data is stored." type="long" name="input-record" char="r" required="true"/>
+  <param description="File name." type="string" name="filename" char="n" required="true"/>
+  <param description="Persistent record identifier where the results get stored." type="long" name="output-record" char="e" required="true"/>
+  <param description="Title of the plot. Defaults to the file name." type="string" name="title" char="t"/>
+  <param description="Format of generated image file." type="choice" choices="eps|jpg|jpeg|pdf|pgf|png|ps|raw|rgba|svg|svgz|tif|tiff" case_sensitive="true" name="format" char="f" default="pdf"/>
+  <param description="Key in the json dictionary for the SOC values." type="string" name="soc-key" char="s" default="SOC\ [C]"/>
+  <param description="Key in the json dictionary for the OCV values." type="string" name="ocv-key" char="o" default="OCV\ [V]"/>
+  <param description="Number of phases of the OCV model. More are more accurate." type="long" name="phases" char="a" default="4"/>
+  <param description="The charge number of the electrode interface reaction." type="real" name="charge-number" char="z" default="1.0"/>
+  <param description="Temperature at which the OCV got measured." type="real" name="temperature" char="k" default="298.15"/>
+  <param description="2-tuple giving the lower maximum and upper minimum SOC range to be considered in the automatic data SOC range determination." type="string" name="soc-range-bounds" char="u" default="(0.2,\ 0.8)"/>
+  <param description="Optional hard lower and upper bounds for the SOC correction from the left and the right side, respectively, as a 2-tuple. Use it if you know that your OCV data is incomplete and by how much. Has to be inside (0.0, 1.0). Set to (0.0, 1.0) to allow the SOC range estimation to assign datapoints to the asymptotes." type="string" name="soc-range-limits" char="g" default="(0.0,\ 1.0)"/>
+  <param description="Set this to 'Positive' or 'Negative' to apply the fitted SOC range on the data and assign the result to one of the two electrodes." type="choice" choices="None|Positive|Negative" case_sensitive="false" name="assign-fitted-soc-to" char="c"/>
+  <param description="Set to True if assigned SOCs shall go in the other direction. 'soc-range' arguments always work as if this was set to False. Flips the SOCs by subtracting them from 1." type="bool" name="flip-soc-convention" char="p" default="false"/>
+  <param description="2-tuple giving the SOC range in which the SOC(OCV) model function gets inverted by a smoothing spline interpolation." type="string" name="spline-soc-range" char="b" default="(0.01,\ 0.99)"/>
+  <param description="Order of the aforementioned smoothing spline. Setting it to 0 only fits and plots the OCV model." type="long" name="spline-order" char="j" default="2"/>
+  <param description="If set to either 'python' or 'matlab', a string representation of the smoothing spline gets appended to the results file." type="string" name="spline-print" char="l"/>
+  <param description="If True, the x-axis gets rescaled to match the asymptotes of the OCV fit function at 0 and 1." type="bool" name="normalized-xaxis" char="x" default="false"/>
+  <param description="The order of the norm of the vector of the distances between OCV data and OCV model. Default is 2, i.e., the Euclidean norm. 1 sets it to absolute distance, and float('inf') sets it to maximum distance." type="string" name="distance-order" char="d" default="2"/>
+  <param description="Dictionary that gets passed to scipy.optimize.minimize with the method 'trust-constr'. See scipy.optimize.show_options with the arguments 'minimize' and 'trust-constr' for details." type="string" name="minimize-options" char="m" default="{}"/>
+  <param description="Whether or not an already existing file by the same name in the record gets overwritten." type="bool" name="overwrite" char="w" default="false"/>
+  <param description="Toggle to display the plot on the machine this script runs on." type="flag" name="display" char="v" default="false"/>
+</program>

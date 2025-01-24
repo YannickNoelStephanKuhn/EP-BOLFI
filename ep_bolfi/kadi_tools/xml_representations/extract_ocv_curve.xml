@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<program name="python -m ep_bolfi.kadi_tools.extract_ocv_curve" description="Please refer to the --help output of this file." version="3.0">
+  <param description="Persistent record identifier." type="long" name="record" char="r" required="true"/>
+  <param description="File name as template for output files." type="string" name="filename" char="n" required="true"/>
+  <param description="Title of the plot. Defaults to the template file name." type="string" name="title" char="t"/>
+  <param description="Format of generated image file." type="choice" choices="eps|jpg|jpeg|pdf|pgf|png|ps|raw|rgba|svg|svgz|tif|tiff" case_sensitive="true" name="format" char="f" default="pdf"/>
+  <param description="The segments that get selected from the dataset. Give as a list of 2-tuples and 3-tuples, e.g., '[(0, 2), (3, 20, 2)]'. Each tuple denotes one range of segments of the dataset to return. The 2-tuples give the range as in Python's [x:y] slice notation, i.e., they refer to segments x through y - 1, counting from 0. Use 'None' to count to the end of the data including the last segment. The 3-tuples give the range as in Python's [x:y:z] slice notation, i.e., they refer to each zth segment from x through y - 1, counting from 0." type="string" name="segments" char="s" default="[(1,\ None,\ 2)]"/>
+  <param description="Seconds at the start of each segment to exclude from the exponential fitting procedure to approximate the OCV." type="real" name="exclude" char="c" default="0.0"/>
+  <param description="Set to True if two OCV curves shall be produced, one for each direction the current had before each datapoint." type="bool" name="split-on-current-direction" char="l" default="false"/>
+  <param description="Set to True if positive current in the measurement corresponds to lithiation of the material, and False otherwise." type="bool" name="positive-current-is-lithiation" char="u" default="true"/>
+  <param description="Whether or not an already existing file by the same name in the record gets overwritten." type="bool" name="overwrite" char="w" default="false"/>
+  <param description="Toggle to display the plot on the machine this script runs on." type="flag" name="display" char="v" default="false"/>
+</program>

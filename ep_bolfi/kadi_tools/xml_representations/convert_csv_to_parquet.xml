@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<program name="python -m ep_bolfi.kadi_tools.convert_csv_to_parquet" description="Please refer to the --help output of this file." version="3.0">
+  <param description="Persistent record identifier where the input data is stored." type="long" name="input-record" char="r" required="true"/>
+  <param description="File name." type="string" name="filename" char="n" required="true"/>
+  <param description="Persistent record identifier where the results get stored." type="long" name="output-record" char="e" required="true"/>
+  <param description="Compression level setting for the compression algorithm Zstandard. -7 is fastest and largest, while 22 ist slowest and smallest. Note that decompression has the same (fast) speed at any level." type="long_range" min="-7" max="22" name="compression-level" char="c" default="22"/>
+  <param description="Encoding of the file." type="string" name="encoding" char="f" default="iso-8859-1"/>
+  <param description="Number of comment lines to trim at the start of the file. This excludes an optional column header line, in contrast to 'ep_bolfi.kadi_tools.read_csv_datasets'. The contents will be dumped in a file separate from the Parquet file." type="long" name="comment-lines" char="t" default="0"/>
+  <param description="Column delimiter used in the file." type="string" name="delimiter" char="l" default="&#9;"/>
+  <param description="Decimal symbol used in the file." type="string" name="decimal" char="d" default="."/>
+  <param description="Whether or not an already existing file by the same name in the record gets overwritten." type="bool" name="overwrite" char="w" default="false"/>
+</program>

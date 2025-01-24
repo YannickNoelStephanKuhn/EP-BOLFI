@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<program name="python -m ep_bolfi.kadi_tools.extract_measurement_protocol" description="Please refer to the --help output of this file." version="3.0">
+  <param description="Persistent record identifier." type="long" name="record" char="r" required="true"/>
+  <param description="File name as template for output files." type="string" name="filename" char="n" required="true"/>
+  <param description="First segment to include in the plot." type="long" name="start" char="s" default="0"/>
+  <param description="Segment after the last one to include in the plot." type="long" name="stop" char="e"/>
+  <param description="Step between segments to include in the plot." type="long" name="step" char="d" default="1"/>
+  <param description="Time unit to use for the timespans." type="choice" choices="d|h|m|s" case_sensitive="false" name="time-unit" char="t" default="h"/>
+  <param description="Optional name of a column stored in the 'other_columns' attribute. Will be used then to describe the individual segments." type="string" name="state-column" char="c"/>
+  <param description="If the mean current during a segment is below this value, it will be regarded as zero current for the whole segment for more sensible simulations." type="real" name="current-threshold" char="b" default="1e-08"/>
+  <param description="Defaults to False, where positive current means discharge. Change to True if positive current shall mean charge." type="bool" name="flip-current-sign" char="g" default="false"/>
+  <param description="If the standard deviation of the voltage during a segment is below this value, it will be regarded as zero deviation voltage for the whole segment, i.e., holding at this voltage." type="real" name="voltage-deviation-threshold" char="u" default="1e-08"/>
+  <param description="Defaults to False, where measured voltage remains unaltered. Change to True if the voltage shall be multiplied by -1." type="bool" name="flip-voltage-sign" char="v" default="false"/>
+  <param description="Whether or not an already existing file by the same name in the record gets overwritten." type="bool" name="overwrite" char="w" default="false"/>
+</program>

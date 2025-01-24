@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<program name="python -m ep_bolfi.kadi_tools.plot_measurement" description="Please refer to the --help output of this file." version="3.0">
+  <param description="Persistent record identifier." type="long" name="record" char="r" required="true"/>
+  <param description="File name as template for output files." type="string" name="filename" char="n" required="true"/>
+  <param description="Type of the measurement, which determines the internal format for further processing. 'cycling' refers to Cycling_Information, 'static' to Static_Information' and 'impedance' to Impedance_Information. If you are unsure which to pick, consult the package documentation." type="choice" choices="cycling|static|impedance" case_sensitive="false" name="datatype" char="y" default="cycling"/>
+  <param description="Title of the plot. Defaults to the template file name." type="string" name="title" char="t"/>
+  <param description="Format of generated image file." type="choice" choices="eps|jpg|jpeg|pdf|pgf|png|ps|raw|rgba|svg|svgz|tif|tiff" case_sensitive="true" name="format" char="f" default="pdf"/>
+  <param description="Set to False if the current shall not be plotted." type="bool" name="plot_current" char="c" default="true"/>
+  <param description="First segment to include in the plot." type="long" name="start" char="s" default="0"/>
+  <param description="Segment after the last one to include in the plot." type="long" name="stop" char="e"/>
+  <param description="Step between segments to include in the plot." type="long" name="step" char="d" default="1"/>
+  <param description="Whether or not an already existing file by the same name in the record gets overwritten." type="bool" name="overwrite" char="w" default="false"/>
+  <param description="Toggle to display the plot on the machine this script runs on." type="flag" name="display" char="v" default="false"/>
+</program>

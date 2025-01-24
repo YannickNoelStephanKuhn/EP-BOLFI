@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<program name="python -m ep_bolfi.kadi_tools.fit_exponential_decay" description="Please refer to the --help output of this file." version="3.0">
+  <param description="Choose the value that gets outputted to stdout. The fit function is f(t, a, b, c) = a + b * exp(-(t - t_0) / c). 'asymptote' is a, 'initial value' is b and 'decay rate' is c. 'all' outputs all three in the format '[a, b, c]'." type="choice" choices="asymptote|initial value|decay rate|all" case_sensitive="true" name="parameter-choice" char="p" required="true"/>
+  <param description="Choose whether a decay is fitted to currents or voltages." type="choice" choices="currents|voltages" case_sensitive="true" name="data-choice" char="d" default="voltages"/>
+  <param description="R²-value threshold. The beginning of the segment gets trimmed until it is reached. Gets calculated via the inversely transformed data." type="real" name="rsquared-threshold" char="r" default="0.95"/>
+  <param description="Seconds at the start of each segment to exclude from the exponential fitting procedure to approximate the OCV." type="real" name="exclude" char="c" default="0.0"/>
+</program>
