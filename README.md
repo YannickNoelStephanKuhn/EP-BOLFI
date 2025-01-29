@@ -26,7 +26,7 @@ Please have a look at [the setup example](Python/parameters/estimation/). [gitt_
 
 ## Using the Kadi4Mat tools
 
-The files in (ep_bolfi/kadi_tools) are command-line tools. These command-line tools are designed to interface with the database software [Kadi4Mat](https://kadi.iam-cms.kit.edu/), of which we have an internal instance running at (https://kadi-dlr.hiu-batteries.de/).
+The files in (ep_bolfi/kadi_tools) are command-line tools. These command-line tools are designed to interface with the database software [Kadi4Mat](https://kadi.iam-cms.kit.edu/), which you may test on the official demo instance at (https://demo-kadi4mat.iam.kit.edu/).
 
 In order to use these command-line tools in the workflow toolchain of Kadi4Mat, they are implemented with the library [xmlhelpy](https://gitlab.com/iam-cms/workflows/xmlhelpy) which extends the [Click](https://github.com/pallets/click) library for command-line tools with the option to generate machine-readable representations of command-line tools. You can find these representations in `ep_bolfi/kadi_tools/xml_representations`, but only when installing a Release. If they are missing in your installation, please refer to the manual instructions in [CONTRIBUTING.md](CONTRIBUTING.md).
 
