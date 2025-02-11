@@ -228,8 +228,6 @@ def simulation_setup(
         A 2-tuple of a pybamm.Simulation.solve call that runs the
         simulation when called, and the proper callback for the logging
         file if specified (else None).
-        Please use solve(check_model=False) if it doesn't
-        work properly with redundant model checks in place.
     """
 
     # Levels of the "logging" module used by PyBaMM:

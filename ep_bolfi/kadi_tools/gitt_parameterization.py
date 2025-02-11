@@ -43,12 +43,12 @@ import xmlhelpy
         "File name of the model parameters. It must be a Python file and "
         "contain the following global variables:"
         + linesep + linesep
-        + " - parameters: The dictionary of parameters to pass on to the solver."
-        " May be a ep_bolfi.utility.preprocessing.SubstitutionDict."
+        + " - parameters: The dictionary of parameters to pass on to the "
+        "solver. May be a ep_bolfi.utility.preprocessing.SubstitutionDict."
         + linesep + linesep
-        + " - unknowns: The dictionary of unknown parameters. Instead of single "
-        "values as in 'parameters', input 2-tuples with their lower and upper "
-        "bounds, e.g. from literature."
+        + " - unknowns: The dictionary of unknown parameters. Instead of "
+        "single values as in 'parameters', input 2-tuples with their lower "
+        "and upper bounds, e.g. from literature."
         + linesep + linesep
         + "It may contain the additional following global variables:"
         + linesep + linesep
@@ -58,14 +58,16 @@ import xmlhelpy
         "one being the transformation. For convenience, putting 'log' gives "
         "log-normal distributions."
         + linesep + linesep
-        + " - negative_SOC_from_cell_SOC: A callable, used for OCV subtraction."
+        + " - negative_SOC_from_cell_SOC: A callable, used for OCV "
+        + "subtraction."
         + linesep + linesep
-        + " - positive_SOC_from_cell_SOC: A callable, used for OCV subtraction."
+        + " - positive_SOC_from_cell_SOC: A callable, used for OCV "
+        + "subtraction."
         + linesep + linesep
-        + " - uncertainties: The dictionary of parameter uncertainties. Used for"
-        " scrambling them in the simulation samples. Give them as tuples: the "
-        "first entry is the name of the distribution in scipy.stats, and the "
-        "following are its parameters. Example: ('norm', mean, std)."
+        + " - uncertainties: The dictionary of parameter uncertainties. Used "
+        "for scrambling them in the simulation samples. Give them as tuples: "
+        "the first entry is the name of the distribution in scipy.stats, and "
+        "the following are its parameters. Example: ('norm', mean, std)."
     )
 )
 @xmlhelpy.option(
@@ -253,7 +255,6 @@ def gitt_parameterization(
             key: parameters[key] for key in solver_free_parameters
         }
         solver(
-            check_model=False,
             calc_esoh=False,
             inputs=test_parameters,
             callbacks=callback
@@ -276,7 +277,6 @@ def gitt_parameterization(
                     for key in solver_free_parameters
                 }
                 solution = solver(
-                    check_model=False,
                     calc_esoh=False,
                     inputs=trial_parameters,
                     callbacks=callback
@@ -290,9 +290,7 @@ def gitt_parameterization(
                     verbose=False,
                     # logging_file=file_prefix + '_evaluations.log',
                 )
-                solution = solver(
-                    check_model=False, calc_esoh=False, callbacks=callback
-                )
+                solution = solver(calc_esoh=False, callbacks=callback)
         except SolverError:
             return [[[0.0 for _ in n] for n in e] for e in experiment_data]
         if solution is None:

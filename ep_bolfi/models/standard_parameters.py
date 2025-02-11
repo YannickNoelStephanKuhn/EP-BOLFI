@@ -202,10 +202,6 @@ C_DLₚ = Parameter("Positive electrode double-layer capacity [F.m-2]")
 # neglect positive electrode materials with high enough potential.
 L_SEI = Parameter("SEI thickness [m]")
 """Thickness of the SEI."""
-κ_SEI = Parameter("SEI ionic conductivity [S.m-1]")
-"""Ionic conductivity of the SEI."""
-R_SEI = L_SEI / κ_SEI
-"""Resistance of the SEI."""
 permittivity_SEI = Parameter("SEI relative permittivity")
 """Relative permittivity of the SEI."""
 C_SEI = ɛ_0 * permittivity_SEI / L_SEI
@@ -219,6 +215,10 @@ center-of-mass velocity).
 """Porosity of the SEI."""
 β_SEI = Parameter("SEI Bruggeman coefficient")
 """Bruggeman coefficient determining the tortuosity of the SEI."""
+κ_SEI = Parameter("SEI ionic conductivity [S.m-1]")
+"""Ionic conductivity of the SEI."""
+R_SEI = L_SEI / (ε_SEI**β_SEI * κ_SEI)
+"""Resistance of the SEI."""
 L_electrolyte_for_SEI_model = (((Lₙ_dim + Lₚ_dim) / 2) + Lₛ_dim) / 2
 """Length-scale for bulk electrolyte contribution in SEI model."""
 

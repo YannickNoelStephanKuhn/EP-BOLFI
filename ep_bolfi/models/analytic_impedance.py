@@ -38,9 +38,9 @@ class AnalyticImpedance:
             usually assigns to the decimal number (53 bits). Exponents
             are stored exactly.
         :param verbose:
-            If set to True, information about the so-called resonancy
+            If set to True, information about the so-called resonance
             frequencies and resistances will be printed during model
-            calculations. The resonancy frequencies are the frequencies
+            calculations. The resonance frequencies are the frequencies
             with maximum imaginary part of the impedance for the various
             model components. The resistances are the widths of the
             semi-circles or Warburg two-thirds-circles with 45° line.
@@ -101,24 +101,22 @@ class AnalyticImpedance:
             "Negative electrolyte concentration impedance scaling":
                 (Cₑ * εₙ_scalar / (εₙ_scalar**βₑₙ_scalar
                                    * Dₑ(cₑ_init, T)))**0.5,
-            "Negative electrode charge transfer resistance": (
-                    zₙ * γₙ / Cᵣₙ * iₛₑₙ_0(cₑ_init, SOCₙ_init(0), cₙ, T) * Lₙ
-                )**(-1),
-            "Positive electrode charge transfer resistance": (
-                    zₚ * γₚ / Cᵣₚ * iₛₑₚ_0(cₑ_init, SOCₚ_init(1), cₚ, T) * Lₚ
-                )**(-1),
-            "Charge transfer resistance": (
-                    zₚ * γₚ / Cᵣₚ * iₛₑₚ_0(cₑ_init, SOCₚ_init(1), cₚ, T) * Lₚ
-                )**(-1)
-                + (
-                    zₙ * γₙ / Cᵣₙ * iₛₑₙ_0(cₑ_init, SOCₙ_init(0), cₙ, T) * Lₙ
-                )**(-1),
-            "Charge transfer resistance for half-cell": (
-                    zₚ * γₚ / Cᵣₚ * iₛₑₚ_0(cₑ_init, SOCₚ_init(1), cₚ, T) * Lₚ
-                )**(-1)
-                + (
-                    zₙ * γₙ / Cᵣₙ * iₛₑₙ_0(cₑ_init, pybamm.Scalar(0.5), cₙ, T)
-                )**(-1),
+            "Negative electrode charge transfer resistance":
+                (zₙ * γₙ / Cᵣₙ
+                 * iₛₑₙ_0(cₑ_init, SOCₙ_init(0), cₙ, T) * Lₙ)**(-1),
+            "Positive electrode charge transfer resistance":
+                (zₚ * γₚ / Cᵣₚ
+                 * iₛₑₚ_0(cₑ_init, SOCₚ_init(1), cₚ, T) * Lₚ)**(-1),
+            "Charge transfer resistance":
+                (zₚ * γₚ / Cᵣₚ
+                 * iₛₑₚ_0(cₑ_init, SOCₚ_init(1), cₚ, T) * Lₚ)**(-1)
+                + (zₙ * γₙ / Cᵣₙ
+                   * iₛₑₙ_0(cₑ_init, SOCₙ_init(0), cₙ, T) * Lₙ)**(-1),
+            "Charge transfer resistance for half-cell":
+                (zₚ * γₚ / Cᵣₚ
+                 * iₛₑₚ_0(cₑ_init, SOCₚ_init(1), cₚ, T) * Lₚ)**(-1)
+                + (zₙ * γₙ / Cᵣₙ
+                   * iₛₑₙ_0(cₑ_init, pybamm.Scalar(0.5), cₙ, T))**(-1),
             "Electrolyte conductivity resistance":
                 (
                     Lₚ / (3 * εₚ_scalar**βₑₚ_scalar)
@@ -363,13 +361,24 @@ class AnalyticImpedance:
         sqrt_s_array = [s**0.5 for s in s_array]
         tanh_p_array = [tanh(sqrt_s * self.Zₚ_int) for sqrt_s in sqrt_s_array]
         tanh_n_array = [tanh(sqrt_s * self.Zₙ_int) for sqrt_s in sqrt_s_array]
+        if self.verbose:
+            print("Positive electrode resistance:", self.Rₚ_int)
+            print("Negative electrode resistance:", -self.Rₙ_int)
+            print(
+                "Positive electrode diffusion resonance frequency:",
+                1 / self.Zₚ_int**2
+            )
+            print(
+                "Negative electrode diffusion resonance frequency:",
+                1 / self.Zₙ_int**2
+            )
         return array([
             complex(
                 (
-                    self.Rₚ_int * tanh_p /
-                    (tanh_p - sqrt_s * self.Zₚ_int)
-                    + self.Rₙ_int * tanh_n /
-                    (tanh_n - sqrt_s * self.Zₙ_int)
+                    self.Rₚ_int * tanh_p
+                    / (tanh_p - sqrt_s * self.Zₚ_int)
+                    + self.Rₙ_int * tanh_n
+                    / (tanh_n - sqrt_s * self.Zₙ_int)
                     + self.Rₛₑ
                 ) * self.thermal_voltage / self.C
             )
@@ -632,6 +641,11 @@ class AnalyticImpedance:
 
         s_array = [2 * pi * mpmathify(s) for s in atleast_1d(s_nondim)]
         sqrt_s_array = [s**0.5 for s in s_array]
+        if self.verbose:
+            print(
+                "Separator electrolyte diffusion resonance frequency:",
+                1 / self.Z_cₑₛ**2
+            )
 
         # Handle high frequencies separately, since no amount of
         # 'just more precision' fixes cancelling exponentials.
@@ -690,6 +704,11 @@ class AnalyticImpedance:
 
         s_array = [2 * pi * mpmathify(s) for s in atleast_1d(s_nondim)]
         sqrt_s_array = [s**0.5 for s in s_array]
+        if self.verbose:
+            print(
+                "Negative electrolyte diffusion resonance frequency:",
+                1 / self.Z_cₑₙ**2
+            )
 
         return [
             + (1 - self.t_plus)
@@ -737,6 +756,11 @@ class AnalyticImpedance:
 
         s_array = [2 * pi * mpmathify(s) for s in atleast_1d(s_nondim)]
         sqrt_s_array = [s**0.5 for s in s_array]
+        if self.verbose:
+            print(
+                "Positive electrolyte diffusion resonance frequency:",
+                1 / self.Z_cₑₚ**2
+            )
 
         return [
             - (1 - self.t_plus)
@@ -788,6 +812,11 @@ class AnalyticImpedance:
         sinh_n_array = [
             sinh(self.Lₙ * self.Z_cₑₙ * sqrt_s) for sqrt_s in sqrt_s_array
         ]
+        if self.verbose:
+            print(
+                "Negative electrolyte diffusion resonance frequency:",
+                1 / self.Z_cₑₙ**2
+            )
 
         return [
             +(1 - self.t_plus) / (self.Cₑ * self.γₑ * self.εₙ * s)
@@ -817,6 +846,11 @@ class AnalyticImpedance:
         sinh_p_array = [
             sinh(self.Lₚ * self.Z_cₑₚ * sqrt_s) for sqrt_s in sqrt_s_array
         ]
+        if self.verbose:
+            print(
+                "Positive electrolyte diffusion resonance frequency:",
+                1 / self.Z_cₑₚ**2
+            )
 
         return [
             -(1 - self.t_plus) / (self.Cₑ * self.γₑ * self.εₚ * s)
@@ -897,6 +931,12 @@ class AnalyticImpedance:
         ]
         sqrt_s_array = [s**0.5 for s in s_array]
         tanh_p_array = [tanh(sqrt_s * self.Zₚ_int) for sqrt_s in sqrt_s_array]
+        if self.verbose:
+            print("Positive electrode resistance:", self.Rₚ_int)
+            print(
+                "Positive electrode diffusion resonance frequency:",
+                1 / self.Zₚ_int**2
+            )
 
         return array([
             complex(
@@ -1055,6 +1095,11 @@ class AnalyticImpedance:
         """
 
         s_array = [2 * pi * mpmathify(s) for s in atleast_1d(s_nondim)]
+        if self.verbose:
+            print(
+                "Positive electrolyte diffusion resonance frequency:",
+                1 / self.Z_cₑₚ**2
+            )
 
         return [
             - (1 - self.t_plus) / (
@@ -1081,6 +1126,11 @@ class AnalyticImpedance:
 
         s_array = [2 * pi * mpmathify(s) for s in atleast_1d(s_nondim)]
         sqrt_s_array = [s**0.5 for s in s_array]
+        if self.verbose:
+            print(
+                "Separator electrolyte diffusion resonance frequency:",
+                1 / self.Z_cₑₛ**2
+            )
 
         return [
             A_s_mc * exp(x_nondim * self.Z_cₑₛ * sqrt_s)
@@ -1268,6 +1318,12 @@ class AnalyticImpedance:
             tanh_p_array = [
                 tanh(sqrt_s * self.Zₚ_int) for sqrt_s in sqrt_s_array
             ]
+            if self.verbose:
+                print("Positive electrode resistance:", self.Rₚ_int)
+                print(
+                    "Positive electrode diffusion resonance frequency:",
+                    1 / self.Zₚ_int**2
+                )
             return array([
                 complex(
                     (
@@ -1281,6 +1337,12 @@ class AnalyticImpedance:
             tanh_n_array = [
                 tanh(sqrt_s * self.Zₙ_int) for sqrt_s in sqrt_s_array
             ]
+            if self.verbose:
+                print("Negative electrode resistance:", -self.Rₙ_int)
+                print(
+                    "Negative electrode diffusion resonance frequency:",
+                    1 / self.Zₙ_int**2
+                )
             return array([
                 complex(
                     (
@@ -1490,25 +1552,25 @@ class AnalyticImpedance:
         if working_electrode == "negative":
             if self.verbose:
                 print(
-                    "Double-layer resonancy frequency:",
+                    "Negative double-layer resonance frequency:",
                     -1 / (self.Rₙ_int * self.C_DLₙ)
                 )
             return 1 / (2 * pi * s_dim * self.C_DLₙ)
         elif working_electrode == "positive":
             if self.verbose:
                 print(
-                    "Double-layer resonancy frequency:",
+                    "Positive double-layer resonance frequency:",
                     1 / (self.Rₚ_int * self.C_DLₚ)
                 )
             return 1 / (2 * pi * s_dim * self.C_DLₚ)
         else:
             if self.verbose:
                 print(
-                    "Negative double-layer resonancy frequency:",
+                    "Negative double-layer resonance frequency:",
                     -1 / (self.Rₙ_int * self.C_DLₙ)
                 )
                 print(
-                    "Positive double-layer resonancy frequency:",
+                    "Positive double-layer resonance frequency:",
                     1 / (self.Rₚ_int * self.C_DLₚ)
                 )
             return (
@@ -1529,7 +1591,7 @@ class AnalyticImpedance:
         # Notations refer to Single2019.
         k_electrolyte = [
             (1 - 1j) * sqrt(
-                self.εₙ ** (1 - self.βₙ) * 2 * pi * s / 1j / (2 * self.Dₑ_dim)
+                self.εₙ ** (-self.βₙ) * 2 * pi * s / 1j / (2 * self.Dₑ_dim)
             )
             for s in s_dim
         ]
@@ -1563,12 +1625,14 @@ class AnalyticImpedance:
         ]
 
         if self.verbose:
+            print("SEI ohmic resistance:", self.R_SEI)
             print(
-                "SEI diffusion resonancy frequency:",
-                float(1.2703 / (
-                    self.L_SEI**2 * self.ε_SEI ** (1 - self.β_SEI)
-                    * 2 * pi / (2 * self.Dₑ_dim)
-                ))
+                "SEI capacitance resonance frequency:",
+                1 / (self.R_SEI * self.C_SEI)
+            )
+            print(
+                "SEI diffusion resonance frequency:",
+                float(1.2703 * D_electrolyte_eff / (pi * self.L_SEI**2))
             )
             print(
                 "SEI diffusion resistance:",
@@ -1581,6 +1645,89 @@ class AnalyticImpedance:
         return array([
             complex(1 / (2 * pi * s * self.C_SEI + 1 / (self.R_SEI + zdsei)))
             for s, zdsei in zip(s_dim, Z_D_SEI)
+        ])
+
+    def Z_SPM_with_double_layer_and_SEI(self, s_dim):
+        """
+        Impedance of the SPM with Double-Layer and SEI.
+
+        :param s_dim:
+            An array of the frequencies to evaluate.
+        :returns:
+            The evaluated impedances as an array.
+        """
+
+        Z_SEI_contribution = self.Z_SEI(s_dim)
+        Z_SPM_contribution = self.Z_SPM(s_dim)
+        Z_DL_contribution = self.Z_DL(s_dim)
+
+        return array([
+            complex(zsei + 1 / (1 / zspm + 1 / zdl))
+            for zsei, zspm, zdl in zip(
+                Z_SEI_contribution,
+                Z_SPM_contribution,
+                Z_DL_contribution
+            )
+        ])
+
+    def Z_SPM_with_double_layer_and_SEI_offset(self):
+        """
+        Impedance of the SPM with Double-Layer and SEI.
+
+        :returns:
+            The evaluated impedances as an array.
+        """
+        Theta = (
+            - (self.nₚ + self.nₙ) / (self.nₚ * self.nₙ)
+            / (self.zₚ_salt * self.zₙ_salt * self.F**2)
+            * self.ρₑ**2 / (self.ρ_N * self.tilde_ρ_N)
+            * self.one_plus_dlnf_dlnc
+        )
+        D_electrolyte_eff = self.Dₑ_dim * self.ε_SEI ** self.β_SEI
+        return (
+            self.Z_SPM_offset()
+            + self.R_SEI
+            + self.L_SEI * Theta / D_electrolyte_eff
+            * (self.t_SEI_minus - self.ρₑ_plus / self.ρₑ)**2
+        )
+
+    def Z_SPM_with_double_layer_and_SEI_reference_electrode(
+        self, s_dim, working_electrode="positive", dimensionless_location=0.5
+    ):
+        """
+        Impedance against a reference electrode.
+
+        :param s_dim:
+            An array of the frequencies to evaluate.
+        :param working_electrode:
+            The electrode against which the voltage was measured with
+            respect to the reference electrode.
+            'positive' or 'negative'.
+        :param dimensionless_location:
+            The location of the reference electrode. 0 refers to the
+            point where negative electrode and separator touch, and 1
+            refers to the point where separator and positive electrode
+            touch.
+        :returns:
+            The evaluated impedances as an array.
+        """
+
+        if working_electrode == "negative":
+            Z_SEI_contribution = self.Z_SEI(s_dim)
+        else:
+            Z_SEI_contribution = [0] * len(s_dim)
+        Z_SPM_contribution = self.Z_SPM_reference_electrode(
+            s_dim, working_electrode
+        )
+        Z_DL_contribution = self.Z_DL(s_dim, working_electrode)
+
+        return array([
+            complex(zsei + 1 / (1 / zspm + 1 / zdl))
+            for zsei, zspm, zdl in zip(
+                Z_SEI_contribution,
+                Z_SPM_contribution,
+                Z_DL_contribution
+            )
         ])
 
     def Z_SPMe_with_double_layer_and_SEI(self, s_dim):

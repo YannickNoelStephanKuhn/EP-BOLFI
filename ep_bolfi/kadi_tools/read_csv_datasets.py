@@ -228,6 +228,7 @@ def read_csv_datasets(
                 extracted_number = (
                     extracted_number[-automatic_numbering_digits:]
                 )
+                filenumbers.append(int(extracted_number))
             elif extracted_number == '':
                 filenumbers.append(backup_numbering)
                 backup_numbering = backup_numbering + 1
@@ -235,8 +236,7 @@ def read_csv_datasets(
                 filenumbers.append(int(extracted_number))
                 backup_numbering = filenumbers[-1] + 1
         if automatic_numbering_digits != 0:
-            for i in range(len(cycl_info.indices)):
-                cycl_info.indices[i] = filenumbers[0]
+            cycl_info.indices = [filenumbers[0]]
     for j, filename in enumerate(filenames[1:]):
         # Skip empty filenames.
         if filename == '':
@@ -261,10 +261,9 @@ def read_csv_datasets(
             flip_imaginary_impedance_sign=flip_imaginary_impedance_sign,
             max_number_of_lines=max_number_of_lines
         )
-        if automatic_numbering_digits != 0:
-            for i in range(len(new_cycl_info.indices)):
-                new_cycl_info.indices[i] = filenumbers[1 + j]
         cycl_info.extend(new_cycl_info)
+        if automatic_numbering_digits != 0:
+            cycl_info.indices.append(filenumbers[1 + j])
     print(cycl_info.to_json())
 
 

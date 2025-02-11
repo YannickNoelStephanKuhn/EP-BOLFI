@@ -978,6 +978,7 @@ class EP_BOLFI:
         model_resampling_increase=1.1,
         independent_mcmc_chains=4,
         scramble_ep_feature_order=True,
+        normalize_features=True,
         show_trials=False,
         verbose=True,
         seed=None
@@ -1073,6 +1074,11 @@ class EP_BOLFI:
             True randomizes the order that the EP features are iterated
             over. Their order is still consistent across EP iterations.
             False uses the order that the *feature_extractors* define.
+        :param normalize_features:
+            Choose whether simulated features get divided by the
+            experimental features before comparison. Has mostly
+            numerical benefits, as BOLFI is scale-invariant.
+            Set to False if you have features that converge to zero.
         :param show_trials:
             True plots the log of tried parameters live. Please note
             that each plot blocks the execution of the program, so do
@@ -1212,12 +1218,18 @@ class EP_BOLFI:
                 # "weights" are applied.
                 def summary(data):
                     try:
-                        return [
-                            data[sub_index] / self.experimental_features[
-                                simulator_index
-                            ][sub_index]
-                            * self.weights[simulator_index][sub_index]
-                        ]
+                        if normalize_features:
+                            return [
+                                data[sub_index] / self.experimental_features[
+                                    simulator_index
+                                ][sub_index]
+                                * self.weights[simulator_index][sub_index]
+                            ]
+                        else:
+                            return [
+                                data[sub_index]
+                                * self.weights[simulator_index][sub_index]
+                            ]
                     except IndexError:
                         if verbose:
                             print("Warning: simulator output was too short.")
@@ -1351,7 +1363,10 @@ class EP_BOLFI:
                             em[em.find('[') + 1:em.find(']')],
                             dtype=float, sep='  '
                         )
-                        current_action = "resample"
+                        if current_action == "sample_from_zero":
+                            current_action = "resample"
+                        else:
+                            current_action = "sample_from_zero"
                         continue
                     except ZeroDivisionError:
                         skip_sample = True

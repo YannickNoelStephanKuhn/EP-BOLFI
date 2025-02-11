@@ -497,6 +497,7 @@ def interactive_impedance_model(
     parameters,
     unknowns,
     transform_unknowns,
+    model="SPMe",
     three_electrode=None,
     dimensionless_reference_electrode_location=0.5,
     with_dl_and_sei=False,
@@ -518,6 +519,9 @@ def interactive_impedance_model(
         Dictionary matching *unknowns*, with values being 2-tuples:
         the first entry being the slider-to-value transform, and
         the second entry being the value-to-slider transform.
+    :param model:
+        Defaults to the analytic impedance model with electrolyte
+        contributions. Set to 'SPM' to only model electrode effects.
     :param three_electrode:
         With None, does nothing (i.e., cell potentials are used). If
         set to either 'positive' or 'negative', instead of cell
@@ -566,33 +570,78 @@ def interactive_impedance_model(
     def simulator(updated_parameters):
         # Unpack in case of a SubstitutionDict.
         updated_parameters = {k: v for k, v in updated_parameters.items()}
-        if three_electrode is None:
-            if with_dl_and_sei:
-                solution = AnalyticImpedance(
-                    updated_parameters, catch_warnings=False, verbose=verbose
-                ).Z_SPMe_with_double_layer_and_SEI(s_eval)
+        if model == "SPM":
+            if three_electrode is None:
+                if with_dl_and_sei:
+                    solution = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPM_with_double_layer_and_SEI(s_eval)
+                else:
+                    solution = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPM(s_eval)
             else:
-                solution = AnalyticImpedance(
-                    updated_parameters, catch_warnings=False, verbose=verbose
-                ).Z_SPMe(s_eval)
+                if with_dl_and_sei:
+                    solution = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPM_with_double_layer_and_SEI_reference_electrode(
+                        s_eval,
+                        three_electrode,
+                        dimensionless_reference_electrode_location
+                    )
+                else:
+                    solution = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPM_reference_electrode(
+                        s_eval,
+                        three_electrode,
+                        dimensionless_reference_electrode_location
+                    )
+            return solution
         else:
-            if with_dl_and_sei:
-                solution = AnalyticImpedance(
-                    updated_parameters, catch_warnings=False, verbose=verbose
-                ).Z_SPMe_with_double_layer_and_SEI_reference_electrode(
-                    s_eval,
-                    three_electrode,
-                    dimensionless_reference_electrode_location
-                )
+            if three_electrode is None:
+                if with_dl_and_sei:
+                    solution = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPMe_with_double_layer_and_SEI(s_eval)
+                else:
+                    solution = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPMe(s_eval)
             else:
-                solution = AnalyticImpedance(
-                    updated_parameters, catch_warnings=False, verbose=verbose
-                ).Z_SPMe_reference_electrode(
-                    s_eval,
-                    three_electrode,
-                    dimensionless_reference_electrode_location
-                )
-        return solution
+                if with_dl_and_sei:
+                    solution = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPMe_with_double_layer_and_SEI_reference_electrode(
+                        s_eval,
+                        three_electrode,
+                        dimensionless_reference_electrode_location
+                    )
+                else:
+                    solution = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPMe_reference_electrode(
+                        s_eval,
+                        three_electrode,
+                        dimensionless_reference_electrode_location
+                    )
+            return solution
 
     # Empty the figure that will contain the sliders.
     ax_slider.xaxis.set_visible(False)
@@ -974,7 +1023,7 @@ def plot_comparison(
         minimum_plot = np.min(errorbar_plot, axis=0)
         maximum_plot = np.max(errorbar_plot, axis=0)
         ax.fill_between(np.array(t_eval) / 3600, minimum_plot, maximum_plot,
-                        alpha=1/3, color=next(color_cycler), label=name)
+                        alpha=1 / 3, color=next(color_cycler), label=name)
 
     update_legend(ax, additional_handles=legend_handles,
                   additional_labels=legend_labels)
