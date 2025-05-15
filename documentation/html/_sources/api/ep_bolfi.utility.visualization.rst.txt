@@ -13,6 +13,7 @@ ep\_bolfi.utility.visualization
       cc_cv_visualization
       colorline
       fit_and_plot_OCV
+      interactive_drt_finetuning
       interactive_impedance_model
       make_segments
       nyquist_plot

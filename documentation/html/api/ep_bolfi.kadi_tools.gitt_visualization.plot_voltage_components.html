@@ -5,11 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components &#8212; EP-BOLFI 3.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
-    <script src="../_static/documentation_options.js?v=110ea713"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <title>ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components &#8212; EP-BOLFI ${VERSION} documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=4a3566fb"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,7 +37,7 @@
 <h1>ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components<a class="headerlink" href="#ep-bolfi-kadi-tools-gitt-visualization-plot-voltage-components" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components">
-<span class="sig-prename descclassname"><span class="pre">ep_bolfi.kadi_tools.gitt_visualization.</span></span><span class="sig-name descname"><span class="pre">plot_voltage_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_by_electrode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">three_electrode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimensionless_reference_electrode_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs_fill</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ep_bolfi.kadi_tools.gitt_visualization.</span></span><span class="sig-name descname"><span class="pre">plot_voltage_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_by_electrode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">three_electrode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimensionless_reference_electrode_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs_fill</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components" title="Link to this definition">¶</a></dt>
 <dd><p>Generate a plot showing the component overpotentials that make up
 the voltage</p>
 <section id="parameters">
@@ -45,8 +46,10 @@ the voltage</p>
 <dt>input_data<span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">pybamm.Solution</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">pybamm.Simulation</span></code></span></dt><dd><p>Solution or Simulation object from which to extract voltage
 components.</p>
 </dd>
-<dt>ax<span class="classifier">matplotlib Axis, optional</span></dt><dd><p>The axis on which to put the plot. If None, a new figure and
-axis is created.</p>
+<dt>fig<span class="classifier">matplotlib Figure</span></dt><dd><p>The figure that contains the plot. Create with
+<code class="docutils literal notranslate"><span class="pre">layout='constrained'</span></code> for proper legend placement.</p>
+</dd>
+<dt>ax<span class="classifier">matplotlib Axis</span></dt><dd><p>The axis on which to put the plot.</p>
 </dd>
 <dt>show_legend<span class="classifier">bool, optional</span></dt><dd><p>Whether to display the legend. Default is True</p>
 </dd>
@@ -93,7 +96,16 @@ want to only display the plot after plt.show() has been called.</p>
 
 
 
-<h3>Navigation</h3>
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
@@ -154,16 +166,6 @@ want to only display the plot after plt.show() has been called.</p>
   </ul></li>
 </ul>
 </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -177,11 +179,11 @@ want to only display the plot after plt.show() has been called.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &#169;2022-%Y, Yannick Kuhn.
+      &#169;2022-2025, Yannick Kuhn.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
       <a href="../_sources/api/ep_bolfi.kadi_tools.gitt_visualization.plot_voltage_components.rst.txt"

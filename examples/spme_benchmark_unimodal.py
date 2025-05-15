@@ -24,10 +24,10 @@ free_parameters = {
          (np.log(100) - np.log(2.80))**2 / chi2(1).ppf(0.98)),
     "Cation transference number":
         (0.4, 0.2**2 / chi2(1).ppf(0.8)),
-    "Negative electrode diffusivity [m2.s-1]":
+    "Negative particle diffusivity [m2.s-1]":
         (np.log(3.9e-14),
          (np.log(100) - np.log(3.90))**2 / chi2(1).ppf(0.98)),
-    "Positive electrode diffusivity [m2.s-1]":
+    "Positive particle diffusivity [m2.s-1]":
         (np.log(1e-13),
          (np.log(100) - np.log(1))**2 / chi2(1).ppf(0.98)),
     "variance of the output noise":
@@ -41,8 +41,8 @@ free_parameters_names.extend([
 transform_parameters = {
     "Electrolyte diffusivity [m2.s-1]": "log",
     "Cation transference number": "none",
-    "Negative electrode diffusivity [m2.s-1]": "log",
-    "Positive electrode diffusivity [m2.s-1]": "log",
+    "Negative particle diffusivity [m2.s-1]": "log",
+    "Positive particle diffusivity [m2.s-1]": "log",
     "variance of the output noise": "log",
 }
 """! The free parameters will have been subtracted from this deep copy. """
@@ -66,7 +66,8 @@ parameters["Current function [A]"] = current
 t_eval = np.linspace(0, 5800, 4000)
 
 
-model = SPMe()
+model = SPMe(halfcell=False, pybamm_control=False)
+# model = SPMe(name="SPMe")
 solver = solver_setup(
     model, parameters, *spectral_mesh_pts_and_method(12, 6, 12, 1, 1, 1,
                                                      halfcell=False),
@@ -114,8 +115,8 @@ experimental_data = [simulator(
     {
         "Electrolyte diffusivity [m2.s-1]": 2.8e-10,
         "Cation transference number": 0.4,
-        "Negative electrode diffusivity [m2.s-1]": 3.9e-14,
-        "Positive electrode diffusivity [m2.s-1]": 1e-13,
+        "Negative particle diffusivity [m2.s-1]": 3.9e-14,
+        "Positive particle diffusivity [m2.s-1]": 1e-13,
         "variance of the output noise": 1.6e-9,
     },
     initial_socs=initial_socs
@@ -231,8 +232,8 @@ optimized_parameters = deepcopy(parameters)
 optimized_parameters.update({
     'Electrolyte diffusivity [m2.s-1]': 2.798437399019171e-10,
     'Cation transference number': 0.4001962531198564,
-    'Negative electrode diffusivity [m2.s-1]': 3.9001132613880597e-14,
-    'Positive electrode diffusivity [m2.s-1]': 1.0003063713144553e-13,
+    'Negative particle diffusivity [m2.s-1]': 3.9001132613880597e-14,
+    'Positive particle diffusivity [m2.s-1]': 1.0003063713144553e-13,
     'variance of the output noise': 1.3482856839508548e-09
 })
 free_parameters_boundaries = {
@@ -240,16 +241,17 @@ free_parameters_boundaries = {
         (2.792353942214955e-10, 2.804534109317555e-10),
     'Cation transference number':
         (0.39941944756997005, 0.40097305866974275),
-    'Negative electrode diffusivity [m2.s-1]':
+    'Negative particle diffusivity [m2.s-1]':
         (3.8993380258644485e-14, 3.9008886510378624e-14),
-    'Positive electrode diffusivity [m2.s-1]':
+    'Positive particle diffusivity [m2.s-1]':
         (9.981805216906142e-14, 1.0024367484125608e-13),
     'variance of the output noise':
         (1.3257511823795397e-09, 1.3712032164919453e-09),
 }
 
 solutions, errorbars = solve_all_parameter_combinations(
-    SPMe(),
+    SPMe(halfcell=False, pybamm_control=False),
+    # SPMe(name="SPMe"),
     t_eval, optimized_parameters,
     free_parameters_boundaries,
     *spectral_mesh_pts_and_method(12, 6, 12, 1, 1, 1, halfcell=False),
@@ -283,7 +285,7 @@ fig0.tight_layout()
 
 fig1, ax1 = plt.subplots(figsize=(5 * 2**0.5, 5))
 plot_comparison(
-    ax1, solutions, errorbars, [t_eval, experimental_data[0]],
+    fig1, ax1, solutions, errorbars, [t_eval, experimental_data[0]],
     title="",
     xlabel="Experiment run-time  /  h", ylabel="Terminal voltage  /  V",
     interactive_plot=False,

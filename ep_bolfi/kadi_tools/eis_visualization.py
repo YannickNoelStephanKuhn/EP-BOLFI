@@ -14,7 +14,7 @@ import xmlhelpy
 
 @xmlhelpy.command(
     name='python -m ep_bolfi.kadi_tools.eis_visualization',
-    version='3.0'
+    version='${VERSION}'
 )
 @xmlhelpy.option(
     'input-record',
@@ -47,9 +47,9 @@ import xmlhelpy
         + linesep + linesep
         + "It may contain the additional following global variables:"
         + linesep + linesep
-        + " - unknowns: The dictionary of unknown parameters. Instead of single "
-        "values as in 'parameters', input 2-tuples with their lower and upper "
-        "bounds, e.g. from literature."
+        + " - unknowns: The dictionary of unknown parameters. Instead of "
+        "single values as in 'parameters', input 2-tuples with their lower "
+        "and upper bounds, e.g. from literature."
     )
 )
 @xmlhelpy.option(
@@ -408,7 +408,10 @@ def eis_visualization(
     legend_labels.append("95% confidence")
 
     update_legend(
-        ax, additional_handles=legend_handles, additional_labels=legend_labels
+        ax.get_legend_handles_labels(),
+        ax,
+        additional_handles=legend_handles,
+        additional_labels=legend_labels
     )
 
     fig.tight_layout()

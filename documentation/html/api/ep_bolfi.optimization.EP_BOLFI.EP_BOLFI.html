@@ -5,11 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ep_bolfi.optimization.EP_BOLFI.EP_BOLFI &#8212; EP-BOLFI 3.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
-    <script src="../_static/documentation_options.js?v=110ea713"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <title>ep_bolfi.optimization.EP_BOLFI.EP_BOLFI &#8212; EP-BOLFI ${VERSION} documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=4a3566fb"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,7 +37,7 @@
 <h1>ep_bolfi.optimization.EP_BOLFI.EP_BOLFI<a class="headerlink" href="#ep-bolfi-optimization-ep-bolfi-ep-bolfi" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ep_bolfi.optimization.EP_BOLFI.</span></span><span class="sig-name descname"><span class="pre">EP_BOLFI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulators</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experimental_datasets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_extractors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">free_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_covariance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">free_parameters_boundaries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundaries_in_deviations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_current_feature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_parameter_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ep_bolfi.optimization.EP_BOLFI.</span></span><span class="sig-name descname"><span class="pre">EP_BOLFI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulators</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experimental_datasets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_extractors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">free_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_covariance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">free_parameters_boundaries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundaries_in_deviations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Q_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_current_feature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_parameter_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Expectation Propagation and Bayesian Optimization.</p>
 <p>Sets up and runs these two algorithms to infer model parameters.
@@ -185,43 +186,40 @@ different contexts.</p></li>
 <tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.initial_guesses" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.initial_guesses"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initial_guesses</span></code></a></p></td>
 <td><p>Container for the initial expectation values.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_raw_tried_parameters" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_raw_tried_parameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_of_raw_tried_parameters</span></code></a></p></td>
-<td><p>Stores all raw parameter evaluation points.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_discrepancies" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_discrepancies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_of_discrepancies</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_discrepancies" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_discrepancies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_of_discrepancies</span></code></a></p></td>
 <td><p>Stores all discrepancies of the sampled parameters.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_expectation" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_expectation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">final_expectation</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_expectation" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_expectation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">final_expectation</span></code></a></p></td>
 <td><p>Stores the inference mean (empty at first).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_covariance" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_covariance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">final_covariance</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_covariance" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_covariance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">final_covariance</span></code></a></p></td>
 <td><p>Stores the inference covariance (empty at first).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_correlation" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_correlation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">final_correlation</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_correlation" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_correlation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">final_correlation</span></code></a></p></td>
 <td><p>Stores the inference correlation (empty at first).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.initial_Q" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.initial_Q"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initial_Q</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.initial_Q" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.initial_Q"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initial_Q</span></code></a></p></td>
 <td><p>Expectation Propagation covariance matrix (prior).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.Q" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.Q"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Q</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.Q" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.Q"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Q</span></code></a></p></td>
 <td><p>Expectation Propagation covariance matrix (posterior).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.initial_r" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.initial_r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initial_r</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.initial_r" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.initial_r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initial_r</span></code></a></p></td>
 <td><p>Expectation Propagation expectation value (prior).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.r" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">r</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.r" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">r</span></code></a></p></td>
 <td><p>Expectation Propagation expectation value (posterior).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.Q_features" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.Q_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Q_features</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.Q_features" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.Q_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Q_features</span></code></a></p></td>
 <td><p>Expectation Propagation itemized covariance matrices.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.r_features" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.r_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">r_features</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.r_features" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.r_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">r_features</span></code></a></p></td>
 <td><p>Expectation Propagation itemized expectation values.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.inferred_parameters" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.inferred_parameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferred_parameters</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.inferred_parameters" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.inferred_parameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inferred_parameters</span></code></a></p></td>
 <td><p>The inferred model parameters.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_error_bounds" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_error_bounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">final_error_bounds</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_error_bounds" title="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.final_error_bounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">final_error_bounds</span></code></a></p></td>
 <td><p>The 95% confidence bounds (which don't reflect the cross-correlations, but are easier to interpret).</p></td>
 </tr>
 </tbody>
@@ -312,12 +310,6 @@ cross-correlations, but are easier to interpret).</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_raw_tried_parameters">
-<span class="sig-name descname"><span class="pre">log_of_raw_tried_parameters</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_raw_tried_parameters" title="Link to this definition">¶</a></dt>
-<dd><p>Stores all raw parameter evaluation points.</p>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_tried_parameters">
 <span class="sig-name descname"><span class="pre">log_of_tried_parameters</span></span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_tried_parameters" title="Link to this definition">¶</a></dt>
 <dd><p>Stores all parameter combinations that have been tried.</p>
@@ -360,7 +352,7 @@ cross-correlations, but are easier to interpret).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bolfi_initial_evidence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bolfi_total_evidence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bolfi_posterior_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ep_iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ep_dampener</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">final_dampening</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ep_dampener_reduction_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gelman_rubin_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ess_ratio_resample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ess_ratio_sampling_from_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ess_ratio_abort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_heuristic_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posterior_sampling_increase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_resampling_increase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">independent_mcmc_chains</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scramble_ep_feature_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.run" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bolfi_initial_evidence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bolfi_total_evidence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bolfi_posterior_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ep_iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ep_dampener</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">final_dampening</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ep_dampener_reduction_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gelman_rubin_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ess_ratio_resample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ess_ratio_sampling_from_zero</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ess_ratio_abort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_heuristic_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">posterior_sampling_increase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_resampling_increase</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">independent_mcmc_chains</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scramble_ep_feature_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_trials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.run" title="Link to this definition">¶</a></dt>
 <dd><p>Runs Expectation Propagation together with BOLFI.</p>
 <p>This function can be called multiple times; the estimation will
 take off from where it last stopped.</p>
@@ -438,6 +430,10 @@ not be faster, but more stable.</p></li>
 <li><p><strong>scramble_ep_feature_order</strong> – True randomizes the order that the EP features are iterated
 over. Their order is still consistent across EP iterations.
 False uses the order that the <em>feature_extractors</em> define.</p></li>
+<li><p><strong>normalize_features</strong> – Choose whether simulated features get divided by the
+experimental features before comparison. Has mostly
+numerical benefits, as BOLFI is scale-invariant.
+Set to False if you have features that converge to zero.</p></li>
 <li><p><strong>show_trials</strong> – True plots the log of tried parameters live. Please note
 that each plot blocks the execution of the program, so do
 not use this when running the estimation in the background.</p></li>
@@ -511,7 +507,16 @@ correlation and error bounds are from the finished estimation.</p>
 
 
 
-<h3>Navigation</h3>
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
@@ -539,7 +544,6 @@ correlation and error bounds are from the finished estimation.</p>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.initial_r"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.initial_r</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.input_dim"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.input_dim</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_discrepancies"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.log_of_discrepancies</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_raw_tried_parameters"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.log_of_raw_tried_parameters</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_tried_parameters"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.log_of_tried_parameters</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_to_json"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.log_to_json()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.output_dim"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.output_dim</span></code></a></li>
@@ -587,16 +591,6 @@ correlation and error bounds are from the finished estimation.</p>
   </ul></li>
 </ul>
 </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -610,11 +604,11 @@ correlation and error bounds are from the finished estimation.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &#169;2022-%Y, Yannick Kuhn.
+      &#169;2022-2025, Yannick Kuhn.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
       <a href="../_sources/api/ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.rst.txt"

@@ -46,7 +46,7 @@ graphite_discharge = [p[i] for i in range(4)
                       for p in [E_0_g_dc, a_g_dc, Δx_g_dc]]
 
 measurement = read_csv_from_measurement_system(
-    "../GITT data/L_ACB440_BP_2_OCV.csv", 'iso-8859-1', 0,
+    "./GITT data/L_ACB440_BP_2_OCV.csv", 'iso-8859-1', 0,
     headers={0: "SOC [-]", 2: "U [V]"}, delimiter=',', decimal='.'
     # headers={0: "SOC [-]", 1: "U [V]"}, delimiter=';', decimal=','
 )
@@ -56,19 +56,19 @@ complete_OCV = np.array(measurement.voltages[0][50:-50])
 fig, (ax0, ax1) = plt.subplots(figsize=(12.73, 9), ncols=2)
 # fig, ax0 = plt.subplots(figsize=(12.73, 9))
 # fit_and_plot_OCV(ax0, complete_SOC, complete_OCV, "graphite",
-#                 spline_order=2, phases=8,
+#                 spline_order=2, phases=8, spline_smoothing=1e-6,  # 2e-5,
 #                 inverted=True, parameters_print=True, spline_print='python',
 #                 spline_SOC_range=(0.02, 0.99))
 # from ep_bolfi.utility.visualization import plot_ICA
-# plot_ICA(ax1, complete_SOC, complete_OCV, "graphite",
-#         spline_order=5, sign=1)  # 1e-5
+# plot_ICA(fig, ax1, complete_SOC, complete_OCV, "graphite",
+#         spline_order=5, spline_smoothing=8e-2, sign=1)  # 1e-5
 ax0.set_xlabel("SOC  /  -")
 ax1.set_xlabel("SOC  /  -")
 ax0.set_ylabel("OCV  /  V")
 fit_and_plot_OCV(ax0, np.linspace(0, 1, 10), np.linspace(0, 1, 10), "graphite",
                  fit=graphite_discharge, spline_SOC_range=(0.001, 0.995),
                  eval_points=500, spline_order=2, phases=4,
-                 inverted=False, spline_print='matlab',
+                 spline_smoothing=1e-4, inverted=False, spline_print='matlab',
                  parameters_print=True)
 fig.tight_layout()
 plt.show()

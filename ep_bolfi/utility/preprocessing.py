@@ -531,7 +531,8 @@ def capacity(parameters, electrode="positive"):
             + " electrode active material volume fraction"
         ]
         * parameters[electrode.capitalize() + " electrode thickness [m]"]
-        * parameters["Current collector perpendicular area [m2]"]
+        * parameters["Electrode width [m]"]
+        * parameters["Electrode height [m]"]
         * parameters[
             "Maximum concentration in " + electrode + " electrode [mol.m-3]"
         ]
@@ -677,9 +678,10 @@ def subtract_OCV_curve_from_cycles(
 
     OCV_function = parameters[electrode.capitalize() + " electrode OCP [V]"]
     if type(OCV_function(0.5)) is Scalar:
-        def OCV_function(s): return (
-            parameters[electrode.capitalize() + " electrode OCP [V]"](s).value
-        )
+        def OCV_function(s):
+            return parameters[
+                electrode.capitalize() + " electrode OCP [V]"
+            ](s).value
     if starting_SOC is None:
         starting_OCV = starting_OCV or dataset.voltages[0][0]
         initial_SOC = root_scalar(
@@ -768,14 +770,12 @@ def subtract_both_OCV_curves_from_cycles(
 
     positive_OCV = parameters["Positive electrode OCP [V]"]
     if type(positive_OCV(0.5)) is Scalar:
-        def positive_OCV(s): return (
-            parameters["Positive electrode OCP [V]"](s).value
-        )
+        def positive_OCV(s):
+            return parameters["Positive electrode OCP [V]"](s).value
     negative_OCV = parameters["Negative electrode OCP [V]"]
     if type(negative_OCV(0.5)) is Scalar:
-        def negative_OCV(s): return (
-            parameters["Negative electrode OCP [V]"](s).value
-        )
+        def negative_OCV(s):
+            return parameters["Negative electrode OCP [V]"](s).value
     if starting_SOC is None:
         starting_OCV = starting_OCV or dataset.voltages[0][0]
         cell_SOC_tracker = root_scalar(

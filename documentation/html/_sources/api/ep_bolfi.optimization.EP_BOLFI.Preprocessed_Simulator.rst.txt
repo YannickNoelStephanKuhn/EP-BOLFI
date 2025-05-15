@@ -33,6 +33,7 @@ ep\_bolfi.optimization.EP\_BOLFI.Preprocessed\_Simulator
    
       ~Preprocessed_Simulator.log_of_tried_parameters
       ~Preprocessed_Simulator.experimental_features
+      ~Preprocessed_Simulator.log_of_calculated_features
       ~Preprocessed_Simulator.input_dim
       ~Preprocessed_Simulator.output_dim
       ~Preprocessed_Simulator.add_parameters

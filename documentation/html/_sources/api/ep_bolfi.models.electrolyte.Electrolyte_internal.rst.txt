@@ -17,6 +17,7 @@ ep\_bolfi.models.electrolyte.Electrolyte\_internal
    .. autosummary::
    
       ~Electrolyte_internal.__init__
+      ~Electrolyte_internal.add_events_from
       ~Electrolyte_internal.build_coupled_variables
       ~Electrolyte_internal.build_fundamental
       ~Electrolyte_internal.build_model
@@ -39,6 +40,7 @@ ep\_bolfi.models.electrolyte.Electrolyte\_internal
       ~Electrolyte_internal.get_parameter_info
       ~Electrolyte_internal.info
       ~Electrolyte_internal.latexify
+      ~Electrolyte_internal.list_coupled_variables
       ~Electrolyte_internal.new_copy
       ~Electrolyte_internal.print_parameter_info
       ~Electrolyte_internal.process_parameters_and_discretise
@@ -63,9 +65,12 @@ ep\_bolfi.models.electrolyte.Electrolyte\_internal
    
       ~Electrolyte_internal.algebraic
       ~Electrolyte_internal.boundary_conditions
+      ~Electrolyte_internal.built
+      ~Electrolyte_internal.calc_esoh
       ~Electrolyte_internal.concatenated_algebraic
       ~Electrolyte_internal.concatenated_initial_conditions
       ~Electrolyte_internal.concatenated_rhs
+      ~Electrolyte_internal.coupled_variables
       ~Electrolyte_internal.default_geometry
       ~Electrolyte_internal.default_parameter_values
       ~Electrolyte_internal.default_quick_plot_variables
@@ -79,6 +84,7 @@ ep\_bolfi.models.electrolyte.Electrolyte\_internal
       ~Electrolyte_internal.geometry
       ~Electrolyte_internal.initial_conditions
       ~Electrolyte_internal.input_parameters
+      ~Electrolyte_internal.is_standard_form_dae
       ~Electrolyte_internal.jacobian
       ~Electrolyte_internal.jacobian_algebraic
       ~Electrolyte_internal.jacobian_rhs

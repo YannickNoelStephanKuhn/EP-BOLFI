@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ep-bolfi"
-version = "3.0.1"
+version = "3.0.2"
 description = "EP-BOLFI (Expectation Propagation with Bayesian Optimization for Likelihood-Free Inference) extends the simulator optimizer BOLFI with the data featurization of Expectation Propagation."
 readme = "README.md"
 classifiers = [

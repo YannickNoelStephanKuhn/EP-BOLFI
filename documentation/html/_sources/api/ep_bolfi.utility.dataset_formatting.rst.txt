@@ -1,4 +1,4 @@
-﻿ep\_bolfi.utility.dataset\_formatting
+ep\_bolfi.utility.dataset\_formatting
 =====================================
 
 .. automodule:: ep_bolfi.utility.dataset_formatting

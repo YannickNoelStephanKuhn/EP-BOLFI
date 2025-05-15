@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import matplotlib.collections as mcoll
 from matplotlib.widgets import CheckButtons, Slider
 import os
+
 from ep_bolfi.models.analytic_impedance import AnalyticImpedance
 from ep_bolfi.utility.fitting_functions import (
     smooth_fit, inverse_OCV_fit_function, d_dE_OCV_fit_function, fit_OCV,
@@ -98,10 +99,12 @@ def set_fontsize(
 
 
 def update_legend(
-    ax,
+    current_handles_labels,
+    target,
     additional_handles=[],
     additional_labels=[],
-    additional_handler_map={}
+    additional_handler_map={},
+    **kwargs,
 ):
     """
     Makes sure that all items remain and all items show up.
@@ -110,8 +113,11 @@ def update_legend(
     that new items can be added to the legend without losing old ones.
     Please note that only *handler_map*s with class keys work correctly.
 
-    :param ax:
-        The axis which legend shall be updated.
+    :param current_handles_labels:
+        The current list of handles and labels. Usually easily
+        obtainable via ``ax.get_legend_handles_labels()``.
+    :param target:
+        The figure or axis which legend shall be updated.
     :param additional_handles:
         The same input ``ax.legend`` would expect. A list of artists.
     :param additional_labels:
@@ -125,39 +131,18 @@ def update_legend(
         lost in the initialization of a ``Legend``.
     """
 
-    try:
-        old_legend = ax.get_legend()
-        handles = old_legend.legend_handles
-        labels = [t._text for t in old_legend.texts]
-        # Avoid duplicates; sadly, Legend does not carry the original
-        # handles, so duplicate labels (which are a bad idea though)
-        # are treated as representing duplicate handles.
-        try:
-            more_handles, more_labels = ax.get_legend_handles_labels()
-            more_handles, more_labels = zip(*[
-                (h, l)
-                for h, l in zip(more_handles, more_labels)
-                if l not in labels
-            ])
-            handles.extend(more_handles)
-            labels.extend(more_labels)
-        except ValueError:
-            # Catch the case where ax.get_legend_handles_labels
-            # returnd empty arrays.
-            pass
-    except AttributeError:
-        handles, labels = ax.get_legend_handles_labels()
+    handles, labels = current_handles_labels
     handles.extend(additional_handles)
     labels.extend(additional_labels)
     try:
-        handler_map = ax.get_legend().get_legend_handler_map()
+        handler_map = target.get_legend().get_legend_handler_map()
         # Remove all class keys.
         # handler_map = {key: value for key, value in handler_map.items()
         #                if not isinstance(key, type)}
         handler_map.update(additional_handler_map)
     except AttributeError:
         handler_map = additional_handler_map
-    ax.legend(handles, labels, handler_map=handler_map)
+    target.legend(handles, labels, handler_map=handler_map, **kwargs)
 
 
 def push_apart_text(
@@ -389,7 +374,7 @@ def nyquist_plot(
         ax.add_collection(lc)
         # Add an item to the legend.
         if lt:
-            update_legend(ax, [lc], [lt])
+            update_legend(ax.get_legend_handles_labels(), ax, [lc], [lt])
         # Update the viewport.
         update_limits(
             ax,
@@ -491,6 +476,176 @@ def bode_plot(
     fig.tight_layout()
 
 
+def interactive_drt_finetuning(
+    frequencies,
+    measured_impedances,
+    lambda_value=None,
+    subsampling=1,
+    start=None,
+    end=None,
+    verbose=False,
+):
+    """
+    Generates a coarse GUI for manual adjustments to DRT transforms.
+
+    :param frequencies:
+        The frequencies at which impedances were measured.
+    :param measured_impedance:
+        The measured impedances as complex numbers.
+    :param lambda_value:
+        The regularization parameter in `pyimpspec`, see there.
+    :param subsampling:
+        The steps between data points used for DRT.
+    :param start:
+        Frequency before which to truncate data.
+    :param end:
+        Frequency after which to truncate data.
+    :param verbose:
+        Whether or not to log the exact settings to console.
+    """
+    lambda_value = lambda_value or -2.0
+    subsampling = abs(int(subsampling))
+    start = start or min(frequencies)
+    end = end or max(frequencies)
+
+    fig = plt.figure()
+    gridspec = fig.add_gridspec(
+        5, 2, height_ratios=[4, 0.25, 0.25, 0.25, 0.25]
+    )
+    ax_nyquist = fig.add_subplot(gridspec[0, 0])
+    ax_drt = fig.add_subplot(gridspec[0, 1])
+
+    slider_names = ["lambda", "subsampling", "start", "end"]
+    slider_axes = {}
+    for i, name in enumerate(slider_names):
+        slider_axes[name] = fig.add_subplot(gridspec[i + 1, :])
+        slider_axes[name].xaxis.set_visible(False)
+        slider_axes[name].yaxis.set_visible(False)
+        for spine in ['top', 'right', 'left', 'bottom']:
+            slider_axes[name].spines[spine].set_visible(False)
+
+    nyquist_line = nyquist_plot(
+        fig,
+        ax_nyquist,
+        frequencies,
+        measured_impedances,
+        ls=':',
+        alpha=0.5,
+        legend_text="measurement",
+        equal_aspect=False
+    )[0]
+
+    time_constants, resistances, drt = fit_drt(
+        frequencies, measured_impedances, lambda_value
+    )
+    lambda_value = drt.lambda_value
+    if verbose:
+        print("DRT regularization parameter λ:", lambda_value)
+
+    nyquist_drt = nyquist_plot(
+        fig,
+        ax_nyquist,
+        frequencies,
+        drt.impedances[::-1],
+        ls='-',
+        alpha=0.5,
+        legend_text="DRT reconstruction",
+        equal_aspect=False,
+        add_frequency_colorbar=False,
+    )[0]
+    drt_line, = ax_drt.loglog(
+        drt.time_constants, drt.gammas, label="DRT for measurement"
+    )
+    drt_res = ax_drt.scatter(
+        time_constants, resistances, label="resistances for measurement"
+    )
+
+    sliders = {}
+    current_parameters = {}
+    for name, valmin, valinit, valmax in zip(
+        slider_names,
+        [lambda_value * 1e-12, 1, min(frequencies), min(frequencies)],
+        [lambda_value, subsampling, start, end],
+        [lambda_value * 1e12, 10, max(frequencies), max(frequencies)],
+    ):
+        sliders[name] = Slider(
+            ax=slider_axes[name],
+            label=name,
+            valmin=valmin if name == "subsampling" else np.log(valmin),
+            valinit=valinit if name == "subsampling" else np.log(valinit),
+            valmax=valmax if name == "subsampling" else np.log(valmax),
+            valstep=1 if name == "subsampling" else None,
+            orientation='horizontal',
+        )
+        sliders[name].label.set_position([0.5, 0])
+        sliders[name].label.set_horizontalalignment('center')
+        sliders[name].label.set_verticalalignment('top')
+        sliders[name].valtext.set_text('{:.3g}'.format(valinit))
+        current_parameters[name] = valinit
+
+    def update_drt(value, name):
+        actual_value = int(value) if name == "subsampling" else np.exp(value)
+        sliders[name].valtext.set_text('{:.3g}'.format(actual_value))
+        current_parameters[name] = actual_value
+        lambda_value = current_parameters["lambda"]
+        subsampling = current_parameters["subsampling"]
+        start_index = find_occurrences(
+            frequencies, current_parameters["start"]
+        )[0]
+        end_index = find_occurrences(
+            frequencies, current_parameters["end"]
+        )[0]
+
+        time_constants, resistances, drt = fit_drt(
+            frequencies[start_index:end_index + 1:subsampling],
+            measured_impedances[start_index:end_index + 1:subsampling],
+            lambda_value
+        )
+
+        plot_impedances = []
+        drt_plot_impedances = []
+        for (plot_target, plot_source) in zip(
+            [plot_impedances, drt_plot_impedances],
+            [
+                measured_impedances[start_index:end_index + 1:subsampling],
+                drt.impedances[::-1]
+            ]
+        ):
+            for _ in measured_impedances[:start_index]:
+                plot_target.append(measured_impedances[start_index])
+            for imp in plot_source:
+                plot_target.extend([imp] * subsampling)
+            for _ in measured_impedances[end_index + 1:]:
+                plot_target.append(measured_impedances[end_index])
+        plot_impedances = plot_impedances[:len(measured_impedances)]
+        drt_plot_impedances = drt_plot_impedances[:len(measured_impedances)]
+        nyquist_line.set_segments(
+            make_segments(np.real(plot_impedances), -np.imag(plot_impedances))
+        )
+        nyquist_drt.set_segments(make_segments(
+            np.real(drt_plot_impedances), -np.imag(drt_plot_impedances)
+        ))
+        drt_line.set_data([drt.time_constants, drt.gammas])
+        try:
+            drt_res.set_offsets(list(zip(time_constants, resistances)))
+        except IndexError:
+            if verbose:
+                print("Warning: DRT failed with no peaks.")
+
+        if verbose:
+            print(current_parameters)
+
+        fig.canvas.draw_idle()
+
+    for name, slider in sliders.items():
+        slider.on_changed(lambda x, name=name: update_drt(x, name))
+    sliders["subsampling"].set_val(current_parameters["subsampling"])
+
+    plt.show()
+
+    return current_parameters
+
+
 def interactive_impedance_model(
     frequencies,
     measured_impedances,
@@ -502,6 +657,8 @@ def interactive_impedance_model(
     dimensionless_reference_electrode_location=0.5,
     with_dl_and_sei=False,
     verbose=False,
+    lambda_value=None,
+    frequency_cutoff_for_electrolyte=None,
 ):
     """
     Generates a coarse GUI for manual impedance model parameterization.
@@ -521,7 +678,10 @@ def interactive_impedance_model(
         the second entry being the value-to-slider transform.
     :param model:
         Defaults to the analytic impedance model with electrolyte
-        contributions. Set to 'SPM' to only model electrode effects.
+        contributions. Set to 'SPM' to only model electrode effects,
+        or provide a callable with your own impedance model.
+        The callable takes parameters as first argument and
+        complex impedances as second argument.
     :param three_electrode:
         With None, does nothing (i.e., cell potentials are used). If
         set to either 'positive' or 'negative', instead of cell
@@ -541,8 +701,23 @@ def interactive_impedance_model(
     :param verbose:
         If True, each slider change triggers a log of some
         characteristic model properties to stdout.
+    :param lambda_value:
+        The regularization parameter in `pyimpspec`, see there.
+    :param frequency_cutoff_for_electrolyte:
+        The frequency above which the electrolyte model is set to 0.
+        Useful in case the in-built numeric failsafes do not suffice.
     """
     s_eval = 1j * np.array(frequencies)
+    if frequency_cutoff_for_electrolyte is not None:
+        cutoff_index = find_occurrences(
+            frequencies, frequency_cutoff_for_electrolyte
+        )[0]
+        if frequencies[-1] > frequencies[0]:
+            s_eval_elde = 1j * np.array(frequencies[cutoff_index:])
+            s_eval_elyte = 1j * np.array(frequencies[:cutoff_index])
+        else:
+            s_eval_elde = 1j * np.array(frequencies[:cutoff_index])
+            s_eval_elyte = 1j * np.array(frequencies[cutoff_index:])
 
     # Substitute transformations given by name.
     if transform_unknowns is not {}:
@@ -570,7 +745,9 @@ def interactive_impedance_model(
     def simulator(updated_parameters):
         # Unpack in case of a SubstitutionDict.
         updated_parameters = {k: v for k, v in updated_parameters.items()}
-        if model == "SPM":
+        if callable(model):
+            return model(updated_parameters, s_eval)
+        elif model == "SPM":
             if three_electrode is None:
                 if with_dl_and_sei:
                     solution = AnalyticImpedance(
@@ -606,7 +783,7 @@ def interactive_impedance_model(
                         dimensionless_reference_electrode_location
                     )
             return solution
-        else:
+        elif frequency_cutoff_for_electrolyte is None:
             if three_electrode is None:
                 if with_dl_and_sei:
                     solution = AnalyticImpedance(
@@ -642,6 +819,75 @@ def interactive_impedance_model(
                         dimensionless_reference_electrode_location
                     )
             return solution
+        else:
+            if three_electrode is None:
+                if with_dl_and_sei:
+                    solution_elde = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPM_with_double_layer_and_SEI(s_eval_elde)
+                    solution_elyte = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPMe_with_double_layer_and_SEI(s_eval_elyte)
+                else:
+                    solution_elde = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPM(s_eval_elde)
+                    solution_elyte = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPMe(s_eval_elyte)
+            else:
+                if with_dl_and_sei:
+                    solution_elde = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPM_with_double_layer_and_SEI_reference_electrode(
+                        s_eval_elde,
+                        three_electrode,
+                        dimensionless_reference_electrode_location
+                    )
+                    solution_elyte = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPMe_with_double_layer_and_SEI_reference_electrode(
+                        s_eval_elyte,
+                        three_electrode,
+                        dimensionless_reference_electrode_location
+                    )
+                else:
+                    solution_elde = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPM_reference_electrode(
+                        s_eval_elde,
+                        three_electrode,
+                        dimensionless_reference_electrode_location
+                    )
+                    solution_elyte = AnalyticImpedance(
+                        updated_parameters,
+                        catch_warnings=False,
+                        verbose=verbose
+                    ).Z_SPMe_reference_electrode(
+                        s_eval_elyte,
+                        three_electrode,
+                        dimensionless_reference_electrode_location
+                    )
+            if frequencies[-1] > frequencies[0]:
+                solution_elyte -= solution_elyte[-1] - solution_elde[0]
+                return np.append(solution_elyte, solution_elde)
+            else:
+                solution_elyte -= solution_elde[-1] - solution_elyte[0]
+                return np.append(solution_elde, solution_elyte)
 
     # Empty the figure that will contain the sliders.
     ax_slider.xaxis.set_visible(False)
@@ -675,9 +921,11 @@ def interactive_impedance_model(
 
     try:
         time_constants, resistances, drt = fit_drt(
-            frequencies, measured_impedances
+            frequencies, measured_impedances, lambda_value or -2.0
         )
         lambda_value = drt.lambda_value
+        if verbose:
+            print("DRT regularization parameter λ:", lambda_value)
         ax_drt.loglog(
             drt.time_constants, drt.gammas, label="DRT for measurement"
         )
@@ -685,7 +933,7 @@ def interactive_impedance_model(
             time_constants, resistances, label="resistances for measurement"
         )
     except RuntimeError as e:
-        lambda_value = -2
+        lambda_value = -2.0
         if verbose:
             print(
                 "Warning: measurement DRT calculation failed due to: " + str(e)
@@ -768,6 +1016,7 @@ def interactive_impedance_model(
 
 
 def plot_comparison(
+    fig,
     ax,
     solutions,
     errorbars,
@@ -795,6 +1044,9 @@ def plot_comparison(
     First, a ``pybamm.QuickPlot`` shows the contents of *solutions*.
     Then, a plot for feature visualization and comparison is generated.
 
+    :param fig:
+        The figure in which to place the legend (below the plots).
+        Create with ``layout='constrained'`` for proper placement.
     :param ax:
         The axes onto which the comparison shall be plotted.
     :param solutions:
@@ -898,7 +1150,8 @@ def plot_comparison(
                 x, y, fit = vis
                 all_texts.append(
                     ax.text(x[0] / 3600, y[0] / voltage_scale, fit,
-                            color=color, fontsize=feature_fontsize)
+                            color=color, fontsize=feature_fontsize,
+                            in_layout=False)
                 )
             else:
                 x, y = vis
@@ -970,7 +1223,8 @@ def plot_comparison(
                 x, y, fit = vis
                 all_texts.append(
                     ax.text(x[0] / 3600, y[0] / voltage_scale, fit,
-                            color=feature_color, fontsize=feature_fontsize)
+                            color=feature_color, fontsize=feature_fontsize,
+                            in_layout=False)
                 )
             else:
                 x, y = vis
@@ -1025,8 +1279,14 @@ def plot_comparison(
         ax.fill_between(np.array(t_eval) / 3600, minimum_plot, maximum_plot,
                         alpha=1 / 3, color=next(color_cycler), label=name)
 
-    update_legend(ax, additional_handles=legend_handles,
-                  additional_labels=legend_labels)
+    update_legend(
+        ax.get_legend_handles_labels(),
+        fig,
+        additional_handles=legend_handles,
+        additional_labels=legend_labels,
+        loc='outside lower center',
+        ncol=2,
+    )
 
     if interactive_plot:
         # Plot the solution with a slider.
@@ -1041,8 +1301,7 @@ def plot_comparison(
                 "Voltage [V]",
             ]
         )
-        # testing=True has the sole effect of not calling plt.show.
-        plot.dynamic_plot(testing=True)
+        plot.dynamic_plot(show_plot=False)
 
     return all_texts
 
@@ -1258,7 +1517,7 @@ def plot_OCV_from_CC_CV(
                          color=colors[i], ls=ls[1],
                          label='{:4.2f}'.format(I_mean[i]) + " A discharge")
 
-    update_legend(ax_OCV_meas,
+    update_legend(ax_OCV_meas.get_legend_handles_labels(), ax_OCV_meas,
                   [matplotlib.lines.Line2D([], [], color=colors[0], ls=ls[2])],
                   ["smoothed cycles"])
 
@@ -1290,27 +1549,29 @@ def plot_OCV_from_CC_CV(
     ax_ICA_meas.set_title("Incremental Capacity Analysis")
     ax_ICA_meas.set_xlabel("Discharged capacity  /  Ah")
     ax_ICA_meas.set_ylabel("dSOC / dV  /  V⁻¹")
-    update_legend(ax_ICA_meas)
+    update_legend(ax_ICA_meas.get_legend_handles_labels(), ax_ICA_meas)
     ax_ICA_mean.set_title("ICA extracted from averaging")
     ax_ICA_mean.set_xlabel("SOC  /  -")
     ax_ICA_mean.set_ylabel("dSOC / dV  /  V⁻¹")
-    update_legend(ax_ICA_mean)
+    update_legend(ax_ICA_mean.get_legend_handles_labels(), ax_ICA_mean)
     ax_OCV_meas.set_title("Smoothed (dis-)charge curves used for ICA")
     ax_OCV_meas.set_xlabel("Charged capacity  /  Ah")
     ax_OCV_meas.set_ylabel("Cell voltage  /  V")
-    update_legend(ax_OCV_meas)
+    update_legend(ax_OCV_meas.get_legend_handles_labels(), ax_OCV_meas)
     ax_OCV_mean.set_title("OCV extracted from averaging")
     ax_OCV_mean.set_xlabel("SOC  /  -")
     ax_OCV_mean.set_ylabel("Cell OCV  /  V")
-    update_legend(ax_OCV_mean)
+    update_legend(ax_OCV_mean.get_legend_handles_labels(), ax_OCV_mean)
 
 
 def plot_ICA(
-    ax, SOC, OCV, name, spline_order=2, spline_smoothing=2e-3, sign=1
+    fig, ax, SOC, OCV, name, spline_order=2, spline_smoothing=2e-3, sign=1
 ):
     """
     Show the derivative of charge by voltage.
 
+    :param fig:
+        The ``matplotlib.Figure`` instance for putting the legend.
     :param ax:
         The ``matplotlib.Axes`` instance for plotting.
     :param SOC:
@@ -1338,7 +1599,7 @@ def plot_ICA(
     ax.set_xlabel("SOC  /  -")
     ax.set_ylabel("∂SOC/∂OCV  /  V⁻¹")
     ax.set_title("ICA for identifying voltage plateaus")
-    ax.legend()
+    fig.legend(loc='outside lower center', ncol=2)
 
 
 def plot_measurement(
@@ -1399,7 +1660,8 @@ def plot_measurement(
             (t[0] - t0) / 3600,
             U[0],
             str(i),
-            color=cmap(norm(i))
+            color=cmap(norm(i)),
+            in_layout=False,
         ))
         if plot_current:
             axI.plot(
@@ -1743,7 +2005,7 @@ def visualize_correlation(
             else:
                 color = entry_color
             ax.text(j, i, '{:3.2f}'.format(correlation[i][j]), ha='center',
-                    va='center', color=color)
+                    va='center', color=color, in_layout=False)
 
     ax.set_title(title or "Correlation matrix")
     fig.colorbar(matplotlib.cm.ScalarMappable(

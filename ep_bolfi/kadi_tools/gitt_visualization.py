@@ -17,7 +17,8 @@ import xmlhelpy
 def plot_voltage_components(
     input_data,
     parameters,
-    ax=None,
+    fig,
+    ax,
     show_legend=True,
     split_by_electrode=False,
     three_electrode=None,
@@ -34,9 +35,11 @@ def plot_voltage_components(
     input_data : :class:`pybamm.Solution` or :class:`pybamm.Simulation`
         Solution or Simulation object from which to extract voltage
         components.
-    ax : matplotlib Axis, optional
-        The axis on which to put the plot. If None, a new figure and
-        axis is created.
+    fig : matplotlib Figure
+        The figure that contains the plot. Create with
+        ``layout='constrained'`` for proper legend placement.
+    ax : matplotlib Axis
+        The axis on which to put the plot.
     show_legend : bool, optional
         Whether to display the legend. Default is True
     split_by_electrode : bool, optional
@@ -75,12 +78,6 @@ def plot_voltage_components(
     # Set a default value for alpha, the opacity
     kwargs_fill = {"alpha": 0.6, **kwargs_fill}
 
-    if ax is not None:
-        fig = None
-        show_plot = False
-    else:
-        fig, ax = plt.subplots(figsize=(8, 4))
-
     if split_by_electrode is False:
         overpotentials = [
             "Battery particle concentration overpotential [V]",
@@ -101,14 +98,16 @@ def plot_voltage_components(
             overpotentials = [
                 "Battery negative particle concentration overpotential [V]",
                 "X-averaged battery negative reaction overpotential [V]",
-                "Electrolyte concentration overpotential [V]",
+                "Electrode-electrolyte concentration overpotential [V]",
+                "Separator-electrolyte concentration overpotential [V]",
                 "Ohmic electrolyte overpotential [V]",
                 "X-averaged battery negative solid phase ohmic losses [V]",
             ]
             labels = [
                 "Negative particle concentration overpotential",
                 "Negative reaction overpotential",
-                "Electrolyte concentration overpotential",
+                "Electrode-electrolyte concentration overpotential",
+                "Separator-electrolyte concentration overpotential",
                 "Ohmic electrolyte overpotential",
                 "Ohmic negative electrode overpotential",
             ]
@@ -116,14 +115,16 @@ def plot_voltage_components(
             overpotentials = [
                 "Battery positive particle concentration overpotential [V]",
                 "X-averaged battery positive reaction overpotential [V]",
-                "Electrolyte concentration overpotential [V]",
+                "Electrode-electrolyte concentration overpotential [V]",
+                "Separator-electrolyte concentration overpotential [V]",
                 "Ohmic electrolyte overpotential [V]",
                 "X-averaged battery positive solid phase ohmic losses [V]",
             ]
             labels = [
                 "Positive particle concentration overpotential",
                 "Positive reaction overpotential",
-                "Electrolyte concentration overpotential",
+                "Electrode-electrolyte concentration overpotential",
+                "Separator-electrolyte concentration overpotential",
                 "Ohmic electrolyte overpotential",
                 "Ohmic positive electrode overpotential",
             ]
@@ -225,7 +226,15 @@ def plot_voltage_components(
         # Use the SPMe expression, as it should apply.
         current = solution["Current [A]"].entries
         κ = parameters["Electrolyte conductivity [S.m-1]"]
-        A = parameters["Current collector perpendicular area [m2]"]
+        # Evaluate κ if it is a function.
+        if callable(κ):
+            c_e = parameters["Initial concentration in electrolyte [mol.m-3]"]
+            T = parameters["Initial temperature [K]"]
+            κ = κ(c_e, T).value
+        A = (
+            parameters["Electrode width [m]"]
+            * parameters["Electrode height [m]"]
+        )
         ε_s = parameters["Separator porosity"]
         β_s = parameters[
             "Separator Bruggeman coefficient (electrolyte)"
@@ -235,19 +244,23 @@ def plot_voltage_components(
             β_p = parameters[
                 "Positive electrode Bruggeman coefficient (electrolyte)"
             ]
-            ohmic_elyte = current / (κ * A) * (L_p / (3 * ε_p**β_p) + (
+            ohmic_elde_elyte = current / (κ * A) * L_p / (3 * ε_p**β_p)
+            ohmic_sep_elyte = current / (κ * A) * (
                 (1 - dimensionless_reference_electrode_location) * L_s
                 / (ε_s**β_s)
-            ))
+            )
+            ohmic_elyte = ohmic_elde_elyte + ohmic_sep_elyte
         elif three_electrode == "negative":
             ε_n = parameters["Negative electrode porosity"]
             β_n = parameters[
                 "Negative electrode Bruggeman coefficient (electrolyte)"
             ]
-            ohmic_elyte = current / (κ * A) * (L_n / (3 * ε_n**β_n) + (
+            ohmic_elde_elyte = current / (κ * A) * L_n / (3 * ε_n**β_n)
+            ohmic_sep_elyte = current / (κ * A) * (
                 dimensionless_reference_electrode_location * L_s
                 / (ε_s**β_s)
-            ))
+            )
+            ohmic_elyte = ohmic_elde_elyte + ohmic_sep_elyte
     # Plot components
     for overpotential, label in zip(overpotentials, labels):
         # negative overpotentials are positive for a discharge and negative
@@ -255,26 +268,40 @@ def plot_voltage_components(
         sgn = -1 if "negative" in overpotential else 1
         if three_electrode == "negative":
             sgn *= -1
+        three_electrode_sign = -1 if three_electrode == "negative" else 1
         # The labels checked for here are only used for three_electrode.
-        if overpotential == "Electrolyte concentration overpotential [V]":
-            reference_electrode_potential = (
+        if "lectrolyte concentration overpotential [V]" in overpotential:
+            reference_electrode_potential = three_electrode_sign * (
                 solution["Electrolyte potential [V]"](
                     x=dimensional_location
                 )
             )
             if three_electrode == "positive":
+                electrode_separator_interface_potential = (
+                    solution["Electrolyte potential [V]"](x=L_n + L_s)
+                )
                 mean_elde_elyte_potential = solution[
                     "X-averaged positive electrolyte potential [V]"
                 ].entries
             elif three_electrode == "negative":
-                mean_elde_elyte_potential = solution[
+                electrode_separator_interface_potential = -(
+                    solution["Electrolyte potential [V]"](x=L_n)
+                )
+                mean_elde_elyte_potential = -solution[
                     "X-averaged negative electrolyte potential [V]"
                 ].entries
-            state = (
-                reference_electrode_potential
-                - mean_elde_elyte_potential
-                + ohmic_elyte
-            )
+            if overpotential[:9] == "Electrode":
+                state = (
+                    mean_elde_elyte_potential
+                    - electrode_separator_interface_potential
+                    + ohmic_elde_elyte
+                )
+            elif overpotential[:9] == "Separator":
+                state = (
+                    electrode_separator_interface_potential
+                    - reference_electrode_potential
+                    + ohmic_sep_elyte
+                )
         elif overpotential == "Ohmic electrolyte overpotential [V]":
             state = -ohmic_elyte
         else:
@@ -302,16 +329,12 @@ def plot_voltage_components(
     ax.plot(time, V, "k--", label="Voltage")
 
     if show_legend:
-        leg = ax.legend(
-            loc="center left", bbox_to_anchor=(1.05, 0.5), frameon=True
-        )
+        leg = fig.legend(loc='outside lower center', frameon=True)
         leg.get_frame().set_edgecolor("k")
-    if fig is not None:
-        fig.tight_layout()
 
     # Labels
     ax.set_xlim([time[0], time[-1]])
-    ax.set_xlabel("Time [h]")
+    ax.set_xlabel("Experiment run-time  /  h")
 
     y_min, y_max = (
         0.98 * min(np.nanmin(V), np.nanmin(ocv)),
@@ -319,7 +342,7 @@ def plot_voltage_components(
     )
     ax.set_ylim([y_min, y_max])
 
-    if show_plot:  # pragma: no cover
+    if show_plot:
         plt.show()
 
     return fig, ax
@@ -327,7 +350,7 @@ def plot_voltage_components(
 
 @xmlhelpy.command(
     name='python -m ep_bolfi.kadi_tools.gitt_visualization',
-    version='3.0'
+    version='${VERSION}'
 )
 @xmlhelpy.option(
     'input-record',
@@ -681,8 +704,9 @@ def gitt_visualization(
         )
 
     output_variables = literal_eval(output_variables)
-    fig, ax = plt.subplots(figsize=(2**0.5 * 6, 6))
+    fig, ax = plt.subplots(figsize=(2**0.5 * 3, 3.5), layout='constrained')
     text_objects = plot_comparison(
+        fig,
         ax,
         solutions,
         errorbars,
@@ -718,16 +742,18 @@ def gitt_visualization(
         parameters=reference_parameters,
         use_cycles=True,
     )
-    fig.tight_layout()
     push_apart_text(fig, ax, text_objects, lock_xaxis=True)
     fig.savefig(
         file_prefix + '_plot.' + format, bbox_inches='tight', pad_inches=0.0
     )
-    fig_comp, ax_comp = plt.subplots(figsize=(2**0.5 * 6, 0.5 * 6))
+    fig_comp, ax_comp = plt.subplots(
+        figsize=(4, 4), layout="constrained"
+    )
     sol_comp = list(solutions.values())[0]
     plot_voltage_components(
         sol_comp,
         reference_parameters,
+        fig_comp,
         ax_comp,
         split_by_electrode=True,
         three_electrode=three_electrode,
@@ -736,9 +762,8 @@ def gitt_visualization(
         ),
         show_plot=False,  # just disables plt.show()
     )
-    ax_comp.set_ylabel("Voltage [V]")
+    ax_comp.set_ylabel("Cell voltage  /  V")
     ax_comp.autoscale(tight=True)
-    fig_comp.tight_layout()
     fig_comp.savefig(
         file_prefix + '_voltage_components.' + format,
         bbox_inches='tight',

@@ -1,4 +1,4 @@
-﻿ep\_bolfi.models
+ep\_bolfi.models
 ================
 
 .. automodule:: ep_bolfi.models

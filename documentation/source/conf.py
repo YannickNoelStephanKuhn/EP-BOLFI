@@ -8,7 +8,7 @@ import os
 project = 'EP-BOLFI'
 copyright = '2022-%Y, Yannick Kuhn'
 author = 'Yannick Kuhn'
-version = release = '3.0'
+version = release = '${VERSION}'
 
 # -- General configuration ---------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html

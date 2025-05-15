@@ -1580,7 +1580,7 @@ class AnalyticImpedance:
 
     def Z_SEI(self, s_dim):
         """
-        Impedance of the Double-Layer.
+        Impedance of the Solid-Electrolyte Interphase (Single2019).
 
         :param s_dim:
             An array of the frequencies to evaluate.

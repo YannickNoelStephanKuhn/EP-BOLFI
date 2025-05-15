@@ -6,12 +6,12 @@ from scipy.stats import chi2
 
 matplotlib.rcParams.update({'font.size': 14})
 
-with open('../GITT estimation results/estimation_results.json', 'r') as f:
+with open('./GITT estimation results/estimation_results.json', 'r') as f:
     estimation_results = json.load(f)
-with open('../GITT estimation results/simulated_features_at_each_pulse.json',
+with open('./GITT estimation results/simulated_features_at_each_pulse.json',
           'r') as f:
     evaluations = json.load(f)
-with open('../GITT estimation results/boundaries_of_simulated_features.json',
+with open('./GITT estimation results/boundaries_of_simulated_features.json',
           'r') as f:
     sensitivities = json.load(f)
 
@@ -44,13 +44,13 @@ for i, estimation_result in enumerate(estimation_results):
 fig, ((ax0, ax1), (ax2, ax3)) = plt.subplots(figsize=(6 * 2**0.5, 6),
                                              nrows=2, ncols=2)
 trans = matplotlib.transforms.ScaledTranslation(
-    10/72, -5/72, fig.dpi_scale_trans
+    10 / 72, -5 / 72, fig.dpi_scale_trans
 )
 lines = []
 names = []
 for (p_name, f_dictionary), ax in zip(
-            sensitivities.items(), (ax0, ax1, ax2, ax3)
-        ):
+    sensitivities.items(), (ax0, ax1, ax2, ax3)
+):
     ax.set_xlabel("Pulse number")
     if p_name.find("Negative") != -1:
         if p_name.find("exchange") != -1:

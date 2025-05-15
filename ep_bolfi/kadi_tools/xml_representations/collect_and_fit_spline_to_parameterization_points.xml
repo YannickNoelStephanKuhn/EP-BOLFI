@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<program name="python -m ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points" description="Please refer to the --help output of this file." version="3.0">
+<program name="python -m ep_bolfi.kadi_tools.collect_and_fit_spline_to_parameterization_points" description="Please refer to the --help output of this file." version="3.0.2">
   <param description="Persistent record identifier of the record with the data points." type="long" name="input-record" char="r" required="true"/>
   <param description="File names of the parameterization result files, separated by '?'." type="tokenlist" separator="?" name="input-files" char="f" required="true"/>
   <param description="List of the dependent variables to fit a spline to, separated by ','." type="tokenlist" separator="," name="input-names" char="e" required="true"/>

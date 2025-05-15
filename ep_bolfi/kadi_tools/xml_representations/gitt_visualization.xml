@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<program name="python -m ep_bolfi.kadi_tools.gitt_visualization" description="Please refer to the --help output of this file." version="3.0">
+<program name="python -m ep_bolfi.kadi_tools.gitt_visualization" description="Please refer to the --help output of this file." version="3.0.2">
   <param description="Persistent record identifier of the record with the preprocessed data and model parameters." type="long" name="input-record" char="r" required="true"/>
   <param description="File name of the preprocessed data file." type="string" name="input-file" char="d" required="true"/>
   <param description="File name of the model parameters. It must be a Python file and contain the following global variables:&#10;&#10; - parameters: The dictionary of parameters to pass on to the solver. May be a ep_bolfi.utility.preprocessing.SubstitutionDict.&#10;&#10;It may contain the additional following global variables:&#10;&#10; - unknowns: The dictionary of unknown parameters. Instead of single values as in 'parameters', input 2-tuples with their lower and upper bounds, e.g. from literature." type="string" name="parameters-file" char="m" required="true"/>

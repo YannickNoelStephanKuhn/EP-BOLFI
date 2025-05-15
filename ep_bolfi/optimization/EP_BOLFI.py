@@ -128,8 +128,9 @@ class Preprocessed_Simulator:
         Q,
         experimental_data,
         feature_extractor,
+        logged_feature_names=None,
         transform_parameters={},
-        fixed_parameter_order=None
+        fixed_parameter_order=None,
     ):
         """
         :param simulator:
@@ -153,6 +154,9 @@ class Preprocessed_Simulator:
         :param feature_extractor:
             A function that takes the output of *simulator* or the
             *experimental_data* and returns a list of numbers.
+        :param logged_feature_names:
+            Optional list assigning feature names to the array elements
+            of the `feature_extractor` output.
         :param transform_parameters:
             Optional transformations between the parameter space that is
             used for searching for optimal parameters and the battery
@@ -181,6 +185,7 @@ class Preprocessed_Simulator:
         self.experimental_data = experimental_data
         self.feature_extractor = feature_extractor
         self.transform_parameters = transform_parameters
+        self.logged_feature_names = logged_feature_names
 
         self.log_of_tried_parameters = {
             name: [] for name in self.free_parameters_names
@@ -189,6 +194,15 @@ class Preprocessed_Simulator:
 
         self.experimental_features = feature_extractor(experimental_data)
         """Extract the features from the experimental data."""
+
+        if self.logged_feature_names is None:
+            self.logged_features_names = [
+                str(i) for i in range(len(self.experimental_features))
+            ]
+        self.log_of_calculated_features = {
+            name: [] for name in self.logged_feature_names
+        }
+        """Stores all features calculated on the tried parameters."""
 
         self.input_dim = len(self.free_parameters_names)
         """Input dimension of the estimation task."""
@@ -393,6 +407,10 @@ class Preprocessed_Simulator:
         for name in self.free_parameters_names:
             # This line logs the tried parameters.
             self.log_of_tried_parameters[name].append(trial_parameters[name])
+
+        for i, name in enumerate(self.logged_feature_names):
+            # This line logs the resulting features.
+            self.log_of_calculated_features[name].append(simulated_features[i])
 
         return simulated_features
 
@@ -671,13 +689,6 @@ class EP_BOLFI:
         """Container for the initial expectation values."""
 
         if self.display_current_feature is not None:
-            self.log_of_raw_tried_parameters = {
-                self.display_current_feature[
-                    self.simulator_index_by_feature[j]
-                ](self.sub_index_by_feature[j]): []
-                for j in range(self.output_dim)
-            }
-            """Stores all raw parameter evaluation points."""
             self.log_of_discrepancies = {
                 self.display_current_feature[
                     self.simulator_index_by_feature[j]
@@ -685,11 +696,17 @@ class EP_BOLFI:
                 for j in range(self.output_dim)
             }
             """Stores all discrepancies of the sampled parameters."""
+            self.log_of_calculated_features = {
+                self.display_current_feature[
+                    self.simulator_index_by_feature[j]
+                ](self.sub_index_by_feature[j]): []
+                for j in range(self.output_dim)
+            }
         else:
-            self.log_of_raw_tried_parameters = {
+            self.log_of_discrepancies = {
                 str(j): [] for j in range(self.output_dim)
             }
-            self.log_of_discrepancies = {
+            self.log_of_calculated_features = {
                 str(j): [] for j in range(self.output_dim)
             }
 
@@ -784,6 +801,8 @@ class EP_BOLFI:
                 )
         if Q is not None:
             self.initial_covariance = np.linalg.inv(Q)
+        if r is not None:
+            self.initial_guesses = self.initial_covariance @ r
 
         self.final_expectation = deepcopy(self.initial_guesses)
         """Stores the inference mean (empty at first)."""
@@ -891,8 +910,8 @@ class EP_BOLFI:
         """Formats the relevant optimizer logs in JSON."""
         return json.dumps({
             "tried parameters": self.log_of_tried_parameters,
+            "features": self.log_of_calculated_features,
             "discrepancies": self.log_of_discrepancies,
-            "raw tried parameters": self.log_of_raw_tried_parameters,
         }, cls=NDArrayEncoder)
 
     def visualize_parameter_distribution(self):
@@ -928,8 +947,9 @@ class EP_BOLFI:
             ps = Preprocessed_Simulator(
                 sim, self.fixed_parameters,
                 list(self.log_of_tried_parameters.keys()),
-                self.r, self.Q, exp_data, feature, self.transform_parameters,
-                self.fixed_parameter_order
+                self.r, self.Q, exp_data, feature,
+                transform_parameters=self.transform_parameters,
+                fixed_parameter_order=self.fixed_parameter_order
             )
             sim_data = ps.simulator(parameters)
             sim_data_plot = [[entry for segment in axis
@@ -981,7 +1001,7 @@ class EP_BOLFI:
         normalize_features=True,
         show_trials=False,
         verbose=True,
-        seed=None
+        seed=None,
     ):
         """
         Runs Expectation Propagation together with BOLFI.
@@ -1197,11 +1217,25 @@ class EP_BOLFI:
 
                 # Get the simulator for use with ELFI with its
                 # normalization and transformation functions.
+                list_of_all_simulator_features = []
+                for m in shuffled_order:
+                    m_simulator_index = self.simulator_index_by_feature[m]
+                    if m_simulator_index != simulator_index:
+                        continue
+                    if self.display_current_feature is not None:
+                        list_of_all_simulator_features.append(
+                            self.display_current_feature[simulator_index](
+                                self.sub_index_by_feature[m]
+                            )
+                        )
+                    else:
+                        list_of_all_simulator_features.append(str(m))
                 ps = Preprocessed_Simulator(
                     self.simulators[simulator_index], self.fixed_parameters,
                     list(self.log_of_tried_parameters.keys()), r_pseudoprior,
                     Q_pseudoprior, self.experimental_datasets[simulator_index],
                     self.feature_extractors[simulator_index],
+                    list_of_all_simulator_features,
                     self.transform_parameters,
                     self.fixed_parameter_order
                 )
@@ -1394,22 +1428,25 @@ class EP_BOLFI:
                     maximum_gelman_rubin = np.max(gelman_rubin)
 
                 if self.display_current_feature is not None:
-                    self.log_of_raw_tried_parameters[
-                        self.display_current_feature[
-                            self.simulator_index_by_feature[j]
-                        ](self.sub_index_by_feature[j])
-                    ].extend(bolfi.target_model.X)
-                    self.log_of_discrepancies[
-                        self.display_current_feature[
-                            self.simulator_index_by_feature[j]
-                        ](self.sub_index_by_feature[j])
-                    ].extend(bolfi.target_model.Y)
+                    name = self.display_current_feature[
+                        self.simulator_index_by_feature[j]
+                    ](self.sub_index_by_feature[j])
                 else:
-                    self.log_of_raw_tried_parameters[str(j)].extend(
-                        bolfi.target_model.X
-                    )
-                    self.log_of_discrepancies[str(j)].extend(
-                        bolfi.target_model.Y
+                    name = str(j)
+                self.log_of_discrepancies[name].extend(
+                    bolfi.target_model.Y
+                )
+                for m in shuffled_order:
+                    if m == j:
+                        continue
+                    if self.display_current_feature is not None:
+                        name = self.display_current_feature[
+                            self.simulator_index_by_feature[m]
+                        ](self.sub_index_by_feature[m])
+                    else:
+                        name = str(m)
+                    self.log_of_discrepancies[name].extend(
+                        0 * bolfi.target_model.Y
                     )
 
                 # Append the newly tried parameters.
@@ -1417,6 +1454,26 @@ class EP_BOLFI:
                     self.log_of_tried_parameters[name].extend(
                         ps.log_of_tried_parameters[name]
                     )
+
+                # Append the corresponding resulting features.
+                for m in shuffled_order:
+                    if self.display_current_feature is not None:
+                        name = self.display_current_feature[
+                            self.simulator_index_by_feature[m]
+                        ](self.sub_index_by_feature[m])
+                    else:
+                        name = str(m)
+                    m_simulator_index = self.simulator_index_by_feature[m]
+                    if m_simulator_index == simulator_index:
+                        self.log_of_calculated_features[name].extend(
+                            ps.log_of_calculated_features[name]
+                        )
+                    else:
+                        self.log_of_calculated_features[name].extend(
+                            [0.0 for i in range(len(
+                                list(ps.log_of_calculated_features.items())[0]
+                            ))]
+                        )
 
                 if show_trials:
                     # Plot the trial log.

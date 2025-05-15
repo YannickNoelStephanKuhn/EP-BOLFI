@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<program name="python -m ep_bolfi.kadi_tools.gitt_preprocessing" description="Please refer to the --help output of this file." version="3.0">
+<program name="python -m ep_bolfi.kadi_tools.gitt_preprocessing" description="Please refer to the --help output of this file." version="3.0.2">
   <param description="Persistent record identifier of the record with the OCV data as prepared by ep_bolfi.kadi_tools.extract_ocv_curve." type="long" name="ocv-record" char="r" required="true"/>
   <param description="The name of the OCV file with electrode SOC to cell SOC assignment as prepared by ep_bolfi.kadi_tools.fit_and_plot_ocv." type="string" name="ocv-file" char="n" required="true"/>
   <param description="Index of the data in the OCV file to use as the starting point of the GITT simulation, as written in its 'indices'. Defaults to the first 'indices' entry in the provided measurement data minus 1." type="real" name="source-index" char="s" default="inf"/>

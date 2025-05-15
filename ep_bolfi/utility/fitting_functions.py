@@ -297,19 +297,19 @@ def smooth_fit(
     if splits is None:
         y_smoothed = y
     else:
-        split_indices = [np.abs(x-split).argmin() for split in splits]
+        split_indices = [np.abs(x - split).argmin() for split in splits]
         x_splits = np.split(x, split_indices)
         number_of_splits = len(x_splits)
         y_splits = np.split(y, split_indices)
 
         for x_split, y_split in zip(x_splits, y_splits):
-            if len(x_split) < order-2:
+            if len(x_split) < order - 2:
                 print("Warning: not enough points in split for smoothing.")
                 y_smoothed.extend(y_split)
             else:
                 split_spline = ip.UnivariateSpline(
                     x_split, y_split, w=w, k=order,
-                    s=None if s is None else s/number_of_splits
+                    s=None if s is None else s / number_of_splits
                 )
                 y_smoothed.extend(split_spline(x_split))
 
@@ -730,11 +730,11 @@ def fit_pwrlaw(timepoints, quantity, threshold=0.95):
 
     def pwrlaw_fit_function(t, k, n, t_0=t_eval[0], b=q_eval[0]):
         """Power law function."""
-        return (b + k * np.maximum(0, (t - t_0))**n)*corv
+        return (b + k * np.maximum(0, (t - t_0))**n) * corv
 
     def pwrlaw_inverse_fit_function(y, k, n, t_0=t_eval[0], b=q_eval[0]):
         """Corresponding inverse function."""
-        return t_0 + ((y - b) / k)**(1/n)
+        return t_0 + ((y - b) / k)**(1 / n)
 
     end = len(t_eval) - 1
     p0 = [
@@ -742,7 +742,7 @@ def fit_pwrlaw(timepoints, quantity, threshold=0.95):
             1e-20,
             np.minimum(
                 0.9e-11,
-                (q_eval[end] - q_eval[0])/(t_eval[end]-t_eval[0])
+                (q_eval[end] - q_eval[0]) / (t_eval[end] - t_eval[0])
             )
         ),
         0.9
@@ -754,9 +754,9 @@ def fit_pwrlaw(timepoints, quantity, threshold=0.95):
     if (np.isinf(t_eval).any()):
         print("t_eval contains inf values")
 
-    if (np.isnan(q_eval*corv).any()):
+    if (np.isnan(q_eval * corv).any()):
         print("q_eval contains NaN values")
-    if (np.isinf(q_eval*corv).any()):
+    if (np.isinf(q_eval * corv).any()):
         print("q_eval contains inf values")
 
     if (np.isnan(p0).any()):
@@ -832,11 +832,11 @@ def fit_pwrlawCL(timepoints, quantity, threshold=0.95):
 
     def pwrlaw_fit_function(t, k, n, t_0=t_eval[0], b=q_eval[0]):
         """Power law function."""
-        return (b + k * np.maximum(0, (t - t_0))**n)*corv
+        return (b + k * np.maximum(0, (t - t_0))**n) * corv
 
     def pwrlaw_inverse_fit_function(y, k, n, t_0=t_eval[0], b=q_eval[0]):
         """Corresponding inverse function."""
-        return t_0 + ((y - b) / k)**(1/n)
+        return t_0 + ((y - b) / k)**(1 / n)
 
     end = len(t_eval) - 1
     p0 = [
@@ -844,7 +844,7 @@ def fit_pwrlawCL(timepoints, quantity, threshold=0.95):
             1e-20,
             np.minimum(
                 0.9e-11,
-                (q_eval[end] - q_eval[0])/(t_eval[end]-t_eval[0])
+                (q_eval[end] - q_eval[0]) / (t_eval[end] - t_eval[0])
             )
         ),
         0.9
@@ -856,9 +856,9 @@ def fit_pwrlawCL(timepoints, quantity, threshold=0.95):
     if (np.isinf(t_eval).any()):
         print("t_eval contains inf values")
 
-    if (np.isnan(q_eval*corv).any()):
+    if (np.isnan(q_eval * corv).any()):
         print("q_eval contains NaN values")
-    if (np.isinf(q_eval*corv).any()):
+    if (np.isinf(q_eval * corv).any()):
         print("q_eval contains inf values")
 
     if (np.isnan(p0).any()):
@@ -878,7 +878,7 @@ def fit_pwrlawCL(timepoints, quantity, threshold=0.95):
     print(params)
     test_q = pwrlaw_fit_function(t_eval, *params)
     R_squared_split = np.nan_to_num(
-        1 - np.sum((q_eval - test_q/corv)**2)
+        1 - np.sum((q_eval - test_q / corv)**2)
         / np.sum((q_eval - np.mean(q_eval))**2)
     )
     print("R_squared_split:", R_squared_split)
@@ -944,6 +944,11 @@ def fit_drt(frequencies, impedances, lambda_value=-2.0):
         for time_constant in peaks[0]
     ]
     # peak_values = peaks[1]
+    # Add both ends of the timescale spectrum, if they have weight.
+    if drt.gammas[0] > 0:
+        peak_indices = [1] + peak_indices
+    if drt.gammas[-1] > 0:
+        peak_indices = peak_indices + [len(drt.time_constants) - 2]
     resistances = []
     for pi in peak_indices:
         peak_surrounding = np.array(
@@ -1868,10 +1873,10 @@ def verbose_spline_parameterization(
                     1 / ((t[i + 2] - t[i]) * (t[i + 1] - t[i]))
                 )
                 p_c[i - order][1] = p_c[i - order][1] + coeffs[i] * (
-                    -2 * t[i] / ((t[i + 2] - t[i]) * (t[i + 1]-t[i]))
+                    -2 * t[i] / ((t[i + 2] - t[i]) * (t[i + 1] - t[i]))
                 )
                 p_c[i - order][0] = p_c[i - order][0] + coeffs[i] * (
-                    t[i]**2 / ((t[i + 2] - t[i]) * (t[i + 1]-t[i]))
+                    t[i]**2 / ((t[i + 2] - t[i]) * (t[i + 1] - t[i]))
                 )
             if t[i + 1] != t[i + 2]:
                 if t[i] != t[i + 2]:
@@ -1894,14 +1899,26 @@ def verbose_spline_parameterization(
                         )
                     )
                 if t[i + 1] != t[i + 3]:
-                    p_c[i - order + 1][2] = p_c[i - order + 1][2] + coeffs[i]*(
-                        -1 / ((t[i + 2] - t[i + 1]) * (t[i + 3] - t[i + 1])))
-                    p_c[i - order + 1][1] = p_c[i - order + 1][1] + coeffs[i]*(
-                        (t[i + 3] + t[i + 1]) / ((t[i + 2] - t[i + 1])
-                                                 * (t[i + 3] - t[i + 1])))
-                    p_c[i - order + 1][0] = p_c[i - order + 1][0] + coeffs[i]*(
-                        -t[i + 3] * t[i + 1] / ((t[i + 2] - t[i + 1])
-                                                * (t[i + 3] - t[i + 1])))
+                    p_c[i - order + 1][2] = (
+                        p_c[i - order + 1][2]
+                        + coeffs[i] * (
+                            -1 / (
+                                (t[i + 2] - t[i + 1]) * (t[i + 3] - t[i + 1])
+                            )
+                        )
+                    )
+                    p_c[i - order + 1][1] = (
+                        p_c[i - order + 1][1] + coeffs[i] * (
+                            (t[i + 3] + t[i + 1]) / ((t[i + 2] - t[i + 1])
+                                                     * (t[i + 3] - t[i + 1]))
+                        )
+                    )
+                    p_c[i - order + 1][0] = (
+                        p_c[i - order + 1][0] + coeffs[i] * (
+                            -t[i + 3] * t[i + 1] / ((t[i + 2] - t[i + 1])
+                                                    * (t[i + 3] - t[i + 1]))
+                        )
+                    )
             if t[i + 1] != t[i + 3] and t[i + 2] != t[i + 3]:
                 p_c[i - order + 2][2] = p_c[i - order + 2][2] + coeffs[i] * (
                     1 / ((t[i + 3] - t[i + 1]) * (t[i + 3] - t[i + 2]))
@@ -2042,7 +2059,7 @@ def verbose_spline_parameterization(
                 # Another note: later in the code, it is asssumed that "x"
                 # is on the lhs and the interval boundary on the rhs.
                 return sp.Piecewise(
-                    (1, sp.And(x >= t[i], x < t[i+1])),
+                    (1, sp.And(x >= t[i], x < t[i + 1])),
                     (0, True)
                 )
 
@@ -2071,13 +2088,13 @@ def verbose_spline_parameterization(
 
         B_splines = []
         for i in range(len(knots) - 1 + order):
-            print("Simplifying B-spline #" + str(i+1) + " of "
+            print("Simplifying B-spline #" + str(i + 1) + " of "
                   + str(len(knots) - 1 + order))
             B_splines.append(sp.simplify(B(i, order)))
 
         if derivatives == 1:
             B_spline_derivatives = []
-            print("Simplifying derivated B-spline #" + str(i+1) + " of "
+            print("Simplifying derivated B-spline #" + str(i + 1) + " of "
                   + str(len(knots) - 1 + order))
             B_spline_derivatives.append(sp.simplify(B_derivative(i, order)))
 

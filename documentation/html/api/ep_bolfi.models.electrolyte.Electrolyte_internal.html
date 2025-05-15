@@ -5,15 +5,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ep_bolfi.models.electrolyte.Electrolyte_internal &#8212; EP-BOLFI 3.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
-    <script src="../_static/documentation_options.js?v=110ea713"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <title>ep_bolfi.models.electrolyte.Electrolyte_internal &#8212; EP-BOLFI ${VERSION} documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=4a3566fb"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ep_bolfi.models.equivalent_circuits" href="ep_bolfi.models.equivalent_circuits.html" />
+    <link rel="next" title="ep_bolfi.models.solversetup" href="ep_bolfi.models.solversetup.html" />
     <link rel="prev" title="ep_bolfi.models.electrolyte.Electrolyte" href="ep_bolfi.models.electrolyte.Electrolyte.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -36,7 +37,7 @@
 <h1>ep_bolfi.models.electrolyte.Electrolyte_internal<a class="headerlink" href="#ep-bolfi-models-electrolyte-electrolyte-internal" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ep_bolfi.models.electrolyte.</span></span><span class="sig-name descname"><span class="pre">Electrolyte_internal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pybamm_control</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ep_bolfi.models.electrolyte.</span></span><span class="sig-name descname"><span class="pre">Electrolyte_internal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pybamm_control</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSubModel</span></code></p>
 <p>Defining equations for a symmetric Li cell with electrolyte.</p>
 <section id="reference">
@@ -72,71 +73,77 @@ then a variable and it or voltage can be fixed functions.</p></li>
 <tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.__init__" title="ep_bolfi.models.electrolyte.Electrolyte_internal.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(param[, pybamm_control, options, build])</p></td>
 <td><p>Sets the model properties.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_coupled_variables</span></code>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.add_events_from" title="ep_bolfi.models.electrolyte.Electrolyte_internal.add_events_from"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_events_from</span></code></a>(variables)</p></td>
+<td><p>A method to set events related to the state of submodel variable.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_coupled_variables</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_fundamental</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_fundamental</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_model</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_model</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_model_equations</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_model_equations</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_algebraic_equations" title="ep_bolfi.models.electrolyte.Electrolyte_internal.check_algebraic_equations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_algebraic_equations</span></code></a>(post_discretisation)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_algebraic_equations" title="ep_bolfi.models.electrolyte.Electrolyte_internal.check_algebraic_equations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_algebraic_equations</span></code></a>(post_discretisation)</p></td>
 <td><p>Check that the algebraic equations are well-posed.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_and_combine_dict</span></code>(dict1, dict2)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_and_combine_dict</span></code>(dict1, dict2)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_discretised_or_discretise_inplace_if_0D" title="ep_bolfi.models.electrolyte.Electrolyte_internal.check_discretised_or_discretise_inplace_if_0D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_discretised_or_discretise_inplace_if_0D</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_discretised_or_discretise_inplace_if_0D" title="ep_bolfi.models.electrolyte.Electrolyte_internal.check_discretised_or_discretise_inplace_if_0D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_discretised_or_discretise_inplace_if_0D</span></code></a>()</p></td>
 <td><p>Discretise model if it isn't already discretised This only works with purely 0D models, as otherwise the mesh and spatial method should be specified by the user</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_for_time_derivatives</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_for_time_derivatives</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_ics_bcs" title="ep_bolfi.models.electrolyte.Electrolyte_internal.check_ics_bcs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_ics_bcs</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_ics_bcs" title="ep_bolfi.models.electrolyte.Electrolyte_internal.check_ics_bcs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_ics_bcs</span></code></a>()</p></td>
 <td><p>Check that the initial and boundary conditions are well-posed.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_no_repeated_keys" title="ep_bolfi.models.electrolyte.Electrolyte_internal.check_no_repeated_keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_no_repeated_keys</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_no_repeated_keys" title="ep_bolfi.models.electrolyte.Electrolyte_internal.check_no_repeated_keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_no_repeated_keys</span></code></a>()</p></td>
 <td><p>Check that no equation keys are repeated.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_variables</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_variables</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_well_determined" title="ep_bolfi.models.electrolyte.Electrolyte_internal.check_well_determined"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_well_determined</span></code></a>(post_discretisation)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_well_determined" title="ep_bolfi.models.electrolyte.Electrolyte_internal.check_well_determined"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_well_determined</span></code></a>(post_discretisation)</p></td>
 <td><p>Check that the model is not under- or over-determined.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_well_posedness" title="ep_bolfi.models.electrolyte.Electrolyte_internal.check_well_posedness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_well_posedness</span></code></a>([post_discretisation])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_well_posedness" title="ep_bolfi.models.electrolyte.Electrolyte_internal.check_well_posedness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_well_posedness</span></code></a>([post_discretisation])</p></td>
 <td><p>Check that the model is well-posed by executing the following tests: - Model is not over- or underdetermined, by comparing keys and equations in rhs and algebraic.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.deserialise" title="ep_bolfi.models.electrolyte.Electrolyte_internal.deserialise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deserialise</span></code></a>(properties)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.deserialise" title="ep_bolfi.models.electrolyte.Electrolyte_internal.deserialise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deserialise</span></code></a>(properties)</p></td>
 <td><p>Create a model instance from a serialised object.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.export_casadi_objects" title="ep_bolfi.models.electrolyte.Electrolyte_internal.export_casadi_objects"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_casadi_objects</span></code></a>(variable_names[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.export_casadi_objects" title="ep_bolfi.models.electrolyte.Electrolyte_internal.export_casadi_objects"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_casadi_objects</span></code></a>(variable_names[, ...])</p></td>
 <td><p>Export the constituent parts of the model (rhs, algebraic, initial conditions, etc) as casadi objects.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.generate" title="ep_bolfi.models.electrolyte.Electrolyte_internal.generate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate</span></code></a>(filename, variable_names[, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.generate" title="ep_bolfi.models.electrolyte.Electrolyte_internal.generate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate</span></code></a>(filename, variable_names[, ...])</p></td>
 <td><p>Generate the model in C, using CasADi.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">generic_deserialise</span></code>(instance, properties)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">generic_deserialise</span></code>(instance, properties)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.get_coupled_variables" title="ep_bolfi.models.electrolyte.Electrolyte_internal.get_coupled_variables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_coupled_variables</span></code></a>(variables)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.get_coupled_variables" title="ep_bolfi.models.electrolyte.Electrolyte_internal.get_coupled_variables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_coupled_variables</span></code></a>(variables)</p></td>
 <td><p>Builds all model symbols that rely on other models.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.get_fundamental_variables" title="ep_bolfi.models.electrolyte.Electrolyte_internal.get_fundamental_variables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_fundamental_variables</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.get_fundamental_variables" title="ep_bolfi.models.electrolyte.Electrolyte_internal.get_fundamental_variables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_fundamental_variables</span></code></a>()</p></td>
 <td><p>Builds all relevant model variables' symbols.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.get_parameter_info" title="ep_bolfi.models.electrolyte.Electrolyte_internal.get_parameter_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_parameter_info</span></code></a>([by_submodel])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.get_parameter_info" title="ep_bolfi.models.electrolyte.Electrolyte_internal.get_parameter_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_parameter_info</span></code></a>([by_submodel])</p></td>
 <td><p>Extracts the parameter information and returns it as a dictionary.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.info" title="ep_bolfi.models.electrolyte.Electrolyte_internal.info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info</span></code></a>(symbol_name)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.info" title="ep_bolfi.models.electrolyte.Electrolyte_internal.info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">info</span></code></a>(symbol_name)</p></td>
 <td><p>Provides helpful summary information for a symbol.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.latexify" title="ep_bolfi.models.electrolyte.Electrolyte_internal.latexify"><code class="xref py py-obj docutils literal notranslate"><span class="pre">latexify</span></code></a>([filename, newline, output_variables])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.latexify" title="ep_bolfi.models.electrolyte.Electrolyte_internal.latexify"><code class="xref py py-obj docutils literal notranslate"><span class="pre">latexify</span></code></a>([filename, newline, output_variables])</p></td>
 <td><p>Converts all model equations in latex.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_coupled_variables</span></code>()</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.new_copy" title="ep_bolfi.models.electrolyte.Electrolyte_internal.new_copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_copy</span></code></a>()</p></td>
 <td><p>Creates a copy of the model, explicitly copying all the mutable attributes to avoid issues with shared objects.</p></td>
@@ -182,107 +189,161 @@ then a variable and it or voltage can be fixed functions.</p></li>
 <p class="rubric">Attributes</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">algebraic</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.algebraic" title="ep_bolfi.models.electrolyte.Electrolyte_internal.algebraic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">algebraic</span></code></a></p></td>
+<td><p>Returns a dictionary mapping expressions (variables) to expressions that represent the algebraic equations of the model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.boundary_conditions" title="ep_bolfi.models.electrolyte.Electrolyte_internal.boundary_conditions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">boundary_conditions</span></code></a></p></td>
+<td><p>Returns a dictionary mapping expressions (variables) to expressions representing the boundary conditions of the model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.built" title="ep_bolfi.models.electrolyte.Electrolyte_internal.built"><code class="xref py py-obj docutils literal notranslate"><span class="pre">built</span></code></a></p></td>
+<td><p>Returns a boolean for the model built status.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.calc_esoh" title="ep_bolfi.models.electrolyte.Electrolyte_internal.calc_esoh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calc_esoh</span></code></a></p></td>
+<td><p>Whether to include eSOH variables in the summary variables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_algebraic" title="ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_algebraic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concatenated_algebraic</span></code></a></p></td>
+<td><p>Returns the concatenated algebraic equations for the model after discretisation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_initial_conditions" title="ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_initial_conditions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concatenated_initial_conditions</span></code></a></p></td>
+<td><p>Returns the initial conditions for all variables after discretization, providing the initial values for the state variables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_rhs" title="ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_rhs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concatenated_rhs</span></code></a></p></td>
+<td><p>Returns the concatenated right-hand side (RHS) expressions for the model after discretisation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.coupled_variables" title="ep_bolfi.models.electrolyte.Electrolyte_internal.coupled_variables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coupled_variables</span></code></a></p></td>
+<td><p>Returns a dictionary mapping strings to expressions representing variables needed by the model but whose equations were set by other models.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_geometry" title="ep_bolfi.models.electrolyte.Electrolyte_internal.default_geometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_geometry</span></code></a></p></td>
+<td><p>Returns a  dictionary of the default geometry for the model, which is empty by default.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_parameter_values" title="ep_bolfi.models.electrolyte.Electrolyte_internal.default_parameter_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_parameter_values</span></code></a></p></td>
+<td><p>Returns the default parameter values for the model (an empty set of parameters by default).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_quick_plot_variables" title="ep_bolfi.models.electrolyte.Electrolyte_internal.default_quick_plot_variables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_quick_plot_variables</span></code></a></p></td>
+<td><p>Returns the default variables for quick plotting (None by default).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_solver" title="ep_bolfi.models.electrolyte.Electrolyte_internal.default_solver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_solver</span></code></a></p></td>
+<td><p>Returns the default solver for the model, based on whether it is an ODE/DAE or algebraic model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_spatial_methods" title="ep_bolfi.models.electrolyte.Electrolyte_internal.default_spatial_methods"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_spatial_methods</span></code></a></p></td>
+<td><p>Returns a dictionary of the default spatial methods for the model, which is empty by default.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_submesh_types" title="ep_bolfi.models.electrolyte.Electrolyte_internal.default_submesh_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_submesh_types</span></code></a></p></td>
+<td><p>Returns a dictionary of the default submesh types for the model, which is empty by default.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_var_pts" title="ep_bolfi.models.electrolyte.Electrolyte_internal.default_var_pts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_var_pts</span></code></a></p></td>
+<td><p>Returns a dictionary of the default variable points for the model, which is empty by default.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">domain</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">boundary_conditions</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.domain_Domain" title="ep_bolfi.models.electrolyte.Electrolyte_internal.domain_Domain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">domain_Domain</span></code></a></p></td>
+<td><p>Returns a tuple containing the current domain and its capitalized form.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">concatenated_algebraic</span></code></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.events" title="ep_bolfi.models.electrolyte.Electrolyte_internal.events"><code class="xref py py-obj docutils literal notranslate"><span class="pre">events</span></code></a></p></td>
+<td><p>Returns a dictionary mapping expressions (variables) to expressions that represent the initial conditions for the state variables.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">concatenated_initial_conditions</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.geometry" title="ep_bolfi.models.electrolyte.Electrolyte_internal.geometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">geometry</span></code></a></p></td>
+<td><p>Returns the geometry of the model.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">concatenated_rhs</span></code></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.initial_conditions" title="ep_bolfi.models.electrolyte.Electrolyte_internal.initial_conditions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initial_conditions</span></code></a></p></td>
+<td><p>Returns a dictionary mapping expressions (variables) to expressions that represent the initial conditions for the state variables.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_geometry</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.input_parameters" title="ep_bolfi.models.electrolyte.Electrolyte_internal.input_parameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">input_parameters</span></code></a></p></td>
+<td><p>Returns a list of all input parameter symbols used in the model.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_parameter_values</span></code></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.is_standard_form_dae" title="ep_bolfi.models.electrolyte.Electrolyte_internal.is_standard_form_dae"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_standard_form_dae</span></code></a></p></td>
+<td><p>Check if the model is a DAE in standard form with a mass matrix that is all zeros except for along the diagonal, which is either ones or zeros.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_quick_plot_variables</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian" title="ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jacobian</span></code></a></p></td>
+<td><p>Returns the Jacobian matrix for the model, computed automatically if <cite>use_jacobian</cite> is True.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_solver" title="ep_bolfi.models.electrolyte.Electrolyte_internal.default_solver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_solver</span></code></a></p></td>
-<td><p>Return default solver based on whether model is ODE/DAE or algebraic</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian_algebraic" title="ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian_algebraic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jacobian_algebraic</span></code></a></p></td>
+<td><p>Returns the Jacobian matrix for the algebraic part of the model, computed automatically during solver setup if <cite>use_jacobian</cite> is True.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_spatial_methods</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_submesh_types</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_var_pts</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">domain</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">domain_Domain</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">events</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">geometry</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">initial_conditions</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.input_parameters" title="ep_bolfi.models.electrolyte.Electrolyte_internal.input_parameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">input_parameters</span></code></a></p></td>
-<td><p>Returns all the input parameters in the model</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">jacobian</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">jacobian_algebraic</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">jacobian_rhs</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian_rhs" title="ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian_rhs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">jacobian_rhs</span></code></a></p></td>
+<td><p>Returns the Jacobian matrix for the right-hand side (RHS) part of the model, computed if <cite>use_jacobian</cite> is True.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">length_scales</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mass_matrix</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.mass_matrix" title="ep_bolfi.models.electrolyte.Electrolyte_internal.mass_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mass_matrix</span></code></a></p></td>
+<td><p>Returns the mass matrix for the system of differential equations after discretisation.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mass_matrix_inv</span></code></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.mass_matrix_inv" title="ep_bolfi.models.electrolyte.Electrolyte_internal.mass_matrix_inv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mass_matrix_inv</span></code></a></p></td>
+<td><p>Returns the inverse of the mass matrix for the differential equations after discretisation.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">options</span></code></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.options" title="ep_bolfi.models.electrolyte.Electrolyte_internal.options"><code class="xref py py-obj docutils literal notranslate"><span class="pre">options</span></code></a></p></td>
+<td><p>Returns the model options dictionary that allows customization of the model's behavior.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">param</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.param" title="ep_bolfi.models.electrolyte.Electrolyte_internal.param"><code class="xref py py-obj docutils literal notranslate"><span class="pre">param</span></code></a></p></td>
+<td><p>Returns a dictionary to store parameter values for the model.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.parameters" title="ep_bolfi.models.electrolyte.Electrolyte_internal.parameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parameters</span></code></a></p></td>
-<td><p>Returns all the parameters in the model</p></td>
+<td><p>Returns a  list of all parameter symbols used in the model.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">rhs</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.rhs" title="ep_bolfi.models.electrolyte.Electrolyte_internal.rhs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rhs</span></code></a></p></td>
+<td><p>Returns a dictionary mapping expressions (variables) to expressions that represent the right-hand side (RHS) of the model's differential equations.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">timescale</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">variables</span></code></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.variables" title="ep_bolfi.models.electrolyte.Electrolyte_internal.variables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">variables</span></code></a></p></td>
+<td><p>Returns a dictionary mapping strings to expressions representing the model's useful variables.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.variables_and_events" title="ep_bolfi.models.electrolyte.Electrolyte_internal.variables_and_events"><code class="xref py py-obj docutils literal notranslate"><span class="pre">variables_and_events</span></code></a></p></td>
-<td><p>Returns variables and events in a single dictionary</p></td>
+<td><p>Returns a dictionary containing both models variables and events.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.pybamm_control" title="ep_bolfi.models.electrolyte.Electrolyte_internal.pybamm_control"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pybamm_control</span></code></a></p></td>
 <td><p>Current is fixed if False and a variable if True.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py method">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.add_events_from">
+<span class="sig-name descname"><span class="pre">add_events_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variables</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.add_events_from" title="Link to this definition">¶</a></dt>
+<dd><p>A method to set events related to the state of submodel variable. Note: this
+method modifies the state of self.events. Unless overwritten by a submodel, the
+default behaviour of ‘pass’ is used as implemented in
+<code class="xref py py-class docutils literal notranslate"><span class="pre">pybamm.BaseSubModel</span></code>.</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>variables: dict</dt><dd><p>The variables in the whole model.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.algebraic">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">algebraic</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.algebraic" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dictionary mapping expressions (variables) to expressions that represent
+the algebraic equations of the model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.boundary_conditions">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">boundary_conditions</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.boundary_conditions" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dictionary mapping expressions (variables) to expressions representing
+the boundary conditions of the model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.built">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">built</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.built" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a boolean for the model built status.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.calc_esoh">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calc_esoh</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.calc_esoh" title="Link to this definition">¶</a></dt>
+<dd><p>Whether to include eSOH variables in the summary variables.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.check_algebraic_equations">
 <span class="sig-name descname"><span class="pre">check_algebraic_equations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">post_discretisation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_algebraic_equations" title="Link to this definition">¶</a></dt>
@@ -327,8 +388,8 @@ if more variables than equations.
 variable/equation pair in self.rhs
 - There are appropriate boundary conditions in self.boundary_conditions for each
 variable/equation pair in self.rhs and self.algebraic</p>
-<section id="parameters">
-<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h3>
+<section id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>post_discretisation<span class="classifier">boolean</span></dt><dd><p>A flag indicating tests to be skipped after discretisation</p>
 </dd>
@@ -337,15 +398,89 @@ variable/equation pair in self.rhs and self.algebraic</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_algebraic">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">concatenated_algebraic</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_algebraic" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the concatenated algebraic equations for the model after discretisation.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_initial_conditions">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">concatenated_initial_conditions</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_initial_conditions" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the initial conditions for all variables after discretization, providing the
+initial values for the state variables.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_rhs">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">concatenated_rhs</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_rhs" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the concatenated right-hand side (RHS) expressions for the model after discretisation.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.coupled_variables">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">coupled_variables</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.coupled_variables" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dictionary mapping strings to expressions representing variables needed by the model but whose equations were set by other models.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.default_geometry">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_geometry</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_geometry" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a  dictionary of the default geometry for the model, which is empty by default.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.default_parameter_values">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_parameter_values</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_parameter_values" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the default parameter values for the model (an empty set of parameters by default).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.default_quick_plot_variables">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_quick_plot_variables</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_quick_plot_variables" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the default variables for quick plotting (None by default).</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.default_solver">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_solver</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_solver" title="Link to this definition">¶</a></dt>
-<dd><p>Return default solver based on whether model is ODE/DAE or algebraic</p>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_solver</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_solver" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the default solver for the model, based on whether it is an ODE/DAE or algebraic model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.default_spatial_methods">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_spatial_methods</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_spatial_methods" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dictionary of the default spatial methods for the model, which is empty by default.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.default_submesh_types">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_submesh_types</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_submesh_types" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dictionary of the default submesh types for the model, which is empty by default.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.default_var_pts">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_var_pts</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_var_pts" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dictionary of the default variable points for the model, which is empty by default.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.deserialise">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.deserialise" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.deserialise" title="Link to this definition">¶</a></dt>
 <dd><p>Create a model instance from a serialised object.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.domain_Domain">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">domain_Domain</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.domain_Domain" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a tuple containing the current domain and its capitalized form.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.events">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">events</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.events" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dictionary mapping expressions (variables) to expressions that represent
+the initial conditions for the state variables.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -353,8 +488,8 @@ variable/equation pair in self.rhs and self.algebraic</p>
 <span class="sig-name descname"><span class="pre">export_casadi_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_parameter_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.export_casadi_objects" title="Link to this definition">¶</a></dt>
 <dd><p>Export the constituent parts of the model (rhs, algebraic, initial conditions,
 etc) as casadi objects.</p>
-<section id="id1">
-<h3>Parameters<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<section id="id2">
+<h3>Parameters<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>variable_names<span class="classifier">list</span></dt><dd><p>Variables to be exported alongside the model structure</p>
 </dd>
@@ -379,8 +514,8 @@ format</p>
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.generate">
 <span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_parameter_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cg_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.generate" title="Link to this definition">¶</a></dt>
 <dd><p>Generate the model in C, using CasADi.</p>
-<section id="id2">
-<h3>Parameters<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<section id="id3">
+<h3>Parameters<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>filename<span class="classifier">str</span></dt><dd><p>Name of the file to which to save the code</p>
 </dd>
@@ -396,6 +531,12 @@ See <a class="reference external" href="https://web.casadi.org/docs/#generating-
 </dd>
 </dl>
 </section>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.geometry">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">geometry</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.geometry" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the geometry of the model.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -438,24 +579,58 @@ use <code class="xref py py-attr docutils literal notranslate"><span class="pre"
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.info">
 <span class="sig-name descname"><span class="pre">info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.info" title="Link to this definition">¶</a></dt>
 <dd><p>Provides helpful summary information for a symbol.</p>
-<section id="id3">
-<h3>Parameters<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
-<p>parameter_name : str</p>
+<section id="id4">
+<h3>Parameters<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>symbol_name : str</p>
 </section>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.initial_conditions">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">initial_conditions</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.initial_conditions" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dictionary mapping expressions (variables) to expressions that represent
+the initial conditions for the state variables.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.input_parameters">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">input_parameters</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.input_parameters" title="Link to this definition">¶</a></dt>
-<dd><p>Returns all the input parameters in the model</p>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">input_parameters</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.input_parameters" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a list of all input parameter symbols used in the model.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.is_standard_form_dae">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_standard_form_dae</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.is_standard_form_dae" title="Link to this definition">¶</a></dt>
+<dd><p>Check if the model is a DAE in standard form with a mass matrix that is all
+zeros except for along the diagonal, which is either ones or zeros.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">jacobian</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the Jacobian matrix for the model, computed automatically if <cite>use_jacobian</cite> is True.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian_algebraic">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">jacobian_algebraic</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian_algebraic" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the Jacobian matrix for the algebraic part of the model, computed automatically
+during solver setup if <cite>use_jacobian</cite> is True.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian_rhs">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">jacobian_rhs</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian_rhs" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the Jacobian matrix for the right-hand side (RHS) part of the model, computed
+if <cite>use_jacobian</cite> is True.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.latexify">
 <span class="sig-name descname"><span class="pre">latexify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">newline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.latexify" title="Link to this definition">¶</a></dt>
 <dd><p>Converts all model equations in latex.</p>
-<section id="id4">
-<h3>Parameters<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<section id="id5">
+<h3>Parameters<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>filename: str (optional)</dt><dd><p>Accepted file formats - any image format, pdf and tex
 Default is None, When None returns all model equations in latex
@@ -478,6 +653,18 @@ If False, returns the list of all the equations.</p>
 </section>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.mass_matrix">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mass_matrix</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.mass_matrix" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the mass matrix for the system of differential equations after discretisation.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.mass_matrix_inv">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mass_matrix_inv</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.mass_matrix_inv" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the inverse of the mass matrix for the differential equations after discretisation.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.new_copy">
 <span class="sig-name descname"><span class="pre">new_copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.new_copy" title="Link to this definition">¶</a></dt>
@@ -486,17 +673,29 @@ to avoid issues with shared objects.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.options">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">options</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.options" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the model options dictionary that allows customization of the model’s behavior.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.param">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">param</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.param" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dictionary to store parameter values for the model.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.parameters">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.parameters" title="Link to this definition">¶</a></dt>
-<dd><p>Returns all the parameters in the model</p>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.parameters" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a  list of all parameter symbols used in the model.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.print_parameter_info">
 <span class="sig-name descname"><span class="pre">print_parameter_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">by_submodel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.print_parameter_info" title="Link to this definition">¶</a></dt>
 <dd><p>Print parameter information in a formatted table from a dictionary of parameters</p>
-<section id="id5">
-<h3>Parameters<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<section id="id6">
+<h3>Parameters<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>by_submodel<span class="classifier">bool, optional</span></dt><dd><p>Whether to print the parameter info sub-model wise or not (default False)</p>
 </dd>
@@ -512,8 +711,8 @@ and discretisation. Note: care should be taken if using spatial operators
 on dimensional symbols. Operators in pybamm are written in non-dimensional
 form, so may need to be scaled by the appropriate length scale. It is
 recommended to use this method on non-dimensional symbols.</p>
-<section id="id6">
-<h3>Parameters<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<section id="id7">
+<h3>Parameters<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
 <dl>
 <dt>symbol<span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">pybamm.Symbol</span></code></span></dt><dd><p>Symbol to be processed</p>
 </dd>
@@ -523,8 +722,8 @@ recommended to use this method on non-dimensional symbols.</p>
 </dd>
 </dl>
 </section>
-<section id="id7">
-<h3>Returns<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<section id="id8">
+<h3>Returns<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt><code class="xref py py-class docutils literal notranslate"><span class="pre">pybamm.Symbol</span></code></dt><dd><p>Processed symbol</p>
 </dd>
@@ -538,12 +737,19 @@ recommended to use this method on non-dimensional symbols.</p>
 <dd><p>Current is fixed if False and a variable if True.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.rhs">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rhs</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.rhs" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dictionary mapping expressions (variables) to expressions that represent
+the right-hand side (RHS) of the model’s differential equations.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.save_model">
 <span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.save_model" title="Link to this definition">¶</a></dt>
 <dd><p>Write out a discretised model to a JSON file</p>
-<section id="id8">
-<h3>Parameters<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<section id="id9">
+<h3>Parameters<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
 <p>filename: str, optional
 The desired name of the JSON file. If no name is provided, one will be created
 based on the model name, and the current datetime.</p>
@@ -611,8 +817,8 @@ their initial conditions as values.</p>
 a dictionary.
 This assumes that, for each variable in self.initial_conditions, there is a
 corresponding variable in the solution with the same name and size.</p>
-<section id="id9">
-<h3>Parameters<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<section id="id10">
+<h3>Parameters<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
 <dl>
 <dt>solution<span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">pybamm.Solution</span></code>, or dict</span></dt><dd><p>The solution to use to initialize the model</p>
 </dd>
@@ -644,8 +850,8 @@ their right-hand-sides as values.</p>
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">submodels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.update" title="Link to this definition">¶</a></dt>
 <dd><p>Update model to add new physics from submodels</p>
-<section id="id10">
-<h3>Parameters<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
+<section id="id11">
+<h3>Parameters<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
 <dl>
 <dt>submodel<span class="classifier">iterable of <code class="xref py py-class docutils literal notranslate"><span class="pre">pybamm.BaseModel</span></code></span></dt><dd><p>The submodels from which to create new model</p>
 </dd>
@@ -654,9 +860,15 @@ their right-hand-sides as values.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.variables">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variables</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.variables" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dictionary mapping strings to expressions representing the model’s useful variables.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="ep_bolfi.models.electrolyte.Electrolyte_internal.variables_and_events">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variables_and_events</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.variables_and_events" title="Link to this definition">¶</a></dt>
-<dd><p>Returns variables and events in a single dictionary</p>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variables_and_events</span></span><a class="headerlink" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.variables_and_events" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a dictionary containing both models variables and events.</p>
 </dd></dl>
 
 </section>
@@ -680,7 +892,16 @@ their right-hand-sides as values.</p>
 
 
 
-<h3>Navigation</h3>
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
@@ -694,27 +915,55 @@ their right-hand-sides as values.</p>
 <li class="toctree-l5 current"><a class="current reference internal" href="#">ep_bolfi.models.electrolyte.Electrolyte_internal</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal</span></code></a><ul>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.__init__"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.__init__()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.add_events_from"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.add_events_from()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.algebraic"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.algebraic</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.boundary_conditions"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.boundary_conditions</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.built"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.built</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.calc_esoh"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.calc_esoh</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_algebraic_equations"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.check_algebraic_equations()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_discretised_or_discretise_inplace_if_0D"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.check_discretised_or_discretise_inplace_if_0D()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_ics_bcs"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.check_ics_bcs()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_no_repeated_keys"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.check_no_repeated_keys()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_well_determined"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.check_well_determined()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.check_well_posedness"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.check_well_posedness()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_algebraic"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.concatenated_algebraic</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_initial_conditions"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.concatenated_initial_conditions</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_rhs"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.concatenated_rhs</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.coupled_variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.coupled_variables</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_geometry"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_geometry</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_parameter_values"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_parameter_values</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_quick_plot_variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_quick_plot_variables</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_solver"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_solver</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_spatial_methods"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_spatial_methods</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_submesh_types"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_submesh_types</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.default_var_pts"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_var_pts</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.deserialise"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.deserialise()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.domain_Domain"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.domain_Domain</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.events"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.events</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.export_casadi_objects"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.export_casadi_objects()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.generate"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.generate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.geometry"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.geometry</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.get_coupled_variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.get_coupled_variables()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.get_fundamental_variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.get_fundamental_variables()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.get_parameter_info"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.get_parameter_info()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.info"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.info()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.initial_conditions"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.initial_conditions</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.input_parameters"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.input_parameters</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.is_standard_form_dae"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.is_standard_form_dae</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.jacobian</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian_algebraic"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.jacobian_algebraic</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian_rhs"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.jacobian_rhs</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.latexify"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.latexify()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.mass_matrix"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.mass_matrix</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.mass_matrix_inv"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.mass_matrix_inv</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.new_copy"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.new_copy()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.options"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.options</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.param"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.param</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.parameters"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.parameters</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.print_parameter_info"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.print_parameter_info()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.process_parameters_and_discretise"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.process_parameters_and_discretise()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.pybamm_control"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.pybamm_control</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.rhs"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.rhs</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.save_model"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.save_model()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.set_algebraic"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.set_algebraic()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.set_boundary_conditions"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.set_boundary_conditions()</span></code></a></li>
@@ -723,6 +972,7 @@ their right-hand-sides as values.</p>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.set_initial_conditions_from"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.set_initial_conditions_from()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.set_rhs"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.set_rhs()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.update"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.update()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.variables</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#ep_bolfi.models.electrolyte.Electrolyte_internal.variables_and_events"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.variables_and_events</span></code></a></li>
 </ul>
 </li>
@@ -730,7 +980,6 @@ their right-hand-sides as values.</p>
 </li>
 </ul>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.equivalent_circuits.html">ep_bolfi.models.equivalent_circuits</a></li>
 <li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.solversetup.html">ep_bolfi.models.solversetup</a></li>
 <li class="toctree-l4"><a class="reference internal" href="ep_bolfi.models.standard_parameters.html">ep_bolfi.models.standard_parameters</a></li>
 </ul>
@@ -753,7 +1002,7 @@ their right-hand-sides as values.</p>
   <li><a href="ep_bolfi.models.html">ep_bolfi.models</a><ul>
   <li><a href="ep_bolfi.models.electrolyte.html">ep_bolfi.models.electrolyte</a><ul>
       <li>Previous: <a href="ep_bolfi.models.electrolyte.Electrolyte.html" title="previous chapter">ep_bolfi.models.electrolyte.Electrolyte</a></li>
-      <li>Next: <a href="ep_bolfi.models.equivalent_circuits.html" title="next chapter">ep_bolfi.models.equivalent_circuits</a></li>
+      <li>Next: <a href="ep_bolfi.models.solversetup.html" title="next chapter">ep_bolfi.models.solversetup</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
@@ -761,16 +1010,6 @@ their right-hand-sides as values.</p>
   </ul></li>
 </ul>
 </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -784,11 +1023,11 @@ their right-hand-sides as values.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &#169;2022-%Y, Yannick Kuhn.
+      &#169;2022-2025, Yannick Kuhn.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
       <a href="../_sources/api/ep_bolfi.models.electrolyte.Electrolyte_internal.rst.txt"

@@ -31,6 +31,9 @@ ep\_bolfi.models.analytic\_impedance.AnalyticImpedance
       ~AnalyticImpedance.Z_SPM_offset_metal_counter
       ~AnalyticImpedance.Z_SPM_offset_reference_electrode
       ~AnalyticImpedance.Z_SPM_reference_electrode
+      ~AnalyticImpedance.Z_SPM_with_double_layer_and_SEI
+      ~AnalyticImpedance.Z_SPM_with_double_layer_and_SEI_offset
+      ~AnalyticImpedance.Z_SPM_with_double_layer_and_SEI_reference_electrode
       ~AnalyticImpedance.Z_SPMe
       ~AnalyticImpedance.Z_SPMe_1
       ~AnalyticImpedance.Z_SPMe_1_metal_counter

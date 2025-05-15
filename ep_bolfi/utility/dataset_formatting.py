@@ -700,7 +700,7 @@ def read_csv_from_measurement_system(
     data = [] if segment_column != -1 else [
         {index: [] for index in list(headers.keys()) + [extra_sign_column]}
     ]
-    indices = []
+    indices = [] if segment_column != -1 else [0]
     last_segment_id = ""
     for i, row in enumerate(csv_file):
         if max_number_of_lines != -1 and i > max_number_of_lines:

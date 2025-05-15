@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<program name="python -m ep_bolfi.kadi_tools.convert_csv_to_parquet" description="Please refer to the --help output of this file." version="3.0">
+<program name="python -m ep_bolfi.kadi_tools.convert_csv_to_parquet" description="Please refer to the --help output of this file." version="3.0.2">
   <param description="Persistent record identifier where the input data is stored." type="long" name="input-record" char="r" required="true"/>
   <param description="File name." type="string" name="filename" char="n" required="true"/>
   <param description="Persistent record identifier where the results get stored." type="long" name="output-record" char="e" required="true"/>

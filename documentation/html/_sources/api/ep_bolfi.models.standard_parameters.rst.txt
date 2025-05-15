@@ -78,13 +78,13 @@ ep\_bolfi.models.standard\_parameters
       C_DLn
       C_DLp
       L_SEI
-      κ_SEI
-      R_SEI
       permittivity_SEI
       C_SEI
       t_SEI_minus
       ε_SEI
       β_SEI
+      κ_SEI
+      R_SEI
       L_electrolyte_for_SEI_model
       De_typ
       κe_typ

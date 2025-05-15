@@ -5,11 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ep_bolfi.utility.dataset_formatting.Impedance_Measurement &#8212; EP-BOLFI 3.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
-    <script src="../_static/documentation_options.js?v=110ea713"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <title>ep_bolfi.utility.dataset_formatting.Impedance_Measurement &#8212; EP-BOLFI ${VERSION} documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=4a3566fb"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -36,7 +37,7 @@
 <h1>ep_bolfi.utility.dataset_formatting.Impedance_Measurement<a class="headerlink" href="#ep-bolfi-utility-dataset-formatting-impedance-measurement" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ep_bolfi.utility.dataset_formatting.</span></span><span class="sig-name descname"><span class="pre">Impedance_Measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_impedances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imaginary_impedances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ep_bolfi.utility.dataset_formatting.</span></span><span class="sig-name descname"><span class="pre">Impedance_Measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_impedances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imaginary_impedances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="ep_bolfi.utility.dataset_formatting.Measurement.html#ep_bolfi.utility.dataset_formatting.Measurement" title="ep_bolfi.utility.dataset_formatting.Measurement"><code class="xref py py-class docutils literal notranslate"><span class="pre">Measurement</span></code></a></p>
 <p>Contains basic impedance data. Each member variable is a list and
 has the same length as the other ones.</p>
@@ -139,7 +140,7 @@ equilibrium.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.from_json">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.from_json" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.from_json" title="Link to this definition">¶</a></dt>
 <dd><p>Reads this object from JSON that was prepared with <code class="docutils literal notranslate"><span class="pre">to_json</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -244,7 +245,7 @@ Does not correspond to <em>self.indices</em>.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ep_bolfi.utility.dataset_formatting.Impedance_Measurement.table_mapping">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">table_mapping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.table_mapping" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">table_mapping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ep_bolfi.utility.dataset_formatting.Impedance_Measurement.table_mapping" title="Link to this definition">¶</a></dt>
 <dd><p>Gives the mapping from attributes to headings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -284,7 +285,16 @@ Does not correspond to <em>self.indices</em>.</p>
 
 
 
-<h3>Navigation</h3>
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../readme.html">ReadMe</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
@@ -357,16 +367,6 @@ Does not correspond to <em>self.indices</em>.</p>
   </ul></li>
 </ul>
 </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -380,11 +380,11 @@ Does not correspond to <em>self.indices</em>.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &#169;2022-%Y, Yannick Kuhn.
+      &#169;2022-2025, Yannick Kuhn.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
       <a href="../_sources/api/ep_bolfi.utility.dataset_formatting.Impedance_Measurement.rst.txt"

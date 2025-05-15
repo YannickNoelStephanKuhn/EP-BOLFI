@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<program name="python -m ep_bolfi.kadi_tools.eis_preprocessing" description="Please refer to the --help output of this file." version="3.0">
+<program name="python -m ep_bolfi.kadi_tools.eis_preprocessing" description="Please refer to the --help output of this file." version="3.0.2">
   <param description="Persistent record identifier of the record with the OCV data." type="long" name="ocv-record" char="r" required="true"/>
   <param description="The name of the OCV file with electrode SOC to cell SOC assignment. Prepare it like ep_bolfi.kadi_tools.extract_ocv_curve does. The 'indices' are what matches SOC to impedance measurements." type="string" name="ocv-file" char="n" required="true"/>
   <param description="Persistent record identifier of the record with the model parameters." type="long" name="parameters-record" char="k" required="true"/>

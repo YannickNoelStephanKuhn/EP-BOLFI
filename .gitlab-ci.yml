@@ -1,0 +1,172 @@
+# A pipeline is composed of independent jobs that run scripts, grouped into stages.
+# Stages run in sequential order, but jobs within stages run in parallel.
+#
+# For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
+#
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+# The specific template used here is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
+
+# Move image: into default: when not running locally.
+# Remove before_script: section copied from .venv_setup when not running locally.
+image: python:3.11-bullseye
+
+default:
+  interruptible: true  # closes any previous but still running pipelines
+
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  - test
+  - documentation
+  - pages
+  - release
+
+# The dot makes this not an actual job, but a template for one.
+.venv_setup:
+  before_script:
+    - apt-get -qy update
+    - python -V  # Python version printout for debugging
+    - python -m venv venv
+    - . venv/bin/activate
+    - pip install --upgrade pip
+
+build:       # This job runs in the build stage, which runs first.
+  stage: build
+  extends: .venv_setup
+  script:
+    - apt-get -qy install gettext-base zip
+    - VERSION=$(head -n 1 version.txt)
+    - export VERSION
+    - envsubst < conda_build_package/build.sh > build.tmp && mv build.tmp conda_build_package/build.sh
+    - envsubst < conda_build_package/meta.yaml > meta.tmp && mv meta.tmp conda_build_package/meta.yaml
+    - envsubst < pyproject.toml > pyproject.tmp && mv pyproject.tmp pyproject.toml
+    - envsubst < setup.cfg > setup.tmp && mv setup.tmp setup.cfg
+    - pip install build
+    - python -m build
+    - mv dist packages
+    - pip install xmlhelpy
+    - pip install packages/ep_bolfi-$(head -n 1 version.txt)-py3-none-any.whl --no-dependencies
+    - |+
+      cd ep_bolfi/kadi_tools
+      mkdir xml_representations
+      for file in ./*.py; do
+          if [ $file = "./__init__.py" ]; then
+              continue
+          fi
+          envsubst < $file > $file.tmp && mv $file.tmp $file
+          python $file --xmlhelp > xml_representations/${file:2:-3}.xml
+      done
+      cd ../..
+    - mv ep_bolfi/kadi_tools/xml_representations xml_representations
+    - zip -r xml_representations.zip xml_representations
+  after_script:
+    - echo "BUILD_JOB_ID=$CI_JOB_ID" >> job.env
+  needs: []  # schedule ASAP
+  artifacts:
+    paths:
+      - packages
+      - xml_representations
+      - xml_representations.zip
+    expire_in: never
+    reports:
+      dotenv: job.env
+
+unit-test:   # This job runs in the test stage.
+  stage: test    # It only starts when the job in the build stage completes successfully.
+  extends: .venv_setup
+  needs:
+    - job: build  # schedule after build
+      artifacts: true  # same behaviour as dependencies
+  script:
+    - pip install packages/ep_bolfi-$(head -n 1 version.txt)-py3-none-any.whl
+    - python -m unittest discover
+
+lint-test:   # This job also runs in the test stage.
+  stage: test    # It can run at the same time as unit-test-job (in parallel).
+  needs: []  # schedule ASAP
+  before_script:
+    - pip install flake8
+  script:
+    - flake8 --ignore=W503,W504,F824
+
+documentation:      # This job runs in the documentation stage.
+  stage: documentation  # It only runs when *both* jobs in the test stage complete successfully.
+  # environment: production
+  needs:
+    - job: build
+      artifacts: true
+  rules:  # Make sure that only pushes to main update the documentation
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  script:
+    - VERSION=$(head -n 1 version.txt)
+    - export VERSION
+    - envsubst < pyproject.toml > pyproject.tmp && mv pyproject.tmp pyproject.toml
+    - envsubst < setup.cfg > setup.tmp && mv setup.tmp setup.cfg
+    - envsubst < documentation/source/conf.py > conf.tmp && mv conf.tmp documentation/source/conf.py
+    - apt-get -qy update
+    - apt-get -qy install fonts-freefont-otf latexmk texlive-latex-base texlive-latex-extra texlive-luatex xindy
+    - pip install sphinx myst-parser
+    - pip install packages/ep_bolfi-$(head -n 1 version.txt)-py3-none-any.whl
+    - mkdir documentation/html
+    - mkdir documentation/latex
+    - sphinx-build -b html documentation/source documentation/html
+    - sphinx-build -b latex documentation/source documentation/latex
+    - cd documentation/latex
+    - make
+  after_script:
+    - echo "DOCS_JOB_ID=$CI_JOB_ID" >> job.env
+  artifacts:
+    paths:
+      - documentation/html
+      - documentation/latex/ep-bolfi.pdf
+    expire_in: never
+    reports:
+      dotenv: job.env
+
+pages:  # This needs to have the exact name "pages" to be picked up by GitLab Pages.
+  stage: pages
+  script:
+    # public/ is the one and only folder GitLab uses for Pages
+    - cp -r documentation/html/ public/
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  needs:
+    - job: documentation
+      artifacts: true
+  artifacts:
+    paths:
+      - public
+
+# Try this if the version below does not work:
+# https://gitlab.com/gitlab-org/gitlab/-/issues/330916#note_575347120
+release:  # Upload the .whl file as a Release.
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never  # Do not run this job when a tag is created manually
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  script:
+    - echo "running release for v$(head -n 1 version.txt)"
+  needs:
+    - job: build
+      artifacts: true
+    - job: documentation
+      artifacts: true
+  variables:
+    VERSION: $(head -n 1 version.txt)
+  release:
+    tag_name: 'v$VERSION.$CI_PIPELINE_IID'
+    description: 'v$VERSION.$CI_PIPELINE_IID'
+    ref: '$CI_COMMIT_SHA'
+    assets:
+      links:
+        - name: "ep_bolfi-$VERSION install file (Python wheel)"
+          url: "https://gitlab.dlr.de/cec/bte/ep-bolfi/-/jobs/$BUILD_JOB_ID/artifacts/raw/packages/ep_bolfi-3.0.2-py3-none-any.whl?inline=false"
+        - name: "PDF version of the documentation, generated with LuaLaTeX"
+          url: "https://gitlab.dlr.de/cec/bte/ep-bolfi/-/jobs/$DOCS_JOB_ID/artifacts/raw/documentation/latex/ep-bolfi.pdf?inline=false"
+        - name: "xml files of the kadi tools for upload to a Kadi4Mat instance or KadiStudio"
+          url: "https://gitlab.dlr.de/cec/bte/ep-bolfi/-/jobs/$BUILD_JOB_ID/artifacts/raw/xml_representations.zip?inline=false"
+        - name: "individual xml files and tarball of source code"
+          url: "https://gitlab.dlr.de/cec/bte/ep-bolfi/-/jobs/$BUILD_JOB_ID/artifacts/browse"

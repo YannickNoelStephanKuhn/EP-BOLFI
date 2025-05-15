@@ -5,11 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>EP-BOLFI documentation &#8212; EP-BOLFI 3.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
-    <script src="_static/documentation_options.js?v=110ea713"></script>
-    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <title>EP-BOLFI documentation &#8212; EP-BOLFI ${VERSION} documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=4a3566fb"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -159,6 +160,9 @@
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.analytic_impedance.AnalyticImpedance.html#ep_bolfi.models.analytic_impedance.AnalyticImpedance.Z_SPM_offset_metal_counter"><code class="docutils literal notranslate"><span class="pre">AnalyticImpedance.Z_SPM_offset_metal_counter()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.analytic_impedance.AnalyticImpedance.html#ep_bolfi.models.analytic_impedance.AnalyticImpedance.Z_SPM_offset_reference_electrode"><code class="docutils literal notranslate"><span class="pre">AnalyticImpedance.Z_SPM_offset_reference_electrode()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.analytic_impedance.AnalyticImpedance.html#ep_bolfi.models.analytic_impedance.AnalyticImpedance.Z_SPM_reference_electrode"><code class="docutils literal notranslate"><span class="pre">AnalyticImpedance.Z_SPM_reference_electrode()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.analytic_impedance.AnalyticImpedance.html#ep_bolfi.models.analytic_impedance.AnalyticImpedance.Z_SPM_with_double_layer_and_SEI"><code class="docutils literal notranslate"><span class="pre">AnalyticImpedance.Z_SPM_with_double_layer_and_SEI()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.analytic_impedance.AnalyticImpedance.html#ep_bolfi.models.analytic_impedance.AnalyticImpedance.Z_SPM_with_double_layer_and_SEI_offset"><code class="docutils literal notranslate"><span class="pre">AnalyticImpedance.Z_SPM_with_double_layer_and_SEI_offset()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.analytic_impedance.AnalyticImpedance.html#ep_bolfi.models.analytic_impedance.AnalyticImpedance.Z_SPM_with_double_layer_and_SEI_reference_electrode"><code class="docutils literal notranslate"><span class="pre">AnalyticImpedance.Z_SPM_with_double_layer_and_SEI_reference_electrode()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.analytic_impedance.AnalyticImpedance.html#ep_bolfi.models.analytic_impedance.AnalyticImpedance.Z_SPMe"><code class="docutils literal notranslate"><span class="pre">AnalyticImpedance.Z_SPMe()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.analytic_impedance.AnalyticImpedance.html#ep_bolfi.models.analytic_impedance.AnalyticImpedance.Z_SPMe_1"><code class="docutils literal notranslate"><span class="pre">AnalyticImpedance.Z_SPMe_1()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.analytic_impedance.AnalyticImpedance.html#ep_bolfi.models.analytic_impedance.AnalyticImpedance.Z_SPMe_1_metal_counter"><code class="docutils literal notranslate"><span class="pre">AnalyticImpedance.Z_SPMe_1_metal_counter()</span></code></a></li>
@@ -258,28 +262,52 @@
 <li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html">ep_bolfi.models.electrolyte.Electrolyte</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte"><code class="docutils literal notranslate"><span class="pre">Electrolyte</span></code></a><ul>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.__init__"><code class="docutils literal notranslate"><span class="pre">Electrolyte.__init__()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.algebraic"><code class="docutils literal notranslate"><span class="pre">Electrolyte.algebraic</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.boundary_conditions"><code class="docutils literal notranslate"><span class="pre">Electrolyte.boundary_conditions</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.built"><code class="docutils literal notranslate"><span class="pre">Electrolyte.built</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.calc_esoh"><code class="docutils literal notranslate"><span class="pre">Electrolyte.calc_esoh</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.check_algebraic_equations"><code class="docutils literal notranslate"><span class="pre">Electrolyte.check_algebraic_equations()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.check_discretised_or_discretise_inplace_if_0D"><code class="docutils literal notranslate"><span class="pre">Electrolyte.check_discretised_or_discretise_inplace_if_0D()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.check_ics_bcs"><code class="docutils literal notranslate"><span class="pre">Electrolyte.check_ics_bcs()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.check_no_repeated_keys"><code class="docutils literal notranslate"><span class="pre">Electrolyte.check_no_repeated_keys()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.check_well_determined"><code class="docutils literal notranslate"><span class="pre">Electrolyte.check_well_determined()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.check_well_posedness"><code class="docutils literal notranslate"><span class="pre">Electrolyte.check_well_posedness()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.concatenated_algebraic"><code class="docutils literal notranslate"><span class="pre">Electrolyte.concatenated_algebraic</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.concatenated_initial_conditions"><code class="docutils literal notranslate"><span class="pre">Electrolyte.concatenated_initial_conditions</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.concatenated_rhs"><code class="docutils literal notranslate"><span class="pre">Electrolyte.concatenated_rhs</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.coupled_variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte.coupled_variables</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.default_geometry"><code class="docutils literal notranslate"><span class="pre">Electrolyte.default_geometry</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.default_parameter_values"><code class="docutils literal notranslate"><span class="pre">Electrolyte.default_parameter_values</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.default_quick_plot_variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte.default_quick_plot_variables</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.default_solver"><code class="docutils literal notranslate"><span class="pre">Electrolyte.default_solver</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.default_spatial_methods"><code class="docutils literal notranslate"><span class="pre">Electrolyte.default_spatial_methods</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.default_submesh_types"><code class="docutils literal notranslate"><span class="pre">Electrolyte.default_submesh_types</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.default_var_pts"><code class="docutils literal notranslate"><span class="pre">Electrolyte.default_var_pts</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.deserialise"><code class="docutils literal notranslate"><span class="pre">Electrolyte.deserialise()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.events"><code class="docutils literal notranslate"><span class="pre">Electrolyte.events</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.export_casadi_objects"><code class="docutils literal notranslate"><span class="pre">Electrolyte.export_casadi_objects()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.generate"><code class="docutils literal notranslate"><span class="pre">Electrolyte.generate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.geometry"><code class="docutils literal notranslate"><span class="pre">Electrolyte.geometry</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.get_parameter_info"><code class="docutils literal notranslate"><span class="pre">Electrolyte.get_parameter_info()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.info"><code class="docutils literal notranslate"><span class="pre">Electrolyte.info()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.initial_conditions"><code class="docutils literal notranslate"><span class="pre">Electrolyte.initial_conditions</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.input_parameters"><code class="docutils literal notranslate"><span class="pre">Electrolyte.input_parameters</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.is_standard_form_dae"><code class="docutils literal notranslate"><span class="pre">Electrolyte.is_standard_form_dae</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.jacobian"><code class="docutils literal notranslate"><span class="pre">Electrolyte.jacobian</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.jacobian_algebraic"><code class="docutils literal notranslate"><span class="pre">Electrolyte.jacobian_algebraic</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.jacobian_rhs"><code class="docutils literal notranslate"><span class="pre">Electrolyte.jacobian_rhs</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.latexify"><code class="docutils literal notranslate"><span class="pre">Electrolyte.latexify()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.length_scales"><code class="docutils literal notranslate"><span class="pre">Electrolyte.length_scales</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.mass_matrix"><code class="docutils literal notranslate"><span class="pre">Electrolyte.mass_matrix</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.mass_matrix_inv"><code class="docutils literal notranslate"><span class="pre">Electrolyte.mass_matrix_inv</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.new_copy"><code class="docutils literal notranslate"><span class="pre">Electrolyte.new_copy()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.options"><code class="docutils literal notranslate"><span class="pre">Electrolyte.options</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.param"><code class="docutils literal notranslate"><span class="pre">Electrolyte.param</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.parameters"><code class="docutils literal notranslate"><span class="pre">Electrolyte.parameters</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.print_parameter_info"><code class="docutils literal notranslate"><span class="pre">Electrolyte.print_parameter_info()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.process_parameters_and_discretise"><code class="docutils literal notranslate"><span class="pre">Electrolyte.process_parameters_and_discretise()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.pybamm_control"><code class="docutils literal notranslate"><span class="pre">Electrolyte.pybamm_control</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.rhs"><code class="docutils literal notranslate"><span class="pre">Electrolyte.rhs</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.save_model"><code class="docutils literal notranslate"><span class="pre">Electrolyte.save_model()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.set_degradation_variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte.set_degradation_variables()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.set_external_circuit_submodel"><code class="docutils literal notranslate"><span class="pre">Electrolyte.set_external_circuit_submodel()</span></code></a></li>
@@ -289,6 +317,7 @@
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.set_voltage_variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte.set_voltage_variables()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.timescale"><code class="docutils literal notranslate"><span class="pre">Electrolyte.timescale</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.update"><code class="docutils literal notranslate"><span class="pre">Electrolyte.update()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte.variables</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte.html#ep_bolfi.models.electrolyte.Electrolyte.variables_and_events"><code class="docutils literal notranslate"><span class="pre">Electrolyte.variables_and_events</span></code></a></li>
 </ul>
 </li>
@@ -297,27 +326,55 @@
 <li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html">ep_bolfi.models.electrolyte.Electrolyte_internal</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal</span></code></a><ul>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.__init__"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.__init__()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.add_events_from"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.add_events_from()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.algebraic"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.algebraic</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.boundary_conditions"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.boundary_conditions</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.built"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.built</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.calc_esoh"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.calc_esoh</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.check_algebraic_equations"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.check_algebraic_equations()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.check_discretised_or_discretise_inplace_if_0D"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.check_discretised_or_discretise_inplace_if_0D()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.check_ics_bcs"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.check_ics_bcs()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.check_no_repeated_keys"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.check_no_repeated_keys()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.check_well_determined"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.check_well_determined()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.check_well_posedness"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.check_well_posedness()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_algebraic"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.concatenated_algebraic</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_initial_conditions"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.concatenated_initial_conditions</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.concatenated_rhs"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.concatenated_rhs</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.coupled_variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.coupled_variables</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.default_geometry"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_geometry</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.default_parameter_values"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_parameter_values</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.default_quick_plot_variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_quick_plot_variables</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.default_solver"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_solver</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.default_spatial_methods"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_spatial_methods</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.default_submesh_types"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_submesh_types</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.default_var_pts"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.default_var_pts</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.deserialise"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.deserialise()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.domain_Domain"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.domain_Domain</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.events"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.events</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.export_casadi_objects"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.export_casadi_objects()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.generate"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.generate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.geometry"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.geometry</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.get_coupled_variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.get_coupled_variables()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.get_fundamental_variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.get_fundamental_variables()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.get_parameter_info"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.get_parameter_info()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.info"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.info()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.initial_conditions"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.initial_conditions</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.input_parameters"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.input_parameters</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.is_standard_form_dae"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.is_standard_form_dae</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.jacobian</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian_algebraic"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.jacobian_algebraic</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.jacobian_rhs"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.jacobian_rhs</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.latexify"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.latexify()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.mass_matrix"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.mass_matrix</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.mass_matrix_inv"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.mass_matrix_inv</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.new_copy"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.new_copy()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.options"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.options</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.param"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.param</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.parameters"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.parameters</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.print_parameter_info"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.print_parameter_info()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.process_parameters_and_discretise"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.process_parameters_and_discretise()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.pybamm_control"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.pybamm_control</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.rhs"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.rhs</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.save_model"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.save_model()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.set_algebraic"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.set_algebraic()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.set_boundary_conditions"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.set_boundary_conditions()</span></code></a></li>
@@ -326,166 +383,8 @@
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.set_initial_conditions_from"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.set_initial_conditions_from()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.set_rhs"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.set_rhs()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.update"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.update()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.variables"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.variables</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.electrolyte.Electrolyte_internal.html#ep_bolfi.models.electrolyte.Electrolyte_internal.variables_and_events"><code class="docutils literal notranslate"><span class="pre">Electrolyte_internal.variables_and_events</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.html">ep_bolfi.models.equivalent_circuits</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.condense.html">ep_bolfi.models.equivalent_circuits.condense</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.condense.html#ep_bolfi.models.equivalent_circuits.condense"><code class="docutils literal notranslate"><span class="pre">condense()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.parallel.html">ep_bolfi.models.equivalent_circuits.parallel</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.parallel.html#ep_bolfi.models.equivalent_circuits.parallel"><code class="docutils literal notranslate"><span class="pre">parallel()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.series.html">ep_bolfi.models.equivalent_circuits.series</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.series.html#ep_bolfi.models.equivalent_circuits.series"><code class="docutils literal notranslate"><span class="pre">series()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.C.html">ep_bolfi.models.equivalent_circuits.C</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.C.html#ep_bolfi.models.equivalent_circuits.C"><code class="docutils literal notranslate"><span class="pre">C</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.C.html#ep_bolfi.models.equivalent_circuits.C.__init__"><code class="docutils literal notranslate"><span class="pre">C.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.ECM.html">ep_bolfi.models.equivalent_circuits.ECM</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.ECM.html#ep_bolfi.models.equivalent_circuits.ECM"><code class="docutils literal notranslate"><span class="pre">ECM</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.ECM.html#ep_bolfi.models.equivalent_circuits.ECM.__init__"><code class="docutils literal notranslate"><span class="pre">ECM.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.L.html">ep_bolfi.models.equivalent_circuits.L</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.L.html#ep_bolfi.models.equivalent_circuits.L"><code class="docutils literal notranslate"><span class="pre">L</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.L.html#ep_bolfi.models.equivalent_circuits.L.__init__"><code class="docutils literal notranslate"><span class="pre">L.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.Q.html">ep_bolfi.models.equivalent_circuits.Q</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.Q.html#ep_bolfi.models.equivalent_circuits.Q"><code class="docutils literal notranslate"><span class="pre">Q</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.Q.html#ep_bolfi.models.equivalent_circuits.Q.__init__"><code class="docutils literal notranslate"><span class="pre">Q.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.R.html">ep_bolfi.models.equivalent_circuits.R</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.R.html#ep_bolfi.models.equivalent_circuits.R"><code class="docutils literal notranslate"><span class="pre">R</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.R.html#ep_bolfi.models.equivalent_circuits.R.__init__"><code class="docutils literal notranslate"><span class="pre">R.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.RC_chain.html">ep_bolfi.models.equivalent_circuits.RC_chain</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.RC_chain.html#ep_bolfi.models.equivalent_circuits.RC_chain"><code class="docutils literal notranslate"><span class="pre">RC_chain</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.RC_chain.html#ep_bolfi.models.equivalent_circuits.RC_chain.__init__"><code class="docutils literal notranslate"><span class="pre">RC_chain.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.SCR.html">ep_bolfi.models.equivalent_circuits.SCR</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.SCR.html#ep_bolfi.models.equivalent_circuits.SCR"><code class="docutils literal notranslate"><span class="pre">SCR</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.SCR.html#ep_bolfi.models.equivalent_circuits.SCR.__init__"><code class="docutils literal notranslate"><span class="pre">SCR.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.SCRF.html">ep_bolfi.models.equivalent_circuits.SCRF</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.SCRF.html#ep_bolfi.models.equivalent_circuits.SCRF"><code class="docutils literal notranslate"><span class="pre">SCRF</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.SCRF.html#ep_bolfi.models.equivalent_circuits.SCRF.__init__"><code class="docutils literal notranslate"><span class="pre">SCRF.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch.html">ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch.html#ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch"><code class="docutils literal notranslate"><span class="pre">Two_RC_Optimized_for_Torch</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch.html#ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch.__init__"><code class="docutils literal notranslate"><span class="pre">Two_RC_Optimized_for_Torch.__init__()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch.html#ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch.imaginary_part"><code class="docutils literal notranslate"><span class="pre">Two_RC_Optimized_for_Torch.imaginary_part()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch.html#ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch.normalised_input"><code class="docutils literal notranslate"><span class="pre">Two_RC_Optimized_for_Torch.normalised_input()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch.html#ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch.real_part"><code class="docutils literal notranslate"><span class="pre">Two_RC_Optimized_for_Torch.real_part()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch.html#ep_bolfi.models.equivalent_circuits.Two_RC_Optimized_for_Torch.unnormalise_tau"><code class="docutils literal notranslate"><span class="pre">Two_RC_Optimized_for_Torch.unnormalise_tau()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.W.html">ep_bolfi.models.equivalent_circuits.W</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.W.html#ep_bolfi.models.equivalent_circuits.W"><code class="docutils literal notranslate"><span class="pre">W</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.W.html#ep_bolfi.models.equivalent_circuits.W.__init__"><code class="docutils literal notranslate"><span class="pre">W.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.aluminium_electrode.html">ep_bolfi.models.equivalent_circuits.aluminium_electrode</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.aluminium_electrode.html#ep_bolfi.models.equivalent_circuits.aluminium_electrode"><code class="docutils literal notranslate"><span class="pre">aluminium_electrode</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.aluminium_electrode.html#ep_bolfi.models.equivalent_circuits.aluminium_electrode.__init__"><code class="docutils literal notranslate"><span class="pre">aluminium_electrode.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.aluminium_electrode_variant.html">ep_bolfi.models.equivalent_circuits.aluminium_electrode_variant</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.aluminium_electrode_variant.html#ep_bolfi.models.equivalent_circuits.aluminium_electrode_variant"><code class="docutils literal notranslate"><span class="pre">aluminium_electrode_variant</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.aluminium_electrode_variant.html#ep_bolfi.models.equivalent_circuits.aluminium_electrode_variant.__init__"><code class="docutils literal notranslate"><span class="pre">aluminium_electrode_variant.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.debye.html">ep_bolfi.models.equivalent_circuits.debye</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.debye.html#ep_bolfi.models.equivalent_circuits.debye"><code class="docutils literal notranslate"><span class="pre">debye</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.debye.html#ep_bolfi.models.equivalent_circuits.debye.__init__"><code class="docutils literal notranslate"><span class="pre">debye.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.debye_variant.html">ep_bolfi.models.equivalent_circuits.debye_variant</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.debye_variant.html#ep_bolfi.models.equivalent_circuits.debye_variant"><code class="docutils literal notranslate"><span class="pre">debye_variant</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.debye_variant.html#ep_bolfi.models.equivalent_circuits.debye_variant.__init__"><code class="docutils literal notranslate"><span class="pre">debye_variant.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.randles.html">ep_bolfi.models.equivalent_circuits.randles</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.randles.html#ep_bolfi.models.equivalent_circuits.randles"><code class="docutils literal notranslate"><span class="pre">randles</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.randles.html#ep_bolfi.models.equivalent_circuits.randles.__init__"><code class="docutils literal notranslate"><span class="pre">randles.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.randles_variant.html">ep_bolfi.models.equivalent_circuits.randles_variant</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.randles_variant.html#ep_bolfi.models.equivalent_circuits.randles_variant"><code class="docutils literal notranslate"><span class="pre">randles_variant</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.randles_variant.html#ep_bolfi.models.equivalent_circuits.randles_variant.__init__"><code class="docutils literal notranslate"><span class="pre">randles_variant.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.warburg_open.html">ep_bolfi.models.equivalent_circuits.warburg_open</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.warburg_open.html#ep_bolfi.models.equivalent_circuits.warburg_open"><code class="docutils literal notranslate"><span class="pre">warburg_open</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.warburg_open.html#ep_bolfi.models.equivalent_circuits.warburg_open.__init__"><code class="docutils literal notranslate"><span class="pre">warburg_open.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.warburg_short.html">ep_bolfi.models.equivalent_circuits.warburg_short</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.warburg_short.html#ep_bolfi.models.equivalent_circuits.warburg_short"><code class="docutils literal notranslate"><span class="pre">warburg_short</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.warburg_short.html#ep_bolfi.models.equivalent_circuits.warburg_short.__init__"><code class="docutils literal notranslate"><span class="pre">warburg_short.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.wrong_randles.html">ep_bolfi.models.equivalent_circuits.wrong_randles</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.wrong_randles.html#ep_bolfi.models.equivalent_circuits.wrong_randles"><code class="docutils literal notranslate"><span class="pre">wrong_randles</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.wrong_randles.html#ep_bolfi.models.equivalent_circuits.wrong_randles.__init__"><code class="docutils literal notranslate"><span class="pre">wrong_randles.__init__()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.wrong_randles_variant.html">ep_bolfi.models.equivalent_circuits.wrong_randles_variant</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.wrong_randles_variant.html#ep_bolfi.models.equivalent_circuits.wrong_randles_variant"><code class="docutils literal notranslate"><span class="pre">wrong_randles_variant</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.models.equivalent_circuits.wrong_randles_variant.html#ep_bolfi.models.equivalent_circuits.wrong_randles_variant.__init__"><code class="docutils literal notranslate"><span class="pre">wrong_randles_variant.__init__()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -588,6 +487,14 @@
 <li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.ce_typ.html#ep_bolfi.models.standard_parameters.ce_typ"><code class="docutils literal notranslate"><span class="pre">ce_typ</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.cn.html">ep_bolfi.models.standard_parameters.cn</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.cn.html#ep_bolfi.models.standard_parameters.cn"><code class="docutils literal notranslate"><span class="pre">cn</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.cp.html">ep_bolfi.models.standard_parameters.cp</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.cp.html#ep_bolfi.models.standard_parameters.cp"><code class="docutils literal notranslate"><span class="pre">cp</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.an_dim.html">ep_bolfi.models.standard_parameters.an_dim</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.an_dim.html#ep_bolfi.models.standard_parameters.an_dim"><code class="docutils literal notranslate"><span class="pre">an_dim</span></code></a></li>
 </ul>
@@ -660,10 +567,6 @@
 <li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.L_SEI.html#ep_bolfi.models.standard_parameters.L_SEI"><code class="docutils literal notranslate"><span class="pre">L_SEI</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.R_SEI.html">ep_bolfi.models.standard_parameters.R_SEI</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.R_SEI.html#ep_bolfi.models.standard_parameters.R_SEI"><code class="docutils literal notranslate"><span class="pre">R_SEI</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.permittivity_SEI.html">ep_bolfi.models.standard_parameters.permittivity_SEI</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.permittivity_SEI.html#ep_bolfi.models.standard_parameters.permittivity_SEI"><code class="docutils literal notranslate"><span class="pre">permittivity_SEI</span></code></a></li>
 </ul>
@@ -674,6 +577,10 @@
 </li>
 <li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.t_SEI_minus.html">ep_bolfi.models.standard_parameters.t_SEI_minus</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.t_SEI_minus.html#ep_bolfi.models.standard_parameters.t_SEI_minus"><code class="docutils literal notranslate"><span class="pre">t_SEI_minus</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.R_SEI.html">ep_bolfi.models.standard_parameters.R_SEI</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.R_SEI.html#ep_bolfi.models.standard_parameters.R_SEI"><code class="docutils literal notranslate"><span class="pre">R_SEI</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.L_electrolyte_for_SEI_model.html">ep_bolfi.models.standard_parameters.L_electrolyte_for_SEI_model</a><ul>
@@ -724,12 +631,12 @@
 <li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.Ce.html#ep_bolfi.models.standard_parameters.Ce"><code class="docutils literal notranslate"><span class="pre">Ce</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.Cn.html">ep_bolfi.models.standard_parameters.cn</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.Cn.html#ep_bolfi.models.standard_parameters.cn"><code class="docutils literal notranslate"><span class="pre">cn</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.Cn.html">ep_bolfi.models.standard_parameters.Cn</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.Cn.html#ep_bolfi.models.standard_parameters.Cn"><code class="docutils literal notranslate"><span class="pre">Cn</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.Cp.html">ep_bolfi.models.standard_parameters.cp</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.Cp.html#ep_bolfi.models.standard_parameters.cp"><code class="docutils literal notranslate"><span class="pre">cp</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.Cp.html">ep_bolfi.models.standard_parameters.Cp</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.Cp.html#ep_bolfi.models.standard_parameters.Cp"><code class="docutils literal notranslate"><span class="pre">Cp</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.models.standard_parameters.Crn.html">ep_bolfi.models.standard_parameters.Crn</a><ul>
@@ -987,7 +894,6 @@
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.html#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.initial_r"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.initial_r</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.html#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.input_dim"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.input_dim</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.html#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_discrepancies"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.log_of_discrepancies</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.html#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_raw_tried_parameters"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.log_of_raw_tried_parameters</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.html#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_of_tried_parameters"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.log_of_tried_parameters</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.html#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.log_to_json"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.log_to_json()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.html#ep_bolfi.optimization.EP_BOLFI.EP_BOLFI.output_dim"><code class="docutils literal notranslate"><span class="pre">EP_BOLFI.output_dim</span></code></a></li>
@@ -1030,6 +936,7 @@
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.html#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.experimental_features"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.experimental_features</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.html#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.input_dim"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.input_dim</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.html#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.inv_variances"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.inv_variances</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.html#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.log_of_calculated_features"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.log_of_calculated_features</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.html#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.log_of_tried_parameters"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.log_of_tried_parameters</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.html#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.norm_factor"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.norm_factor</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="api/ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.html#ep_bolfi.optimization.EP_BOLFI.Preprocessed_Simulator.normed_means"><code class="docutils literal notranslate"><span class="pre">Preprocessed_Simulator.normed_means</span></code></a></li>
@@ -1383,6 +1290,10 @@
 <li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.utility.visualization.fit_and_plot_OCV.html#ep_bolfi.utility.visualization.fit_and_plot_OCV"><code class="docutils literal notranslate"><span class="pre">fit_and_plot_OCV()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.utility.visualization.interactive_drt_finetuning.html">ep_bolfi.utility.visualization.interactive_drt_finetuning</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.utility.visualization.interactive_drt_finetuning.html#ep_bolfi.utility.visualization.interactive_drt_finetuning"><code class="docutils literal notranslate"><span class="pre">interactive_drt_finetuning()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l5"><a class="reference internal" href="api/ep_bolfi.utility.visualization.interactive_impedance_model.html">ep_bolfi.utility.visualization.interactive_impedance_model</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="api/ep_bolfi.utility.visualization.interactive_impedance_model.html#ep_bolfi.utility.visualization.interactive_impedance_model"><code class="docutils literal notranslate"><span class="pre">interactive_impedance_model()</span></code></a></li>
 </ul>
@@ -1460,7 +1371,16 @@
 
 
 
-<h3>Navigation</h3>
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="readme.html">ReadMe</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
@@ -1475,16 +1395,6 @@
   </ul></li>
 </ul>
 </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -1498,11 +1408,11 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &#169;2022-%Y, Yannick Kuhn.
+      &#169;2022-2025, Yannick Kuhn.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.4.7</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
       <a href="_sources/index.rst.txt"

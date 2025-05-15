@@ -39,7 +39,6 @@ ep\_bolfi.optimization.EP\_BOLFI.EP\_BOLFI
       ~EP_BOLFI.sub_index_by_feature
       ~EP_BOLFI.weights
       ~EP_BOLFI.initial_guesses
-      ~EP_BOLFI.log_of_raw_tried_parameters
       ~EP_BOLFI.log_of_discrepancies
       ~EP_BOLFI.final_expectation
       ~EP_BOLFI.final_covariance
